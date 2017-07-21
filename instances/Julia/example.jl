@@ -18,4 +18,4 @@ m = sslp(5,25,50)
 writeSmps(m, "../SMPS/sslp_5_25_50")
 
 # Write the deterministic equivalent form in MPS file
-writeMps(m, "../MPS/sslp_5_25_50")
+# writeMps(m, "../MPS/sslp_5_25_50")
