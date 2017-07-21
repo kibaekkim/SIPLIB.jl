@@ -10,13 +10,19 @@ s.t.  A_0 x_0           (sign_0) b_0
 
 where (sign_j) represents either <=, >=, or ==, and 
       (Bounds) define the column bounds.
+
+It may take long time to generate a large number of scenarios. To reduce the time you can use multithreads.
+
+For example, set the folloing environment variable in terminal.
+
+    export JULIA_NUM_THREADS=16
 =#
 
 module SmpsWriter
 
 using StructJuMP
 
-export writeSmps, writeMps
+export writeAll, writeSmps, writeMps
 
 type ModelData
     mat::SparseMatrixCSC{Float64}
@@ -27,6 +33,30 @@ type ModelData
     clbd::Vector{Float64}
     cubd::Vector{Float64}
     ctype::String
+end
+
+function writeAll(m::JuMP.Model, filename::String="SmpsWriter")
+    # Check if this is a StructJuMP model
+    if !haskey(m.ext, :Stochastic)
+        writeMPS(m, "$filename.mps")
+        warn("This is not a stochastic model. $filename.mps was geneerated.")
+        return
+    end
+
+    # Get StructJuMP model data
+    mdata_all = getStructModelData(m)
+
+    # Create and write a core model
+    mdata_core = writeCore(filename, mdata_all)
+
+    # Write tim and sto files
+    writeTime(filename, mdata_all[1].mat)
+    writeStoc(filename, num_scenarios(m), getprobability(m), mdata_all, mdata_core)
+
+    # Write MPS file
+    writeMps(m, mdata_all, filename)
+
+    return
 end
 
 # write SMPS files (cor, tim, and sto)
@@ -41,7 +71,6 @@ function writeSmps(m::JuMP.Model, filename::String="SmpsWriter")
 
     # Get StructJuMP model data
     mdata_all = getStructModelData(m)
-
 
     # Create and write a core model
     mdata_core = writeCore(filename, mdata_all)
@@ -61,6 +90,15 @@ function writeMps(m::JuMP.Model, filename::String="SmpsWriter")
     end
 
     mdata_all = getStructModelData(m)
+
+    writeMps(m, mdata_all, filename)
+
+    return
+end
+
+function writeMps(m::JuMP.Model, mdata_all::Array{ModelData,1}, filename::String="SmpsWriter")
+
+    print("Writing MPS file ...")
 
     # @show full(mat_all[1])
     nrows0, ncols0 = size(mdata_all[1].mat)
@@ -101,6 +139,8 @@ function writeMps(m::JuMP.Model, filename::String="SmpsWriter")
     objsense = mdata_all[1].objsense
 
     writeMps("$filename.mps", filename, mat, rhs, sense, obj, objsense, clbd, cubd, ctype)
+
+    println("done")
 
     return
 end
@@ -219,17 +259,22 @@ writeMps(filename, probname, mdata::ModelData) = writeMps(filename, probname, md
 
 function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
 
-    println("Reading all data from StructJuMP model")
+    println("Reading all data from StructJuMP model ($filename)")
 
     # create the model data array
     mdata_all = Array{ModelData,1}()
 
     # get model data for the first stage
-    mdata = getModelData(m)
+    @time begin
+        mdata = getModelData(m)
+    end
     push!(mdata_all, mdata)
 
+    @show Threads.nthreads()
+    println("You can set the number of threads as follows:\n\nexport JULIA_NUM_THREADS=4")
+
     # get model data for the second stage
-    for i = 1:num_scenarios(m)
+    @time Threads.@threads for i = 1:num_scenarios(m)
         mdata = getModelData(getchildren(m)[i])
         push!(mdata_all, mdata)
     end
