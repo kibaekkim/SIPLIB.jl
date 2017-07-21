@@ -11,12 +11,11 @@ Kibaek Kim
 
 using CPLEX, JuMP, MathProgBase
 
-# command-line arguments
+# command-line argument
 mpsfile = ARGS[1] # mps file to read
-ofile   = ARGS[2] # output file to write
 
 # set parameters for CPLEX
-mod = Model(solver=CplexSolver(CPX_PARAM_TILIM=3600,CPX_PARAM_EPAGAP=0.0))
+mod = Model(solver=CplexSolver(CPX_PARAM_TILIM=3600,CPX_PARAM_EPAGAP=0.0,CPX_PARAM_THREADS=8))
 m_internal = MathProgBase.LinearQuadraticModel(CplexSolver())
 
 MathProgBase.loadproblem!(m_internal, mpsfile)
@@ -55,6 +54,8 @@ status = solve(mod)
 
 # write simple soultion file in the form of
 # (instance, primal objective, dual objective, solution time)
+ofile = splitext(basename(mpsfile))[1]*".txt" # output file to write
 fp = open(ofile, "w")
-@printf(fp, "%s,%e,%e,%e\n", mpsfile, getobjectivevalue(mod), getobjectivebound(mod), getsolvetime(mod))
+@printf(fp, "%s,%e,%e,%e\n", basename(mpsfile), getobjectivevalue(mod), getobjectivebound(mod), getsolvetime(mod))
 close(fp)
+
