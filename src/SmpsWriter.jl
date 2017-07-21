@@ -259,7 +259,7 @@ writeMps(filename, probname, mdata::ModelData) = writeMps(filename, probname, md
 
 function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
 
-    println("Reading all data from StructJuMP model ($filename)")
+    println("Reading all data from StructJuMP model")
 
     # create the model data array
     mdata_all = Array{ModelData,1}()
