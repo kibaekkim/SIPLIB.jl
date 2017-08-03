@@ -14,7 +14,6 @@ where (sign_j) represents either <=, >=, or ==, and
 It may take long time to generate a large number of scenarios. To reduce the time you can use multithreads.
 
 For example, set the folloing environment variable in terminal.
-
     export JULIA_NUM_THREADS=16
 =#
 
@@ -224,28 +223,28 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
             continue
         end
 
-        if clbd[j] <= -Inf && cubd[j] >= Inf
-            @printf(fp, " FR BOUND  %-8s\n", "x"*string(j))
-            continue
-        end
-
         if clbd[j] == cubd[j]
             @printf(fp, " FX %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
             continue
         end
 
-        if clbd[j] > -Inf && cubd[j] >= Inf
-            if clbd[j] == 0
-                @printf(fp, " PL %-8s  %-8s\n", "BOUND", "x"*string(j))
+        if clbd[j] <= -Inf
+            if cubd[j] >= Inf
+                @printf(fp, " FR BOUND  %-8s\n", "x"*string(j))
             else
-                @printf(fp, " LO %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
-            end
-        end
-
-        if clbd[j] <= -Inf && cubd[j] < Inf
-            if cubd[j] == 0
                 @printf(fp, " MI %-8s  %-8s\n", "BOUND", "x"*string(j))
-            else
+                if cubd[j] != 0
+                    @printf(fp, " UP %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            end
+        elseif clbd[j] == 0
+            # cubd[j] >= Inf is default.
+            if cubd[j] < Inf
+                @printf(fp, " UP %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+            end
+        else # clbd[j] > -Inf
+            @printf(fp, " LO %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
+            if cubd[j] < Inf
                 @printf(fp, " UP %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
             end
         end
@@ -270,8 +269,8 @@ function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
     end
     push!(mdata_all, mdata)
 
-    @show Threads.nthreads()
-    println("You can set the number of threads as follows:\n\nexport JULIA_NUM_THREADS=4")
+    # @show Threads.nthreads()
+    # println("You can set the number of threads as follows:\n\texport JULIA_NUM_THREADS=4")
 
     # get model data for the second stage
     @time Threads.@threads for i = 1:num_scenarios(m)
@@ -381,6 +380,8 @@ function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
     cubd     = [mdata_all[1].cubd ; mdata_all[2].cubd]
     ctype    = mdata_all[1].ctype * mdata_all[2].ctype
     mat      = [[mdata_all[1].mat zeros(nrows0, ncols-ncols0)] ; mdata_all[2].mat]
+    @assert length(clbd) == ncols
+    @assert length(obj) == ncols
 
     # reserve the nonzero spaces
     for s = 3:length(mdata_all)
@@ -403,7 +404,7 @@ function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
     end
 
     mdata_core = ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype)
-    writeMps("$filename.cor", filename, mdata_core)
+    writeMps("$filename.cor", basename(filename), mdata_core)
 
     println("done")
 
@@ -421,7 +422,7 @@ function writeTime(filename, mat0::SparseMatrixCSC{Float64})
     start_cons2 += 1
 
     #            123456789 123456789
-    println(fp, "TIME          $filename")
+    println(fp, "TIME          ", basename(filename))
     println(fp, "PERIOD        IMPLICIT")
     @printf(fp, "    %-8s  %-8s  PERIOD1\n", "x1", "obj")
     @printf(fp, "    %-8s  %-8s  PERIOD2\n", "x"*string(start_vars2), "c"*string(start_cons2))
@@ -444,7 +445,7 @@ function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, 
     fp = open("$filename.sto", "w")
 
     #            123456789 123456789
-    println(fp, "STOCH         $filename")
+    println(fp, "STOCH         ", basename(filename))
     println(fp, "SCENARIOS")
     for s in 1:nscen
         @printf(fp, " SC %-8s  %-8s  %-8f  PERIOD2\n", "SCEN"*string(s), "ROOT", probability[s])
