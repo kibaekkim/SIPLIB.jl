@@ -237,7 +237,7 @@ function weccdata(nScenarios::Integer, Season::AbstractString)::UnitCommitmentMo
     # @show length(uc.WIND)
 
     # ADDITIONAL PARAMETERS
-    penetration = 0.0
+    penetration = 0.1
     nPeriods = 24
     uc.π = ones(nScenarios) / nScenarios # equal probabilities
     uc.Cl = 5000 # value of lost load ($/MWh)
