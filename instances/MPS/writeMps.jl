@@ -7,7 +7,7 @@ Kibaek Kim
 
 using Dsp
 
-if length(ARGS) = 2
+if length(ARGS) != 2
 	error("Require two arguments.")
 end
 
