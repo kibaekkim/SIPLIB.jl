@@ -9,13 +9,14 @@ Kibaek Kim
 # Of course, DSP solver is required too.
 using Dsp
 
-if length(ARGS) != 2
-	error("Requires two arguments.")
+if length(ARGS) != 1
+	error("Requires one argument.")
 end
 
 # command-line arguments
 smps  = ARGS[1] # smps file instance name
-ofile = ARGS[2] # output file name
+ofile = basename(smps) # output file name
+@show ofile
 
 readSmps(smps)
 
@@ -25,7 +26,7 @@ solve_types = [:Dual, :Benders, :Extensive]
 # solve the model defined in SMPS files 
 # with the choice of algorithm 
 # and parameter setting.
-optimize(solve_type = solve_types[3], param = "param.txt")
+optimize(solve_type = solve_types[1], param = "param.txt")
 
 @show getprimobjval() # Dsp.model.primVal
 @show getdualobjval() # Dsp.model.dualVal
