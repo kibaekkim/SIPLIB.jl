@@ -79,7 +79,7 @@ function suc_wecc(nScenarios::Integer, Season::AbstractString)::JuMP.Model
     @constraint(model, [g=uc.Gs,t=1:Int(length(uc.T)-uc.DT[g])], sum(z[g,q] for q=(t+1):Int(t+uc.DT[g])) <= w[g,t])
     @constraint(model, [g=uc.Gs,t=uc.T], z[g,t] >= w[g,t] - w[g,t-1])
 
-    Threads.@threads for j in 1:nScenarios
+    for j in 1:nScenarios
         sb = StructuredModel(parent=model, id = j, prob = uc.π[j])
 
         @variable(sb, u[g=uc.Gf,t=uc.T0], Bin)
