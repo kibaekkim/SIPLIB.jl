@@ -341,8 +341,7 @@ function prepConstrMatrix(m::JuMP.Model)
         rind = Int[]
         cind = Int[]
         value = Float64[]
-        linconstr = deepcopy(m.linconstr)
-        for (nrow,con) in enumerate(linconstr)
+        for (nrow,con) in enumerate(m.linconstr)
             aff = con.terms
             for (var,id) in zip(reverse(aff.vars), length(aff.vars):-1:1)
                 push!(rind, nrow)
@@ -435,7 +434,7 @@ end
 
 function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, mdata_core::ModelData)
 
-    print("Writing time file ... ")
+    print("Writing stochastic file ... ")
 
     # get # of first-stage rows and columns
     nrows0, ncols0 = size(mdata_all[1].mat)
