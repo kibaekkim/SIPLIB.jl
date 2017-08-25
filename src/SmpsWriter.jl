@@ -422,8 +422,8 @@ function writeTime(filename, mat0::SparseMatrixCSC{Float64})
 
     #            123456789 123456789
     println(fp, "TIME          ", basename(filename))
-    println(fp, "PERIOD        IMPLICIT")
-    @printf(fp, "    %-8s  %-8s  PERIOD1\n", "x1", "obj")
+    println(fp, "PERIODS       IMPLICIT")
+    @printf(fp, "    %-8s  %-8s  PERIOD1\n", "x1", "c1")
     @printf(fp, "    %-8s  %-8s  PERIOD2\n", "x"*string(start_vars2), "c"*string(start_cons2))
     println(fp, "ENDATA")
 
