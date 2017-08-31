@@ -441,6 +441,9 @@ function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, 
     nrows1, ncols = size(mdata_all[2].mat)
     ncols1 = ncols - ncols0
 
+    coremat_rows = rowvals(mdata_core.mat)
+    coremat_vals = nonzeros(mdata_core.mat)
+
     fp = open("$filename.sto", "w")
 
     #            123456789 123456789
@@ -465,10 +468,19 @@ function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, 
             end
 
             # constraint matrix
+            rows_to_modify = Dict{Int,Float64}()
             for i in nzrange(mdata_all[s+1].mat,j)
                 if mdata_core.mat[nrows0+mat_rows[i],j] != mat_vals[i]
-                    @printf(fp, "    %-8s  %-8s  %-12f\n", "x"*string(j), "c"*string(nrows0+mat_rows[i]), mat_vals[i])
+                    rows_to_modify[nrows0+mat_rows[i]] = mat_vals[i]
                 end
+            end
+            for i in nzrange(mdata_core.mat,j)
+                if coremat_rows[i] > nrows0 && mdata_all[s+1].mat[coremat_rows[i]-nrows0,j] != coremat_vals[i]
+                    rows_to_modify[coremat_rows[i]] = mdata_all[s+1].mat[coremat_rows[i]-nrows0,j]
+                end
+            end
+            for i in sort(collect(keys(rows_to_modify)))
+                @printf(fp, "    %-8s  %-8s  %-12f\n", "x"*string(j), "c"*string(i), rows_to_modify[i])
             end
         end
     end
