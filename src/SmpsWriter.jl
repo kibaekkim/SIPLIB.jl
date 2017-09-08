@@ -174,24 +174,26 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
             marker_started = true
         end
 
-        @printf(fp, "    %-8s", "x"*string(j))
-        pos = 1
-        if abs(obj[j]) > 0
-            @printf(fp, "  %-8s", "obj")
-            @printf(fp, "  %-12f", obj[j])
-            pos += 1
-        end
-
-        for i in nzrange(mat,j)
-            if pos >= 3
-                @printf(fp, "\n    %-8s", "x"*string(j))
-                pos = 1
+        if abs(obj[j]) > 0 || length(nzrange(mat,j)) > 0
+            @printf(fp, "    %-8s", "x"*string(j))
+            pos = 1
+            if abs(obj[j]) > 0
+                @printf(fp, "  %-8s", "obj")
+                @printf(fp, "  %-12f", obj[j])
+                pos += 1
             end
-            @printf(fp, "  %-8s", "c"*string(mat_rows[i]))
-            @printf(fp, "  %-12f", mat_vals[i])
-            pos += 1
+
+            for i in nzrange(mat,j)
+                if pos >= 3
+                    @printf(fp, "\n    %-8s", "x"*string(j))
+                    pos = 1
+                end
+                @printf(fp, "  %-8s", "c"*string(mat_rows[i]))
+                @printf(fp, "  %-12f", mat_vals[i])
+                pos += 1
+            end
+            @printf(fp, "\n")
         end
-        @printf(fp, "\n")
 
         if marker_started
             if j == ncols || !in(ctype[j+1], "BI")
