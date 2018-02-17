@@ -75,7 +75,7 @@
 	\end{itemize}
 	\begin{enumerate}
 		\item What are the sources of the instances?\\
-		They started a call for instances: March 2010-Oct. 2010. 1,108 instances from 57 contributors. They translated them to .MPS format. When somebody sent .AMPL model, they preserved them on MIPLIB website. And any other internet repositories: BCOL, CORL, DEIS-ORGLI, etc. Initially, the number of candidate set contained about 2,000 instances. \textcolor{blue}{(I think, we also need to make a  call for instances to researchers. Prior to that, we need to make a ``format'' in which they can submit instances. The format can roughly contain: the form of SIP model, application type - energy, manufacturing, logistics, telecom \#scenarios, prob. for each scenario, etc. We will provide a sample format for each family of instances so that they can refer.)}
+		They started a call for instances: March 2010-Oct. 2010. 1,108 instances from 57 contributors. They translated them to .MPS format. When somebody sent .AMPL model, they preserved them on MIPLIB website. And any other internet repositories: BCOL, CORL, DEIS-ORGLI, etc. Initially, the number of candidate set contained about 2,000 instances. \textcolor{blue}{(I think, we also need to make a  call for instances to researchers. Prior to that, we need to make a ``format'' in which they can submit instances. The format can roughly contain: the form of SIP model, application type - energy, manufacturing, logistics, telecom, etc, \#scenarios, prob. for each scenario, etc. We will provide a sample format for each family of instances so that they can refer.)}
 		\item How were the instances selected?
 		\begin{itemize}
 			\item Exclusion of trivial instances and (near) duplicates.
@@ -103,49 +103,5 @@
 \end{enumerate}
 	
 \newpage
-{\Large \textbf{Meeting 11/06/09}}\\
-\linebreak
-\textbf{Formulation} \\
-\linebreak
-\underline{Given:}\\
-$A$: set of applications\\
-$S$: set of servers\\
-$T$: set of time slots (e.g. every hour of a week)\\
-$\lambda_{it}$: average arrival rate of application $i$ at time $t$ for all $i \in A$, $t \in T$\\
-$\forall i \in A$, $b_i \equiv$ memory required for application $i$\\
-$\forall j \in S$, $c_i \equiv$ memory available on server $j$\\
-$\forall j \in S$, $\mu_j \equiv$ maximum service rate of server $j$\\
-$\mu_{ij}$: average service rate for application $i$ when it ran at maximum speed in server $j$ for $i \in A$, $j\in S$\\
-$\underbrace{\rho \equiv\textrm{: target load (max) }}_{\textrm{surrogate for QoS}}$\\
-\linebreak
-\underline{Decision variables}\\
-$\forall i\in A, j\in S$\\
-$  x_{ij}= \left\{ \begin{array}{ll}
-      1 & \textrm{if application $i$ is assigned to server $j$} \\
-      0 & \textrm{otherwise}
-      \end{array} \right.
-$\\
-$
-  y_{jt}= \left\{ \begin{array}{ll}
-      1 & \textrm{if server $j$ is ON in time slot $t$} \\
-      0 & \textrm{otherwise}
-      \end{array} \right.
-$\\
-$z_{jt} \equiv$ speed level of server $j$ in time slot $t$ (e.g. $z_{jt} \in (1/n, 2/n, \ldots, 1)$)\\
-$w_{ijt} \equiv$ arrival rate of application $i$ assigned to server $j$ at time $t$\\
-\linebreak
-\underline{Objective}\\
-\begin{eqnarray}
-  \min &&  \sum_{j\in S}\sum_{t\in T} y_{jt}(K_j + \alpha_j z_{jt}^3)  \nonumber \\
-  s.t.&& \nonumber \\
-  &&\sum_{i \in A} \mu_{ij}x_{ij} \le  \mu_j \quad \forall j\in S \label{const_01} \\
-  && \sum_{j \in S} x_{ij}y_{jt} \ge 1 \quad \forall i \in A, \forall t \label{const_02} \in T \\
-  && \rho \sum_{j\in S} \mu_{ij}x_{ij} y_{jt}z_{jt} \ge \lambda_{it} \quad \forall i\in A, \forall t\in T \label{const_03} \\
-  && \sum_{i\in A} \{\rho \mu_{ij} y_{jt} z_{jt} -  w_{ijt}x_{ij}\} \ge 0 \quad \forall j\in   S, \forall t\in T \label{const_04}\\
-  && \sum_{j\in S} w_{ijt} \ge \lambda_{it} \quad \forall i\in A, \forall j \in S, \forall t\in T \label{const_05}\\
-  && w_{ijt} \ge 0 \quad \forall i\in A, \forall j \in S, \forall t\in T \label{const_06}\\
-  && \sum_{i\in A} x_{ij} -y_{jt} \ge 0 \quad \forall j \in S, \forall t\in T \label{const_07}
-\end{eqnarray}
-
 \end{document}
 
