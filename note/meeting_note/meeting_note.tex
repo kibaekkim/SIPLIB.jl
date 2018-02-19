@@ -1,0 +1,82 @@
+\documentclass[11pt,english]{article}
+%\documentclass[oneside, english]{article}
+
+\usepackage[numbers,comma]{natbib}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+%\usepackage{cite}     
+\ifx\pdfoutput\undefined
+\usepackage{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\fi
+\usepackage{psfrag}    
+\usepackage{subfigure} 
+\usepackage{url}       
+\usepackage{stfloats}  
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{appendix}
+\usepackage{setspace}
+%\renewcommand{\baselinestretch}{2}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry} 
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{tabularx,latexsym}
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{proposition}[theorem]{Proposition}
+%\newtheorem{remark}{Remark}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{assumption}{Assumption}
+\newtheorem{remark}{Remark}
+\newtheorem{example}{Example}
+\newtheorem{problem}{Problem}
+\newtheorem{definition}{Definition}
+\newtheorem{question}{Question}
+\newtheorem{answer}{Answer}
+\newtheorem{exercise}{Exercise}
+
+\makeatletter
+\usepackage{babel}
+\makeatother
+
+\setlength{\parindent}{0mm}
+%\doublespacing
+\begin{document}
+{\Large \textbf{Meeting Note on 2/19/18}}\\
+\begin{itemize}
+	\item (Kim) No CFI this time. It will takes too much time. But, later we can (like, SIPLIPv3).
+	\item ``Measure'' can be used to categorize the instances.
+	\item ``Measure'' is used to argue that our instances are good for evaluating SIP solving algorithms.
+	\item (Kim) ``Measure'' should be closely related to ``SIP Taxonomy''. 
+	\item One easy categorization strategy: e.g., integrality in 2nd stage $\Rightarrow$ Stage-wise decomposition is now applicable. $\Rightarrow$ Instance set that is good for PH (PH can easily find primal solution ), Instance set that is good for DD.
+	\item (Kim) More time is likely to be required on Experiment since I need to time to get used to DDP, PySP, commercial solvers (other than CPLEX, Gurobi)
+	\item (Liu) Liu's friend's algorithm can be used as a benchmarking algorithm (DD + PH) 
+	\item (Liu) Stochastic Programming: 1. stage-wise decomposition, 2. scenario-wise decomposition
+	\item (Liu) Progressive Hedging (PH): Let's make the same first stage agree with each other
+	\item (Kim) PH is not aimed to find global optimum. But, for some instances, depending on parameter setting, it provides good primal heuristic fastly. PH can easily find primal solution.
+	\item (Kim) DD can find good LB much better than PH. But it is (probably) weaker when finding primal solution.
+	\item (Kim) One of the contributions of the project is to provide julia model in addition with SMPS files (since SMPS is not readable by human, but by julia ppl can easily read, modify).
+	\item convert current SUC to StructJuMP modeling structure.
+	\item (Kim) We have a script to convert StructJuMP model to SMPS (MPS) files.
+	\item The format is already decided: StructJuMP model, SMPS
+	\item Jim has some models and instances (maybe Stochastic Network Infrastructure Problem)
+	\item Kind of taxonomy in whiteboard: \#instances, \#FS (FirstStage) \#CB (Mixed Continous \& Binary), \#B, SS (SecondStage)
+	\item Initial goal for \#instances: 8-12, but the more the better
+	\item (Kim) Suggestions: 1. Get used to the solvers (DSP, PH, whatever...), 2. write simultaneously
+\end{itemize}
+
+\end{document}
+
