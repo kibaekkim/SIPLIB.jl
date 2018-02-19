@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.2.7)  16 FEB 2018 20:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.2.7)  17 FEB 2018 18:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -462,12 +462,17 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 Non-PDF special ignored!
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-[2] (./note_SIPLIB2.0.aux) ) 
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 106--108
+
+ []
+
+[3] (./note_SIPLIB2.0.aux) ) 
 Here is how much of TeX's memory you used:
- 5133 strings out of 492990
- 66505 string characters out of 6135006
- 145891 words of memory out of 5000000
- 8558 multiletter control sequences out of 15000+600000
+ 5126 strings out of 492990
+ 66435 string characters out of 6135006
+ 145835 words of memory out of 5000000
+ 8551 multiletter control sequences out of 15000+600000
  12195 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,5n,35p,793b,233s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -476,10 +481,10 @@ Here is how much of TeX's memory you used:
 b></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/
 fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/c
 m-super/sfrm1095.pfb>
-Output written on note_SIPLIB2.0.pdf (2 pages, 73718 bytes).
+Output written on note_SIPLIB2.0.pdf (3 pages, 75408 bytes).
 PDF statistics:
- 28 PDF objects out of 1000 (max. 8388607)
- 19 compressed objects within 1 object stream
+ 31 PDF objects out of 1000 (max. 8388607)
+ 21 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
