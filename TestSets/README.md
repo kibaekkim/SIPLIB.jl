@@ -2,7 +2,7 @@
 
 This folder contains test sets and their solutions.
 
-0) DATA folder: This exists only in case where data is required to construct model. If it does not exists, the model is constructed only by randomly generated parameters. This random generation is done by Julia package (Distribution.jl) or built-in random number generator.
+0) DATA folder: This exists only in case where data is required to construct model. If it does not exists, the model is constructed only by randomly generated parameters. This random generation is done by Julia package (Distribution.jl) or built-in random number generator (rand()).
 
 1) JULIA folder: This contains the julia source code (.jl) that models the SIP as a 'JuMP.Model'-type object.
 
