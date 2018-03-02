@@ -14,6 +14,4 @@ Once we have a source code for creating the 'JuMP.Model' objects, it is easy to 
 
 Please see ./instances/Julia/example.jl
 
-A JuMP.Model constructed by StructuredModel can be converted easily to SMPS file as well as MPS file.
-
-In 'src' folder, you will find a source code (SmpsWriter.jl) that converts the structured JuMP.Model to SMPS files. 
+In 'src' folder, you will find a source code (SmpsWriter.jl) that converts '(structured) JuMP.Model'-type objects to SMPS files. 
