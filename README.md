@@ -12,7 +12,4 @@ Once we have a source code for creating the model objects, it is easy to modify 
 
 Please see ./instances/Julia/example.jl
 
-# StructJuMP to SMPS
-
 In 'src' folder, you will find a source code (SmpsWriter.jl) that converts StructJuMP model to SMPS files. 
- 
