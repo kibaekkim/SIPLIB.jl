@@ -8,7 +8,7 @@ Using Julia language, mathematical program can be modeled as a'JuMP.Model'-type 
 
 Once we have a source code for creating the model objects, it is easy to modify the model and convert to SMPS/MPS-type files.
 
-# Converting StructuredModel to SMPS Example
+# Converting JuMP.Model to SMPS Example
 
 Please see ./instances/Julia/example.jl
 
