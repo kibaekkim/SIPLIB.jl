@@ -1,9 +1,9 @@
 #=
 Source:
-  A. Papavasiliou and S. Oren. (2013) Multiarea Stochastic Unit Commitment for High Wind 
+  A. Papavasiliou and S. Oren. (2013) Multiarea Stochastic Unit Commitment for High Wind
   Penetration in a Transmission Constrained Network. Operations Research 61(3):578-592
 =#
-
+cd(dirname(Base.source_path()))
 using StructJuMP
 
 type UnitCommitmentModel
@@ -55,7 +55,7 @@ type UnitCommitmentModel
     wind2bus   # map wind farm to bus
     fbus       # bus from which line l flows
     tbus       # bus to which line l flows
-    
+
     π # probability
 
     UnitCommitmentModel() = new()
@@ -66,11 +66,11 @@ function suc_wecc(nScenarios::Integer, Season::AbstractString)::JuMP.Model
     uc = weccdata(nScenarios, Season)
 
     model = StructuredModel(num_scenarios=nScenarios)
-    
+
     @variable(model, w[g=uc.Gs,t=uc.T0], Bin)
     @variable(model, 0 <= z[g=uc.Gs,t=uc.T] <= 1)
-    
-    @objective(model, Min, 
+
+    @objective(model, Min,
         sum(uc.K[g]*w[g,t] + uc.S[g]*z[g,t] for g in uc.Gs for t in uc.T)
     )
 
@@ -91,8 +91,8 @@ function suc_wecc(nScenarios::Integer, Season::AbstractString)::JuMP.Model
         @variable(sb, 0 <= ispill[i=uc.IMPORT,t=uc.T] <= uc.Igen[i,t]) # import spillage
         @variable(sb, 0 <= rspill[i=uc.RE,t=uc.T] <= uc.Rgen[i,t])     # renewable spillage
         @variable(sb, 0 <= wspill[i=uc.WIND,t=uc.T] <= uc.Wgen[i,t,j])   # wind spillage
-        
-        @objective(sb, Min, 
+
+        @objective(sb, Min,
               sum(uc.K[g]*u[g,t] + uc.S[g]*v[g,t] for g in uc.Gf for t in uc.T)
             + sum(uc.C[g]*p[g,t] for g in uc.G for t in uc.T)
             + sum(uc.Cl * loadshed[i,t] for i in uc.LOAD for t in uc.T)
@@ -107,12 +107,12 @@ function suc_wecc(nScenarios::Integer, Season::AbstractString)::JuMP.Model
         @constraint(sb, [g=uc.Gf,t=uc.T], v[g,t] >= u[g,t] - u[g,t-1])
 
         # Flow balance
-        @constraint(sb, [n=uc.N,t=uc.T], 
-            sum(e[l,t] for l in uc.L if uc.tbus[l] == n) 
+        @constraint(sb, [n=uc.N,t=uc.T],
+            sum(e[l,t] for l in uc.L if uc.tbus[l] == n)
             + sum(p[g,t] for g in uc.G if uc.gen2bus[g] == n)
             + sum(loadshed[i,t] for i in uc.LOAD if uc.load2bus[i] == n)
             + sum(uc.Wgen[i,t,j] for i in uc.WIND if uc.wind2bus[i] == n)
-            == uc.D[n,t] 
+            == uc.D[n,t]
             + sum(e[l,t] for l in uc.L if uc.fbus[l] == n)
             + sum(ispill[i,t] for i in uc.IMPORT if uc.import2bus[i] == n)
             + sum(rspill[i,t] for i in uc.RE if uc.re2bus[i] == n)

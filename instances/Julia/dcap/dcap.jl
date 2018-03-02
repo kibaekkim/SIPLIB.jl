@@ -18,16 +18,16 @@ Variables (1st Stage):
   u[i,t]: 1 if x[i,t] > 0, 0 otherwise
 
 Variables (2nd Stage):
-  y[i,j,t]: 1 if resource i is assigned to task j in period t, 0 otherwise  
+  y[i,j,t]: 1 if resource i is assigned to task j in period t, 0 otherwise
 
 Parameters (general):
-  fx[i,t]: linear component of expansion cost for resource i at period t 
-  fu[i,t]: fixed component of expansion cost for resource i at period t 
+  fx[i,t]: linear component of expansion cost for resource i at period t
+  fu[i,t]: fixed component of expansion cost for resource i at period t
   c[i,j,t]: cost of assigning resource i to task j in period t
   z[j,t]: penalty incurred if task j in period t is not served
-  
+
 Parameters (scenario):
-  d[j,t,s]: capacity required for to perform task j in period t in scenario s 
+  d[j,t,s]: capacity required for to perform task j in period t in scenario s
 =#
 
 function dcap(m::Int, n::Int, T::Int, S::Int, seed::Int=1)::JuMP.Model
@@ -36,7 +36,7 @@ function dcap(m::Int, n::Int, T::Int, S::Int, seed::Int=1)::JuMP.Model
     I = 1:m
     J = 1:n
     P = 1:T
-    
+
     fx = rand(m, T) * 5 + 5
     fu = rand(m, T) * 40 + 10
     c = rand(m, n, T) * 5 + 5

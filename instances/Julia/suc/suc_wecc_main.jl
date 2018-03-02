@@ -9,7 +9,7 @@ include("../../../src/SmpsWriter.jl")
 using SmpsWriter
 
 ########################
-# Parameters to set 
+# Parameters to set
 
 nScenarios = 15
 daytype    = "FallWD"
@@ -21,5 +21,4 @@ daytype    = "FallWD"
 end
 
 # Write SMPS files
-@time writeSmps(model, "../../SMPS/suc_wecc_$daytype\_$nScenarios")
-
+@time SmpsWriter.writeSmps(model, "../../SMPS/suc_wecc_$daytype\_$nScenarios")
