@@ -46,6 +46,7 @@ grestore
 \smartqed  % flush right qed marks, e.g. at end of proof
 %
 \usepackage{graphicx}
+\usepackage{hyperref}
 %
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
@@ -109,26 +110,62 @@ We present a collection of stochastic integer programming problem instances.
 \end{abstract}
 
 \section{Introduction}
+\begin{itemize}
+	\item What SIP is?\\
+	Stochastic integer programming is ... The main difficulty in solving stochastic integer programs is that the second-stage value function is not necessarily convex, but only lower semicontinuous (l.s.c.). Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when second stage integer variables are present (Ahmed and Garcia, 2004). 
+	\item SIPLIB?\\
+	\begin{itemize}
+		\item MIPLIBv5 (last modified 2017): http://miplib.zib.de/
+		\item Shabbir's SIPLIB (last modified 2015): https://www2.isye.gatech.edu/~sahmed/siplib/
+		\item Felt et al's SLPlib (last modified 2001): https://www4.uwsp.edu/math/afelt/slpinput/download.html
+		\item Holmes's POSTS (the most recent reference 1994): http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html
+	\end{itemize}
+	\item Motivation for SIPLIBv2\\
+	We need more..
+	\item Power of Julia language for large-scale optimization problems
+	\item Contribution\\
+	By SIPLIB 2.0, we mainly provide 1) richer collection of test problems for computational and algorithmic research in SIP with benchmark experimental results, 2) not only SMPS files but also \textit{Julia} files formatted in \textit{StructJuMP} that are easily readable/modifiable.
+\end{itemize}
 
-Stochastic integer programming is ... Small test instances are available in Shabbir's website. We need more..
 
 \section{Stochastic Integer Programming}
 
 \subsection{Formulation}
+\subsubsection{2-Stage Recourse Programs}
+\subsubsection{Chance-constrained Programs}
+\subsubsection{Hybrid Programs}
+
 
 \subsection{Algorithms}
-
+\subsubsection{Stage-wise Decomposition Algorithm}
+\subsubsection{Scenario-wise Decompostion Algorithm}
 Benders, dual, ...
 
 \subsection{Software Libraries}
-
-modeling, solving, ...
+\subsubsection{Modeling Languages}
+\subsubsection{Solvers}
 
 \section{Problem Instances}
 
-We introduce the set of problem instances. The instances are available in SMPS file format.
+We introduce the set of problem instances. The instances are available in SMPS and Julia (StructJuMP) file format. characteristics, categorization
+\subsection{Problem sets in SIPLIP}
+\begin{itemize}
+	\item DCAP (dynamic capacity acquisition and allocation under uncertainty)
+	\item EXPUTIL (expected utility knapsack problem)
+	\item MPTSP (multi-path traveling salesman problem)
+	\item PROBPORT (portfolio optimization problem)
+	\item SEMI (semiconductor tool purchase problem)
+	\item SMKP (stochastic multiple knapsack problem)
+	\item SIZES (selection of an optimal subset of sizes)
+	\item SSLP (stochastic server location problem)\\
+	Parameters:\\
+	
+	\item VACCINE (optimal vaccine allocation problem)
+\end{itemize}
+\subsection{Problem sets in SIPLIP 2.0}
 
-characteristics, categorization
+
+
 
 \section{Implementation of SMPS Writer}
 
