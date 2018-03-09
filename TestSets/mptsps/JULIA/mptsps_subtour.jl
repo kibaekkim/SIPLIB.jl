@@ -12,14 +12,14 @@ type MPTSPsModel
     # Sets
     N   # set of nodes of the graph : i,j ∈ N
     U   # set of subsets of nodes in N : u ∈ U
-    K   # set of paths between the pair of nodes : k ∈ K[i][j]
+    K   # set of paths between the pair of nodes : k ∈ K
     S   # set of time scenarios : s ∈ S
 
     # Parameters
     Cs  # nonnegative unit random travel time cost under the time scenario s ∈ S : Cs[s][i][j][k]
     Ce  # nonnegative estimation of the mean unit travel time cost : Ce[i][j]
-    Δ   # the error on the travel time cost estimated for the path k ∈ K under time scenario s ∈ S : Δs[i][j][k][s] ≡ Cs[i][j][k][s] - Ce[i][j]
-    π   # probability distribution of scenario s ∈ S : p[s] ≡ 1/nScenario
+    Δ   # the error on the travel time cost estimated for the path k ∈ K under time scenario s ∈ S : Δ[i][j][k][s] ≡ Cs[i][j][k][s] - Ce[i][j]
+    π   # probability distribution of scenario s ∈ S : π[s] ≡ 1/nScenario
 
     MPTSPsModel() = new()
 end
