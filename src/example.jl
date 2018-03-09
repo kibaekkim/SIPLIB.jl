@@ -5,11 +5,11 @@
 using StructJuMP
 
 # Required package to write SMPS files
-include("../../src/SmpsWriter.jl")
+include("../src/SmpsWriter.jl")
 using SmpsWriter
 
 # Read Julia model
-include("sslp/sslp.jl")
+include("../TestSets/sslp/sslp.jl")
 
 # Generate sslp model instance with parameters (m,n,s)
 m = sslp(5,25,50)

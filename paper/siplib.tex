@@ -47,6 +47,8 @@ grestore
 %
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{float}
+\usepackage{mathrsfs,amsmath,amssymb,amscd,mathtools}
 %
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
@@ -71,7 +73,8 @@ grestore
 
 \titlerunning{SIPLIB 2.0}        % if too long for running head
 
-\author{Kibaek Kim \and
+\author{Yongkyu Cho \and 
+		Kibaek Kim \and
         Cong Han Lim \and
         James Luedtke \and
         Jeffrey Linderoth
@@ -79,21 +82,21 @@ grestore
 
 %\authorrunning{Short form of author list} % if too long for running head
 
-\institute{Kibaek Kim \at
+\institute{Yongkyu Cho, Kibaek Kim \at
            Mathematics and Computer Science Division, Argonne National Laboratory, Lemont, IL 60439, USA \\
-           \email{kimk@anl.gov}
+           \email{choy@anl.gov; kimk@anl.gov}
            \and
            Cong Han Lim \and James Luedtke \and Jeffrey Linderoth \at
            Department of Industrial and Systems Engineering, University of Wisconsin-Madison Madison, WI 53706, USA \\
-           \and
-           Cong Han Lim \at
-           \email{clim9@wisc.edu}
-           \and 
-           James Luedtke \at
-           \email{jim.luedtke@wisc.edu}
-           \and 
-           Jeffrey Linderoth \at
-           \email{linderoth@wisc.edu}
+%          \and
+%           Cong Han Lim \at
+           \email{clim9@wisc.edu; jim.luedtke@wisc.edu; linderoth@wisc.edu}
+%           \and 
+%           James Luedtke \at
+%           \email{jim.luedtke@wisc.edu}
+%           \and 
+%           Jeffrey Linderoth \at
+%           \email{linderoth@wisc.edu}
 }
 
 \date{Received: date / Accepted: date}
@@ -112,8 +115,8 @@ We present a collection of stochastic integer programming problem instances.
 \section{Introduction}
 \begin{itemize}
 	\item What SIP is?\\
-	Stochastic integer programming is ... The main difficulty in solving stochastic integer programs is that the second-stage value function is not necessarily convex, but only lower semicontinuous (l.s.c.). Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when second stage integer variables are present (Ahmed and Garcia, 2004). 
-	\item SIPLIB?\\
+	Stochastic integer programming (SIP) is ... The main difficulty in solving stochastic integer programs is that the second-stage value function is not necessarily convex, but only lower semicontinuous (l.s.c.). Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when second stage integer variables are present (Ahmed and Garcia, 2004). In this research study, we focus our emphasis on 2-stage SIP.
+	\item SIPLIB?
 	\begin{itemize}
 		\item MIPLIBv5 (last modified 2017): http://miplib.zib.de/
 		\item Shabbir's SIPLIB (last modified 2015): https://www2.isye.gatech.edu/~sahmed/siplib/
@@ -124,16 +127,14 @@ We present a collection of stochastic integer programming problem instances.
 	We need more..
 	\item Power of Julia language for large-scale optimization problems
 	\item Contribution\\
-	By SIPLIB 2.0, we mainly provide 1) richer collection of test problems for computational and algorithmic research in SIP with benchmark experimental results, 2) not only SMPS files but also \textit{Julia} files formatted in \textit{StructJuMP} that are easily readable/modifiable.
+	By SIPLIB 2.0, we mainly provide 1) richer collection of test problems for computational and algorithmic research in 2-stage SIP with benchmark experimental results, 2) not only SMPS files but also \textit{Julia} files formatted in \textit{StructJuMP} that are easily readable/modifiable.
 \end{itemize}
 
 
 \section{Stochastic Integer Programming}
-
+The form of SIP is varying 
 \subsection{Formulation}
 \subsubsection{2-Stage Recourse Programs}
-\subsubsection{Chance-constrained Programs}
-\subsubsection{Hybrid Programs}
 
 
 \subsection{Algorithms}
@@ -145,28 +146,63 @@ Benders, dual, ...
 \subsubsection{Modeling Languages}
 \subsubsection{Solvers}
 
-\section{Problem Instances}
+\section{Test Sets Description}
 
 We introduce the set of problem instances. The instances are available in SMPS and Julia (StructJuMP) file format. characteristics, categorization
-\subsection{Problem sets in SIPLIP}
-\begin{itemize}
-	\item DCAP (dynamic capacity acquisition and allocation under uncertainty)
-	\item EXPUTIL (expected utility knapsack problem)
-	\item MPTSP (multi-path traveling salesman problem)
-	\item PROBPORT (portfolio optimization problem)
-	\item SEMI (semiconductor tool purchase problem)
-	\item SMKP (stochastic multiple knapsack problem)
-	\item SIZES (selection of an optimal subset of sizes)
-	\item SSLP (stochastic server location problem)\\
-	Parameters:\\
-	
-	\item VACCINE (optimal vaccine allocation problem)
-\end{itemize}
-\subsection{Problem sets in SIPLIP 2.0}
+\subsection{Mutli-Path Traveling Salesman Problem with Stochastic Travel Times (MPTSPS)}
+\subsubsection{Problem Class}
+\begin{table}[H]
+	\centering
+	%\caption{My caption}
+	\label{mptsps-class}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		& 1$^{st}$ stage & 2$^{nd}$ stage \\ \hline
+		Variables   & Bin & Bin               \\ \hline
+		Constraints &                &                \\ \hline
+	\end{tabular}
+\end{table}
+\subsubsection{Notation}
+\begin{table}[H]
+	\caption{Notations corresponding to problem}
+	\label{notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\hline 
+			\textbf{Index sets} &  \\ 
+			$T$ & \textrm{index set of time slots $(t=1,\ldots,|T|)$} \\ 
+			$A$ & \textrm{index set of applications $(i=1,\ldots,|A|)$} \\ 
+			$S$ & \textrm{index set of servers $(j=1,\ldots,|S|)$}\\
+			$F_j$ & \textrm{index set of frequency options of server $j\in S$ $(f=0,\ldots,|F_j|)$} \\ 
+			\textbf{Parameters} &   \\ 
+			$\lambda_{it}$ & \textrm{average workload of application $i\in A$ that arrives in time interval $t\in T$} \\ 
+			$U_j$  & \textrm{maximum number of applications installable to server $j\in S$} \\ 
+			$C_{jf}$ & \textrm{processing capacity of server $j\in S$ under frequency $f\in F_j$} \\ 
+			$\beta_{jft}$ & \textrm{cost incurred when server $j\in S$ runs at frequency $f\in F_j$ in time interval $t\in T$} \\ 
+			$\rho$ & \textrm{target load for all servers (surrogate for quality of service)}\\ 
+			\textbf{Decision variables} &  \\ 
+			$a_{ij}$ (virtualization) & \textrm{1 if application $i\in A$ is installed to server $j\in S$, 0 otherwise} \\ 
+			$x_{jft}$ (server provisioning) & \textrm{1 if server $j\in S$ runs at frequency $f\in F_j$ during time interval $t\in T$, 0 otherwise} \\ 
+			$r_{ijt}$ (routing) & \textrm{fraction of workloads of application $i\in A$ assigned to server $j\in S$ in time  interval $t\in T$}\\
+			\hline
+		\end{tabular}
+	}
+\end{table} 
 
-
-
-
+\subsubsection{Formulation}
+\begin{align}
+(\textrm{MIP}_O): \textrm{minimize    } &\sum_{j\in S}\sum_{f\in F_j}\sum_{t\in T}\beta_{jft}x_{jft},\\
+\textrm{subject to} \nonumber\\ 
+&\sum_{i\in A}a_{ij} \le U_j, \quad \forall j\in S,\\
+&\sum_{j\in S}r_{ijt}=1, \quad \forall i\in A, \forall t\in T,\\
+&r_{ijt} \le a_{ij}, \quad \forall i\in A, \forall j\in S, \forall t\in T, \\
+&\sum_{i\in A}\lambda_{it}r_{ijt} \le \rho \sum_{f\in F_j}C_{jf}x_{jft}, \quad \forall j\in S, \forall t\in T,\\
+&\sum_{f\in F_j}x_{jft}=1, \quad \forall j\in S, \forall t\in T, \\
+&\sum_{i\in S}r_{ijt} \le U_j(1-x_{j0t}), \quad \forall j\in S, \forall t\in T, \\
+&a_{ij}, x_{jft}\in \{0,1\}, \quad \forall j\in S, \forall f\in F_j, \forall t\in T  \\
+&0 \le r_{ijt} \le 1, \quad \forall j\in S, \forall t\in T
+\end{align}
 \section{Implementation of SMPS Writer}
 
 We describe our Julia implementation, how to model SIP and generate SMPS files..
@@ -181,11 +217,14 @@ We describe our Julia implementation, how to model SIP and generate SMPS files..
 %\end{acknowledgements}
 
 % BibTeX users please use one of
-%\bibliographystyle{spbasic}      % basic style, author-year citations
+\bibliographystyle{spbasic}      % basic style, author-year citations
 %\bibliographystyle{spmpsci}      % mathematics and physical sciences
 %\bibliographystyle{spphys}       % APS-like style for physics
 %\bibliography{}   % name your BibTeX data base
-
+\begin{thebibliography}{9} 
+	\bibitem{example}
+	Author1 and Author2, paper paper paper paper, Journal Title 68 (2011), 1207--1221.
+\end{thebibliography}
 \end{document}
 % end of file template.tex
 
