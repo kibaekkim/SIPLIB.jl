@@ -49,7 +49,17 @@ grestore
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{mathrsfs,amsmath,amssymb,amscd,mathtools}
-%
+
+\makeatletter
+\let\scshape\relax % to avoid a warning
+\DeclareRobustCommand\scshape{%
+	\not@math@alphabet\scshape\relax
+	\ifnum\pdf@strcmp{\f@family}{\familydefault}=\z@
+	\fontfamily{qbk}%
+	\fi
+	\fontshape\scdefault\selectfont}
+\makeatother
+
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
 % insert here the call for the packages your document requires
@@ -113,22 +123,19 @@ We present a collection of stochastic integer programming problem instances.
 \end{abstract}
 
 \section{Introduction}
-\begin{itemize}
-	\item What SIP is?\\
-	Stochastic integer programming (SIP) is ... The main difficulty in solving stochastic integer programs is that the second-stage value function is not necessarily convex, but only lower semicontinuous (l.s.c.). Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when second stage integer variables are present (Ahmed and Garcia, 2004). In this research study, we focus our emphasis on 2-stage SIP.
-	\item SIPLIB?
-	\begin{itemize}
-		\item MIPLIBv5 (last modified 2017): http://miplib.zib.de/
-		\item Shabbir's SIPLIB (last modified 2015): https://www2.isye.gatech.edu/~sahmed/siplib/
-		\item Felt et al's SLPlib (last modified 2001): https://www4.uwsp.edu/math/afelt/slpinput/download.html
-		\item Holmes's POSTS (the most recent reference 1994): http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html
-	\end{itemize}
-	\item Motivation for SIPLIBv2\\
-	We need more..
-	\item Power of Julia language for large-scale optimization problems
-	\item Contribution\\
-	By SIPLIB 2.0, we mainly provide 1) richer collection of test problems for computational and algorithmic research in 2-stage SIP with benchmark experimental results, 2) not only SMPS files but also \textit{Julia} files formatted in \textit{StructJuMP} that are easily readable/modifiable.
-\end{itemize}
+(What is SIPLIB?) The \texttt{SIPLIB} \cite{web:SIPLIB1} is an abbreviated term of the Stochastic Integer Programming (SIP) LIBrary firstly contructed in 2002 by Shabbir Ahmed and his colleagues. The library has been providing a collection of test problems with instances to facilitate computational and algorithmic research in SIP. Test problems have been added to \texttt{SIPLIB} gradually and now it provides nine different problems in total.  The instances are basically given in the standard \texttt{SMPS} format accompanied with additional information including parameter data, size of the instance in the number of rows, columns, and integers, benchmark data such as best known objective value or bounds, optimality gap, and solution time.
+
+(Motivation) At the time \texttt{SIPLIB} appeared, it provided enoughly large-sized instances that is reasonable to argue that the performance of algorithm is remarkable if it solves the instances. The state-of-art in SIP together with vastly increased computational power, however, makes many instances of \texttt{SIPLIB} trivial so that we have no more basis to use \texttt{SIPLIB} for showing the excellence of new solution methods. At this point, we are motivated to develop a compatible second version of \texttt{SIPLIB}, say, \texttt{SIPLIB2.0} that provides larger-sized test problems with higher degree of tailorability.
+
+(What SIP is and our restriction) Stochastic programming (SP) is a framework for modeling optimization problems that involve uncertaity. Whereas optimization problems are typically formulated with known parameters, the problems in real world contain some unknown parameters in many cases. For details on SP, see, e.g., \cite{web:SPS,book:BL2011}. SIP is a branch of SP that indicates any type of SP including at least one integer decision variable. The integers can be placed anywhere in general SIP. However, we restrict our focus on two-stage SIP that contains integer variables (including binary) in its second stage throughout this paper and \texttt{SIPLIB2.0}. The main reason is that the class of SIP is most widely used to model real world problems. Moreover, two-stage SIP itself has enough difficulties that has not been conquered yet without any other details like chance-constraints and multi-stages. The main difficulty in solving two-stage SIP is that the second-stage value function is not necessarily convex, but only lower semicontinuous. Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when the second stage integer variables are present \cite{journal:AG2003}. Hereinafter, we use the term SIP to indicate the two-stage SIP that contains integer variables (including binary) in its second stage.
+
+(SMPS, Julia)
+We provide the problem sets in two formats: \texttt{SMPS} files (*.cor, *.tim, *.stoch) and \texttt{Julia} files (*.jl). \texttt{SMPS} is widely used to describe stochastic linear and quadratic programs. Once having \texttt{SMPS} files of a problem instance, we can directly solve it using various mixed integer linear programming (MILP) solvers such as \texttt{CPLEX}, \texttt{GUROBI}, and \texttt{CBC}. One can also use the existing open-source SIP solvers like \texttt{DSP} \cite{journal:KZ2015}, \texttt{PySP} \cite{journal:WWH2012}, and \texttt{SMI} \cite{web:SMI} if \texttt{SMPS} files are given. One drawback of \texttt{SMPS} format is its low readability by human. We decided to provide \texttt{Julia} files to let users be able to easily tailor the problem and instances.
+
+(Convenience of Julia) \texttt{Julia} is an open source high-level, high-performance dynamic programming language for numerical computing. It is also known as its good performance, approaching that of statically-compiled languages like \texttt{C}. The syntax of \texttt{Julia} is simple and should feel familiar to anyone who has experienced in other high-level languages like \texttt{MATLAB} or \texttt{Python}. A \texttt{Julia} package called \texttt{JuMP} (Julia for Mathematical Programming \cite{web:JuMP}) provides a domain-specific modeling language for mathematical optimization embedded in \texttt{Julia}. \texttt{JuMP} enables us to easily translate mathematical models to \texttt{JuMP.Model}-type object. Some structured mathematical model like SIP can also be translated to the \texttt{JuMP.Model}-type object combined with a package \texttt{StructJuMP} \cite{web:StructJuMP}. Once we have \texttt{JuMP.Model}-type object of mathematical model, it is easy to modify and convert to \texttt{SMPS} files. For each problem in \texttt{SIPLIB2.0}, we provide a \texttt{Julia} script for constructing \texttt{JuMP.Model}-type object. We also provide a \texttt{Julia} script (SmpsWriter.jl) for converting any \texttt{JuMP.Model}-type objects to \texttt{SMPS} files for users' convenience.
+
+(Contribution of SIPLIP2.0) By \texttt{SIPLIB2.0}, we provide 1) richer collection of test problems for computational and algorithmic research in SIP with benchmarking computational results, 2) not only \texttt{SMPS} files but also \texttt{Julia} files that are easily readable/tailorable.
+
 
 
 \section{Stochastic Integer Programming}
@@ -148,7 +155,7 @@ Benders, dual, ...
 
 \section{Test Sets Description}
 
-We introduce the set of problem instances. The instances are available in SMPS and Julia (StructJuMP) file format. characteristics, categorization
+We introduce the set of problems. For some problems, we provide more than one formulation based on the reference papers. 
 \subsection{Mutli-Path Traveling Salesman Problem with Stochastic Travel Times (MPTSPS)}
 \subsubsection{Problem Class}
 \begin{table}[H]
@@ -190,7 +197,7 @@ We introduce the set of problem instances. The instances are available in SMPS a
 	}
 \end{table} 
 
-\subsubsection{Formulation}
+\subsubsection{Formulations}
 \begin{align}
 (\textrm{MIP}_O): \textrm{minimize    } &\sum_{j\in S}\sum_{f\in F_j}\sum_{t\in T}\beta_{jft}x_{jft},\\
 \textrm{subject to} \nonumber\\ 
@@ -203,6 +210,20 @@ We introduce the set of problem instances. The instances are available in SMPS a
 &a_{ij}, x_{jft}\in \{0,1\}, \quad \forall j\in S, \forall f\in F_j, \forall t\in T  \\
 &0 \le r_{ijt} \le 1, \quad \forall j\in S, \forall t\in T
 \end{align}
+
+\begin{align}
+(\textrm{subtour elimination}): \textrm{minimize    } &\sum_{j\in S}\sum_{f\in F_j}\sum_{t\in T}\beta_{jft}x_{jft},\\
+\textrm{subject to} \nonumber\\ 
+&\sum_{i\in A}a_{ij} \le U_j, \quad \forall j\in S,\\
+&\sum_{j\in S}r_{ijt}=1, \quad \forall i\in A, \forall t\in T,\\
+&r_{ijt} \le a_{ij}, \quad \forall i\in A, \forall j\in S, \forall t\in T, \\
+&\sum_{i\in A}\lambda_{it}r_{ijt} \le \rho \sum_{f\in F_j}C_{jf}x_{jft}, \quad \forall j\in S, \forall t\in T,\\
+&\sum_{f\in F_j}x_{jft}=1, \quad \forall j\in S, \forall t\in T, \\
+&\sum_{i\in S}r_{ijt} \le U_j(1-x_{j0t}), \quad \forall j\in S, \forall t\in T, \\
+&a_{ij}, x_{jft}\in \{0,1\}, \quad \forall j\in S, \forall f\in F_j, \forall t\in T  \\
+&0 \le r_{ijt} \le 1, \quad \forall j\in S, \forall t\in T
+\end{align}
+
 \section{Implementation of SMPS Writer}
 
 We describe our Julia implementation, how to model SIP and generate SMPS files..
@@ -224,6 +245,26 @@ We describe our Julia implementation, how to model SIP and generate SMPS files..
 \begin{thebibliography}{9} 
 	\bibitem{example}
 	Author1 and Author2, paper paper paper paper, Journal Title 68 (2011), 1207--1221.
+	\bibitem{web:SIPLIB1}
+	S. Ahmed, R. Garcia, N. Kong, L. Ntaimo, G. Parija, F. Qiu, S. Sen. SIPLIB: A Stochastic Integer Programming Test Problem Library. http://www.isye.gatech.edu/~sahmed/siplib, 2015.
+	\bibitem{web:SPS}
+	SPS: Stochastic Programming Society (https://stoprog.org/what-stochastic-programming).
+	\bibitem{book:BL2011}
+	Introduction to Stochastic Programming, J. R. Birge, F. Louveaus.
+	\bibitem{journal:AG2003}
+	S. Ahmed and R. Garcia. "Dynamic Capacity Acquisition and Assignment under Uncertainty," Annals of Operations Research, vol.124, pp. 267-283, 2003.
+	\bibitem{journal:KZ2015}
+	Kibaek Kim and Victor M. Zavala. "Algorithmic Innovations and Software for the Dual Decomposition Method applied to Stochastic Mixed-Integer Programs" Mathematical Programming Computation, 2015.
+	\bibitem{journal:WWH2012}
+	J.-P. Watson, D. L. Woodruff, and W. E. Hart, PySP: modeling and solving stochastic programs in Python, Mathematical Programming Computation, 2012.
+	\bibitem{web:SMI}
+	SMI - Stochastic Modeling Interface. https://github.com/coin-or/Smi
+	\bibitem{journal:BEKS2017}
+	Julia: A Fresh Approach to Numerical Computing. Jeff Bezanson, Alan Edelman, Stefan Karpinski and Viral B. Shah (2017) SIAM Review, 59: 65–98.
+	\bibitem{web:JuMP}
+	JuMP - Julia for Mathematical Optimization, https://jump.readthedocs.io/en/latest/index.html
+	\bibitem{web:StructJuMP}
+	StructJuMP - Parallel algebraic modeling framework for block structured optimization models in Julia, https://github.com/StructJuMP/StructJuMP.jl
 \end{thebibliography}
 \end{document}
 % end of file template.tex
