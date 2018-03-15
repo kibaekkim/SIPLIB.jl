@@ -2,7 +2,7 @@
 #  Perboli et al., "A Progressive Hedging Method for the Multi-path Travelling Salesman Problem with Stochastic Travel Times," vol.28, pp. 65-86, 2017
 
 # Decision variables
-#  (1st stage, real)    ϕ[i,j]: the flow on the arc (i,j) ∈ N × N
+#  (1st stage, real)    phi[i,j]: the flow on the arc (i,j) ∈ N × N
 #  (1st stage, binary)  y[i,j] = 1 if node j ∈ N is visited just after node i ∈ N, 0 otherwise.
 #  (2nd stage, binary)  x[s,i,j,p] = 1 if path p ∈ K between nodes (i,j) ∈ N × N  is selected at the second stage under scenario s ∈ S, 0 otherwise.
 
@@ -17,8 +17,8 @@ type MPTSPsModel
     # Parameters
     Cs  # nonnegative unit random travel time cost under the time scenario s ∈ S : Cs[s][i][j][k]
     Ce  # nonnegative estimation of the mean unit travel time cost : Ce[i][j]
-    Δ   # the error on the travel time cost estimated for the path k ∈ K under time scenario s ∈ S : Δ[i][j][k][s] ≡ Cs[i][j][k][s] - Ce[i][j]
-    π   # probability distribution of scenario s ∈ S : π[s] ≡ 1/nScenario
+    E   # the error on the travel time cost estimated for the path k ∈ K under time scenario s ∈ S : E[i][j][k][s] ≡ Cs[i][j][k][s] - Ce[i][j]
+    Pr   # probability distribution of scenario s ∈ S : p[s] ≡ 1/nScenario
 
     MPTSPsModel() = new()
 end
@@ -69,14 +69,14 @@ function mptspsdata(nScenarios::Integer, Graph::String)::MPTSPsModel
         end
     end
 
-    tsp.Δ = deepcopy(tsp.Cs)
+    tsp.E = deepcopy(tsp.Cs)
     for s in tsp.S
         for i in tsp.N, j in tsp.N, k in tsp.K
-            tsp.Δ[s][i][j][k] -= tsp.Ce[i][j]
+            tsp.E[s][i][j][k] -= tsp.Ce[i][j]
         end
     end
 
-    tsp.π = [1/nScenarios for s in tsp.S]
+    tsp.Pr = [1/nScenarios for s in tsp.S]
 
     return tsp
 end
@@ -90,22 +90,22 @@ function mptsps_flow(nScenarios::Integer, Graph::String)::JuMP.Model
 
     ## add 1st stage components
     @variables model begin
-        ϕ[i = tsp.N, j = tsp.N] >= 0, Cont
+        phi[i = tsp.N, j = tsp.N] >= 0, Cont
         y[i = tsp.N, j = tsp.N], Bin
     end
     @objective(model, Min, sum(tsp.Ce[i][j]*y[i,j] for i in tsp.N for j in tsp.N))
     @constraints model begin
-        [i = tsp.N], sum(y[i,j] for j in tsp.N if j ∉ i) == 1
-        [j = tsp.N], sum(y[i,j] for i in tsp.N if i ∉ j) == 1
-        [i = tsp.N ; i ∉ 1], sum(ϕ[i,j] for j in tsp.N) - sum(ϕ[j,i] for j in tsp.N if j ∉ 1) == 1
-        [i = tsp.N, j = tsp.N ; i ∉ 1], ϕ[i,j] <= (length(tsp.N)-1)*y[i,j]
+        [i = tsp.N], sum(y[i,j] for j in tsp.N if j != i) == 1
+        [j = tsp.N], sum(y[i,j] for i in tsp.N if i != j) == 1
+        [i = tsp.N ; i != 1], sum(phi[i,j] for j in tsp.N) - sum(phi[j,i] for j in tsp.N if j != 1) == 1
+        [i = tsp.N, j = tsp.N ; i != 1], phi[i,j] <= (length(tsp.N)-1)*y[i,j]
     end
 
     ## add 2nd stage components
     for s in tsp.S
-        sb = StructuredModel(parent = model, id = s, prob = tsp.π[s])
+        sb = StructuredModel(parent = model, id = s, prob = tsp.Pr[s])
         @variable(sb, x[s = tsp.S, i = tsp.N, j = tsp.N, p = tsp.K], Bin)
-        @objective(sb, Min, sum(tsp.Δ[s][i][j][p]*x[s,i,j,p] for i in tsp.N for j in tsp.N for p in tsp.K))
+        @objective(sb, Min, sum(tsp.E[s][i][j][p]*x[s,i,j,p] for i in tsp.N for j in tsp.N for p in tsp.K))
         @constraint(sb, [i = tsp.N, j = tsp.N], sum(x[s,i,j,p] for p in tsp.K) == y[i,j])
     end
 
@@ -121,20 +121,20 @@ nScenarios, Graph = 10, "D0_50"
 tsp = mptspsdata(nScenarios, Graph)
 model = StructuredModel(num_scenarios = nScenarios)
 @variables model begin
-    ϕ[i = tsp.N, j = tsp.N] >= 0, Cont
+    phi[i = tsp.N, j = tsp.N] >= 0, Cont
     y[i = tsp.N, j = tsp.N], Bin
 end
 @objective(model, Min, sum(tsp.Ce[i][j]*y[i,j] for i in tsp.N for j in tsp.N))
 @constraints model begin
-    [i = tsp.N], sum(y[i,j] for j in tsp.N if j ∉ i) == 1
-    [j = tsp.N], sum(y[i,j] for i in tsp.N if i ∉ j) == 1
-    [i = tsp.N ; i ∉ 1], sum(ϕ[i,j] for j in tsp.N) - sum(ϕ[j,i] for j in tsp.N if j ∉ 1) == 1
-    [i = tsp.N, j = tsp.N ; i ∉ 1], ϕ[i,j] <= (length(tsp.N)-1)*y[i,j]
+    [i = tsp.N], sum(y[i,j] for j in tsp.N if j != i) == 1
+    [j = tsp.N], sum(y[i,j] for i in tsp.N if i != j) == 1
+    [i = tsp.N ; i != 1], sum(phi[i,j] for j in tsp.N) - sum(phi[j,i] for j in tsp.N if j != 1) == 1
+    [i = tsp.N, j = tsp.N ; i != 1], phi[i,j] <= (length(tsp.N)-1)*y[i,j]
 end
 for s in tsp.S
-    sb = StructuredModel(parent = model, id = s, prob = tsp.π[s])
+    sb = StructuredModel(parent = model, id = s, prob = tsp.Pr[s])
     @variable(sb, x[i = tsp.N, j = tsp.N, p = tsp.K], Bin)
-    @objective(sb, Min, sum(tsp.Δ[s][i][j][p]*x[i,j,p] for i in tsp.N for j in tsp.N for p in tsp.K))
+    @objective(sb, Min, sum(tsp.E[s][i][j][p]*x[i,j,p] for i in tsp.N for j in tsp.N for p in tsp.K))
     @constraint(sb, [i = tsp.N, j = tsp.N], sum(x[i,j,p] for p in tsp.K) == y[i,j])
 end
 # solve & print result =======================#

@@ -16,7 +16,7 @@ function smkp(nScenarios::Int=20, nDim::Int=120, seed::Int=1)::JuMP.Model
     J = 1:nDim
     K = 1:5
     U = 1:100 # Uniform distribution parameter
-    π = ones(nScenarios)/nScenarios
+    Pr = ones(nScenarios)/nScenarios
 
     A = rand(U, 50, nDim)
     C = rand(U, 50, nDim)
@@ -36,7 +36,7 @@ function smkp(nScenarios::Int=20, nDim::Int=120, seed::Int=1)::JuMP.Model
     @objective(model, Min, sum(c[j]*x[j] for j in J) + sum(d[j]*z[j] for j in J))
     @constraint(model, [i = I], sum(A[i,j]*x[j] for j in J) + sum(C[i,j]*z[j] for j in J) >= b[i])
     for s in 1:nScenarios
-        sb = StructuredModel(parent = model, id = s, prob = π[s])
+        sb = StructuredModel(parent = model, id = s, prob = Pr[s])
         @variable(sb, y[j = J], Bin)
         @objective(sb, Min, sum(q[s,j]*y[j] for j in J))
         @constraint(sb, [k = K], sum(W[k,j]*y[j] for j in J) >= h[k] - sum(T[k,j]*x[j] for j in J))
@@ -54,7 +54,7 @@ I = 1:50
 J = 1:nDim
 K = 1:5
 U = 1:100 # Uniform distribution parameter
-π = ones(nScenarios)/nScenarios
+Pr = ones(nScenarios)/nScenarios
 
 A = rand(U, 50, nDim)
 C = rand(U, 50, nDim)
@@ -74,7 +74,7 @@ end
 @objective(model, Min, sum(c[j]*x[j] for j in J) + sum(d[j]*z[j] for j in J))
 @constraint(model, [i = I], sum(A[i,j]*x[j] for j in J) + sum(C[i,j]*z[j] for j in J) >= b[i])
 for s in 1:nScenarios
-    sb = StructuredModel(parent = model, id = s, prob = π[s])
+    sb = StructuredModel(parent = model, id = s, prob = Pr[s])
     @variable(sb, y[j = J], Bin)
     @objective(sb, Min, sum(q[s,j]*y[j] for j in J))
     @constraint(sb, [k = K], sum(W[k,j]*y[j] for j in J) >= h[k] - sum(T[k,j]*x[j] for j in J))
