@@ -14,7 +14,7 @@ type SIZESModel
     s   # setup cost
     rc  # resource (sleeve) capacity
     pc  # production capacity
-    π   # probability distribution of scenario s
+    Pr   # probability distribution of scenario s
 
 
 
