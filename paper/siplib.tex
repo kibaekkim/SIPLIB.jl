@@ -55,7 +55,8 @@ grestore
 
 \DeclareMathOperator*{\PP}{\mathbb{P}}
 \DeclareMathOperator*{\EE}{\mathbb{E}}
-
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
 % insert here the call for the packages your document requires
@@ -135,14 +136,15 @@ We provide the test sets in two formats: \texttt{SMPS} files (*.cor, *.tim, *.st
 \section{Stochastic integer programming}
 In this section, we explain general description of SIP. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
 \subsection{Formulation}
-In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solutions for two-stage SIP of the form: 
+In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP of the form: 
 \begin{align}
 z:=\min_{x\in X}{\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
 \end{align}
-where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the second stage recourse function given the random variable $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $p_1,\cdots,p_r$, i.e., $p_i:=\PP[\pmb{\xi}=\xi_i]$ for $i\in\{1,\ldots,r\}$. When the distribution is continuous, we can aproximate it by a suitably discretized distribution. The real-valued map $\phi:\mathbb{R}^{m_2}\times\mathbb{R}^{+}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
+where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function given the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $p_1,\cdots,p_r$, i.e., $p_i:=\PP[\pmb{\xi}=\xi_i]$ for $i\in\{1,\ldots,r\}$. When the distribution is continuous, we can aproximate it by a suitably discretized distribution. The real-valued map $\phi:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
 \begin{align}
-\phi(s;\xi):=\min_{y\in Y}\left\{ q(\xi)^\top y:\ W(\xi)y \ge s \right\},\ s\in\mathbb{R}^{m_2}.
+\phi(s;\xi):=\min_{y\in Y}\left\{ q(\xi)^\top y:\ W(\xi)y \ge s \right\},\ s\in\mathbb{R}^{m_2},
 \end{align}
+where the r.v. $\pmb{\xi}$ is realized by an arbitrary scenario $\xi$.
 The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent integer or binary restrictions on a subset of the decision variables $x$ and $y$, respectively. 
 The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_j)$, $W(\xi_j)$, $h(\xi_j)$, and $q(\xi_j)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_j,W_j,h_j,q_j)$.
 The SIP (\ref{eq:SIP_1}) can be rewritten in the extensive form
@@ -157,7 +159,7 @@ where the scenario feasibility set $G_j$ is defined as
 \begin{align}
 G_j:=\left\{ (x_j,y_j): \ Ax_j\ge b,\  T_j x_j+W_j y_j\ge h_j,\ (x_j,y_j)\in X\times Y  \right\}.
 \end{align}
-The nonanticipativity constraints in (\ref{eq:SIP_2-2}) represent the equations $x_1=x_r$ and $x_j=x_{j-1}$ for $j=2,\ldots,r$, and $H_j$ is a suitable $rn_1\times n_1$ matrix. We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_j$ for some j. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
+The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations $x_1=x_r$ and $x_j=x_{j-1}$ for $j=2,\ldots,r$, and $H_j$ is a suitable $rn_1\times n_1$ matrix. We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_j$ for some $j$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
 \begin{table}[H]
 	\caption{Summary of notations in SIP formulation}
 	\label{notation:SIP}
@@ -180,8 +182,8 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) represent the equations 
 			$c\in \mathbb{R}^{n_1}$	& the first-stage cost vector\\
 			$b\in\mathbb{R}^{m_1}$	& the first-stage RHS vector\\
 			$y,y_j\in\mathbb{R}^{n_2}$	& the second-stage decision vector	\\
-			$q_j\in\mathbb{R}^{n_2}$	& the second-stage cost vector \\
-			$h_j\in\mathbb{R}^{m_2}$	& the second-stage RHS vector\\
+			$q_j\equiv q(\xi_j)\in\mathbb{R}^{n_2}$	& the second-stage cost vector \\
+			$h_j\equiv h(\xi_j)\in\mathbb{R}^{m_2}$	& the second-stage RHS vector\\
 			$\mathbf{0}\in\mathbb{R}^{rn_1}$	& the vector filled with zeros \\ \midrule
 			\textbf{Matrices} &  \\  \midrule
 			$A\in\mathbb{R}^{m_1\times n_1}$	&	the first-stage constraint matrix corresponds to the decision vector $x_j$\\
@@ -189,8 +191,8 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) represent the equations 
 			$T_j\equiv T(\xi_j)\in\mathbb{R}^{m_2\times n_1}$	&	the second-stage constraint matrix corresponds to the decision vector $x_j$\\
 			$H_j\equiv H(\xi_j)\in\mathbb{R}^{rm_1\times n_1}$	&	nonanticipativity constraints matrix \\ \midrule
 			\textbf{Functions}	&	\\ \midrule
-			$\phi:\mathbb{R}^{m_2}\times\mathbb{R}^{+}\to\mathbb{R}$	&	the second stage program optimal value given the realization of scenario $\xi_j$	\\
-			$\mathcal{Q}:\mathbb{R}^{n_1}\to\mathbb{R}$	&	the recourse function (the expectation of $\phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right)$ over $\pmb{\xi}$) 	\\
+			$\phi:\mathbb{R}^{m_2}\to\mathbb{R}$	&	the second stage program optimal value given the realization of scenario $\xi_j$	\\
+			$\mathcal{Q}:\mathbb{R}^{n_1}\to\mathbb{R}$	&	the recourse function (the expectation of $\phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right)$ over the r.v. $\pmb{\xi}$) 	\\
 			\hline
 		\end{tabular}
 	}
@@ -216,13 +218,13 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) represent the equations 
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{@{}llll@{}}
 			\toprule
-			Problem name & Description                                                        & Reference             & Is in \texttt\{SIPLIB\}? \\ \midrule
-			DCAP         & Dynamic capacity planning with stochastic demand                   & Ahmed and Garcia      & Yes                      \\
-			mpTSPs       & Multi-path traveling salesman problem with stochastic travel costs & Perboli et al.        & Yes                      \\
-			SMKP         & Stochastic multiple knapsack problem                               & Angulo et al.         & Yes                      \\
-			SIZES        & Optimal product substitution with stochastic demand                & Jorjani et al.        & Yes                      \\
-			SSLP         & Stochastic server location problem                                 & Ntaimo and Sen        & Yes                      \\
-			WECC         & Wind power stochastic unit commitment				              & Papavasiliou and Oren & No                       \\ \bottomrule
+			Problem name & Description                                                        & Reference             & Is in \texttt{SIPLIB}? \\ \midrule
+			\texttt{DCAP}         & Dynamic capacity planning with stochastic demand                   & Ahmed and Garcia      & Yes                      \\
+			\texttt{MPTSPS}       & Multi-path traveling salesman problem with stochastic travel costs & \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}        & Yes                      \\
+			\texttt{\texttt{SMKP}}         & Stochastic multiple knapsack problem                               & Angulo et al.         & Yes                      \\
+			\texttt{SIZES}        & Optimal product substitution with stochastic demand                & Jorjani et al.        & Yes                      \\
+			\texttt{SSLP}         & Stochastic server location problem                                 & Ntaimo and Sen        & Yes                      \\
+			\texttt{WECC}         & Wind power stochastic unit commitment				              & Papavasiliou and Oren & No                       \\ \bottomrule
 		\end{tabular}%
 	}
 \end{table}
@@ -231,80 +233,111 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) represent the equations 
 	\centering
 	\caption{The components of problems in \texttt{SIPLIB 2.0}}
 	\label{table:prob_class}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}lllll@{}}
-			\toprule
-			& \multicolumn{2}{l}{1st stage}                              & \multicolumn{2}{l}{2nd stage}                             \\ \midrule
-			Problem & Variable                    & Constraint                   & Variable                    & Constraint                  \\ \midrule
-			DCAP    & \texttt{real}, \texttt{bin} &                              & \texttt{bin}                & \texttt{PAR}, \texttt{M01}1 \\
-			mpTSPs  & \texttt{bin}, \texttt{real} & \texttt{PAR}2, \texttt{GEN}1 & \texttt{bin}                & \texttt{GEN}1               \\
-			SMKP    & \texttt{bin}                & \texttt{KNA}1                & \texttt{bin}                & \texttt{KNA}1               \\
-			SIZES   & \texttt{real}, \texttt{int} & \texttt{VBD}1, \texttt{GEN}2 & \texttt{real}, \texttt{int} & \texttt{IKN}1               \\
-			SSLP    & \texttt{bin}                & \texttt{IVK}1, \texttt{GEN}1 & \texttt{real}, \texttt{int} & \texttt{GEN}2               \\
-			WECC    &                             &                              &                             &                             \\ \bottomrule
-		\end{tabular}%
-	}
+	\begin{tabular}{@{}lllll@{}}
+		\toprule
+		& \multicolumn{2}{l}{1st stage}                              & \multicolumn{2}{l}{2nd stage}                             \\ \midrule
+		Problem & Variable                    & Constraint                   & Variable                    & Constraint                  \\ \midrule
+		\texttt{DCAP}    & \texttt{real}, \texttt{bin} &                              & \texttt{bin}                & \texttt{PAR}, \texttt{M01}1 \\
+		\texttt{MPTSPS}  & \texttt{bin}, \texttt{real} & \texttt{PAR}2, \texttt{GEN}1 & \texttt{bin}                & \texttt{GEN}1               \\
+		\texttt{SMKP}    & \texttt{bin}                & \texttt{KNA}1                & \texttt{bin}                & \texttt{KNA}1               \\
+		\texttt{SIZES}   & \texttt{real}, \texttt{int} & \texttt{VBD}1, \texttt{GEN}2 & \texttt{real}, \texttt{int} & \texttt{IKN}1               \\
+		\texttt{SSLP}    & \texttt{bin}                & \texttt{IVK}1, \texttt{GEN}1 & \texttt{real}, \texttt{int} & \texttt{GEN}2               \\
+		\texttt{WECC}    &                             &                              &                             &                             \\ \bottomrule
+	\end{tabular}
+
 \end{table}
 
 \subsection{The instance catalog}
 
 \section{How to run a test, generate new instance, and convert to \texttt{SMPS}}
 
-We explain the structure of \texttt{SIPLIB 2.0}. We explain procedure to generate new instances with user-generated scenario data using \texttt{Julia} scripts. We explain how to convert \texttt{JuMP.Model}-type object to \texttt{SMPS} files.
+We explain the structure of \texttt{SIPLIB 2.0}. We explain procedure to generate new instances with user-generated scenario data using \texttt{Julia} scripts. The problem-specific descriptions are given in Section \ref{sec:prob_desc}. We explain how to convert \texttt{JuMP.Model}-type object to \texttt{SMPS} files.
 
 \section{Implementation of SMPS Writer}
 
 We describe our Julia implementation, how to model SIP and generate SMPS files..
 
 
-\section{Problem descriptions}
+\section{Problem descriptions} \label{sec:prob_desc}
 
-In this section, we introduce each problem in \texttt{SIPLIB 2.0}. More than one formulation per problem possibly exist based on the reference papers. For each problem, we provide various size of instances as a default. We also explain the scenario data generation procedure for each problem. %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
-\subsection{mpTSPs: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
-\subsubsection{Notation}
+In this section, we introduce each problem in \texttt{SIPLIB 2.0}. More than one formulation per problem possibly exist based on the reference papers. For each problem, we provide various size of instances as a default. We also explain the scenario data generation procedure for each problem. Due to limited access to the original data and inconsistencies in the papers, we selectively choose the methods from the papers as long as we think they are valid. Also, we guess some parameters about scenario generation to make the procedure clear.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
+\subsection{\texttt{MPTSPS}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
+\subsubsection{Mathematical formulation}
 \begin{table}[H]
-	\caption{Notations corresponding to problem}
+	\caption{Notations for \texttt{MPTSPS}}
 	\label{notation}
 	\resizebox{\textwidth}{!}
 	{
 		\begin{tabular}{ll}
 			\toprule
 			\textbf{Index sets} &  \\ 
-			$T$ & \textrm{index set of time slots $(t=1,\ldots,|T|)$} \\ 
-			$A$ & \textrm{index set of applications $(i=1,\ldots,|A|)$} \\ 
-			$S$ & \textrm{index set of servers $(j=1,\ldots,|S|)$}\\
-			$F_j$ & \textrm{index set of frequency options of server $j\in S$ $(f=0,\ldots,|F_j|)$} \\ 
+			$N$ & \textrm{index set of nodes} \\ 
+			$K_{ij}$ & \textrm{index set of paths between nodes $i,j\in N$} \\ 
+			$S$ & \textrm{index set of scenarios}\\
 			\textbf{Parameters} &   \\ 
-			$\lambda_{it}$ & \textrm{average workload of application $i\in A$ that arrives in time interval $t\in T$} \\ 
-			$U_j$  & \textrm{maximum number of applications installable to server $j\in S$} \\ 
-			$C_{jf}$ & \textrm{processing capacity of server $j\in S$ under frequency $f\in F_j$} \\ 
-			$\beta_{jft}$ & \textrm{cost incurred when server $j\in S$ runs at frequency $f\in F_j$ in time interval $t\in T$} \\ 
-			$\rho$ & \textrm{target load for all servers (surrogate for quality of service)}\\ 
-			\textbf{Decision variables} &  \\ 
-			$a_{ij}$ (virtualization) & \textrm{1 if application $i\in A$ is installed to server $j\in S$, 0 otherwise} \\ 
-			$x_{jft}$ (server provisioning) & \textrm{1 if server $j\in S$ runs at frequency $f\in F_j$ during time interval $t\in T$, 0 otherwise} \\ 
-			$r_{ijt}$ (routing) & \textrm{fraction of workloads of application $i\in A$ assigned to server $j\in S$ in time  interval $t\in T$}\\
+			$c_{ij}^{ks}$ & \textrm{unit random travel time of path $k$ between nodes $i,j\in N$ under scenario $s\in S$} \\ 
+			$\bar{c}_{ij}$ & \textrm{estimation of the mean unit travel time (expectation of $c_{ij}^{ks}$ over all $s\in S$ and $k\in K_{ij}$)} \\ 
+			$e_{ij}^{ks}$ & \textrm{the error on the travel time extimated for the path $k\in K_{ij}$ under the scenario $s\in S$} \\ 
+			$p_{s}$ & \textrm{the probability of occurence of the scenario $s\in S$} \\ 
+			\textbf{Variables} &  \\ 
+			$x_{ij}^{ks}$ (1st stage) & \textrm{1 if node $j\in N$ is visited just after node $i\in N$, 0 otherwise} \\ 
+			$y_{ij}$ (2nd stage)& \textrm{1 if path $k\in K_{ij}$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise} \\ 
+			$\phi_{ij}$ (1st stage) & \textrm{the nonnegative flow on the arc $(i,j)\in N\times N$}\\
 			\hline
 		\end{tabular}
 	}
 \end{table} 
 
-\subsubsection{Formulations}
+\begin{subequations}
 \begin{align}
-(\textrm{MIP}_O): \textrm{minimize    } &\sum_{j\in S}\sum_{f\in F_j}\sum_{t\in T}\beta_{jft}x_{jft},\\
-\textrm{subject to} \nonumber\\ 
-&\sum_{i\in A}a_{ij} \le U_j, \quad \forall j\in S,\\
-&\sum_{j\in S}r_{ijt}=1, \quad \forall i\in A, \forall t\in T,\\
-&r_{ijt} \le a_{ij}, \quad \forall i\in A, \forall j\in S, \forall t\in T, \\
-&\sum_{i\in A}\lambda_{it}r_{ijt} \le \rho \sum_{f\in F_j}C_{jf}x_{jft}, \quad \forall j\in S, \forall t\in T,\\
-&\sum_{f\in F_j}x_{jft}=1, \quad \forall j\in S, \forall t\in T, \\
-&\sum_{i\in S}r_{ijt} \le U_j(1-x_{j0t}), \quad \forall j\in S, \forall t\in T, \\
-&a_{ij}, x_{jft}\in \{0,1\}, \quad \forall j\in S, \forall f\in F_j, \forall t\in T  \\
-&0 \le r_{ijt} \le 1, \quad \forall j\in S, \forall t\in T
+(\texttt{MPTSPS})\ \textrm{min}\ &\sum_{i\in N}\sum_{j\in N}\bar{c}_{ij}y_{ij}+\sum_{s\in S}p_s\sum_{i\in N}\sum_{j\in N}\sum_{k\in K_{ij}}e_{ij}^{ks}x_{ij}^{ks} \\
+\textrm{s.t.}\ &\sum_{j\in N:j\neq i}y_{ij}=1,\quad\forall i\in N,\\
+&\sum_{i\in N:i\neq j}y_{ij}=1,\quad\forall j\in N,\\
+&\sum_{j\in N}\phi_{lj}-\sum_{i\in N: i\neq 1}\phi_{il}=1,\quad\forall l\in N\backslash\{1\},\\
+&\phi_{ij}\le \left(|N|-1\right)y_{ij},\quad\forall i\in N\backslash\{1\},\ \forall j\in N,\\
+&\sum_{k\in K_{ij}}x_{ij}^{ks}=y_{ij},\quad\forall i\in N,\ \forall j\in N,\ \forall s\in S, \\
+&x_{ij}^{ks}\in\{0,1\},\quad\forall i\in N,\ \forall j\in N,\ \forall k\in K_{ij},\ \forall s\in S,\\
+&y_{ij}\in \{0,1\},\quad \forall i\in N,\ \forall j\in N,\\
+&\phi_{ij} \ge 0, \quad \forall i\in N,\ \forall j\in N.
 \end{align}
+\end{subequations}
 
-\subsubsection{Data generation}
+\subsubsection{Scenario data generation}
+We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPS}, there are three mainly distinguished characteristics for each instance: number of nodes ($N\in\{2,3,\ldots\}$), number of paths for each edge ($|K_{ij}|\in\{1,2,3,\ldots\}$), and nodes partition strategy ($D\in\{D0,D1,D2,D3\}$). Following \cite{journal:TPP2017}, $|K_{ij}|$ is fixed by 3 as a default. Once we decide $D$ and $N$, each instance is named by \texttt{MPTSPS\_D\_N}. 
 
+The nodes are distributed in a circle with radius equal to $r$ km. We use Cartesian coordinate system where the geometric center of the circle is $(r,r)$. The nodes are distinguished by two subsets: \textit{central} and \textit{suburban}. If the Euclidean distance between the node and the geometric center is less than or equal to the half of the radius ($r/2$), then the node is of \textit{central} type. Else if the Euclidean distance is greater than the half of the radius, the node is of \textit{suburban} type. Each arc between any two nodes $i$ and $j$ is either \textit{homogeneous} or \textit{heterogeneous}. If the two nodes are of the same type of node, i.e., both are \textit{central} or both are \textit{suburban}, the type of the arc is \textit{homogeneous}. Else, the type of the arc is \textit{heterogeneous}. Later, the length of each path between two nodes are affected by the type of arc. The nodes are generated by the following distribution strategies:
+\begin{itemize}
+	\item D0: All the nodes are \textit{central}.
+	\item D1: All the nodes are \textit{suburban}.
+	\item D2: 3/4 of the nodes are \textit{central} and the remaining 1/4 are \textit{suburban}.
+	\item D3: 1/2 of the nodes are \textit{central} and the remaining 1/2 are \textit{suburban}.
+\end{itemize}
+
+
+After determining $N$ and $D$, the next procedure can be summarized as follows:
+\begin{enumerate}
+	\item Generate $N$ nodes based on the predetermined strategy $D$. Then, the nodes are generated by acceptance-rejection procedure with uniform random number generation. Following \cite{journal:TPP2017}, we fix $r=7$\textit{km}. 
+	\item Calculate Euclidean distances between the nodes ($EC_{ij}$).
+	\item We fix the deterministic velocity profile by 30 \textit{km/h} for the \textit{central} nodes and 60 \textit{km/h} for the \textit{suburban} nodes: $v^c=30$ and $v^s=60$.
+	\item Generate random travel times ($c_{ij}^{ks}$) for each scenario $s$, for each path $k$, and for each arc $(i,j)$.
+	\begin{itemize}
+		\item The velocity for traveling arc $(i,j)$ is affected by its arc type.
+		\item Each arc has $|K_{ij}|$ paths (we have fixed it $|K_{ij}|=3$ for all $i,j$).
+		\item If the arc is \textit{homogeneous}, the random travel time of all the paths are generated only based on the corresponding velocity profile.
+		\item If the arc is \textit{heterogeneous}, $\ceil*{\frac{|K_{ij}|}{3}}$ paths are generated based on $v^c=30$ and the remaining paths are generated based on $v^s=60$. 
+		\item The velocities are distributed by $Unif(\frac{v}{2},2v)$ for $v=v^c,v^s$.
+		\item Therefore, if $(i,j)$ is \textit{homogeneous}, 
+		\begin{align*}
+		c_{ij}^{ks}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v^c}{2},2v^c)} & \textrm{if $(i,j)$ is \textit{central},} \\
+		\frac{EC_{ij}}{Unif(\frac{v^s}{2},2v^s)} & \textrm{if $(i,j)$ is \textit{suburban}}	\end{array} \right.\ \forall k\in K_{ij},
+		\end{align*}
+		\item otherwise if $(i,j)$ is \textit{heterogeneous},
+		\begin{align*}
+		c_{ij}^{ks}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v^c}{2},2v^c)} & \textrm{for $k\in\left\{1,\ldots,\ceil*{\frac{|K_{ij}|}{3}}\right\}$,} \\
+		\frac{EC_{ij}}{Unif(\frac{v^s}{2},2v^s)} & \textrm{for $k\in\left\{\ceil*{\frac{|K_{ij}|}{3}}+1,\ldots,|K_{ij}|\right\}$.}	\end{array} \right.
+		\end{align*}
+	\end{itemize}
+\end{enumerate}
 \section{Solution report}
 
 \section{Concluding remarks}
@@ -342,6 +375,12 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}. More than one
 	JuMP - Julia for Mathematical Optimization, https://jump.readthedocs.io/en/latest/index.html
 	\bibitem{web:StructJuMP}
 	StructJuMP - Parallel algebraic modeling framework for block structured optimization models in Julia, https://github.com/StructJuMP/StructJuMP.jl
+	\bibitem{journal:MPT2014}
+	F. Maggioni, G. Perboli, and R. Tadei, The multi-path traveling salesman problem with stochastic travel socts: Building realistic instances for city ligistics applications, Transportation Research Procedia, 2014
+	\bibitem{journal:PGM2017}
+	G. Perboli, L. Gobbato, and F. Maggioni, A progressive hedging method for the multi-path travelling salesman problem with stochastic travel times, IMA Journal of Management Mathematics, 2017
+	\bibitem{journal:TPP2017}
+	R. Tadei, G. Perboli, and F. Perfetti, The multi-path traveling salesman problem with stochastic travel costs, EURO Journal on Transportation and Logistics, 2017
 \end{thebibliography}
 \end{document}
 % end of file template.tex
