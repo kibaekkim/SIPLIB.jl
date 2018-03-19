@@ -314,14 +314,14 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 
 \begin{subequations}
 	\begin{align}
-	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{s\in \mathcal{S}} \PP(s)\sum_{t\in T}\left[\sum_{i\in N} sz_{its}+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijts}\right] \\
-	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{ts},\quad \forall t\in T,\ \forall s\in \mathcal{S} \\
-	&\sum_{i=j}^N x_{ijts} \ge d_{its},\quad\forall j\in N,\ \forall t\in T,\  \forall s\in \mathcal{S},\\
-	&\sum_{t'\in T}\sum_{j=1}^{i}x_{ijt's}\le\sum_{t'\in T}y_{it'}, \quad\forall j\in N,\ \forall t\in T,\ \forall s\in \mathcal{S},\\
-	&y_{its}\le Mz_{its},\quad\forall i \in N,\ \forall t\in T,\ \forall s\in \mathcal{S},\\
-	&x_{ijts}\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall s\in \mathcal{S},\\
+	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(s)\sum_{t\in T}\left[\sum_{i\in N} sz_{its}+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijtl}\right] \\
+	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{tl},\quad \forall t\in T,\ \forall l\in \mathcal{L} \\
+	&\sum_{i=j}^N x_{ijts} \ge d_{itl},\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\\
+	&\sum_{t'\in T}\sum_{j=1}^{i}x_{ijt'l}\le\sum_{t'\in T}y_{it'}, \quad\forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
+	&y_{its}\le Mz_{itl},\quad\forall i \in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
+	&x_{ijts}\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
 	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\\
-	&z_{its}\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\ \forall s\in \mathcal{S}.
+	&z_{its}\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.
 	\end{align}
 \end{subequations}
 
