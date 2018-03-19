@@ -16,11 +16,10 @@ using SmpsWriter
 D = "D0"
 nN = 50
 nS = 100
-#INSTANCE = "MPTSPs_$(D)_N$(nN)_S$(nS)"  # for SIPLIB 2.0 instances
 ########################
 
-
 # Write SMPS files (for SIPLIB 2.0)
+INSTANCE = "MPTSPs_$(D)_N$(nN)_S$(nS)"  # for SIPLIB 2.0 instances
 SMPS_PATH = "../SMPS/$INSTANCE"
 mkdir(SMPS_PATH)
 model = @time mptsps_flow(INSTANCE)
@@ -28,8 +27,6 @@ model = @time mptsps_flow(INSTANCE)
 
 
 # Write SMPS files (for SIPLIB)
-D = "D0"
-nN = 50
 INSTANCE = "MPTSPs_$(D)_$(nN)"  # for SIPLIB instances
 SMPS_PATH = "../SMPS/$INSTANCE"
 mkdir(SMPS_PATH)
