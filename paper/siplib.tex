@@ -140,7 +140,7 @@ In this subsection, we introduce the form of SIP of interest. The notations and 
 \begin{align}
 z:=\min_{x\in X}{\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
 \end{align}
-where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function given the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $p_1,\cdots,p_r$, i.e., $p_i:=\PP[\pmb{\xi}=\xi_i]$ for $i\in\{1,\ldots,r\}$. When the distribution is continuous, we can aproximate it by a suitably discretized distribution. The real-valued map $\phi:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
+where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $p_1,\cdots,p_r$, i.e., $p_i:=\PP[\pmb{\xi}=\xi_i]$ for $i\in\{1,\ldots,r\}$. When the distribution is continuous, we can aproximate it by a suitably discretized distribution. The real-valued map $\phi:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
 \begin{align}
 \phi(s;\xi):=\min_{y\in Y}\left\{ q(\xi)^\top y:\ W(\xi)y \ge s \right\},\ s\in\mathbb{R}^{m_2},
 \end{align}
@@ -265,7 +265,7 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations 
 			\texttt{DCAP}    &                              &                                                                                                                     \\
 			\texttt{MPTSPs}  & \texttt{MPTSPs\_D}x\texttt{\_N}y\texttt{\_S}z &node distribution strategy \texttt{D}x, number of nodes y, and number of scenarios z \\
 			\texttt{SMKP}    &                              &                                                                                                                     \\
-			\texttt{SIZES}   &                             &                                                                                                                     \\
+			\texttt{SIZES}   & \texttt{SIZES}z                            & number of scenario is z                                                                                                                     \\
 			\texttt{SSLP}    &                              &                                                                                                                     \\
 			\texttt{WECC}    &                              &                                                                                                                     \\ \bottomrule
 		\end{tabular}%
@@ -278,7 +278,6 @@ We explain the structure of \texttt{SIPLIB 2.0}. We explain procedure to generat
 \section{Implementation of SMPS Writer}
 
 We describe our Julia implementation, how to model SIP and generate SMPS files..
-
 
 \section{Problem descriptions} \label{sec:prob_desc}
 
@@ -298,14 +297,15 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 			$T$ & \textrm{index set of time periods ($t\in T$)} \\ 
 			$\mathcal{L}$ & \textrm{index set of scenarios ($l\in\mathcal{L}$)}\\
 			\textbf{Parameters} &   \\ 
-			$d_{its}$ &	demand for item $i$ at time $t$ under scenario $l$\\
+			$d_{itl}$ &	demand for item $i$ at time $t$ under scenario $l$\\
 			$p_{i}$ & unit production cost for item $i$\\
-			$s$	& setup cost for producing any item $i$\\
+			$s$	& setup cost for producing any item\\
 			$r$ & unit cutting cost\\ 
-			$\PP(l)$ & the probability of occerence of scenario $l$\\
+			$c_{tl}$ & production capacity at time $t$ under scenario $l$\\
+			$\PP(l)$ & the probability of occurence of scenario $l$\\
 			\textbf{Variables} &  \\ 
-			$y_{it}$ (1st stage) & number of units of size $i$ produced at time $t$ \\
-			$x_{ijtl}$ (2nd stage)& number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
+			$y_{it}$ (1st stage)  & number of units of size $i$ produced at time $t$ \\
+			$x_{ijtl}$ (2nd stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
 			$z_{itl}$ (2nd stage)& 1 if we produce size $i$ at time $t$ under scenario $l$, 0 otherwise\\
 			\hline
 		\end{tabular}
@@ -314,10 +314,10 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 
 \begin{subequations}
 	\begin{align}
-	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(s)\sum_{t\in T}\left[\sum_{i\in N} sz_{its}+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijtl}\right] \\
+	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\left[\sum_{i\in N} sz_{itl}+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijtl}\right] \\
 	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{tl},\quad \forall t\in T,\ \forall l\in \mathcal{L}, \\
-	&\sum_{i=j}^N x_{ijtl} \ge d_{itl},\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\\
-	&\sum_{t'\in T}\sum_{j=1}^{i}x_{ijt'l}\le\sum_{t'\in T}y_{it'}, \quad\forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
+	&\sum_{i=j}^{|N|} x_{ijtl} \ge d_{jtl},\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\\
+	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'l}\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
 	&y_{it}\le Mz_{itl},\quad\forall i \in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
 	&x_{ijtl}\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
 	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\\
@@ -343,7 +343,7 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 			\textbf{Parameters} &   \\ 
 			$c_{ij}^{ks}$ & \textrm{unit random travel time of path $k$ between nodes $i,j$ under scenario $s$} \\ 
 			$\bar{c}_{ij}$ & \textrm{estimation of the mean unit travel time (expectation of $c_{ij}^{ks}$ over all $s$ and $k$)} \\ 
-			$e_{ij}^{ks}$ & \textrm{the error on the travel time estimated for path $k$ under scenario $s$} \\ 
+			$e_{ij}^{ks}$ & \textrm{the error on the travel time on estimated for arc $(i,j)$ and path $k$ under scenario $s$} \\ 
 			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ 
 			\textbf{Variables} &  \\ 
 			$\phi_{ij}$ (1st stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
@@ -407,7 +407,9 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 	\end{itemize}
 	\item Finally, we multiply 3600 for each component of $c_{ij}^{ks}$ to convert the unit from \textit{hours} to \textit{seconds}.
 \end{enumerate}
+
 \section{Solution report}
+
 
 \section{Concluding remarks}
 
