@@ -220,7 +220,7 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations 
 			\toprule
 			Problem name & Description                                                        & Reference             & Is in \texttt{SIPLIB}? \\ \midrule
 			\texttt{DCAP}         & Dynamic capacity planning with stochastic demand                   & Ahmed and Garcia      & Yes                      \\
-			\texttt{MPTSPS}       & Multi-path traveling salesman problem with stochastic travel costs & \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}        & Yes                      \\
+			\texttt{MPTSPs}       & Multi-path traveling salesman problem with stochastic travel costs & \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}        & Yes                      \\
 			\texttt{\texttt{SMKP}}         & Stochastic multiple knapsack problem                               & Angulo et al.         & Yes                      \\
 			\texttt{SIZES}        & Optimal product substitution with stochastic demand                & Jorjani et al.        & Yes                      \\
 			\texttt{SSLP}         & Stochastic server location problem                                 & Ntaimo and Sen        & Yes                      \\
@@ -238,7 +238,7 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations 
 		& \multicolumn{2}{l}{1st stage}                              & \multicolumn{2}{l}{2nd stage}                             \\ \midrule
 		Problem & Variable                    & Constraint                   & Variable                    & Constraint                  \\ \midrule
 		\texttt{DCAP}    & \texttt{real}, \texttt{bin} &                              & \texttt{bin}                & \texttt{PAR}, \texttt{M01}1 \\
-		\texttt{MPTSPS}  & \texttt{bin}, \texttt{real} & \texttt{PAR}2, \texttt{GEN}1 & \texttt{bin}                & \texttt{GEN}1               \\
+		\texttt{MPTSPs}  & \texttt{bin}, \texttt{real} & \texttt{PAR}2, \texttt{GEN}1 & \texttt{bin}                & \texttt{GEN}1               \\
 		\texttt{SMKP}    & \texttt{bin}                & \texttt{KNA}1                & \texttt{bin}                & \texttt{KNA}1               \\
 		\texttt{SIZES}   & \texttt{real}, \texttt{int} & \texttt{VBD}1, \texttt{GEN}2 & \texttt{real}, \texttt{int} & \texttt{IKN}1               \\
 		\texttt{SSLP}    & \texttt{bin}                & \texttt{IVK}1, \texttt{GEN}1 & \texttt{real}, \texttt{int} & \texttt{GEN}2               \\
@@ -263,7 +263,7 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations 
 			\toprule
 			Problem & Instance name                 & Description                                                                                                          \\ \midrule
 			\texttt{DCAP}    &                              &                                                                                                                     \\
-			\texttt{MPTSPS}  & \texttt{MPTSPs\_D}x\texttt{\_N}y\texttt{\_S}z & MPTSPS with node distribution strategy \texttt{D}x, number of nodes y, and number of scenarios z \\
+			\texttt{MPTSPs}  & \texttt{MPTSPs\_D}x\texttt{\_N}y\texttt{\_S}z &node distribution strategy \texttt{D}x, number of nodes y, and number of scenarios z \\
 			\texttt{SMKP}    &                              &                                                                                                                     \\
 			\texttt{SIZES}   &                             &                                                                                                                     \\
 			\texttt{SSLP}    &                              &                                                                                                                     \\
@@ -282,11 +282,11 @@ We describe our Julia implementation, how to model SIP and generate SMPS files..
 
 \section{Problem descriptions} \label{sec:prob_desc}
 
-In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each problem, we provide various size of instances as a default. We also explain the scenario data generation procedure for each problem. Due to limited access to the original data and inconsistencies present in reference papers, we selectively choose the methods from the references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to make the procedure clear.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
-\subsection{\texttt{MPTSPS}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
+In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each problem, we provide various size of instances as a default. We also explain the scenario data generation procedures. Due to limited access to the original data and inconsistencies present in reference papers, we selectively choose the methods from the references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to make the procedure clear.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
+\subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
 \subsubsection{Mathematical formulation}
 \begin{table}[H]
-	\caption{Notations for \texttt{MPTSPS}}
+	\caption{Notations for \texttt{MPTSPs}}
 	\label{notation}
 	\resizebox{\textwidth}{!}
 	{
@@ -313,7 +313,7 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 
 \begin{subequations}
 \begin{align}
-(\texttt{MPTSPS})\ \textrm{min}\ &\sum_{i\in N}\sum_{j\in N}\bar{c}_{ij}y_{ij}+\sum_{s\in S}p_s\sum_{i\in N}\sum_{j\in N}\sum_{k\in K_{ij}}e_{ij}^{ks}x_{ij}^{ks} \\
+(\texttt{MPTSPs})\ \textrm{min}\ &\sum_{i\in N}\sum_{j\in N}\bar{c}_{ij}y_{ij}+\sum_{s\in S}p_s\sum_{i\in N}\sum_{j\in N}\sum_{k\in K_{ij}}e_{ij}^{ks}x_{ij}^{ks} \\
 \textrm{s.t.}\ &\sum_{j\in N:j\neq i}y_{ij}=1,\quad\forall i\in N,\\
 &\sum_{i\in N:i\neq j}y_{ij}=1,\quad\forall j\in N,\\
 &\sum_{j\in N}\phi_{lj}-\sum_{i\in N: i\neq 1}\phi_{il}=1,\quad\forall l\in N\backslash\{1\},\\
@@ -326,7 +326,7 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 \end{subequations}
 
 \subsubsection{Scenario data generation}
-We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPS}, there are three mainly distinguished characteristics for each instance: number of nodes ($N\in\{2,3,\ldots\}$), number of paths for each edge ($|K_{ij}|\in\{1,2,3,\ldots\}$), and nodes partition strategy ($D\in\{D0,D1,D2,D3\}$). Following \cite{journal:TPP2017}, $|K_{ij}|$ is fixed by 3 as a default. Once we decide $D$ and $N$, each instance is named by \texttt{MPTSPS\_D\_N}. 
+We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPs}, there are three mainly distinguished characteristics for each instance: the nodes partition strategy ($D\in\{D0,D1,D2,D3\}$), the number of nodes ($N\in\{2,3,\ldots\}$), and the number of scenarios ($S\in\{1,2,\ldots\}$). Another important charicteristic $|K_{ij}|$ which is number of paths for each edge ($|K_{ij}|\in\{1,2,3,\ldots\}$) is fixed by 3 as a default following \cite{journal:TPP2017}. Once we decide $D$, $N$, and $S$ by $D=D\textrm{x}$, $N=\textrm{y}$, and $S=\textrm{z}$, each instance is named by \texttt{MPTSPs\_Dx\_Ny\_Sz}.
 
 The nodes are distributed in a circle with radius equal to $r$ km. We use Cartesian coordinate system where the geometric center of the circle is $(r,r)$. The nodes are distinguished by two subsets: \textit{central} and \textit{suburban}. If the Euclidean distance between a node and the geometric center is less than or equal to the half of the radius ($r/2$), then the node is of \textit{central} type. Otherwise, if the Euclidean distance is greater than the half of the radius, the node is of \textit{suburban} type. Each arc between any two nodes $i$ and $j$ is either \textit{homogeneous} or \textit{heterogeneous}. If the two nodes are of the same type of node, i.e., both are \textit{central} or both are \textit{suburban}, the type of the arc is \textit{homogeneous}. Otherwise, the type of the arc is \textit{heterogeneous}. Later, the length of each path between two nodes are affected by the type of arc. 
 
@@ -341,9 +341,9 @@ The nodes are generated by the following distribution strategies:
 
 After determining $N$ and $D$, the next procedure can be summarized as follows:
 \begin{enumerate}
-	\item Generate $N$ nodes based on the predetermined strategy $D$. Then, the nodes are generated by acceptance-rejection procedure with uniform random number generation. Following \cite{journal:TPP2017}, we fix $r=7$\textit{km}. 
+	\item Generate $N$ nodes based on the predetermined strategy $D$. Then, the nodes are generated by acceptance-rejection procedure with uniform random number generation. Again following \cite{journal:TPP2017}, we fix $r=7$\textit{km}. 
 	\item Calculate Euclidean distances between the nodes ($EC_{ij}$).
-	\item We fix the deterministic velocity profile by 40 \textit{km/h} for the \textit{central} nodes and 80 \textit{km/h} for the \textit{suburban} nodes: $v^c=40$ and $v^s=80$.
+	\item We guess and fix the deterministic velocity profile by 40\textit{km/h} for the \textit{central} nodes and 80\textit{km/h} for the \textit{suburban} nodes: $v^c=40$ and $v^s=80$.
 	\item Generate random travel times ($c_{ij}^{ks}$) for each scenario $s$.
 	\begin{itemize}
 		\item The velocity for traveling arc $(i,j)$ is affected by its arc type.
