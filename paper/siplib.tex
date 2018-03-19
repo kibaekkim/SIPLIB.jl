@@ -133,7 +133,7 @@ We provide the test sets in two formats: \texttt{SMPS} files (*.cor, *.tim, *.st
 
 (Contribution of SIPLIP2.0) By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational and algorithmic research in SIP with benchmarking computational results, 2) not only \texttt{SMPS} files but also \texttt{Julia} files that are easily readable/tailorable. Hence, the users can obtain as large-sized instances as they need by generating new scenarios and including them into instances. For those who want to utilize the instances in the legacy \texttt{SIPLIB} with strong tailorability provided by \texttt{SIPLIB 2.0}, we include the original \texttt{SIPLIB} instances as well.
 
-\section{Stochastic integer programming}
+\section{Stochastic integer programming} \label{sec:SIP}
 In this section, we explain general description of SIP. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
 \subsection{Formulation}
 In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP of the form: 
@@ -238,9 +238,9 @@ The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations 
 		& \multicolumn{2}{l}{1st stage}                              & \multicolumn{2}{l}{2nd stage}                             \\ \midrule
 		Problem & Variable                    & Constraint                   & Variable                    & Constraint                  \\ \midrule
 		\texttt{DCAP}    & \texttt{real}, \texttt{bin} &                              & \texttt{bin}                & \texttt{PAR}, \texttt{M01}1 \\
-		\texttt{MPTSPs}  & \texttt{bin}, \texttt{real} & \texttt{PAR}2, \texttt{GEN}1 & \texttt{bin}                & \texttt{GEN}2               \\
+		\texttt{MPTSPs}  & \texttt{real}, \texttt{bin} & \texttt{PAR}2, \texttt{GEN}1 & \texttt{bin}                & \texttt{GEN}2               \\
 		\texttt{SMKP}    & \texttt{bin}                & \texttt{KNA}1                & \texttt{bin}                & \texttt{KNA}1               \\
-		\texttt{SIZES}   & \texttt{real}, \texttt{int} & \texttt{VBD}1, \texttt{GEN}2 & \texttt{real}, \texttt{int} & \texttt{IKN}1               \\
+		\texttt{SIZES}   & \texttt{int} & \texttt{VBD}1, \texttt{GEN}2 & \texttt{bin}, \texttt{int} & \texttt{IKN}1               \\
 		\texttt{SSLP}    & \texttt{bin}                & \texttt{IVK}1, \texttt{GEN}1 & \texttt{real}, \texttt{int} & \texttt{GEN}2               \\
 		\texttt{WECC}    &                             &                              &                             &                             \\ \bottomrule
 	\end{tabular}
@@ -284,6 +284,10 @@ We describe our Julia implementation, how to model SIP and generate SMPS files..
 In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each problem, we provide various size of instances as a default. We also explain the scenario data generation procedures. Due to limited access to the original data and inconsistencies present in reference papers, we selectively choose the methods from the references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to make the procedure clear.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
 
 \subsection{\texttt{SIZES}: Selection of an optimal subset of sizes}
+\texttt{SIZES} is a simplified version of the cutting stock problem with multi-period stochastic demand. In this problem, the term \textit{period} can be exchangeably used with \textit{stage}. The first period (first stage) demand is deterministic whereas demands for the other periods (stages) are stochastic with scenarios. We only consider the two-periods (i.e., two stage) model to follow \cite{journal:JSW1999} as well as the SIP of interest discussed in Section \ref{sec:SIP}. 
+
+In \texttt{SIPLIB}, only three instances are available in \texttt{SMPS} files. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \texttt{JuMP.Model}. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \texttt{SIPLIB 2.0}.
+
 \subsubsection{Mathematical formulation}
 \begin{table}[H]
 	\caption{Notations for \texttt{SIZES}}
@@ -328,6 +332,7 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 \subsubsection{Scenario data generation}
 
 \subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
+\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. In \texttt{SIPLIB}, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \texttt{SMPS} files are available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to some unclear subtour breaking constraints, we refer to another paper \cite{journal:LSD1990}. Combining the two references, we construct the forthcoming single commodity flow-based formulation \texttt{MPTSPs} that is used for \texttt{SIPLIB 2.0}. 
 \subsubsection{Mathematical formulation}
 \begin{table}[H]
 	\caption{Notations for \texttt{MPTSPs}}
@@ -452,6 +457,10 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 	G. Perboli, L. Gobbato, and F. Maggioni, A progressive hedging method for the multi-path travelling salesman problem with stochastic travel times, IMA Journal of Management Mathematics, 2017
 	\bibitem{journal:TPP2017}
 	R. Tadei, G. Perboli, and F. Perfetti, The multi-path traveling salesman problem with stochastic travel costs, EURO Journal on Transportation and Logistics, 2017
+	\bibitem{journal:LSD1990}
+	Andre Langevin, Francois Soumis, and Jacques Desrosiers, Classification of travelling salesman problem formulations, Operations Research Letters, 1990
+	\bibitem{journal:JSW1999}
+	Soheila Jorjani, Carlton H. Scott, and David L. Woodruff, Selection of an optimal subset of sizes, International Journal of Production Research, 1999
 \end{thebibliography}
 \end{document}
 % end of file template.tex
