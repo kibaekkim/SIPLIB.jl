@@ -53,7 +53,9 @@ grestore
 \usepackage{graphicx}
 \usepackage{lscape}
 \usepackage{color}
+\usepackage[normalem]{ulem}
 
+\newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
 \DeclareMathOperator*{\PP}{\mathbb{P}}
 \DeclareMathOperator*{\EE}{\mathbb{E}}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
@@ -122,13 +124,13 @@ We present a collection of stochastic integer programming problem instances.
 
 \section{Introduction}
 %(What is SIPLIB?) 
-\texttt{SIPLIB} \cite{web:SIPLIB1} is an abbreviated term of the Stochastic Integer Programming (SIP) LIBrary firstly contructed in 2002 by Shabbir Ahmed and his colleagues. The library has been providing a collection of test instances to facilitate computational and algorithmic research in SIP. Some new test problems with instances have been added to \texttt{SIPLIB} gradually and now it contains nine different problems in total.  The instances are basically given in the standard \texttt{SMPS} format accompanied with additional information including parameter data, size of the instance in terms of the number of rows, columns, and integers, benchmarking information such as best known objective value or bounds, optimality gap, and solution time.
+The \texttt{SIPLIB} \cite{web:SIPLIB1} is an abbreviated term of the Stochastic Integer Programming (SIP) Library firstly contructed in 2002 by Shabbir Ahmed and his colleagues. The library has been providing a collection of test instances to facilitate computational and algorithmic research in SIP. Some new test problems with instances have been added to \texttt{SIPLIB} gradually and now it contains nine different problems in total.  The instances are basically given in the standard \texttt{SMPS} format accompanied with additional information including parameter data, size of the instance in terms of the number of rows, columns, and integers, benchmarking information such as best known objective value or bounds, optimality gap, and solution time.
 
 %(Motivation) 
-At the time \texttt{SIPLIB} appeared, it provided enoughly large-sized instances that is reasonable to argue that the performance of algorithm is remarkable if it solves the instances. The state-of-art in SIP combined with the speedup in computing machinery, however, makes many instances of \texttt{SIPLIB} trivial so that we have no more basis to use \texttt{SIPLIB} for showing the excellence of new solution methods. At this point, we are motivated to develop the second version of \texttt{SIPLIB}, say \texttt{SIPLIB 2.0} that provides larger-sized test instances with higher degree of tailorability, e.g., users can expand the size of instance as much as they want in terms of the number of scenarios included.
+At the time \texttt{SIPLIB} appeared, it provided enoughly large-sized instances that is reasonable to argue that the performance of algorithm is remarkable if it solves the instances. State-of-the-art in SIP combined with the speedup in computing machinery, however, makes many instances in \texttt{SIPLIB} so easy that we have not enough basis to use them for showing the excellence of newly suggested solution methods. At this point, we are motivated to develop the second version of \texttt{SIPLIB}, say \texttt{SIPLIB 2.0} that provides larger-sized test instances with higher degree of tailorability, e.g., users can easily generate instances of test problems as largely as they want.% in terms of the number of scenarios included.
 
 %(What SIP is and our restriction) 
-Stochastic programming (SP) is a framework for modeling optimization problems that involve uncertainty. Whereas optimization problems are typically formulated with known parameters, the problems in real world contain some unknown parameters in many cases. For details on SP, see, e.g., \cite{web:SPS,book:BL2011}. SIP is a branch of SP that indicates any type of SP including at least one integer decision variable. The integers can be placed anywhere in general SIP. \textcolor{red}{However, we restrict our focus on two-stage SIP that contains integer variables (including binary) in its second stage throughout this paper and \texttt{SIPLIB 2.0}.} The main reason is that the class of SIP is most widely used to model real world problems. Moreover, two-stage SIP itself has enough difficulties that have not been conquered yet even without any other details like chance-constraints and multi-stages. The main difficulty in solving two-stage SIP is that the second-stage value function is not necessarily convex, but only lower semicontinuous. Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when the second stage integer variables are present \cite{journal:AG2004}. Hereinafter, we use the term SIP to indicate the two-stage SIP that contains integer variables in its second stage.
+\textcolor{red}{(as we include \texttt{DCLP} (data center location problem), this paragraph should be modified)} Stochastic programming (SP) is a framework for modeling optimization problems that involve uncertainty. Whereas optimization problems are typically formulated with known parameters, the problems in real world contain some unknown parameters in many cases. For details on SP, see, e.g., \cite{web:SPS,book:BL2011}. SIP is a branch of SP that indicates any type of SP including at least one integer decision variable. The integers can be placed anywhere in general SIP. \textcolor{red}{However, we restrict our focus on two-stage SIP that contains integer variables (including binary) in its second stage throughout this paper and \texttt{SIPLIB 2.0}.} The main reason is that the class of SIP is most widely used to model real world problems. Moreover, two-stage SIP itself has enough difficulties that have not been conquered yet even without any other details like chance-constraints and multi-stages. The main difficulty in solving two-stage SIP is that the second-stage value function is not necessarily convex, but only lower semicontinuous. Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when the second stage integer variables are present \cite{journal:AG2004}. Hereinafter, we use the term SIP to indicate the two-stage SIP that contains integer variables in its second stage.
 
 %(SMPS, Julia)
 We provide the test sets in two formats: \texttt{SMPS} files (*.cor, *.tim, *.stoch) and \texttt{Julia} files (*.jl). \texttt{SMPS} is widely used to describe stochastic linear and quadratic programs. Once having \texttt{SMPS} files of a problem instance, we can directly solve it using various mixed integer linear program (MILP) solvers such as \texttt{CPLEX}, \texttt{GUROBI}, and \texttt{CBC}. One can also use the existing open-source SIP solvers like \texttt{DSP} \cite{journal:KZ2015}, \texttt{PySP} \cite{journal:WWH2012}, and \texttt{SMI} \cite{web:SMI} given that \texttt{SMPS} files. A drawback of \texttt{SMPS} format is its low readability by human, which we decided to provide \texttt{Julia} files to let users be able to easily read problems and tailor the instances.
@@ -138,6 +140,9 @@ We provide the test sets in two formats: \texttt{SMPS} files (*.cor, *.tim, *.st
 
 %(Contribution of SIPLIP2.0) 
 By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational and algorithmic research in SIP with benchmarking computational results, 2) not only \texttt{SMPS} files but also \texttt{Julia} files that are easily readable/tailorable. Hence, the users can obtain as large-sized instances as they need by generating new scenarios and including them into instances. For those who want to utilize the instances in the legacy \texttt{SIPLIB} with strong tailorability provided by \texttt{SIPLIB 2.0}, we include the original \texttt{SIPLIB} instances as well.
+
+%(Contents)
+\textcolor{red}{(Contents of the paper, not finished yet) In this paper, we provide a detailed description of the test problems in \texttt{SIPLIB 2.0}, including information on the instances, their origin, formal mathematical models with explanation on notations, and scenario data generation procedure. \texttt{SIPLIB 2.0} classifies problems based on the stages, variables, and constraints. We borrow some classification criteria from the most frequently utilized mixed integer programming (MIP) library, \texttt{MIPLIB 2010} \cite{MIPLIB}, whenever they are applicable to SIP as well.}
 
 \section{Stochastic integer programming} \label{sec:SIP}
 In this section, we explain general description of SIP. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
@@ -218,7 +223,7 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\
 \subsection{Type of problems}
 \begin{table}[H]
 	\centering
-	\caption{The type of problems in \texttt{SIPLIB 2.0}}
+	\caption{Types of the problems in \texttt{SIPLIB 2.0}}
 	\label{table:prob_type}
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{@{}llll@{}}
@@ -237,19 +242,19 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\
 
 \begin{table}[H]
 	\centering
-	\caption{The components of problems in \texttt{SIPLIB 2.0}}
+	\caption{Components of the problems in \texttt{SIPLIB 2.0}}
 	\label{table:prob_class}
 	\begin{tabular}{@{}lllll@{}}
 		\toprule
-		& \multicolumn{2}{l}{1st stage}                              				  & \multicolumn{2}{l}{2nd stage}                             			      \\ \midrule
-		Problem 	     & Variable                    & Constraint                   & Variable                    & Constraint                  \\ \midrule
-		\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$ &                              & $\mathbb{B}$                & \texttt{PAR}, \texttt{M01}1 \\
-		\texttt{DCLP}	 &							&								&							&								\\				
-		\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$ & \texttt{PAR}2, \texttt{GEN}1 & $\mathbb{B}$                & \texttt{GEN}2               \\
-		\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}1, \texttt{GEN}2 & $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}1               \\
-		\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}1                & $\mathbb{B}$                & \texttt{KNA}1               \\
-		\texttt{SSLP}    & $\mathbb{B}$               & \texttt{IVK}1, \texttt{GEN}1 & $\mathbb{C}$, $\mathbb{I}$ & \texttt{GEN}2               \\
-		\texttt{SUCW}    & $\emptyset$                &                              & $\mathbb{C}$, $\mathbb{B}$  &                             \\ \bottomrule
+		& \multicolumn{2}{l}{1st stage}                              				  		& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
+		Problem 	     & Variable                    & Constraint                   		& Variable                    & Constraint                  				    \\ \midrule
+		\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}$^1$                	& $\mathbb{B}$                & \texttt{PAR}$^1$, \texttt{M01}$^1$ 			    \\
+		\texttt{DCLP}	 &							   &									& $\mathbb{C}$			 	  &													\\				
+		\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}$^2$, \texttt{GEN}$^1$ & $\mathbb{B}$                & \texttt{GEN}$^2$               					\\
+		\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}$^1$, \texttt{GEN}$^2$ & $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}$^1$               					\\
+		\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}$^1$                	& $\mathbb{B}$                & \texttt{KNA}$^1$               					\\
+		\texttt{SSLP}    & $\mathbb{B}$                & \texttt{IVK}$^1$, \texttt{GEN}$^1$ & $\mathbb{C}$, $\mathbb{I}$  & \texttt{GEN}$^2$               					\\
+		\texttt{SUCW}    & $\emptyset$                 &                              		& $\mathbb{C}$, $\mathbb{B}$  &                             					\\ \bottomrule
 	\end{tabular}
 
 \end{table}
@@ -289,10 +294,10 @@ We describe our Julia implementation, how to model SIP and generate SMPS files..
 
 \section{Problem descriptions} \label{sec:prob_desc}
 
-In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each problem, we provide various size of instances as a default. We also explain the scenario data generation procedures. Due to limited access to the original data and inconsistencies present in reference papers, we selectively choose the methods from the references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to make the procedure clear.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
+In this section, we introduce details for each problem in \texttt{SIPLIB 2.0}. We also explain the scenario data generation procedures. Due to limited access to the original data in reference papers, we selectively choose the methods from several available references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to make the procedure clear.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
 
 \subsection{\texttt{DCAP}: Dynamic capacity planning with stochastic demand}
-\texttt{DCAP} is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. In \texttt{SIPLIB}, 12 instances are available in \texttt{SMPS} format with the largest instance comprises of 500 scenarios correspond to the size of 9012 rows and 18018 columns. We refer to \cite{journal:AG2004} for writing \texttt{Julia} scripts for \texttt{DCAP} described by the following subsections.
+\texttt{DCAP} is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. In \texttt{SIPLIB}, 12 instances are available in \texttt{SMPS} format with the largest instance comprises of 500 scenarios correspond to the size of 9,012 rows and 18,018 columns. We refer to \cite{journal:AG2004} for writing \texttt{Julia} scripts.
 %\texttt{DCAP} is a problem of deciding the capacity expansion schedule for $m$ resources over $T$ time periods in order to satisfy the processing requirements of $n$ tasks.
 \subsubsection{Mathematical formulation}
 \begin{subequations}
@@ -327,9 +332,9 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 			$d_{jt}^s$	& processing requirement for task $j$ in period $t$ under scenario $s$		\\
 			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$x_{it}$ (1st stage) & capacity acquisition amount of resource $i$ in period $t$ \\ 
-			$u_{it}$ (2nd stage)& 1 if capacity of resource $i$ is expanded in period $t$, 0 otherwise \\ 
-			$y_{ijt}^s$ (2nd stage)& 1 if resource $i$ is assigned to task $j$ in period $t$ under scenario $s$, 0 otherwise\\
+			$x_{it}$ ($1^{\textrm{st}}$ stage) & capacity acquisition amount of resource $i$ in period $t$ \\ 
+			$u_{it}$ ($1^{\textrm{st}}$ stage)& 1 if capacity of resource $i$ is expanded in period $t$, 0 otherwise \\ 
+			$y_{ijt}^s$ ($2^{\textrm{nd}}$ stage)& 1 if resource $i$ is assigned to task $j$ in period $t$ under scenario $s$, 0 otherwise\\
 			\bottomrule
 		\end{tabular}
 	}
@@ -351,7 +356,7 @@ In this section, we introduce each problem in \texttt{SIPLIB 2.0}.  For each pro
 \texttt{SIPLIB} provides 30 instances of \texttt{SMKP} in total. The first-stage problems contain 240 binary variables and 50 knapsack constraints. The second-stage problems have 120 binary variables and 5 knapsack constraints. Each instance has 20 scenarios. 
 We refer \cite{journal:AAD2014} for writing \texttt{Julia} script for \texttt{SIPLIB 2.0} and explain the model throughout the following subsections.
 \subsubsection{Mathematical formulation}
-We have three types of items $x$, $z$, and $y$ where the first two types are of the first-stage and the last one is of the second-stage with stochastic scenarios. For each type, we have $|I|$ number of items where $I$ is the index set of the items. Hence, we define the binary variables $x_i$, $z_i$, and $y_i^s$ are equal to 1 if the $i^{\mathrm{th}}$ item is decided to be included ($s$ denotes scenario so only appears in $y$-type variables). We consider two types of knapsacks: one associated with $x$-type and $z$-type items (say \texttt{xz}-knapsack) and the other one with $x$-type and $y$-type items (say \texttt{xy}-knapsack). \texttt{xz}-knapsacks are indexed by $j\in J$ and \texttt{xy}-knapsacks are indexed by $k\in K$.  Each knapsack has its own minimum level of profit that should be satisfied by the items of the associated types, e.g., the profit of the $j^{\mathrm{th}}$ \texttt{xz}-type knapsack is calculated based on the inclusion or exclusion of $x$-type and $z$-type items and should satisfy a certain requirement $b_j$. Bear in mind that the inclusion or exclusion of a certain item $i$ affects all the associated knapsacks.
+We have three types of items $x$, $z$, and $y$ where the first two types are of the first-stage and the last one is of the second-stage with stochastic scenarios. For each type, we have $|I|$ number of items where $I$ is the index set of the items. Hence, we define the binary variables $x_i$, $z_i$, and $y_i^s$ which are equal to 1 if the $i^{\mathrm{th}}$ item is decided to be included ($s$ denotes scenario so only appears in $y$-type variables). We consider two types of knapsacks: one associated with $x$-type and $z$-type items (say \texttt{xz}-knapsack) and the other one with $x$-type and $y$-type items (say \texttt{xy}-knapsack). \texttt{xz}-knapsacks are indexed by $j\in J$ and \texttt{xy}-knapsacks are indexed by $k\in K$.  Each knapsack has its own minimum level of profit that should be satisfied by the items of the associated types, e.g., the profit of the $j^{\mathrm{th}}$ \texttt{xz}-type knapsack is calculated based on the inclusion or exclusion of $x$-type and $z$-type items and should satisfy a certain requirement $b_j$. Bear in mind that the inclusion or exclusion of a certain item $i$ affects all the associated knapsacks.
  
 Each parameter $c_i$, $d_i$, and $q_i^s$ denotes the gain of weight when including items of type $x$, $z$, and $y$, respectively. Here, $c_i$ and $d_i$ are deterministic and $q_i^s$ is stochastic. Parameters $a_{ij}$, $e_{ij}$, $t_{ik}$, and $w_{ik}$ are all deterministic and denote the profits for including items in the knapsacks. The RHS parameters $b_j$ and $h_k$ are the minimum levels of profit requirements for \texttt{xz}-knapsacks and \texttt{xy}-knapsacks, respectively.
 
@@ -393,9 +398,9 @@ The objective (\ref{smkp:obj}) is to minimize the expected value of the total we
 			$h_k$		& minimum required profit for the $k^{\mathrm{th}}$ \texttt{xy}-knapsack		\\
 			$\PP(s)$ 	& \textrm{the probability of occurence of scenario $s$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$x_{j}$ (1st stage) & 1 if the $j^{\mathrm{th}}$ $x$-type item is decided to be included, 0 otherwise \\ 
-			$z_{j}$ (1st stage) & 1 if the $j^{\mathrm{th}}$ $z$-type item is decided to be included, 0 otherwise \\ 
-			$y_{j}^s$ (2nd stage)& 1 if the $j^{\mathrm{th}}$ $y$-type item is decided to be included under scenario $s$, 0 otherwise  \\
+			$x_{j}$ ($1^{\textrm{st}}$ stage) & 1 if the $j^{\mathrm{th}}$ $x$-type item is decided to be included, 0 otherwise \\ 
+			$z_{j}$ ($1^{\textrm{st}}$ stage) & 1 if the $j^{\mathrm{th}}$ $z$-type item is decided to be included, 0 otherwise \\ 
+			$y_{j}^s$ ($2^{\textrm{nd}}$ stage)& 1 if the $j^{\mathrm{th}}$ $y$-type item is decided to be included under scenario $s$, 0 otherwise  \\
 			\bottomrule
 		\end{tabular}
 	}
@@ -405,14 +410,67 @@ The objective (\ref{smkp:obj}) is to minimize the expected value of the total we
 
 
 \subsection{\texttt{SSLP}: Stochastic server location problem}
+\texttt{SSLP} is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \texttt{SSLP} finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \texttt{SIPLIB} provides 12 instances with varying number of clients, server locations, and scenarios in \texttt{SMPS} format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables.
+
+We refer to \cite{journal:NS2005} for mathematical formulation and data generation forthcoming through the following subsections.
+
 
 \subsubsection{Mathematical formulation}
+
+
+\begin{subequations}
+	\begin{align}
+	(\texttt{SSLP})\ \textrm{min}\ &	\sum_{j\in J}c_j x_j - \sum_{s\in\mathcal{S}}\PP(s)\left(\sum_{i\in I}\sum_{j\in J}q_{ij}^s y_{ij}^s - \sum_{j\in J}q_{0j}^s y_{0j}^s \right) \label{sslp:obj} \\ 
+	\textrm{s.t.}\ &\sum_{j\in J}x_j\le v,\label{sslp:b}\\ 
+	&\sum_{j\in J_z}x_j\ge w_z,\quad\forall z\in Z,\label{sslp:c}\\
+	&\sum_{i\in I}d_{ij}y_{ij}^s - y_{0j}^s\le ux_j,\quad\forall j\in J,\ \stkout{\textcolor{red}{\forall i\in I,}}\ \forall s\in\mathcal{S}, \label{sslp:d} \\
+	&\sum_{j\in J}y_{ij}^s=h_i^s,\quad\forall i\in I,\ \forall s\in \mathcal{S}, \label{sslp:e}\\
+	&x_j\in\{0,1\},\quad\forall j\in J,\label{sslp:f}\\
+	&y_{ij}^s\in\{0,1\},\quad\forall i\in I,\ j\in J,\ s\in\mathcal{S}, \label{sslp:g}\\
+	&y_{0j}^s\ge 0,\quad\forall j\in J,\ \forall s\in\mathcal{S} \label{sslp:h}.
+	\end{align}
+\end{subequations}
+
+\begin{table}[H]
+	\caption{Notations for \texttt{SSLP}}
+	\label{notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$I$ 		  & index set of clients ($i\in I$)  \\ 
+			$J$ 		  & index set of servers ($j\in J$)\\ 
+			$Z$ 		  & index set of zones ($z\in Z$) \\
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$)	\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$c_j$		& cost of locating a server at location $j$	\\
+			$q_{ij}^s$	& revenue from client $i$ being served by server at location $j$ under scenario $s$	\\
+			$q_{0j}^s$	& rate of revenue loss for overflows that are not served due to limited server capacity under scenario $s$	\\
+			$d_{ij}$	& resource demand of client $i$ from server at location $j$	\\
+			$u$			& server capacity	\\
+			$v$			& upper bound on the total number of servers that can be located	\\
+			$w_z$		& minimum number of servers to be located in zone $z$	\\
+			$J_z$		& subset of server locations that belong to zone $z$	\\
+			$h_i^s$		& 1 if client $i$ is present under scenario $s$, 0 otherwise	\\
+			$\PP(s)$ 	& probability of occurence for scenario $s$\\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_j$ ($1^{\textrm{st}}$ stage)  	 & 1 if a server is located at site $j$, 0 otherwise \\
+			$y_{ij}^s$ ($2^{\textrm{nd}}$ stage) & 1 if client $i$ is served by a server at location $j$ under scenario $s$, 0 otherwise\\
+			$y_{0j}^s$ ($2^{\textrm{nd}}$ stage) & non-negative amount of overflows that are not served due to limitations in server $j$'s capacity	\\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
 
 \subsubsection{Scenario data generation}
 
 
 \subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
-\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. In \texttt{SIPLIB}, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \texttt{SMPS} file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to some unclear subtour breaking constraints, we refer to another paper \cite{journal:LSD1990}. Combining the two references, we construct the forthcoming single commodity flow-based formulation \texttt{MPTSPs} that is used for \texttt{SIPLIB 2.0}. 
+\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. 
+
+In \texttt{SIPLIB}, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \texttt{SMPS} file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to break subtours. Combining the two references, we construct the forthcoming single commodity flow-based formulation \texttt{MPTSPs} that is used for \texttt{SIPLIB 2.0}. 
 \subsubsection{Mathematical formulation}
 We consider a two-stage SIP with recourse. The travel time oscillation $e_{ij}^k$ by using path $k$ between nodes $i$ and $j$. We present each realization (scenario) of random travel time oscillation by $e_{ijk}^{s}$ where $s$ indicates the scenario. In \texttt{MPTSPs}, at the first stage, the decision-maker does not have any information about the travel time oscillation. The tour paths among the nodes, however, should be determined before the complete information is available. The first stage decision variable $y_{ij}$ is represented by the selection of nodes $i$ and $j$ to be visited in a tour. In the second stage where the random travel time $c_{ijk}^{s}$ are avilable, the paths $k$ between each couple of nodes $i$ and $j$ under scenario $s$, $x_{ijk}^{s}$ can be calculated. 
 
@@ -453,9 +511,9 @@ The first sum in the objective function (\ref{mptsps:obj}) represents the first 
 			$e_{ijk}^{s}$ & \textrm{the error on the travel time on estimated for arc $(i,j)$ and path $k$ under scenario $s$} \\ 
 			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\  \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$\phi_{ij}$ (1st stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
-			$x_{ijk}^{s}$ (1st stage) & \textrm{1 if node $j$ is visited just after node $i$, 0 otherwise} \\ 
-			$y_{ij}$ (2nd stage)& \textrm{1 if path $k$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise} \\  
+			$\phi_{ij}$ ($1^{\textrm{st}}$ stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
+			$y_{ij}$ ($1^{\textrm{st}}$ stage)& \textrm{1 if path $k$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise} \\  
+			$x_{ijk}^{s}$ ($2^{\textrm{nd}}$ stage) & \textrm{1 if node $j$ is visited just after node $i$, 0 otherwise} \\ 
 			\bottomrule
 		\end{tabular}
 	}
@@ -525,9 +583,9 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 			$c_{t}^l$ & production capacity at time $t$ under scenario $l$\\
 			$\PP(l)$ & the probability of occurence of scenario $l$\\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables}} \\
-			$y_{it}$ (1st stage)  & number of units of size $i$ produced at time $t$ \\
-			$x_{ijt}^l$ (2nd stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
-			$z_{it}^l$ (2nd stage)& 1 if we produce size $i$ at time $t$ under scenario $l$, 0 otherwise\\
+			$y_{it}$ ($1^{\textrm{st}}$ stage)  & number of units of size $i$ produced at time $t$ \\
+			$x_{ijt}^l$ ($2^{\textrm{nd}}$ stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
+			$z_{it}^l$ ($2^{\textrm{nd}}$ stage)& 1 if we produce size $i$ at time $t$ under scenario $l$, 0 otherwise\\
 			\bottomrule
 		\end{tabular}
 	}
@@ -654,6 +712,7 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 
 
 \section{Concluding remarks}
+\textcolor{red}{(not finished yet) Any further contribution or suggestions for \texttt{SIPLIB 2.0} are always welcomed. Better solutions than discovered so far, more functions, more problems with \texttt{Julia} scripts for instance generation, more effective classification rules, etc.}
 
 %\begin{acknowledgements}
 %If you'd like to thank anyone, place your comments here
@@ -666,8 +725,6 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 %\bibliographystyle{spphys}       % APS-like style for physics
 %\bibliography{}   % name your BibTeX data base
 \begin{thebibliography}{9} 
-	\bibitem{example}
-	Author1 and Author2, paper paper paper paper, Journal Title 68 (2011), 1207--1221.
 	\bibitem{web:SIPLIB1}
 	S. Ahmed, R. Garcia, N. Kong, L. Ntaimo, G. Parija, F. Qiu, S. Sen. SIPLIB: A Stochastic Integer Programming Test Problem Library. http://www.isye.gatech.edu/~sahmed/siplib, 2015.
 	\bibitem{web:SPS}
@@ -708,6 +765,8 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 	Kibaek Kim, Fan Yang, Victor M. Zavala, and Andrew A. Chien, Data centers as dispatchable loads to harness stranded power, IEEE Transactions on sustainable energy, 2017
 	\bibitem{journal:NS2005}
 	Lewis Ntaimo and Suvrajeet Sen, The million-variable ``March'' for stochastic combinatorial optimization, Journal of Global Optimization, 2005
+	\bibitem{MIPLIB}
+	Koch et al., MIPLIB 2010, Mathmatical Programming Computation, 2011
 \end{thebibliography}
 \end{document}
 % end of file template.tex
