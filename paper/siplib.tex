@@ -130,7 +130,7 @@ The \texttt{SIPLIB} \cite{web:SIPLIB1} is an abbreviated term of the Stochastic 
 At the time \texttt{SIPLIB} appeared, it provided enoughly large-sized instances that is reasonable to argue that the performance of algorithm is remarkable if it solves the instances. State-of-the-art in SIP combined with the speedup in computing machinery, however, makes many instances in \texttt{SIPLIB} so easy that we have not enough basis to use them for showing the excellence of newly suggested solution methods. At this point, we are motivated to develop the second version of \texttt{SIPLIB}, say \texttt{SIPLIB 2.0} that provides larger-sized test instances with higher degree of tailorability, e.g., users can easily generate instances of test problems as largely as they want.% in terms of the number of scenarios included.
 
 %(What SIP is and our restriction) 
-\textcolor{red}{(as we include \texttt{DCLP} (data center location problem), this paragraph should be modified)} Stochastic programming (SP) is a framework for modeling optimization problems that involve uncertainty. Whereas optimization problems are typically formulated with known parameters, the problems in real world contain some unknown parameters in many cases. For details on SP, see, e.g., \cite{web:SPS,book:BL2011}. SIP is a branch of SP that indicates any type of SP including at least one integer decision variable. The integers can be placed anywhere in general SIP. \textcolor{red}{However, we restrict our focus on two-stage SIP that contains integer variables (including binary) in its second stage throughout this paper and \texttt{SIPLIB 2.0}.} The main reason is that the class of SIP is most widely used to model real world problems. Moreover, two-stage SIP itself has enough difficulties that have not been conquered yet even without any other details like chance-constraints and multi-stages. The main difficulty in solving two-stage SIP is that the second-stage value function is not necessarily convex, but only lower semicontinuous. Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when the second stage integer variables are present \cite{journal:AG2004}. Hereinafter, we use the term SIP to indicate the two-stage SIP that contains integer variables in its second stage.
+\textcolor{red}{(as we include \texttt{DCLP} (data center location problem), this paragraph must be modified)} Stochastic programming (SP) is a framework for modeling optimization problems that involve uncertainty. Whereas optimization problems are typically formulated with known parameters, the problems in real world contain some unknown parameters in many cases. For details on SP, see, e.g., \cite{web:SPS,book:BL2011}. SIP is a branch of SP that indicates any type of SP including at least one integer decision variable. The integers can be placed anywhere in general SIP. \textcolor{red}{However, we restrict our focus on two-stage SIP that contains integer variables (including binary) in its second stage throughout this paper and \texttt{SIPLIB 2.0}.} The main reason is that the class of SIP is most widely used to model real world problems. Moreover, two-stage SIP itself has enough difficulties that have not been conquered yet even without any other details like chance-constraints and multi-stages. The main difficulty in solving two-stage SIP is that the second-stage value function is not necessarily convex, but only lower semicontinuous. Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when the second stage integer variables are present \cite{journal:AG2004}. Hereinafter, we use the term SIP to indicate the two-stage SIP that contains integer variables in its second stage.
 
 %(SMPS, Julia)
 We provide the test sets in two formats: \texttt{SMPS} files (*.cor, *.tim, *.stoch) and \texttt{Julia} files (*.jl). \texttt{SMPS} is widely used to describe stochastic linear and quadratic programs. Once having \texttt{SMPS} files of a problem instance, we can directly solve it using various mixed integer linear program (MILP) solvers such as \texttt{CPLEX}, \texttt{GUROBI}, and \texttt{CBC}. One can also use the existing open-source SIP solvers like \texttt{DSP} \cite{journal:KZ2015}, \texttt{PySP} \cite{journal:WWH2012}, and \texttt{SMI} \cite{web:SMI} given that \texttt{SMPS} files. A drawback of \texttt{SMPS} format is its low readability by human, which we decided to provide \texttt{Julia} files to let users be able to easily read problems and tailor the instances.
@@ -300,17 +300,22 @@ In this section, we introduce details for each problem in \texttt{SIPLIB 2.0}. W
 \texttt{DCAP} is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. In \texttt{SIPLIB}, 12 instances are available in \texttt{SMPS} format with the largest instance comprises of 500 scenarios correspond to the size of 9,012 rows and 18,018 columns. We refer to \cite{journal:AG2004} for writing \texttt{Julia} scripts.
 %\texttt{DCAP} is a problem of deciding the capacity expansion schedule for $m$ resources over $T$ time periods in order to satisfy the processing requirements of $n$ tasks.
 \subsubsection{Mathematical formulation}
+We consider the problem of deciding the capacity expansion schedule for $|R|$ resources over $|T|$ time periods to satisfy the processing requirements of $|N|$ tasks where $R$, $T$, and $N$ denote set of resources, set of time periods, and set of tasks, respectively. We define decision variables: the first-stage continuous variable $x_{it}$ for the capacity acquisition of resource $i$ in period $t$ and the second-stage binary variable $y_{ijt}^s$ to indicate whether resource $i$ is assigned to task $j$ in period $t$ under scenario $s$. Additional first-stage binary variable $u_{it}$ is for logical constraint whether or not we decided to acquire more capacity of resource $i$ in period $t$. Hence, for all resource $i\in M$ and time $t\in T$, $u_{it}=1$ if $x_{it}>0$, $u_{it}=0$ otherwise. 
+
+Under the definition of the decision variables, the extensive form of \texttt{DCAP} is written below and the summarized notation is available in Table \ref{dcap:notation}.
+
 \begin{subequations}
 	\begin{align}
-	(\texttt{DCAP})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in M}\left(\alpha_{it}x_{it}+\beta_{it}u_{it}\right)+\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T}\sum_{i\in M\cup\{0\}}\sum_{j\in N}c_{ijt}^{s}y_{ij}^s\\
-	\textrm{s.t.}\ &x_{it}\le u_{it},\quad\forall i\in M,\ \forall t\in T,\\
-	&\sum_{j\in N}d_{jt}^s y_{ijt}^s\le\sum_{\tau=1}^{t}x_{i\tau},\quad\forall i\in M,\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&\sum_{i\in M\cup \{0\}}y_{ijt}^s=1,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
-	&x_{it}\ge 0,\quad\forall i\in M\cup\{0\},\ \forall t\in T,\\
-	&u_{it}\in\{0,1\}, \quad\forall i\in M\cup\{0\},\ \forall t\in T,\\
-	&y_{ijt}^s\in\{0,1\},\quad\forall i\in M\cup\{0\},\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},
+	(\texttt{DCAP})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in R}\left(\alpha_{it}x_{it}+\beta_{it}u_{it}\right)+\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T}\sum_{i\in M\cup\{0\}}\sum_{j\in N}c_{ijt}^{s}y_{ij}^s	\label{dcap:obj} \\
+	\textrm{s.t.}\ & \textcolor{red}{x_{it}\le Mu_{it}},\quad\forall i\in R,\ \forall t\in T,	\label{dcap:b}\\
+	&\sum_{j\in N}d_{jt}^s y_{ijt}^s\le\sum_{\tau=1}^{t}x_{i\tau},\quad\forall i\in R,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:c}\\
+	&\sum_{i\in R\cup \{0\}}y_{ijt}^s=1,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \label{dcap:d} \\
+	&x_{it}\ge 0,\quad\forall i\in R\cup\{0\},\ \forall t\in T,\label{dcap:e} \\
+	&u_{it}\in\{0,1\}, \quad\forall i\in R\cup\{0\},\ \forall t\in T,\label{dcap:f}\\
+	&y_{ijt}^s\in\{0,1\},\quad\forall i\in R\cup\{0\},\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:g}
 	\end{align}
 \end{subequations}
+The objective function (\ref{dcap:obj}) is to minimize total expected cost for the capacity expansion schedule. The first double summation denotes the expansion cost for resource $i$ in period $t$ where $\alpha_{it}$ and $\beta_{it}$ are the variable and fixed cost, respectively. The second term in the objective function represents the expected assignment cost in period $t$ over all scenario $s\in\mathcal{S}$. Note that a dummy resource $i=0$ is included with infinite capacity. The cost $c_{0jt}^s$ denotes the penalty of failing to assign a resource to task $j$. The dummy resource enforces the \textit{complete recourse property}, which ensures that there is a feasible second-stage assignment in all periods and all scenarios for any capacity acquisition schedule \cite{journal:AG2004}. Constraint (\ref{dcap:b}) is the logical constraint containing a suitably large value $M$ to define the cost for capacity expansion. Constraint (\ref{dcap:c}) reflects that the processing requirement of all tasks assigned to a resource in any period cannot exceed the installed capacity in that period under all scenarios. Constraint (\ref{dcap:d}) guarantees that each task needs to be assigned to exactly one resource in each period under all scenarios. Finally, constraints (\ref{dcap:e})-(\ref{dcap:g}) restrict the space from which the variables take values.
 
 
 \begin{table}[H]
@@ -321,7 +326,7 @@ In this section, we introduce details for each problem in \texttt{SIPLIB 2.0}. W
 		\begin{tabular}{ll}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
-			$M$ & index set of resources ($i\in M\cup\{0\}$ where $0$ is a dummy resource with infinite capacity) \\ 
+			$R$ & index set of resources ($i\in R\cup\{0\}$ where $0$ is a dummy resource with infinite capacity) \\ 
 			$N$ & index set of tasks ($j\in N$)\\ 
 			$T$ & index set of time periods ($t\in T$)\\
 			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$) \\ \midrule
@@ -341,7 +346,15 @@ In this section, we introduce details for each problem in \texttt{SIPLIB 2.0}. W
 \end{table} 
 
 \subsubsection{Scenario data generation}
-
+There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, $|T|$, and $|\mathcal{S}|$. Once we decide the factors by, $n_R=|R|$, $n_N=|N|$, $n_T=|T|$, and $n_\mathcal{S}=|\mathcal{S}|$, each instance is named by \texttt{DCAP\_$n_R$\_$n_N$\_$n_T$\_$n_\mathcal{S}$}. \textcolor{red}{Since no original parameter is available, we randomly generate the parameters as long as they are valid.} Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
+\begin{align*}
+	\alpha_{it}&=5U+5,\quad\forall i\in R,\ \forall t\in T, \\
+	\beta_{it} &=40U+10,\quad\forall i\in R,\ \forall t\in T, \\
+	c_{ijt}^s  &=5U+5,\quad\forall i\in R,\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
+	c_{0jt}^s  &=500U+500,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
+	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
+\end{align*}
+\textcolor{red}{For the first-stage parameters $\alpha_{it}$ and $\beta_{it}$, we fix the random seed to make it deterministic.}
 
 \subsection{\texttt{DCLP}: Data center location problem}
 
@@ -358,14 +371,14 @@ We refer \cite{journal:AAD2014} for writing \texttt{Julia} script for \texttt{SI
 \subsubsection{Mathematical formulation}
 We have three types of items $x$, $z$, and $y$ where the first two types are of the first-stage and the last one is of the second-stage with stochastic scenarios. For each type, we have $|I|$ number of items where $I$ is the index set of the items. Hence, we define the binary variables $x_i$, $z_i$, and $y_i^s$ which are equal to 1 if the $i^{\mathrm{th}}$ item is decided to be included ($s$ denotes scenario so only appears in $y$-type variables). We consider two types of knapsacks: one associated with $x$-type and $z$-type items (say \texttt{xz}-knapsack) and the other one with $x$-type and $y$-type items (say \texttt{xy}-knapsack). \texttt{xz}-knapsacks are indexed by $j\in J$ and \texttt{xy}-knapsacks are indexed by $k\in K$.  Each knapsack has its own minimum level of profit that should be satisfied by the items of the associated types, e.g., the profit of the $j^{\mathrm{th}}$ \texttt{xz}-type knapsack is calculated based on the inclusion or exclusion of $x$-type and $z$-type items and should satisfy a certain requirement $b_j$. Bear in mind that the inclusion or exclusion of a certain item $i$ affects all the associated knapsacks.
  
-Each parameter $c_i$, $d_i$, and $q_i^s$ denotes the gain of weight when including items of type $x$, $z$, and $y$, respectively. Here, $c_i$ and $d_i$ are deterministic and $q_i^s$ is stochastic. Parameters $a_{ij}$, $e_{ij}$, $t_{ik}$, and $w_{ik}$ are all deterministic and denote the profits for including items in the knapsacks. The RHS parameters $b_j$ and $h_k$ are the minimum levels of profit requirements for \texttt{xz}-knapsacks and \texttt{xy}-knapsacks, respectively.
+Each parameter $c_i$, $d_i$, and $q_i^s$ denotes the gain of weight when including items of type $x$, $z$, and $y$, respectively. Here, $c_i$ and $d_i$ are deterministic and $q_i^s$ is stochastic. Parameters $a_{ji}$, $e_{ji}$, $t_{ki}$, and $w_{ki}$ are all deterministic and denote the profits for including items in the knapsacks. The RHS parameters $b_j$ and $h_k$ are the minimum levels of profit requirements for \texttt{xz}-knapsacks and \texttt{xy}-knapsacks, respectively.
 
 The extensive form of \texttt{SMKP} is as follows and the notations used are summrized in Table \ref{smkp:notation}.
 \begin{subequations}
 	\begin{align}
 	(\texttt{SMKP})\ \textrm{min}\ &\sum_{i \in I}\left(c_i x_i + d_i z_i\right) + \sum_{s\in\mathcal{S}}\PP(s)\sum_{i\in I}q_i^s y_i^s \label{smkp:obj}\\
-	\textrm{s.t.}\ &  \sum_{i\in I}a_{ij}x_{i} + \sum_{i \in I}e_{ij}z_i\ge b_j,\quad\forall j\in J, \label{smkp:b}\\
-	&  \sum_{i\in I} t_{ik}x_i + \sum_{i\in I}w_{ik} y_i^s\ge h_k,\quad\forall k\in K,\ \forall s\in\mathcal{S}, \label{smkp:c}\\
+	\textrm{s.t.}\ &  \sum_{i\in I}a_{ji}x_{i} + \sum_{i \in I}e_{ji}z_i\ge b_j,\quad\forall j\in J, \label{smkp:b}\\
+	&  \sum_{i\in I} t_{ki}x_i + \sum_{i\in I}w_{ki} y_i^s\ge h_k,\quad\forall k\in K,\ \forall s\in\mathcal{S}, \label{smkp:c}\\
 	&  x_i\in\{0,1\},\quad\forall i\in I, \label{smkp:d}\\
 	&  z_i\in\{0,1\},\quad\forall i\in I, \label{smkp:e}\\
 	&  y_i^s\in\{0,1\},\quad\forall i\in I,\ \forall s\in \mathcal{S}. \label{smkp:f}
@@ -390,24 +403,36 @@ The objective (\ref{smkp:obj}) is to minimize the expected value of the total we
 			$c_{i}$ 	& weight of the $i^{\mathrm{th}}$ $x$-type item 		\\ 
 			$d_{i}$ 	& weight of the $i^{\mathrm{th}}$ $z$-type item  		\\ 
 			$q_{i}^{s}$ & weight of the $i^{\mathrm{th}}$ $y$-type item under scenario $s$ 		\\ 
-			$a_{ij}$	& profit of the $j^{\mathrm{th}}$ \texttt{xz}-knapsack for including $i^{\mathrm{th}}$ $x$-type item		\\
-			$e_{ij}$	& profit of the $j^{\mathrm{th}}$ \texttt{xz}-knapsack for including $i^{\mathrm{th}}$ $z$-type item		\\
-			$t_{ik}$	& profit of the $k^{\mathrm{th}}$ \texttt{xy}-knapsack for including $i^{\mathrm{th}}$ $x$-type item	\\
-			$w_{ik}$	& profit of the $k^{\mathrm{th}}$ \texttt{xy}-knapsack for including $i^{\mathrm{th}}$ $y$-type item		\\
+			$a_{ji}$	& profit of the $j^{\mathrm{th}}$ \texttt{xz}-knapsack for including $i^{\mathrm{th}}$ $x$-type item		\\
+			$e_{ji}$	& profit of the $j^{\mathrm{th}}$ \texttt{xz}-knapsack for including $i^{\mathrm{th}}$ $z$-type item		\\
+			$t_{ki}$	& profit of the $k^{\mathrm{th}}$ \texttt{xy}-knapsack for including $i^{\mathrm{th}}$ $x$-type item	\\
+			$w_{ki}$	& profit of the $k^{\mathrm{th}}$ \texttt{xy}-knapsack for including $i^{\mathrm{th}}$ $y$-type item		\\
 			$b_j$		& minimum required profit for the $j^{\mathrm{th}}$ \texttt{xz}-knapsack		\\
 			$h_k$		& minimum required profit for the $k^{\mathrm{th}}$ \texttt{xy}-knapsack		\\
 			$\PP(s)$ 	& \textrm{the probability of occurence of scenario $s$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$x_{j}$ ($1^{\textrm{st}}$ stage) & 1 if the $j^{\mathrm{th}}$ $x$-type item is decided to be included, 0 otherwise \\ 
-			$z_{j}$ ($1^{\textrm{st}}$ stage) & 1 if the $j^{\mathrm{th}}$ $z$-type item is decided to be included, 0 otherwise \\ 
-			$y_{j}^s$ ($2^{\textrm{nd}}$ stage)& 1 if the $j^{\mathrm{th}}$ $y$-type item is decided to be included under scenario $s$, 0 otherwise  \\
+			$x_{i}$ ($1^{\textrm{st}}$ stage) & 1 if the $i^{\mathrm{th}}$ $x$-type item is decided to be included, 0 otherwise \\ 
+			$z_{i}$ ($1^{\textrm{st}}$ stage) & 1 if the $i^{\mathrm{th}}$ $z$-type item is decided to be included, 0 otherwise \\ 
+			$y_{i}^s$ ($2^{\textrm{nd}}$ stage)& 1 if the $i^{\mathrm{th}}$ $y$-type item is decided to be included under scenario $s$, 0 otherwise  \\
 			\bottomrule
 		\end{tabular}
 	}
 \end{table} 
 
 \subsubsection{Scenario data generation}
-
+There are two factors that define the instance of \texttt{SMKP}: $|I|$ and $|\mathcal{S}|$. The sizes for another sets are fixed by $|J|=50$ and $|K|=5$ following \cite{journal:AAD2014}. Once we decide the factors by $n_I=|I|$, $n_S=|\mathcal{S}|$, $n_T=|T|$, and $n_\mathcal{S}=|\mathcal{S}|$, each instance is named by \texttt{SMKP\_$n_I$\_$n_\mathcal{S}$}. Again directly following \cite{journal:AAD2014}, we randomly generate the parameters. Let $U$ be a discrete uniform random variable: $U\sim Unif[1,100]$. Then, the parameters are generated as follows:
+\begin{align*}
+c_i		&=	U,\quad\forall i\in I, \\
+d_i		&=	U,\quad\forall i\in I, \\
+q_i^s	&= 	U,\quad\forall i\in I,\ \forall s\in\mathcal{S},\\
+a_{ji}	&=	U,\quad\forall j\in J,\ \forall i\in I, \\
+e_{ji}	&=	U,\quad\forall j\in J,\ \forall i\in I, \\
+t_{ki}	&=	U,\quad\forall k\in K,\ \forall i\in I, \\
+w_{ki}	&=	U,\quad\forall k\in K,\ \forall i\in I,  \\
+b_j		&=	\frac{3}{4}\sum_{i\in I}\left(a_{ji}+e_{ji}\right),\quad\forall j\in J, \\
+h_k		&=	\frac{3}{4}\sum_{i\in I}\left(t_{ji}+w_{ji}\right),\quad\forall k\in K. 
+\end{align*}
+\textcolor{red}{For the first-stage parameters, we fix the random seed to make it deterministic.}
 
 \subsection{\texttt{SSLP}: Stochastic server location problem}
 \texttt{SSLP} is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \texttt{SSLP} finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \texttt{SIPLIB} provides 12 instances with varying number of clients, server locations, and scenarios in \texttt{SMPS} format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables.
@@ -492,7 +517,7 @@ The extensive form of \texttt{MPTSPs} is as follows and the notations used are s
 &\phi_{ij} \ge 0, \quad \forall i\in N,\ \forall j\in N. \label{mptsps:con8}
 \end{align}
 \end{subequations}
-The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{journal:GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the polyhedral sets from which the variables take values.
+The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{journal:GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the space from which the variables take values.
 
 \begin{table}[H]
 	\caption{Notations for \texttt{MPTSPs}}
