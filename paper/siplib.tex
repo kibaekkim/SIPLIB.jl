@@ -441,8 +441,13 @@ We refer to \cite{journal:NS2005} for mathematical formulation and data generati
 
 
 \subsubsection{Mathematical formulation}
+Let $I$, $J$, $Z$, and $\mathcal{S}$ be index sets for the clients, servers, zones, and scenarios. For $i\in I$, $j\in J$, $z\in Z$, and $s\in\mathcal{S}$, we define the notations in Table \ref{sslp:notation}.
 
+Suppose that we place a server at location $j$. Then, the allocation costs $c_j$ and the server will provide capacity to serve up to $u$ amount of resource to clients. The revenue earned by serving client $i$ from location $j$ is denoted by $q_{ij}$. We have also a shortage cost (penalty) $q_{0j}$ for each unit of demand that remains unserved among the clients assigned to server $j$. If client $i$ is served by a server at location $j$, it uses $d_{ij}$ units of resource from the server. We allow only one server to be installed at each location and each client can only be served by one server. There is a requirement that a minimum number of servers to be located in a zone $z$, and is denoted by $w_z$. 
 
+The first-stage binary variables $x_j$ decide whether or not a server is located at location $j$. The second-stage binary variables $y_{ij}^s$ are referred to as recourse decision under scenario $s$ and associated with the decision on serving client $i$ by server $j$. The variables $y_{ij}^s$ will be implemented in the future, when scenario $s$ is finally observed.
+
+Based on the above, the extensive form of \texttt{SSLP} can be stated as follows:
 \begin{subequations}
 	\begin{align}
 	(\texttt{SSLP})\ \textrm{min}\ &	\sum_{j\in J}c_j x_j - \sum_{s\in\mathcal{S}}\PP(s)\left(\sum_{i\in I}\sum_{j\in J}q_{ij}^s y_{ij}^s - \sum_{j\in J}q_{0j}^s y_{0j}^s \right) \label{sslp:obj} \\ 
@@ -455,17 +460,17 @@ We refer to \cite{journal:NS2005} for mathematical formulation and data generati
 	&y_{0j}^s\ge 0,\quad\forall j\in J,\ \forall s\in\mathcal{S} \label{sslp:h}.
 	\end{align}
 \end{subequations}
-
+The objective function (\ref{sslp:obj}) is to maximize total expected revenue of locating servers and serving customers by the servers. Constraint (\ref{sslp:b}) satisfies the requirement that only up to a total of $v$ available servers can be installed. The zonal requirements that specify how many servers are needed in each zone are given by constraint (\ref{sslp:c}). Constraint (\ref{sslp:d}) ensures that a server located at site $j$ can serve only up to its capacity $u$. The variable $y_{0j}^s$ is introduced in the constraint (\ref{sslp:d}) to accomodate any overflows that are not served due to limitations in server capacity. These overflows result in a loss of revenue at a rate of $q_{0j}^s$. The inclusion of an artificial variable may allow a client to be assigned to servers that are not located. However, penalty costs associated with such an assignment may result in such high costs as to preclude it in an optimal solution, unless server capacity is so limited that some clients have to be turned away \cite{journal:NS2005}. Constraint (\ref{sslp:e}) guarantees that each client is served by only one server. Constraint (\ref{sslp:f}) and (\ref{sslp:g}) are binary restrictions on the decision variables. Finally, constraint (\ref{sslp:h}) is the non-negativity requirement on the overflow variables.
 \begin{table}[H]
 	\caption{Notations for \texttt{SSLP}}
-	\label{notation}
+	\label{sslp:notation}
 	\resizebox{\textwidth}{!}
 	{
 		\begin{tabular}{ll}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$I$ 		  & index set of clients ($i\in I$)  \\ 
-			$J$ 		  & index set of servers ($j\in J$)\\ 
+			$J$ 		  & index set of server locations ($j\in J$)\\ 
 			$Z$ 		  & index set of zones ($z\in Z$) \\
 			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$)	\\ \midrule
 			\multicolumn{2}{l}{\textbf{Parameters:}} \\
@@ -488,9 +493,19 @@ We refer to \cite{journal:NS2005} for mathematical formulation and data generati
 	}
 \end{table} 
 
-
 \subsubsection{Scenario data generation}
-
+For each instance of \texttt{SSLP}, we determine $n_I=|I|$, $n_J=|J|$, and $n_\mathcal{S}=|\mathcal{S}|$. Then, the instance is named by \texttt{SSLP\_$n_I$\_$n_J$\_$n_\mathcal{S}$}. The client-server revenue are set to be 1 per unit of client demand. Some of deterministic parameters are randomly generated from the discrete uniform distribution while scenario data are generated from the Bernoulli distribution. In summary, the parameters are generated as follows:
+\begin{align*}
+c_j	&=Unif[40,80],\quad\forall j\in J,\\
+q_{ij}^s	&= d_{ij},\quad\forall i\in I,\ \forall j\in J,\ \forall s\in\mathcal{S},\\
+q_{0j}^s	&=	1000,\quad\forall j\in J,\ \forall s\in\mathcal{S},\\
+d_{ij}	&= Unif[0,25],\quad\forall i\in I,\ \forall j\in J,\\
+h_i^s	&= Bernoulli(0.5),\quad\forall i\in I,\ \forall s\in \mathcal{S},\\
+v 		&= |J|	\\
+\textcolor{red}{u	}&\textcolor{red}{=		}\\
+\textcolor{red}{w_z	}&\textcolor{red}{=		}\\
+\textcolor{red}{J_z	}&\textcolor{red}{=	}
+\end{align*}
 
 \subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
 \texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. 
@@ -586,9 +601,31 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 
 
 \subsection{\texttt{SIZES}: Selection of an optimal subset of sizes}
-\texttt{SIZES} is a simplified version of the cutting stock problem with multi-period stochastic demand. In this problem, the term \textit{period} can be exchangeably used with \textit{stage}. The first period (first stage) demand is deterministic whereas demands for the other periods (stages) are stochastic with scenarios. We only consider the two-periods (i.e., two stage) model to follow \cite{journal:JSW1999} as well as the SIP of interest discussed in Section \ref{sec:SIP}. In \texttt{SIPLIB}, only three instances are available in \texttt{SMPS} files. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \texttt{JuMP.Model}. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \texttt{SIPLIB 2.0}.
+\texttt{SIZES} is a simplified version of the cutting-stock problem with multi-period stochastic demand. In this problem, the term \textit{period} can be exchangeably used with \textit{stage}. The first period (first stage) demand is deterministic whereas demands for the other periods (stages) are stochastic with scenarios. We only consider the two-periods (i.e., two stage) model to follow \cite{journal:JSW1999} as well as the SIP of interest discussed in Section \ref{sec:SIP}. In \texttt{SIPLIB}, only three instances are available in \texttt{SMPS} files. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \texttt{JuMP.Model}. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \texttt{SIPLIB 2.0}.
 
 \subsubsection{Mathematical formulation}
+Suppose a product is available in a finite number $|N|$ of sizes where 1 is the index of the smallest size and $|N|$ is the index of the largest size. Further, suppose size $i$ is substitutable for size $j$ if $i>j$, i.e., larger-sized items may fulfill demand for smaller sizes. Unlike typical cutting-stock problem, an item cannot be substituted into several pieces. 
+
+Let $p_i$ be the unit production cost for size $i$. Generally $p_i>p_j$ for $i>j$. Let $s$ be the setup cost for producing units of any size and $r$ be the unit penalty cost of meeting demand for size $j$ with a larger size $i$.
+
+We introduce three decision variables. The first-stage integer variable $y_{it}$ is the number of units of sizes $i$ produced at time $t$. The second-stage integer variable $x_{ijt}^l$ denotes the number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$. The second-stage binary variable $z_i$ denotes whether or not we produce size $i$ item at time $t$ under scenario $l$. 
+
+Based on the above definitions, \texttt{SIZES} can be fomulated by the following extensive form.
+\begin{subequations}
+	\begin{align}
+	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\left(\sum_{i\in N} sz_{it}^l+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijt}^l\right) \label{sizes:obj}\\
+	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{t}^l,\quad \forall t\in T,\ \forall l\in \mathcal{L}, \label{sizes:b}\\
+	&\sum_{i=j}^{|N|} x_{ijt}^l \ge d_{jt}^l,\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\label{sizes:c}\\
+	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^l\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:d}\\
+	&y_{it}\le c_{t}^l z_{it}^l,\quad\forall i \in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:e}\\
+	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\label{sizes:f}\\
+	&x_{ijt}^l\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:g}\\
+	&z_{it}^l\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.\label{sizes:h}
+	\end{align}
+\end{subequations}
+The first sum of the objective function (\ref{sizes:obj}) is the unit costs for producing items for all time periods. The second term corresponds to the expectation of the setup costs and penalty costs for substituting items. Constraint (\ref{sizes:b}) ensures the production for each period cannot exceed the capacity under all scenarios. Constraint (\ref{sizes:c}) and (\ref{sizes:d}) guarantee the demand for each item can be met for all time periods and for all scenarios. In particular, constraint (\ref{sizes:d}) means the demand can be met by the items that are produced in the previous periods. Constraint (\ref{sizes:e}) enforces the production limits. Constraints (\ref{sizes:f})-(\ref{sizes:h}) are binary or integer restrictions of decision variables.
+
+
 \begin{table}[H]
 	\caption{Notations for \texttt{SIZES}}
 	\label{notation}
@@ -615,20 +652,6 @@ Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
 		\end{tabular}
 	}
 \end{table} 
-
-\begin{subequations}
-	\begin{align}
-	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\left(\sum_{i\in N} sz_{it}^l+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijt}^l\right) \\
-	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{t}^l,\quad \forall t\in T,\ \forall l\in \mathcal{L}, \\
-	&\sum_{i=j}^{|N|} x_{ijt}^l \ge d_{jt}^l,\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\\
-	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^l\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
-	&y_{it}\le c_{t}^l z_{it}^l,\quad\forall i \in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
-	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\\
-	&x_{ijt}^l\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\\
-	&z_{it}^l\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.
-	\end{align}
-\end{subequations}
-
 \subsubsection{Scenario data generation}
 
 
