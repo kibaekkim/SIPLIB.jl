@@ -1,0 +1,485 @@
+\section*{Appendix}
+\subsection*{Problem descriptions} \label{sec:prob_desc}
+
+In this section, we introduce details for each problem in \texttt{SIPLIB 2.0}. We also explain the scenario data generation procedures. Due to limited access to the original data in reference papers, we selectively choose the methods from several available references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to make the procedure clear.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
+
+\subsection{\texttt{DCAP}: Dynamic capacity planning with stochastic demand}
+\texttt{DCAP} is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. In \texttt{SIPLIB}, 12 instances are available in \texttt{SMPS} format with the largest instance comprises of 500 scenarios correspond to the size of 9,012 rows and 18,018 columns. We refer to \cite{journal:AG2004} for writing \texttt{Julia} scripts.
+%\texttt{DCAP} is a problem of deciding the capacity expansion schedule for $m$ resources over $T$ time periods in order to satisfy the processing requirements of $n$ tasks.
+\subsubsection{\texttt{DCAP}: Mathematical formulation}
+We consider the problem of deciding the capacity expansion schedule for $|R|$ resources over $|T|$ time periods to satisfy the processing requirements of $|N|$ tasks where $R$, $T$, and $N$ denote set of resources, set of time periods, and set of tasks, respectively. We define decision variables: the first-stage continuous variable $x_{it}$ for the capacity acquisition of resource $i$ in period $t$ and the second-stage binary variable $y_{ijt}^s$ to indicate whether resource $i$ is assigned to task $j$ in period $t$ under scenario $s$. Additional first-stage binary variable $u_{it}$ is for logical constraint whether or not we decided to acquire more capacity of resource $i$ in period $t$. Hence, for all resource $i\in M$ and time $t\in T$, $u_{it}=1$ if $x_{it}>0$, $u_{it}=0$ otherwise. 
+
+Under the definition of the decision variables, the extensive form of \texttt{DCAP} is written below and the summarized notation is available in Table \ref{dcap:notation}.
+
+\begin{subequations}
+	\begin{align}
+	(\texttt{DCAP})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in R}\left(\alpha_{it}x_{it}+\beta_{it}u_{it}\right)+\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T}\sum_{i\in M\cup\{0\}}\sum_{j\in N}c_{ijt}^{s}y_{ij}^s	\label{dcap:obj} \\
+	\textrm{s.t.}\ & \textcolor{red}{x_{it}\le Mu_{it}},\quad\forall i\in R,\ \forall t\in T,	\label{dcap:b}\\
+	&\sum_{j\in N}d_{jt}^s y_{ijt}^s\le\sum_{\tau=1}^{t}x_{i\tau},\quad\forall i\in R,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:c}\\
+	&\sum_{i\in R\cup \{0\}}y_{ijt}^s=1,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \label{dcap:d} \\
+	&x_{it}\ge 0,\quad\forall i\in R\cup\{0\},\ \forall t\in T,\label{dcap:e} \\
+	&u_{it}\in\{0,1\}, \quad\forall i\in R\cup\{0\},\ \forall t\in T,\label{dcap:f}\\
+	&y_{ijt}^s\in\{0,1\},\quad\forall i\in R\cup\{0\},\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:g}
+	\end{align}
+\end{subequations}
+The objective function (\ref{dcap:obj}) is to minimize total expected cost for the capacity expansion schedule. The first double summation denotes the expansion cost for resource $i$ in period $t$ where $\alpha_{it}$ and $\beta_{it}$ are the variable and fixed cost, respectively. The second term in the objective function represents the expected assignment cost in period $t$ over all scenario $s\in\mathcal{S}$. Note that a dummy resource $i=0$ is included with infinite capacity. The cost $c_{0jt}^s$ denotes the penalty of failing to assign a resource to task $j$. The dummy resource enforces the \textit{complete recourse property}, which ensures that there is a feasible second-stage assignment in all periods and all scenarios for any capacity acquisition schedule \cite{journal:AG2004}. Constraint (\ref{dcap:b}) is the logical constraint containing a suitably large value $M$ to define the cost for capacity expansion. Constraint (\ref{dcap:c}) reflects that the processing requirement of all tasks assigned to a resource in any period cannot exceed the installed capacity in that period under all scenarios. Constraint (\ref{dcap:d}) guarantees that each task needs to be assigned to exactly one resource in each period under all scenarios. Finally, constraints (\ref{dcap:e})-(\ref{dcap:g}) restrict the space from which the variables take values.
+
+
+\begin{table}[H]
+	\caption{Notations for \texttt{DCAP}}
+	\label{dcap:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$R$ & index set of resources ($i\in R\cup\{0\}$ where $0$ is a dummy resource with infinite capacity) \\ 
+			$N$ & index set of tasks ($j\in N$)\\ 
+			$T$ & index set of time periods ($t\in T$)\\
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$) \\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$\alpha_{it}$ & variable cost for expanding capacity of resource $i$\\ 
+			$\beta_{it}$ & fixed cost for expanding capacity of resource $i$ \\ 
+			$c_{ijt}^{s}$ & cost of processing task $j$ using resource $i$ in period $t$ under scenario $s$ \\ 
+			$d_{jt}^s$	& processing requirement for task $j$ in period $t$ under scenario $s$		\\
+			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_{it}$ ($1^{\textrm{st}}$ stage) & capacity acquisition amount of resource $i$ in period $t$ \\ 
+			$u_{it}$ ($1^{\textrm{st}}$ stage)& 1 if capacity of resource $i$ is expanded in period $t$, 0 otherwise \\ 
+			$y_{ijt}^s$ ($2^{\textrm{nd}}$ stage)& 1 if resource $i$ is assigned to task $j$ in period $t$ under scenario $s$, 0 otherwise\\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+\subsubsection{\texttt{DCAP}: Data generation}
+There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, $|T|$, and $|\mathcal{S}|$. Once we decide the factors by, $n_R=|R|$, $n_N=|N|$, $n_T=|T|$, and $n_\mathcal{S}=|\mathcal{S}|$, each instance is named by \texttt{DCAP\_$n_R$\_$n_N$\_$n_T$\_$n_\mathcal{S}$}. \textcolor{red}{Since no original parameter is available, we randomly generate the parameters as long as they are valid.} Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
+\begin{align*}
+	\alpha_{it}&=5U+5,\quad\forall i\in R,\ \forall t\in T, \\
+	\beta_{it} &=40U+10,\quad\forall i\in R,\ \forall t\in T, \\
+	c_{ijt}^s  &=5U+5,\quad\forall i\in R,\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
+	c_{0jt}^s  &=500U+500,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
+	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
+\end{align*}
+\textcolor{red}{For the first-stage parameters $\alpha_{it}$ and $\beta_{it}$, we fix the random seed to make it deterministic.}
+
+\subsection{\texttt{DCLP}: Data center location problem}
+
+\subsubsection{\texttt{DCLP}: Mathematical formulation}
+
+\subsubsection{\texttt{DCLP}: Data generation}
+
+
+\subsection{\texttt{SMKP}: Stochastic multiple knapsack problem}
+\texttt{SMKP} is a class of stochastic multiple binary knapsack problems. Unlike typical knapsack problems where the objective is to maximize total profits under the restriction of the weight capacity of each knapsack, \texttt{SMKP} is to minimize total weights while satisfying a certain required profit for each knapsack. 
+
+\texttt{SIPLIB} provides 30 instances of \texttt{SMKP} in total. The first-stage problems contain 240 binary variables and 50 knapsack constraints. The second-stage problems have 120 binary variables and 5 knapsack constraints. Each instance has 20 scenarios. 
+We refer \cite{journal:AAD2014} for writing \texttt{Julia} script for \texttt{SIPLIB 2.0} and explain the model throughout the following subsections.
+\subsubsection{\texttt{SMKP}: Mathematical formulation}
+We have three types of items $x$, $z$, and $y$ where the first two types are of the first-stage and the last one is of the second-stage with stochastic scenarios. For each type, we have $|I|$ number of items where $I$ is the index set of the items. Hence, we define the binary variables $x_i$, $z_i$, and $y_i^s$ which are equal to 1 if the $i^{\mathrm{th}}$ item is decided to be included ($s$ denotes scenario so only appears in $y$-type variables). We consider two types of knapsacks: one associated with $x$-type and $z$-type items (say \texttt{xz}-knapsack) and the other one with $x$-type and $y$-type items (say \texttt{xy}-knapsack). \texttt{xz}-knapsacks are indexed by $j\in J$ and \texttt{xy}-knapsacks are indexed by $k\in K$.  Each knapsack has its own minimum level of profit that should be satisfied by the items of the associated types, e.g., the profit of the $j^{\mathrm{th}}$ \texttt{xz}-type knapsack is calculated based on the inclusion or exclusion of $x$-type and $z$-type items and should satisfy a certain requirement $b_j$. Bear in mind that the inclusion or exclusion of a certain item $i$ affects all the associated knapsacks.
+ 
+Each parameter $c_i$, $d_i$, and $q_i^s$ denotes the gain of weight when including items of type $x$, $z$, and $y$, respectively. Here, $c_i$ and $d_i$ are deterministic and $q_i^s$ is stochastic. Parameters $a_{ji}$, $e_{ji}$, $t_{ki}$, and $w_{ki}$ are all deterministic and denote the profits for including items in the knapsacks. The RHS parameters $b_j$ and $h_k$ are the minimum levels of profit requirements for \texttt{xz}-knapsacks and \texttt{xy}-knapsacks, respectively.
+
+The extensive form of \texttt{SMKP} is as follows and the notations used are summrized in Table \ref{smkp:notation}.
+\begin{subequations}
+	\begin{align}
+	(\texttt{SMKP})\ \textrm{min}\ &\sum_{i \in I}\left(c_i x_i + d_i z_i\right) + \sum_{s\in\mathcal{S}}\PP(s)\sum_{i\in I}q_i^s y_i^s \label{smkp:obj}\\
+	\textrm{s.t.}\ &  \sum_{i\in I}a_{ji}x_{i} + \sum_{i \in I}e_{ji}z_i\ge b_j,\quad\forall j\in J, \label{smkp:b}\\
+	&  \sum_{i\in I} t_{ki}x_i + \sum_{i\in I}w_{ki} y_i^s\ge h_k,\quad\forall k\in K,\ \forall s\in\mathcal{S}, \label{smkp:c}\\
+	&  x_i\in\{0,1\},\quad\forall i\in I, \label{smkp:d}\\
+	&  z_i\in\{0,1\},\quad\forall i\in I, \label{smkp:e}\\
+	&  y_i^s\in\{0,1\},\quad\forall i\in I,\ \forall s\in \mathcal{S}. \label{smkp:f}
+	\end{align}
+\end{subequations}
+
+The objective (\ref{smkp:obj}) is to minimize the expected value of the total weights. Constraint (\ref{smkp:b}) ensures the minimum levels of profit requirements for all \texttt{xz}-knapsacks are satisfied. Constraint (\ref{smkp:c}) guarantees the minimum levels of profit requirements are satisfied for all \texttt{xy}-knapsacks under every scenario. Constraints (\ref{smkp:d})-(\ref{smkp:f}) are binary restriction of the decision variables.
+
+\begin{table}[H]
+	\caption{Notations for \texttt{SMKP}}
+	\label{smkp:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$I$ &  index set of items for each type ($i\in I$)\\ 
+			$J$ &  index set of \texttt{xz}-knapsacks ($j \in J$)\\ 
+			$K$ &  index set of \texttt{xy}-knapsacks ($k \in K$)\\
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$)\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$c_{i}$ 	& weight of the $i^{\mathrm{th}}$ $x$-type item 		\\ 
+			$d_{i}$ 	& weight of the $i^{\mathrm{th}}$ $z$-type item  		\\ 
+			$q_{i}^{s}$ & weight of the $i^{\mathrm{th}}$ $y$-type item under scenario $s$ 		\\ 
+			$a_{ji}$	& profit of the $j^{\mathrm{th}}$ \texttt{xz}-knapsack for including $i^{\mathrm{th}}$ $x$-type item		\\
+			$e_{ji}$	& profit of the $j^{\mathrm{th}}$ \texttt{xz}-knapsack for including $i^{\mathrm{th}}$ $z$-type item		\\
+			$t_{ki}$	& profit of the $k^{\mathrm{th}}$ \texttt{xy}-knapsack for including $i^{\mathrm{th}}$ $x$-type item	\\
+			$w_{ki}$	& profit of the $k^{\mathrm{th}}$ \texttt{xy}-knapsack for including $i^{\mathrm{th}}$ $y$-type item		\\
+			$b_j$		& minimum required profit for the $j^{\mathrm{th}}$ \texttt{xz}-knapsack		\\
+			$h_k$		& minimum required profit for the $k^{\mathrm{th}}$ \texttt{xy}-knapsack		\\
+			$\PP(s)$ 	& \textrm{the probability of occurence of scenario $s$} \\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_{i}$ ($1^{\textrm{st}}$ stage) & 1 if the $i^{\mathrm{th}}$ $x$-type item is decided to be included, 0 otherwise \\ 
+			$z_{i}$ ($1^{\textrm{st}}$ stage) & 1 if the $i^{\mathrm{th}}$ $z$-type item is decided to be included, 0 otherwise \\ 
+			$y_{i}^s$ ($2^{\textrm{nd}}$ stage)& 1 if the $i^{\mathrm{th}}$ $y$-type item is decided to be included under scenario $s$, 0 otherwise  \\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+\subsubsection{\texttt{SMKP}: Data generation}
+There are two factors that define the instance of \texttt{SMKP}: $|I|$ and $|\mathcal{S}|$. The sizes for another sets are fixed by $|J|=50$ and $|K|=5$ following \cite{journal:AAD2014}. Once we decide the factors by $n_I=|I|$, $n_S=|\mathcal{S}|$, $n_T=|T|$, and $n_\mathcal{S}=|\mathcal{S}|$, each instance is named by \texttt{SMKP\_$n_I$\_$n_\mathcal{S}$}. Again directly following \cite{journal:AAD2014}, we randomly generate the parameters. Let $U$ be a discrete uniform random variable: $U\sim Unif[1,100]$. Then, the parameters are generated as follows:
+\begin{align*}
+c_i		&=	U,\quad\forall i\in I, \\
+d_i		&=	U,\quad\forall i\in I, \\
+q_i^s	&= 	U,\quad\forall i\in I,\ \forall s\in\mathcal{S},\\
+a_{ji}	&=	U,\quad\forall j\in J,\ \forall i\in I, \\
+e_{ji}	&=	U,\quad\forall j\in J,\ \forall i\in I, \\
+t_{ki}	&=	U,\quad\forall k\in K,\ \forall i\in I, \\
+w_{ki}	&=	U,\quad\forall k\in K,\ \forall i\in I,  \\
+b_j		&=	\frac{3}{4}\sum_{i\in I}\left(a_{ji}+e_{ji}\right),\quad\forall j\in J, \\
+h_k		&=	\frac{3}{4}\sum_{i\in I}\left(t_{ji}+w_{ji}\right),\quad\forall k\in K. 
+\end{align*}
+\textcolor{red}{For the first-stage parameters, we fix the random seed to make it deterministic.}
+
+\subsection{\texttt{SSLP}: Stochastic server location problem}
+\texttt{SSLP} is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \texttt{SSLP} finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \texttt{SIPLIB} provides 12 instances with varying number of clients, server locations, and scenarios in \texttt{SMPS} format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables.
+
+We refer to \cite{journal:NS2005} for mathematical formulation and data generation forthcoming through the following subsections.
+
+
+\subsubsection{\texttt{SSLP}: Mathematical formulation}
+Let $I$, $J$, $Z$, and $\mathcal{S}$ be index sets for the clients, servers, zones, and scenarios. For $i\in I$, $j\in J$, $z\in Z$, and $s\in\mathcal{S}$, we define the notations in Table \ref{sslp:notation}.
+
+Suppose that we place a server at location $j$. Then, the allocation costs $c_j$ and the server will provide capacity to serve up to $u$ amount of resource to clients. The revenue earned by serving client $i$ from location $j$ is denoted by $q_{ij}$. We have also a shortage cost (penalty) $q_{0j}$ for each unit of demand that remains unserved among the clients assigned to server $j$. If client $i$ is served by a server at location $j$, it uses $d_{ij}$ units of resource from the server. We allow only one server to be installed at each location and each client can only be served by one server. There is a requirement that a minimum number of servers to be located in a zone $z$, and is denoted by $w_z$. 
+
+The first-stage binary variables $x_j$ decide whether or not a server is located at location $j$. The second-stage binary variables $y_{ij}^s$ are referred to as recourse decision under scenario $s$ and associated with the decision on serving client $i$ by server $j$. The variables $y_{ij}^s$ will be implemented in the future, when scenario $s$ is finally observed.
+
+Based on the above, the extensive form of \texttt{SSLP} can be stated as follows:
+\begin{subequations}
+	\begin{align}
+	(\texttt{SSLP})\ \textrm{min}\ &	\sum_{j\in J}c_j x_j - \sum_{s\in\mathcal{S}}\PP(s)\left(\sum_{i\in I}\sum_{j\in J}q_{ij}^s y_{ij}^s - \sum_{j\in J}q_{0j}^s y_{0j}^s \right) \label{sslp:obj} \\ 
+	\textrm{s.t.}\ &\sum_{j\in J}x_j\le v,\label{sslp:b}\\ 
+	&\sum_{j\in J_z}x_j\ge w_z,\quad\forall z\in Z,\label{sslp:c}\\
+	&\sum_{i\in I}d_{ij}y_{ij}^s - y_{0j}^s\le ux_j,\quad\forall j\in J,\ \stkout{\textcolor{red}{\forall i\in I,}}\ \forall s\in\mathcal{S}, \label{sslp:d} \\
+	&\sum_{j\in J}y_{ij}^s=h_i^s,\quad\forall i\in I,\ \forall s\in \mathcal{S}, \label{sslp:e}\\
+	&x_j\in\{0,1\},\quad\forall j\in J,\label{sslp:f}\\
+	&y_{ij}^s\in\{0,1\},\quad\forall i\in I,\ j\in J,\ s\in\mathcal{S}, \label{sslp:g}\\
+	&y_{0j}^s\ge 0,\quad\forall j\in J,\ \forall s\in\mathcal{S} \label{sslp:h}.
+	\end{align}
+\end{subequations}
+The objective function (\ref{sslp:obj}) is to maximize total expected revenue of locating servers and serving customers by the servers. Constraint (\ref{sslp:b}) satisfies the requirement that only up to a total of $v$ available servers can be installed. The zonal requirements that specify how many servers are needed in each zone are given by constraint (\ref{sslp:c}). Constraint (\ref{sslp:d}) ensures that a server located at site $j$ can serve only up to its capacity $u$. The variable $y_{0j}^s$ is introduced in the constraint (\ref{sslp:d}) to accomodate any overflows that are not served due to limitations in server capacity. These overflows result in a loss of revenue at a rate of $q_{0j}^s$. The inclusion of an artificial variable may allow a client to be assigned to servers that are not located. However, penalty costs associated with such an assignment may result in such high costs as to preclude it in an optimal solution, unless server capacity is so limited that some clients have to be turned away \cite{journal:NS2005}. Constraint (\ref{sslp:e}) guarantees that each client is served by only one server. Constraint (\ref{sslp:f}) and (\ref{sslp:g}) are binary restrictions on the decision variables. Finally, constraint (\ref{sslp:h}) is the non-negativity requirement on the overflow variables.
+\begin{table}[H]
+	\caption{Notations for \texttt{SSLP}}
+	\label{sslp:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$I$ 		  & index set of clients ($i\in I$)  \\ 
+			$J$ 		  & index set of server locations ($j\in J$)\\ 
+			$Z$ 		  & index set of zones ($z\in Z$) \\
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$)	\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$c_j$		& cost of locating a server at location $j$	\\
+			$q_{ij}^s$	& revenue from client $i$ being served by server at location $j$ under scenario $s$	\\
+			$q_{0j}^s$	& rate of revenue loss for overflows that are not served due to limited server capacity under scenario $s$	\\
+			$d_{ij}$	& resource demand of client $i$ from server at location $j$	\\
+			$u$			& server capacity	\\
+			$v$			& upper bound on the total number of servers that can be located	\\
+			$w_z$		& minimum number of servers to be located in zone $z$	\\
+			$J_z$		& subset of server locations that belong to zone $z$	\\
+			$h_i^s$		& 1 if client $i$ is present under scenario $s$, 0 otherwise	\\
+			$\PP(s)$ 	& probability of occurence for scenario $s$\\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_j$ ($1^{\textrm{st}}$ stage)  	 & 1 if a server is located at site $j$, 0 otherwise \\
+			$y_{ij}^s$ ($2^{\textrm{nd}}$ stage) & 1 if client $i$ is served by a server at location $j$ under scenario $s$, 0 otherwise\\
+			$y_{0j}^s$ ($2^{\textrm{nd}}$ stage) & non-negative amount of overflows that are not served due to limitations in server $j$'s capacity	\\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+\subsubsection{\texttt{SSLP}: Data generation}
+For each instance of \texttt{SSLP}, we determine $n_I=|I|$, $n_J=|J|$, and $n_\mathcal{S}=|\mathcal{S}|$. Then, the instance is named by \texttt{SSLP\_$n_I$\_$n_J$\_$n_\mathcal{S}$}. The client-server revenue are set to be 1 per unit of client demand. Some of deterministic parameters are randomly generated from the discrete uniform distribution while scenario data are generated from the Bernoulli distribution. In summary, the parameters are generated as follows:
+\begin{align*}
+c_j	&=Unif[40,80],\quad\forall j\in J,\\
+q_{ij}^s	&= d_{ij},\quad\forall i\in I,\ \forall j\in J,\ \forall s\in\mathcal{S},\\
+q_{0j}^s	&=	1000,\quad\forall j\in J,\ \forall s\in\mathcal{S},\\
+d_{ij}	&= Unif[0,25],\quad\forall i\in I,\ \forall j\in J,\\
+h_i^s	&= Bernoulli(0.5),\quad\forall i\in I,\ \forall s\in \mathcal{S},\\
+v 		&= |J|	\\
+\textcolor{red}{u	}&\textcolor{red}{=		}\\
+\textcolor{red}{w_z	}&\textcolor{red}{=		}\\
+\textcolor{red}{J_z	}&\textcolor{red}{=	}
+\end{align*}
+
+\subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
+\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. 
+
+In \texttt{SIPLIB}, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \texttt{SMPS} file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to break subtours. Combining the two references, we construct the forthcoming single commodity flow-based formulation \texttt{MPTSPs} that is used for \texttt{SIPLIB 2.0}. 
+\subsubsection{\texttt{MPTSPs}: Mathematical formulation}
+We consider a two-stage SIP with recourse. The travel time oscillation $e_{ij}^k$ by using path $k$ between nodes $i$ and $j$. We present each realization (scenario) of random travel time oscillation by $e_{ijk}^{s}$ where $s$ indicates the scenario. In \texttt{MPTSPs}, at the first stage, the decision-maker does not have any information about the travel time oscillation. The tour paths among the nodes, however, should be determined before the complete information is available. The first stage decision variable $y_{ij}$ is represented by the selection of nodes $i$ and $j$ to be visited in a tour. In the second stage where the random travel time $c_{ijk}^{s}$ are avilable, the paths $k$ between each couple of nodes $i$ and $j$ under scenario $s$, $x_{ijk}^{s}$ can be calculated. 
+
+Let $N$ and $K_{ij}$, respectively, bethe finite set of nodes of the graph and the set of paths between the pair of nodes $i,j\in N$. We denote with $\mathcal{S}$ the set of scenarios with associated equally distributed probability of each scenario $\PP(s)$, i.e., $\PP(s)\equiv 1/|\mathcal{S}|$. Each path $k\in K_{ij}$ between nodes $i,j\in N$ is chracterized by a non-negative estimation of the mean unit travel time $\bar{c}_{ij}$ and a non-negative unit random travel time $c_{ijk}^{s}$ under the scenario $s\in S$. Let $e_{ijk}^{s}\equiv c_{ijk}^{s}-\bar{c}_{ij}$ be the error on the travel time estimated for the path $k\in K_{ij}$ under time scenario $s\in S$.
+
+The first stage binary variables $y_{ij}=1$ if node $j\in N$ is visited right after node $i\in N$, 0 otherwise. The second stage binary variables $x_{ijk}^{s}=1$ if path $k\in K_{ij}$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise. We have one more set of first stage variables $\phi_{ij}$ which is introduced to break the subtours \cite{journal:LSD1990}. The non-negative continuous variables $\phi_{ij}$ describe the flow of a single commodity to node 1 from every other nodes (without loss of generality, 1 is the starting node). 
+
+The extensive form of \texttt{MPTSPs} is as follows and the notations used are summrized in Table \ref{mptsps:notation}.
+\begin{subequations}
+\begin{align}
+(\texttt{MPTSPs})\ \textrm{min}\ &\sum_{i\in N}\sum_{j\in N}\bar{c}_{ij}y_{ij}+\sum_{s\in \mathcal{S}}\PP(s)\sum_{i\in N}\sum_{j\in N}\sum_{k\in K_{ij}}e_{ijk}^{s}x_{ijk}^{s} \label{mptsps:obj} \\ 
+	\textrm{s.t.}\ &\sum_{j\in N:j\neq i}y_{ij}=1,\quad\forall i\in N, \label{mptsps:con1} \\ 
+&\sum_{i\in N:i\neq j}y_{ij}=1,\quad\forall j\in N,\label{mptsps:con2} \\ 
+&\sum_{j\in N}\phi_{lj}-\sum_{i\in N\backslash\{1\}}\phi_{il}=1,\quad\forall l\in N\backslash\{1\}, \label{mptsps:con3}  \\ 
+&\phi_{ij}\le \left(|N|-1\right)y_{ij},\quad\forall i\in N\backslash\{1\},\ \forall j\in N,  \label{mptsps:con4} \\ 
+&\sum_{k\in K_{ij}}x_{ijk}^{s}=y_{ij},\quad\forall i\in N,\ \forall j\in N,\ \forall s\in \mathcal{S}, \label{mptsps:con5} \\ 
+&x_{ijk}^{s}\in\{0,1\},\quad\forall i\in N,\ \forall j\in N,\ \forall k\in K_{ij},\ \forall s\in \mathcal{S}, \label{mptsps:con6}  \\ 
+&y_{ij}\in \{0,1\},\quad \forall i\in N,\ \forall j\in N, \label{mptsps:con7} \\ 
+&\phi_{ij} \ge 0, \quad \forall i\in N,\ \forall j\in N. \label{mptsps:con8}
+\end{align}
+\end{subequations}
+The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{journal:GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the space from which the variables take values.
+
+\begin{table}[H]
+	\caption{Notations for \texttt{MPTSPs}}
+	\label{mptsps:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$N$ & \textrm{index set of nodes ($i,j,l\in N$)} \\ 
+			$K_{ij}$ & \textrm{index set of paths between nodes $i$ and $j$ ($k\in K_{ij}$)} \\ 
+			$\mathcal{S}$ & \textrm{index set of scenarios ($s\in \mathcal{S}$)}\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$c_{ijk}^{s}$ & \textrm{unit random travel time of path $k$ between nodes $i,j$ under scenario $s$} \\ 
+			$\bar{c}_{ij}$ & \textrm{estimation of the mean unit travel time (expectation of $c_{ijk}^{s}$ over all $s$ and $k$)} \\ 
+			$e_{ijk}^{s}$ & \textrm{the error on the travel time on estimated for arc $(i,j)$ and path $k$ under scenario $s$} \\ 
+			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\  \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$\phi_{ij}$ ($1^{\textrm{st}}$ stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
+			$y_{ij}$ ($1^{\textrm{st}}$ stage)& \textrm{1 if path $k$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise} \\  
+			$x_{ijk}^{s}$ ($2^{\textrm{nd}}$ stage) & \textrm{1 if node $j$ is visited just after node $i$, 0 otherwise} \\ 
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+
+\subsubsection{\texttt{MPTSPs}: Data generation}
+We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPs}, there are three mainly distinguished characteristics for each instance: the nodes partition strategy ($D\in\{D0,D1,D2,D3\}$, explanation on each strategy is forthcoming), the number of nodes ($|N|\in\{2,3,\ldots\}$), and the number of scenarios ($|S|\in\{1,2,\ldots\}$). Another important charicteristic $|K_{ij}|\in\{1,2,3,\ldots\}$ is the number of paths for each edge which is fixed by 3 as a default following \cite{journal:TPP2017}. Once we decide $D$, $|N|$, and $|S|$ by $D=D\textrm{x}$, $|N|=\textrm{y}$, and $|S|=\textrm{z}$, each instance is named by \texttt{MPTSPs\_Dx\_Ny\_Sz}.
+
+The nodes are distributed in a circle with radius equal to $r$ km. We use Cartesian coordinate system where the geometric center of the circle is $(r,r)$. The nodes are distinguished by two subsets: \textit{central} and \textit{suburban}. If the Euclidean distance between a node and the geometric center is less than or equal to the half of the radius ($r/2$), then the node is of \textit{central} type. Otherwise, if the Euclidean distance is greater than the half of the radius, the node is of \textit{suburban} type. Each arc between any two nodes $i$ and $j$ is either \textit{homogeneous} or \textit{heterogeneous}. If the two nodes are of the same type of node, i.e., both are \textit{central} or both are \textit{suburban}, the type of the arc is \textit{homogeneous}. Otherwise, the type of the arc is \textit{heterogeneous}. Later, the travel time of each path between two nodes are affected by the type of arc. 
+
+The nodes are generated by one of the following distribution strategies:
+\begin{itemize}
+	\item $D0$: All the nodes are \textit{central}.
+	\item $D1$: All the nodes are \textit{suburban}.
+	\item $D2$: 3/4 of the nodes are \textit{central} and the remaining 1/4 are \textit{suburban}.
+	\item $D3$: 1/2 of the nodes are \textit{central} and the remaining 1/2 are \textit{suburban}.
+\end{itemize}
+
+Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
+\begin{enumerate}
+	\item Generate $|N|$ nodes based on the predetermined strategy $D$. Then, the nodes are generated by acceptance-rejection procedure with uniform random number generation. Again following \cite{journal:TPP2017}, we fix $r=7$\textit{km}. 
+	\item Calculate Euclidean distances between the nodes ($EC_{ij}$).
+	\item We guess and fix the deterministic velocity profile by 40\textit{km/h} for the \textit{central} nodes and 80\textit{km/h} for the \textit{suburban} nodes: $v_{cntr}=40$ and $v_{sbrb}=80$.
+	\item Generate random travel times ($c_{ijk}^{s}$) for each scenario $s$.
+	\begin{itemize}
+		\item The velocity for traveling arc $(i,j)$ is affected by its arc type.
+		%\item Each arc has $|K_{ij}|$ paths (we have fixed it $|K_{ij}|=3$ for all $i,j$).
+		\item If the arc is \textit{homogeneous}, the random travel time of all the paths are generated only based on the corresponding velocity profile.
+		\item If the arc is \textit{heterogeneous}, $\ceil*{\frac{|K_{ij}|}{3}}$ paths are generated based on $v_{cntr}=40$ and the remaining paths are generated based on $v_{sbrb}=80$. 
+		\item The velocities are distributed by $Unif(\frac{v}{2},2v)$ for $v=v_{cntr},v_{sbrb}$.
+		\item In summary, if the arc $(i,j)$ is \textit{homogeneous}, 
+		\begin{align*}
+		c_{ijk}^{s}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v_{cntr}}{2},2v_{cntr})} & \textrm{if $i,j$ are both \textit{central},} \\
+		\frac{EC_{ij}}{Unif(\frac{v_{sbrb}}{2},2v_{sbrb})} & \textrm{if $i,j$ are both \textit{suburban},}	\end{array} \right.\ \forall k\in K_{ij}.
+		\end{align*}
+		\item Otherwise, if $(i,j)$ is \textit{heterogeneous},
+		\begin{align*}
+		c_{ijk}^{s}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v_{cntr}}{2},2v_{cntr})} & \textrm{for $k\in\left\{1,\ldots,\ceil*{\frac{|K_{ij}|}{3}}\right\}$,} \\
+		\frac{EC_{ij}}{Unif(\frac{v_{sbrb}}{2},2v_{sbrb})} & \textrm{for $k\in\left\{\ceil*{\frac{|K_{ij}|}{3}}+1,\ldots,|K_{ij}|\right\}$.}	\end{array} \right.
+		\end{align*}
+	\end{itemize}
+	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
+\end{enumerate}
+
+
+\subsection{\texttt{SIZES}: Selection of an optimal subset of sizes}
+\texttt{SIZES} is a simplified version of the cutting-stock problem with multi-period stochastic demand. In this problem, the term \textit{period} can be exchangeably used with \textit{stage}. The first period (first stage) demand is deterministic whereas demands for the other periods (stages) are stochastic with scenarios. We only consider the two-periods (i.e., two stage) model to follow \cite{journal:JSW1999} as well as the SIP of interest discussed in Section \ref{sec:SIP}. In \texttt{SIPLIB}, only three instances are available in \texttt{SMPS} files. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \texttt{JuMP.Model}. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \texttt{SIPLIB 2.0}.
+
+\subsubsection{\texttt{SIZES}: Mathematical formulation}
+Suppose a product is available in a finite number $|N|$ of sizes where 1 is the index of the smallest size and $|N|$ is the index of the largest size. Further, suppose size $i$ is substitutable for size $j$ if $i>j$, i.e., larger-sized items may fulfill demand for smaller sizes. Unlike typical cutting-stock problem, an item cannot be substituted into several pieces. 
+
+Let $p_i$ be the unit production cost for size $i$. Generally $p_i>p_j$ for $i>j$. Let $s$ be the setup cost for producing units of any size and $r$ be the unit penalty cost of meeting demand for size $j$ with a larger size $i$. Let $d_{jt}^l$ be the stochastic demand for size $j$ at time $t$ under scenario $l$. Let $c_t^l$ be the stochastic production capacity at time $t$ under scenario $l$. $\PP(l)$ is the equiprobable probability of occurence for scenario $l$.
+
+We introduce three decision variables. The first-stage integer variable $y_{it}$ is the number of units of sizes $i$ produced at time $t$. The second-stage integer variable $x_{ijt}^l$ denotes the number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$. The second-stage binary variable $z_i$ denotes whether or not we produce size $i$ item at time $t$ under scenario $l$. 
+
+Based on the above definitions, \texttt{SIZES} can be fomulated by the following extensive form.
+\begin{subequations}
+	\begin{align}
+	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\left(\sum_{i\in N} sz_{it}^l+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijt}^l\right) \label{sizes:obj}\\
+	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{t}^l,\quad \forall t\in T,\ \forall l\in \mathcal{L}, \label{sizes:b}\\
+	&\sum_{i=j}^{|N|} x_{ijt}^l \ge d_{jt}^l,\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\label{sizes:c}\\
+	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^l\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:d}\\
+	&y_{it}\le c_{t}^l z_{it}^l,\quad\forall i \in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:e}\\
+	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\label{sizes:f}\\
+	&x_{ijt}^l\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:g}\\
+	&z_{it}^l\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.\label{sizes:h}
+	\end{align}
+\end{subequations}
+The first sum of the objective function (\ref{sizes:obj}) is the unit costs for producing items for all time periods. The second term corresponds to the expectation of the setup costs and penalty costs for substituting items. Constraint (\ref{sizes:b}) ensures the production for each period cannot exceed the capacity under all scenarios. Constraint (\ref{sizes:c}) and (\ref{sizes:d}) guarantee the demand for each item can be met for all time periods and for all scenarios. In particular, constraint (\ref{sizes:d}) means the demand can be met by the items that are produced in the previous periods. Constraint (\ref{sizes:e}) enforces the production limits. Constraints (\ref{sizes:f})-(\ref{sizes:h}) are binary or integer restrictions of decision variables.
+\begin{table}[H]
+	\caption{Notations for \texttt{SIZES}}
+	\label{sizes:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets}} \\
+			$N$ & \textrm{index set of items ($i,j\in N$)} \\ 
+			$T$ & \textrm{index set of time periods ($t\in T$)} \\ 
+			$\mathcal{L}$ & \textrm{index set of scenarios ($l\in\mathcal{L}$)}\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters}} \\
+			$d_{it}^l$ &	demand for item $i$ at time $t$ under scenario $l$\\
+			$p_{i}$ & unit production cost for item $i$\\
+			$s$	& setup cost for producing any item\\
+			$r$ & unit cutting cost\\ 
+			$c_{t}^l$ & production capacity at time $t$ under scenario $l$\\
+			$\PP(l)$ & the probability of occurence of scenario $l$\\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables}} \\
+			$y_{it}$ ($1^{\textrm{st}}$ stage)  & number of units of size $i$ produced at time $t$ \\
+			$x_{ijt}^l$ ($2^{\textrm{nd}}$ stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
+			$z_{it}^l$ ($2^{\textrm{nd}}$ stage)& 1 if we produce size $i$ at time $t$ under scenario $l$, 0 otherwise\\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+\subsubsection{\texttt{SIZES}: Data generation}
+Instances of \texttt{SIZES} are generated based on the one-period data given in Table \ref{sizes:data}. Note that although the table includes sleeve length data, we do not use this information for \texttt{SIZES}. Following \cite{journal:JSW1999}, we set the stochstic parameter $c_t^l=200,000$ to be deterministic for all $t\in T$ and $l\in\mathcal{L}$, hence only the demand parameter ($d_i^l$) is stochastic throughout the scenarios. The stochastic demand data in generated based on Table \ref{sizes:data}. First, we decide the number of scenarios to be generated by $n_\mathcal{L}=|\mathcal{L}|$. Then, the demand data is specified by a vector of multipliers: one multiplier for each scenario that is multiplied times the demand vector from Table \ref{sizes:data}. For example, if $n_\mathcal{L}=3$, the instance is defined by $(0.7,1,1.3)$. Or if $n_\mathcal{L}=5$, the instance is defined by $(0.6,0.8,1,1.2,1.4)$. Since \texttt{SIPLIB} provides instances with $n_\mathcal{L}\le 20$, we recommend the users to use \texttt{SIPLIB 2.0} to only generate instances with $n_\mathcal{L} \ge 20$. In \texttt{SIPLIB 2.0}, the multiplier vector is defined by the equally split set of subintervals between $[0.5,1.5]$, e.g., when $n_\mathcal{L}=20$, the multiplier vector is $(0.5,0.55,0.6,\ldots,1.4,1.45,1.5)$. With larger value of $n_\mathcal{L}$, we will have vector with finer granularity. After that, the instance is named by \texttt{SIZES\_$n_\mathcal{L}$}.
+\begin{table}[]
+	\centering
+	\caption{Base data for \texttt{SIZES} scenarios \cite{journal:JSW1999}}
+	\label{sizes:data}
+	\begin{tabular}{cccc}
+		\hline
+		$i$  & sleeve length & unit production cost ($p_i$) & demand ($d_i$) \\ \hline
+		1  & 25            & 0.748                & 2500   \\
+		2  & 30            & 0.7584               & 7500   \\
+		3  & 35            & 0.7688               & 12500  \\
+		4  & 40            & 0.7792               & 10000  \\
+		5  & 45            & 0.7896               & 35000  \\
+		6  & 50            & 0.8                  & 25000  \\
+		7  & 55            & 0.8014               & 15000  \\
+		8  & 60            & 0.8208               & 12500  \\
+		9  & 65            & 0.8312               & 12500  \\
+		10 & 70            & 0.8416               & 5000   \\ \hline
+		\multicolumn{4}{c}{unit cutting cost ($u$): \$0.008}     \\
+		\multicolumn{4}{c}{setup cost ($s$): \$453}              \\ 
+		\multicolumn{4}{c}{production capacity ($c_t$): 200,000} \\ \hline
+	\end{tabular}
+\end{table}
+
+
+\subsection{\texttt{SUCW}: Stochastic unit commitment problem with wind power}
+The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an exteded time horizon. \texttt{SUCW} is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} and \cite{journal:KZ2015} for mathematical models.
+\subsubsection{\texttt{SUCW}: Mathematical formulation}
+A two-stage stochastic unit commitment model \texttt{SUCW} is presented, where we make decision on slow generators in the first stage and make the commitment decisions for fast generators and the power dispatch decision in the second stage. In \texttt{SUCW}, we also incorporate ramping constraints, reserve constraints and transmission line capacity constraints. We assume the piecewise linear convex cost function for the power generation.
+\begin{subequations}
+	\begin{align}
+	\min \ & \sum_{\sigma \in \mathcal{S}} \PP(\sigma) \sum_{t\in T} \sum_{g\in G}\left( C^\text{fx}_g x_{gt}^\sigma + C^\text{up}_g u_{gt}^\sigma  + C^\text{dn}_g v_{gt}^\sigma  + \sum_{k\in K} C^\text{mar}_{gk} q_{gkt}^\sigma\right) \label{sucw:obj}\\
+	\text{s.t.} \
+	%% Constraints for commitment, start-up, and shut-down
+	& 1 - x_{g(t-1)}^\sigma \geq u_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:b} \\
+	& x_{g(t-1)}^\sigma \geq v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:c} \\
+	& x_{gt}^\sigma - x_{g(t-1)}^\sigma = u_{gt}^\sigma  - v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:d} \\
+	%% Constraints for minimum down/up time
+	& x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-UT_g+1\}}^t u_{g\tau}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:e} \\
+	& 1 - x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-DT_g+1\}}^t u_{g\tau}^\sigma,\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:f} \\
+	%% Ramping constraint
+	& -RD_g \leq p_{gt}^\sigma - p_{g(t-1)}^\sigma \leq RU_g - s_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:g} \\
+	& s_{gt}^\sigma \leq RC_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:h} \\
+	%% Spinning reserve constraint
+	& \sum_{g\in G} s_{gt}^\sigma \geq SR_t, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:i} \\
+	%% Minimum/maximum power generation level
+	& p_{gt}^\sigma = P^\text{min}_g x_{gt}^\sigma + \sum_{k\in K} q_{gkt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G, t\in T,\ \label{sucw:j} \\
+	& p_{gt}^\sigma + s_{gt}^\sigma \leq P^\text{max}_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:k} \\
+	%% Marginal power generation cost
+	& q_{gkt}^\sigma \leq Q^\text{max}_{gk} x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ k\in K,\ t\in T, \label{sucw:l} \\
+	%% System balance
+	& \sum_{g\in G} p_{gt}^\sigma = \sum_{n\in N} D_{nt}^\sigma - \sum_{w\in W} W_{wt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:m} \\
+	%% maximum power flow on each transmission lines
+	& -F^\text{max}_l \leq \sum_{g\in G} LSF_{lg} p_{gt}^\sigma - \sum_{n\in N} LSF_{ln} D_{nt}^\sigma \notag	\\
+	&\quad\quad\quad\quad\quad + \sum_{w\in W} LSF_{lw} W_{wt}^\sigma \leq F^\text{max}_l,\quad \forall \sigma \in \mathcal{S},\ l\in L,\ t\in T, \label{sucw:n} \\
+	%% Non-anticipativity constraint
+	& x_{gt}^{\sigma_1} = x_{gt}^{\sigma_2},\ u_{gt}^{\sigma_1} = u_{gt}^{\sigma_2},\ v_{gt}^{\sigma_1} = v_{gt}^{\sigma_2},\quad \forall \sigma_1,\sigma_2 \in \mathcal{S},\ g\in G_s,\ t\in T, \label{sucw:o} \\
+	%% Initial conditions
+	& x_{g0}^\sigma = X^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G, \label{sucw:p} \\
+	& x_{gt}^\sigma = 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, UT^\text{init}_g\}, \label{sucw:q} \\
+	& x_{gt}^\sigma = 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, DT^\text{init}_g\}, \label{sucw:r} \\
+	& p_{g0}^\sigma = P^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ \label{sucw:s} \\
+	%% bound constraints
+	%& x_{gt}^\sigma \in \{0,1\},\quad 0\leq u_{gt}^\sigma , v_{gt}^\sigma  \leq 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{eq:suc:cons19} \\
+	& \textcolor{red}{x_{gt}^\sigma , u_{gt}^\sigma , v_{gt}^\sigma \in \{0,1\},\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, }\label{sucw:t} \\
+	& p_{gt}^\sigma , q_{gkt}^\sigma,s_{gt}^\sigma \geq 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T. \label{sucw:u} 
+	\end{align}
+\end{subequations}
+The objective function (\ref{sucw:obj}) is to minimize the expected value of the sum of operating, start-up, shut-down, and production cost. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for logical relationships amongst the commitment, start-up, and shut-down decisions. Constraints (\ref{sucw:e}) and (\ref{sucw:f}) represent the minimum downtime and uptime of generators in each time period. Constraints (\ref{sucw:g}) and (\ref{sucw:h}) are ramping restrictions, and (\ref{sucw:i}) is a spinning reserve constraint. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) ensure the amount of power generation is restricted by its minimum and maximum limits. Constraint (\ref{sucw:l}) represents the piecewise linearized power generation cost. Constraint (\ref{sucw:m}) guarantees the balanced flow. Constraint (\ref{sucw:n}) is for the transmission line flow. Constraint (\ref{sucw:o}) is a \textit{nonanticipativity} constraint that enforces the decisions do not change over scenarios. Constraints (\ref{sucw:p})-(\ref{sucw:s}) represent the initial conditions of generators and production level. Finally, constraints (\ref{sucw:t}) and (\ref{sucw:u}) restrict the space from which the decision variables can take values by binary or non-negative continuous. 
+
+
+\begin{table}[H]
+	\centering
+	\caption{Notations for the \texttt{SUCW}}
+	\begin{tabular}{ll}
+		\toprule
+		\multicolumn{2}{l}{\textbf{Index sets:}} \\
+		$G$ & index set of all generators ($g\in G$)\\
+		$G_s$ & index set of slow generators ($g\in G_s$)\\
+		$G_f$ & index set of fast generators ($g\in G_f$)\\
+		$K$ & index set of linear segments of the piece-wise linear power generation cost ($k\in K$)\\
+		$L$ & index set of transmission lines ($l\in L$) \\
+		$N$ & index set of buses ($n\in N$)\\
+		$T$ & index set of time periods ($t\in T$)\\
+		$W$ & index set of wind power generators ($w\in W$)\\
+		$\mathcal{S}$ & index set of scenarios ($\sigma\in\mathcal{S}$) 		\\ \midrule
+		\multicolumn{2}{l}{\textbf{Parameters:}} \\
+		$C^\text{up}_g$ & start-up cost of generator $g$ \\
+		$C^\text{dn}_g$ & shut-down cost of generator $g$ \\
+		$C^\text{fx}_g$ & fixed cost of operating the generator $g$ \\
+		$C^\text{mar}_{gk}$ & $k^\textrm{th}$ marginal cost of production of generator $g$ \\
+		$X^\text{init}_g$ & initial on/off status of generator $g$ \\
+		$UT^\text{init}_g$ & initial minimum uptime of generator $g$ \\
+		$UT_g$ & minimum uptime of generator $g$ \\
+		$DT^\text{init}_g$ & initial minimum downtime of generator $g$ \\
+		$DT_g$ & minimum downtime of generator $g$ \\
+		$RU_g$ & ramp-up limit of generator $g$ \\
+		$RD_g$ & ramp-down limit of generator $g$ \\
+		$RC_g$ & ramping capacity of generator $g$ \\
+		$P^\text{init}_g$ & initial power output of generator $g$ \\
+		$P^\text{min}_g$ & minimum power output of generator $g$ \\
+		$P^\text{max}_g$ & maximum power output of generator $g$ \\
+		$Q^\text{max}_{gk}$ & maximum power output of generator $g$ with the $k^\textrm{th}$ marginal cost \\
+		$SR_t$ & spinning reserve required at time $t$ \\
+		$F^\text{max}_l$ & maximum power flow of transmission line $l$ \\
+		$LSF_{ln}$ & load-shift factor of transmission line $l$ with respect to bus $n$ \\
+		$\PP(\sigma)$ & probability of scenario $\sigma$ \\
+		$D_{nt}^\sigma$ & demand load at bus $n$ at time $t$ in scenario $\sigma$ \\
+		$W_{wt}^\sigma$ & wind power generation from generator $w$ at time $t$ in scenario $\sigma$ \\ \midrule
+		\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+		$x_{gt}^\sigma$ & on/off indicator of generator $g$ at time $t$ in scenario $\sigma$\\
+		$u_{gt}^\sigma $ & start-up indicator of generator $g$ at time $t$ in scenario $\sigma$\\
+		$v_{gt}^\sigma $ & shut-down indicator of generator $g$ at time $t$ in scenario $\sigma$ \\
+		$p_{gt}^\sigma$ & power output of generator $g$ at time $t$ in scenario $\sigma$ \\
+		$q_{gkt}^\sigma$ & power output of generator $g$ at time $t$ with the $k^\textrm{th}$ marginal cost in scenario $\sigma$\\
+		\textcolor{red}{$s_{gt}^\sigma$} & \textcolor{red}{spinning reserve of generator $g$ at time $t$ in scenario $\sigma$} \\
+		\hline
+	\end{tabular}
+\end{table}
+
+
+\subsubsection{\texttt{SUCW}: Data generation}
+For \texttt{SUCW} instances, thermal power generators are scheduled over a day. The schedules are subjected to uncertainty in wind power. We use a modified IEEE 188-bus system with 54 generators, 118 buses, and 186 transmission lines provided in \cite{journal:LLMS2014}. 17 of the 54 generators are assumed to be allowed to start on demand (second-stage) while the other generators should be scheduled in advance (first-stage). We consider 3 identical wind farms. Each of them consts of  120 wind turbines. We used real wind speed data predicted from the observations of 31 weather stations in Illinois.
+
+\textcolor{red}{Amongst the parameters, only the wind power generation data $W_{wt}^\sigma$ is stochastic subjected to be generated randomly.}
