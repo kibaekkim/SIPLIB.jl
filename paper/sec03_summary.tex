@@ -1,0 +1,87 @@
+\textcolor{red}{In this section, we explain information about the test problems and corresponding instances in summarized manner. This includes type, components, and instances for each problem. More detailed problem-specific explanation is available in Section \ref{sec:prob_desc}.}
+\subsection{Type of problems}
+\begin{table}[H]
+	\centering
+	\caption{Types of the problems in \texttt{SIPLIB 2.0}}
+	\label{table:prob_type}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}llll@{}}
+			\toprule
+			Problem name 		  & Description                                                        & Main reference              \\ \midrule
+			\texttt{DCAP}         & Dynamic capacity planning with stochastic demand                   & Ahmed and Garcia \cite{journal:AG2004}                          \\
+			\texttt{DCLP}		  &	Data center location problem									   & Kim et al. \cite{journal:KYZC2017}								\\	
+			\texttt{MPTSPs}       & Multi-path traveling salesman problem with stochastic travel costs & Tadei et al. \cite{journal:TPP2017}                            \\
+			\texttt{SIZES}        & Optimal product substitution with stochastic demand                & Jorjani et al. \cite{journal:JSW1999}          \\
+			\texttt{SMKP}		  & Stochastic multiple knapsack problem                               & Angulo et al. \cite{journal:AAD2014}                            \\
+			\texttt{SSLP}         & Stochastic server location problem                                 & Ntaimo and Sen \cite{journal:NS2005}                           \\
+			\texttt{SUCW}         & Wind power stochastic unit commitment				               & Papavasiliou and Oren \cite{journal:PO2013}                       \\ \bottomrule
+		\end{tabular}%
+	}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Constraint type legend \cite{MIPLIB}}
+	\label{table:constraint_type}
+	\begin{tabular}{@{}lll@{}}
+		\toprule
+		Type           & Description        & Constraint form                                                                                           \\ \midrule
+		\texttt{AGG} & Aggregation        & $a_i x_i+a_k x_k=b,\ x_i , x_k$ int. or cont., $a_i , a_k , b \in \mathbb{R}$                  \\
+		\texttt{VBD} & Variable bound     & $x_i \le a_k x_k + b$ or $x_i\ge a_k x_k + b$, $x_i, x_k$ int. or cont., $a_k, b\in\mathbb{R}$ \\
+		\texttt{PAR} & Set partition      & $\sum x_i = 1,$ $x_i$ binary                                                                   \\
+		\texttt{PAC} & Set packing        & $\sum x_i \le 1,$ $x_i$ binary                                                                 \\
+		\texttt{COV} & Set cover          & $\sum x_i \ge 1,$ $x_i$ binary                                                                 \\
+		\texttt{CAR} & Cardinality        & $\sum x_i = b,$ $x_i$ binary, $b\in\mathbb{N}$                                                 \\
+		\texttt{EQK} & Equality knapsack  & $\sum a_i x_i = b,$ $x_i$ binary, $a_i , b\in\mathbb{N}$                                       \\
+		\texttt{BIN} & Bin packing        & $\sum a_i x_i  + a_k x_k \le a_k,$ $x_i$ binary, $a_i , a_k\in\mathbb{N}$                      \\
+		\texttt{IVK} & Invariant knapsack & $\sum x_i \le b,$ $x_i$ binary, $b\in\mathbb{N}$                                               \\
+		\texttt{KNA} & Knapsack           & $a_i x_i \le b$, $x_i$ binary, $a_i,b\in\mathbb{N}$                                            \\
+		\texttt{IKN} & Integer knapsack   & $a_i x_i \le b$, $x_i\ge 0$ integer, $a_i,b\in\mathbb{N}$                                      \\
+		\texttt{M01} & Mixed binary       & $\sum a_i x_i + \sum p_j s_j \le$ or $=b$, $x_i$ binary, $s_j$ cont., $a_i, p_j\in\mathbb{R}$  \\
+		\texttt{GEN} & General            & All other constraint types                                                                     \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Components of the problems in \texttt{SIPLIB 2.0} ($\mathbb{C},\mathbb{B},\mathbb{I}$: continuous, binary, integer variables)}
+	\label{table:prob_class}
+	\begin{tabular}{@{}lllll@{}}
+		\toprule
+		& \multicolumn{2}{l}{1st stage}                              				  	& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
+		Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
+		\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
+		\texttt{DCLP}	 &							   &								& $\mathbb{C}$			 	  &													\\				
+		\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\
+		\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}, \texttt{GEN} 	& $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}             						\\
+		\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}                	& $\mathbb{B}$                & \texttt{KNA}              						\\
+		\texttt{SSLP}    & $\mathbb{B}$                & \texttt{IVK}, \texttt{GEN} 	& $\mathbb{C}$, $\mathbb{I}$  & \texttt{GEN}             						\\
+		\texttt{SUCW}    & $\emptyset$                 &                              	& $\mathbb{C}$, $\mathbb{B}$  &                             					\\ \bottomrule
+	\end{tabular}
+\end{table}
+
+
+
+\subsection{Instance catalog}
+
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+% \usepackage{graphicx}
+\begin{table}[H]
+	\centering
+	\caption{Problem-specific instance naming rules}
+	\label{table:instance_naming_rule}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}lll@{}}
+			\toprule
+			Problem & Instance name                 & Description                                                                    					      \\ \midrule
+			\texttt{DCAP}    & \texttt{DCAP\_x\_y\_z\_w}    &   number of resources x, number of tasks y, number of time periods z, number of scenarios w        \\
+			\texttt{DCLP}	 &								&																										\\
+			\texttt{MPTSPs}  & \textcolor{red}{\texttt{MPTSPs\_D}x\texttt{\_N}y\texttt{\_S}z} &node distribution strategy \texttt{D}x, number of nodes y, and number of scenarios z \\
+			\texttt{SIZES}   & \texttt{SIZES\_z}                            & number of scenario is z    															\\
+			\texttt{SMKP}    &   \texttt{SMKP\_x\_y}    &   number of types for item x, number of scenarios y   													 \\
+			\texttt{SSLP}    &   \texttt{SSLP\_x\_y\_z}      &    number of clients x, number of servers y, number of scenarios z                 				   \\
+			\texttt{SUCW}    & 	\texttt{SUCW\_x\_y}    &  day type x, number of scenarios y                                                 						 \\ \bottomrule
+		\end{tabular}%
+	}
+\end{table}
