@@ -1,0 +1,70 @@
+In this section, we explain general description of SIP. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
+\subsection{Formulation}
+In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP of the form: 
+\begin{align}
+z:=\min_{x\in X}{\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
+\end{align}
+where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $\PP(1),\cdots,\PP(r)$, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ for $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is continuous, we can approximate it by a suitably discretized distribution. The real-valued map $\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
+\begin{align}
+\phi_{\xi_s}(t):=\min_{y_s\in Y}\left\{ q(\xi_s)^\top y_s:\ W(\xi_s)y_s \ge t \right\},\ t\in\mathbb{R}^{m_2},
+\end{align}
+where $\xi_s$ is an arbitrarily realized scenario.
+The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent integer or binary restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
+The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_s,W_s,h_s,q_s)$.
+The SIP (\ref{eq:SIP_1}) can be rewritten in the extensive form
+\begin{subequations}
+\begin{align}
+z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\ 
+\mathrm{s.t.}\ &Ax\ge b,  \\
+	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\},\\
+	&x\in X, \\
+	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}.
+\end{align}
+\end{subequations}
+%The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations $x_1=x_r$ and $x_j=x_{j-1}$ for $j=2,\ldots,r$, and $H_j$ is a suitable $rn_1\times n_1$ matrix. We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_j$ for some $j$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
+\begin{table}[H]
+	\caption{Summary of notations in SIP formulation}
+	\label{notation:SIP}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Sets:}} \\ 
+			$X\subseteq\mathbb{R}^{n_1}$	& first-stage polyhedral set (continuous, integer, binary)\\
+			$Y\subseteq\mathbb{R}^{n_2}$	& second-stage polyhedral set (continuous, integer, binary)\\ 
+			$\mathcal{S}=\{1,\ldots,r\}$	& index set of realizable scenarios \\ \midrule
+			%$G_j$	& scenario feasibility set\\ \midrule
+			\multicolumn{2}{l}{\textbf{Scalas:}} \\ 
+			$\pmb{\xi}$	& r.v. denoting scenario that realizes by one of the set $\{\xi_1,\cdots,\xi_r\}$ 	\\			
+			$z\in\mathbb{R}$ & optimal objective value of the SIP \\ 
+			$r\in\mathbb{N}$	& number of scenarios	\\	
+			$s\in\mathcal{S}$	& index denoting scenario	\\
+			$\PP(s)\in[0,1]$ & probability that scenario $s$ happens, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ \\ \midrule
+			\multicolumn{2}{l}{\textbf{Vectors:}} \\  
+			$x\in\mathbb{R}^{n_1}$	& first-stage decision vector	\\
+			$c\in \mathbb{R}^{n_1}$	& first-stage cost vector\\
+			$b\in\mathbb{R}^{m_1}$	& first-stage RHS vector\\
+			$y_s\in\mathbb{R}^{n_2}$	& second-stage decision vector under scenario $\xi_s$	\\
+			$q_s\equiv q(\xi_s)\in\mathbb{R}^{n_2}$	& second-stage cost vector \\
+			$h_s\equiv h(\xi_s)\in\mathbb{R}^{m_2}$	& second-stage RHS vector\\ \midrule
+			%$\mathbf{0}\in\mathbb{R}^{rn_1}$	& vector filled with zeros \\ \midrule
+			\multicolumn{2}{l}{\textbf{Matrices:}} \\  
+			$A\in\mathbb{R}^{m_1\times n_1}$	& first-stage constraint matrix corresponds to decision vector $x$\\
+			$W_s\equiv W(\xi_s)\in\mathbb{R}^{m_2\times n_2}$	& second-stage constraint matrix corresponds to decision vector $y_s$\\
+			$T_s\equiv T(\xi_s)\in\mathbb{R}^{m_2\times n_1}$	& second-stage constraint matrix corresponds to decision vector $x$\\ \midrule
+			%$H_j\equiv H(\xi_j)\in\mathbb{R}^{rm_1\times n_1}$	&	nonanticipativity constraints matrix \\ \midrule
+			\multicolumn{2}{l}{\textbf{Functions:}} \\
+			$\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$	& second stage program optimal value under the realization of scenario $\xi_s$	\\
+			$\mathcal{Q}:\mathbb{R}^{n_1}\to\mathbb{R}$	& recourse function (the expectation of $\phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right)$ over the r.v. $\pmb{\xi}$) 	\\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+\subsection{Solution methods}
+\subsubsection{Stage-wise decomposition algorithm}
+\subsubsection{Scenario-wise decompostion algorithm}
+
+\subsection{Software libraries}
+\subsubsection{Modeling languages}
+\subsubsection{Solvers}

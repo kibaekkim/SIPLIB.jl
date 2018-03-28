@@ -60,6 +60,8 @@ grestore
 \DeclareMathOperator*{\EE}{\mathbb{E}}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\raggedbottom
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
 % insert here the call for the packages your document requires
@@ -110,308 +112,50 @@ grestore
 }
 
 \date{Received: date / Accepted: date}
-% The correct dates will be entered by the editor
-
 
 \maketitle
 
 \begin{abstract}
 We present a collection of stochastic integer programming problem instances.
 \keywords{Stochastic Integer Programming \and Problem Instances}
-% \PACS{PACS code1 \and PACS code2 \and more}
-% \subclass{MSC code1 \and MSC code2 \and more}
 \end{abstract}
 
-\section{Introduction}
-%(What is SIPLIB?) 
-The \texttt{SIPLIB} \cite{web:SIPLIB1} is an abbreviated term of the Stochastic Integer Programming (SIP) Library firstly contructed in 2002 by Shabbir Ahmed and his colleagues. The library has been providing a collection of test instances to facilitate computational and algorithmic research in SIP. Some new test problems with instances have been added to \texttt{SIPLIB} gradually and now it contains nine different problems in total.  The instances are basically given in the standard \texttt{SMPS} format accompanied with additional information including parameter data, size of the instance in terms of the number of rows, columns, and integers, benchmarking information such as best known objective value or bounds, optimality gap, and solution time.
+\section{Introduction}\label{sec:intro}
+\input{sec01_intro}
+\pagebreak
 
-%(Motivation) 
-At the time \texttt{SIPLIB} appeared, it provided enoughly large-sized instances that is reasonable to argue that the performance of algorithm is remarkable if it solves the instances. State-of-the-art in SIP combined with the speedup in computing machinery, however, makes many instances in \texttt{SIPLIB} so easy that we have not enough basis to use them for showing the excellence of newly suggested solution methods. At this point, we are motivated to develop the second version of \texttt{SIPLIB}, say \texttt{SIPLIB 2.0} that provides larger-sized test instances with higher degree of tailorability, e.g., users can easily generate instances of test problems as largely as they want.% in terms of the number of scenarios included.
+\section{Stochastic integer programming}\label{sec:sip}
+\input{sec02_sip}
+\pagebreak
+ 
+\section{Summary of the test sets}\label{sec:summary}
+\input{sec03_summary}
+\pagebreak
 
-%(What SIP is and our restriction) 
-\textcolor{red}{(as we include \texttt{DCLP} (data center location problem), this paragraph must be modified)} Stochastic programming (SP) is a framework for modeling optimization problems that involve uncertainty. Whereas optimization problems are typically formulated with known parameters, the problems in real world contain some unknown parameters in many cases. For details on SP, see, e.g., \cite{web:SPS,book:BL2011}. SIP is a branch of SP that indicates any type of SP including at least one integer decision variable. The integers can be placed anywhere in general SIP. \textcolor{red}{However, we restrict our focus on two-stage SIP that contains integer variables (including binary) in its second stage throughout this paper and \texttt{SIPLIB 2.0}.} The main reason is that the class of SIP is most widely used to model real world problems. Moreover, two-stage SIP itself has enough difficulties that have not been conquered yet even without any other details like chance-constraints and multi-stages. The main difficulty in solving two-stage SIP is that the second-stage value function is not necessarily convex, but only lower semicontinuous. Thus, the standard decomposition approaches that work nicely for stochastic \textit{linear} programs, break down when the second stage integer variables are present \cite{journal:AG2004}. Hereinafter, we use the term SIP to indicate the two-stage SIP that contains integer variables in its second stage.
+\section{How to run a test, generate new instance, and convert to \texttt{SMPS}}\label{sec:tutorial}
+\input{sec04_tutorial}
+\pagebreak
 
-%(SMPS, Julia)
-We provide the test sets in two formats: \texttt{SMPS} files (*.cor, *.tim, *.stoch) and \texttt{Julia} files (*.jl). \texttt{SMPS} is widely used to describe stochastic linear and quadratic programs. Once having \texttt{SMPS} files of a problem instance, we can directly solve it using various mixed integer linear program (MILP) solvers such as \texttt{CPLEX}, \texttt{GUROBI}, and \texttt{CBC}. One can also use the existing open-source SIP solvers like \texttt{DSP} \cite{journal:KZ2015}, \texttt{PySP} \cite{journal:WWH2012}, and \texttt{SMI} \cite{web:SMI} given that \texttt{SMPS} files. A drawback of \texttt{SMPS} format is its low readability by human, which we decided to provide \texttt{Julia} files to let users be able to easily read problems and tailor the instances.
+\section{Implementation of SMPS Writer}\label{sec:smps_writer}
+\input{sec05_smpswriter}
+\pagebreak
 
-%(Convenience of Julia) 
-\texttt{Julia} is an open source high-level, high-performance dynamic programming language for numerical computing. It is also known as its good performance, approaching that of statically-compiled languages like \texttt{C} \cite{journal:BEKS2017}. The syntax of \texttt{Julia} is simple and should feel familiar to anyone who has experienced in another high-level languages like \texttt{MATLAB} or \texttt{Python}. A \texttt{Julia} package called \texttt{JuMP} (Julia for Mathematical Programming \cite{web:JuMP}) provides a domain-specific modeling language for mathematical optimization embedded in \texttt{Julia}. \texttt{JuMP} enables us to easily translate mathematical model to \texttt{JuMP.Model}-type object. Some structured mathematical models like SIP can also be translated to the \texttt{JuMP.Model}-type object combined with the package \texttt{StructJuMP} \cite{web:StructJuMP}. Once we have a \texttt{Julia} code for constructing \texttt{JuMP.Model}-type object, it is easy to generate instances whenever we need to modify the original mathematical model. For each problem in \texttt{SIPLIB 2.0}, we provide a \texttt{Julia} script for constructing \texttt{JuMP.Model}-type object. We also provide a \texttt{Julia} script (SmpsWriter.jl) for converting any \texttt{JuMP.Model}-type objects to \texttt{SMPS} files for users' convenience. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter in \texttt{Julia} script corresponding to the number of scenarios.
-
-%(Contribution of SIPLIP2.0) 
-By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational and algorithmic research in SIP with benchmarking computational results, 2) not only \texttt{SMPS} files but also \texttt{Julia} files that are easily readable/tailorable. Hence, the users can obtain as large-sized instances as they need by generating new scenarios and including them into instances. For those who want to utilize the instances in the legacy \texttt{SIPLIB} with strong tailorability provided by \texttt{SIPLIB 2.0}, we include the original \texttt{SIPLIB} instances as well.
-
-%(Contents)
-\textcolor{red}{(Contents of the paper, not finished yet) In this paper, we provide a detailed description of the test problems in \texttt{SIPLIB 2.0}, including information on the instances, their origin, formal mathematical models with explanation on notations, and scenario data generation procedure. \texttt{SIPLIB 2.0} classifies problems based on the stages, variables, and constraints. We borrow some classification criteria from the most frequently utilized mixed integer programming (MIP) library, \texttt{MIPLIB 2010} \cite{MIPLIB}, whenever they are applicable to SIP as well.}
-
-\section{Stochastic integer programming} \label{sec:SIP}
-In this section, we explain general description of SIP. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
-\subsection{Formulation}
-In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP of the form: 
-\begin{align}
-z:=\min_{x\in X}{\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
-\end{align}
-where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $\PP(1),\cdots,\PP(r)$, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ for $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is continuous, we can approximate it by a suitably discretized distribution. The real-valued map $\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
-\begin{align}
-\phi_{\xi_s}(t):=\min_{y_s\in Y}\left\{ q(\xi_s)^\top y_s:\ W(\xi_s)y_s \ge t \right\},\ t\in\mathbb{R}^{m_2},
-\end{align}
-where $\xi_s$ is an arbitrarily realized scenario.
-The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent integer or binary restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
-The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_s,W_s,h_s,q_s)$.
-The SIP (\ref{eq:SIP_1}) can be rewritten in the extensive form
-\begin{subequations}
-\begin{align}
-z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\ 
-\mathrm{s.t.}\ &Ax\ge b,  \\
-	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\},\\
-	&x\in X, \\
-	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}.
-\end{align}
-\end{subequations}
-%The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations $x_1=x_r$ and $x_j=x_{j-1}$ for $j=2,\ldots,r$, and $H_j$ is a suitable $rn_1\times n_1$ matrix. We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_j$ for some $j$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
-\begin{table}[H]
-	\caption{Summary of notations in SIP formulation}
-	\label{notation:SIP}
-	\resizebox{\textwidth}{!}
-	{
-		\begin{tabular}{ll}
-			\toprule
-			\multicolumn{2}{l}{\textbf{Sets:}} \\ 
-			$X\subseteq\mathbb{R}^{n_1}$	& first-stage polyhedral set (continuous, integer, binary)\\
-			$Y\subseteq\mathbb{R}^{n_2}$	& second-stage polyhedral set (continuous, integer, binary)\\ 
-			$\mathcal{S}=\{1,\ldots,r\}$	& index set of realizable scenarios \\ \midrule
-			%$G_j$	& scenario feasibility set\\ \midrule
-			\multicolumn{2}{l}{\textbf{Scalas:}} \\ 
-			$\pmb{\xi}$	& r.v. denoting scenario that realizes by one of the set $\{\xi_1,\cdots,\xi_r\}$ 	\\			
-			$z\in\mathbb{R}$ & optimal objective value of the SIP \\ 
-			$r\in\mathbb{N}$	& number of scenarios	\\	
-			$s\in\mathcal{S}$	& index denoting scenario	\\
-			$\PP(s)\in[0,1]$ & probability that scenario $s$ happens, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ \\ \midrule
-			\multicolumn{2}{l}{\textbf{Vectors:}} \\  
-			$x\in\mathbb{R}^{n_1}$	& first-stage decision vector	\\
-			$c\in \mathbb{R}^{n_1}$	& first-stage cost vector\\
-			$b\in\mathbb{R}^{m_1}$	& first-stage RHS vector\\
-			$y_s\in\mathbb{R}^{n_2}$	& second-stage decision vector under scenario $\xi_s$	\\
-			$q_s\equiv q(\xi_s)\in\mathbb{R}^{n_2}$	& second-stage cost vector \\
-			$h_s\equiv h(\xi_s)\in\mathbb{R}^{m_2}$	& second-stage RHS vector\\ \midrule
-			%$\mathbf{0}\in\mathbb{R}^{rn_1}$	& vector filled with zeros \\ \midrule
-			\multicolumn{2}{l}{\textbf{Matrices:}} \\  
-			$A\in\mathbb{R}^{m_1\times n_1}$	& first-stage constraint matrix corresponds to decision vector $x$\\
-			$W_s\equiv W(\xi_s)\in\mathbb{R}^{m_2\times n_2}$	& second-stage constraint matrix corresponds to decision vector $y_s$\\
-			$T_s\equiv T(\xi_s)\in\mathbb{R}^{m_2\times n_1}$	& second-stage constraint matrix corresponds to decision vector $x$\\ \midrule
-			%$H_j\equiv H(\xi_j)\in\mathbb{R}^{rm_1\times n_1}$	&	nonanticipativity constraints matrix \\ \midrule
-			\multicolumn{2}{l}{\textbf{Functions:}} \\
-			$\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$	& second stage program optimal value under the realization of scenario $\xi_s$	\\
-			$\mathcal{Q}:\mathbb{R}^{n_1}\to\mathbb{R}$	& recourse function (the expectation of $\phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right)$ over the r.v. $\pmb{\xi}$) 	\\
-			\bottomrule
-		\end{tabular}
-	}
-\end{table} 
-
-
-\subsection{Solution methods}
-\subsubsection{Stage-wise decomposition algorithm}
-\subsubsection{Scenario-wise decompostion algorithm}
-
-\subsection{Software libraries}
-\subsubsection{Modeling languages}
-\subsubsection{Solvers}
-
-
-\section{Summary of the test sets}
-\textcolor{red}{In this section, we explain information about the test problems and corresponding instances in summarized manner. This includes type, components, and instances for each problem. More detailed problem-specific explanation is available in Section \ref{sec:prob_desc}.}
-\subsection{Type of problems}
-\begin{table}[H]
-	\centering
-	\caption{Types of the problems in \texttt{SIPLIB 2.0}}
-	\label{table:prob_type}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}llll@{}}
-			\toprule
-			Problem name 		  & Description                                                        & Main reference              \\ \midrule
-			\texttt{DCAP}         & Dynamic capacity planning with stochastic demand                   & Ahmed and Garcia \cite{journal:AG2004}                          \\
-			\texttt{DCLP}		  &	Data center location problem									   & Kim et al. \cite{journal:KYZC2017}								\\	
-			\texttt{MPTSPs}       & Multi-path traveling salesman problem with stochastic travel costs & Tadei et al. \cite{journal:TPP2017}                            \\
-			\texttt{SIZES}        & Optimal product substitution with stochastic demand                & Jorjani et al. \cite{journal:JSW1999}          \\
-			\texttt{SMKP}		  & Stochastic multiple knapsack problem                               & Angulo et al. \cite{journal:AAD2014}                            \\
-			\texttt{SSLP}         & Stochastic server location problem                                 & Ntaimo and Sen \cite{journal:NS2005}                           \\
-			\texttt{SUCW}         & Wind power stochastic unit commitment				               & Papavasiliou and Oren \cite{journal:PO2013}                       \\ \bottomrule
-		\end{tabular}%
-	}
-\end{table}
-
-\begin{table}[H]
-	\centering
-	\caption{Constraint type legend \cite{MIPLIB}}
-	\label{table:constraint_type}
-	\begin{tabular}{@{}lll@{}}
-		\toprule
-		Type           & Description        & Constraint form                                                                                           \\ \midrule
-		\texttt{AGG} & Aggregation        & $a_i x_i+a_k x_k=b,\ x_i , x_k$ int. or cont., $a_i , a_k , b \in \mathbb{R}$                  \\
-		\texttt{VBD} & Variable bound     & $x_i \le a_k x_k + b$ or $x_i\ge a_k x_k + b$, $x_i, x_k$ int. or cont., $a_k, b\in\mathbb{R}$ \\
-		\texttt{PAR} & Set partition      & $\sum x_i = 1,$ $x_i$ binary                                                                   \\
-		\texttt{PAC} & Set packing        & $\sum x_i \le 1,$ $x_i$ binary                                                                 \\
-		\texttt{COV} & Set cover          & $\sum x_i \ge 1,$ $x_i$ binary                                                                 \\
-		\texttt{CAR} & Cardinality        & $\sum x_i = b,$ $x_i$ binary, $b\in\mathbb{N}$                                                 \\
-		\texttt{EQK} & Equality knapsack  & $\sum a_i x_i = b,$ $x_i$ binary, $a_i , b\in\mathbb{N}$                                       \\
-		\texttt{BIN} & Bin packing        & $\sum a_i x_i  + a_k x_k \le a_k,$ $x_i$ binary, $a_i , a_k\in\mathbb{N}$                      \\
-		\texttt{IVK} & Invariant knapsack & $\sum x_i \le b,$ $x_i$ binary, $b\in\mathbb{N}$                                               \\
-		\texttt{KNA} & Knapsack           & $a_i x_i \le b$, $x_i$ binary, $a_i,b\in\mathbb{N}$                                            \\
-		\texttt{IKN} & Integer knapsack   & $a_i x_i \le b$, $x_i\ge 0$ integer, $a_i,b\in\mathbb{N}$                                      \\
-		\texttt{M01} & Mixed binary       & $\sum a_i x_i + \sum p_j s_j \le$ or $=b$, $x_i$ binary, $s_j$ cont., $a_i, p_j\in\mathbb{R}$  \\
-		\texttt{GEN} & General            & All other constraint types                                                                     \\ \bottomrule
-	\end{tabular}
-\end{table}
-
-%\begin{table}[H]
-%	\centering
-%	\caption{Components of the problems in \texttt{SIPLIB 2.0} ($\mathbb{C},\mathbb{B},\mathbb{I}$: continuous, binary, integer variables; superscript means the number of constraints in formulation)}
-%	\label{table:prob_class}
-%	\begin{tabular}{@{}lllll@{}}
-%		\toprule
-%		& \multicolumn{2}{l}{1st stage}                              				  		& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
-%		Problem 	     & Variable                    & Constraint                   		& Variable                    & Constraint                  				    \\ \midrule
-%		\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}$^1$                	& $\mathbb{B}$                & \texttt{PAR}$^1$, \texttt{M01}$^1$ 			    \\
-%		\texttt{DCLP}	 &							   &									& $\mathbb{C}$			 	  &													\\				
-%		\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}$^2$, \texttt{GEN}$^1$ & $\mathbb{B}$                & \texttt{GEN}$^2$               					\\
-%		\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}$^1$, \texttt{GEN}$^2$ & $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}$^1$               					\\
-%		\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}$^1$                	& $\mathbb{B}$                & \texttt{KNA}$^1$               					\\
-%		\texttt{SSLP}    & $\mathbb{B}$                & \texttt{IVK}$^1$, \texttt{GEN}$^1$ & $\mathbb{C}$, $\mathbb{I}$  & \texttt{GEN}$^2$               					\\
-%		\texttt{SUCW}    & $\emptyset$                 &                              		& $\mathbb{C}$, $\mathbb{B}$  &                             					\\ \bottomrule
-%	\end{tabular}
-%\end{table}
-
-\begin{table}[H]
-	\centering
-	\caption{Components of the problems in \texttt{SIPLIB 2.0} ($\mathbb{C},\mathbb{B},\mathbb{I}$: continuous, binary, integer variables)}
-	\label{table:prob_class}
-	\begin{tabular}{@{}lllll@{}}
-		\toprule
-		& \multicolumn{2}{l}{1st stage}                              				  	& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
-		Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
-		\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
-		\texttt{DCLP}	 &							   &								& $\mathbb{C}$			 	  &													\\				
-		\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\
-		\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}, \texttt{GEN} 	& $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}             						\\
-		\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}                	& $\mathbb{B}$                & \texttt{KNA}              						\\
-		\texttt{SSLP}    & $\mathbb{B}$                & \texttt{IVK}, \texttt{GEN} 	& $\mathbb{C}$, $\mathbb{I}$  & \texttt{GEN}             						\\
-		\texttt{SUCW}    & $\emptyset$                 &                              	& $\mathbb{C}$, $\mathbb{B}$  &                             					\\ \bottomrule
-	\end{tabular}
-\end{table}
-
-
-
-\subsection{Instance catalog}
-
-% Please add the following required packages to your document preamble:
-% \usepackage{booktabs}
-% \usepackage{graphicx}
-\begin{table}[H]
-	\centering
-	\caption{Problem-specific instance naming rules}
-	\label{table:instance_naming_rule}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}lll@{}}
-			\toprule
-			Problem & Instance name                 & Description                                                                    					      \\ \midrule
-			\texttt{DCAP}    & \texttt{DCAP\_x\_y\_z\_w}    &   number of resources x, number of tasks y, number of time periods z, number of scenarios w        \\
-			\texttt{DCLP}	 &								&																										\\
-			\texttt{MPTSPs}  & \textcolor{red}{\texttt{MPTSPs\_D}x\texttt{\_N}y\texttt{\_S}z} &node distribution strategy \texttt{D}x, number of nodes y, and number of scenarios z \\
-			\texttt{SIZES}   & \texttt{SIZES\_z}                            & number of scenario is z    															\\
-			\texttt{SMKP}    &   \texttt{SMKP\_x\_y}    &   number of types for item x, number of scenarios y   													 \\
-			\texttt{SSLP}    &   \texttt{SSLP\_x\_y\_z}      &    number of clients x, number of servers y, number of scenarios z                 				   \\
-			\texttt{SUCW}    & 	\texttt{SUCW\_x\_y}    &  day type x, number of scenarios y                                                 						 \\ \bottomrule
-		\end{tabular}%
-	}
-\end{table}
-\section{How to run a test, generate new instance, and convert to \texttt{SMPS}}
-
-We explain the structure of \texttt{SIPLIB 2.0}. We explain procedure to generate new instances with user-generated scenario data using \texttt{Julia} scripts. The problem-specific descriptions are given in Section \ref{sec:prob_desc}. We explain how to convert \texttt{JuMP.Model}-type object to \texttt{SMPS} files.
-
-\section{Implementation of SMPS Writer}
-
-We describe our Julia implementation, how to model SIP and generate SMPS files..
-
-
-
-
-
-
-\section{Solution report}
-
-
-
-\begin{itemize}
-  \item Coin-SMI (\url{https://github.com/coin-or/Smi}): compile with CPLEX; can read SMPS and solve in extensive form.
-  \item DSP: Benders/dual decomposition
-  \item PySP: Progressive Hedging
-\end{itemize}
-
-- problem characteristics
-
-- preliminary results using CPLEX
+\section{Solution report}\label{sec:solution}
+\input{sec06_solution}
+\pagebreak
 
 \section{Concluding remarks}
 \textcolor{red}{(not finished yet) Any further contribution or suggestions for \texttt{SIPLIB 2.0} are always welcomed. Better solutions than discovered so far, more functions, more problems with \texttt{Julia} scripts for instance generation, more effective classification rules, etc.}
+\pagebreak
 
 %\begin{acknowledgements}
-%If you'd like to thank anyone, place your comments here
-%and remove the percent signs.
 %\end{acknowledgements}
 
-% BibTeX users please use one of
-\bibliographystyle{spbasic}      % basic style, author-year citations
-%\bibliographystyle{spmpsci}      % mathematics and physical sciences
-%\bibliographystyle{spphys}       % APS-like style for physics
-%\bibliography{}   % name your BibTeX data base
-\begin{thebibliography}{9} 
-	\bibitem{web:SIPLIB1}
-	S. Ahmed, R. Garcia, N. Kong, L. Ntaimo, G. Parija, F. Qiu, S. Sen. SIPLIB: A Stochastic Integer Programming Test Problem Library. http://www.isye.gatech.edu/~sahmed/siplib, 2015.
-	\bibitem{web:SPS}
-	SPS: Stochastic Programming Society (https://stoprog.org/what-stochastic-programming).
-	\bibitem{book:BL2011}
-	Introduction to Stochastic Programming, J. R. Birge, F. Louveaus.
-	\bibitem{journal:AG2004}
-	S. Ahmed and R. Garcia. "Dynamic Capacity Acquisition and Assignment under Uncertainty," Annals of Operations Research, vol.124, pp. 267-283, 2003.
-	\bibitem{journal:KZ2015}
-	Kibaek Kim and Victor M. Zavala. "Algorithmic Innovations and Software for the Dual Decomposition Method applied to Stochastic Mixed-Integer Programs" Mathematical Programming Computation, 2015.
-	\bibitem{journal:WWH2012}
-	J.-P. Watson, D. L. Woodruff, and W. E. Hart, PySP: modeling and solving stochastic programs in Python, Mathematical Programming Computation, 2012.
-	\bibitem{web:SMI}
-	SMI - Stochastic Modeling Interface. https://github.com/coin-or/Smi
-	\bibitem{journal:BEKS2017}
-	Julia: A Fresh Approach to Numerical Computing. Jeff Bezanson, Alan Edelman, Stefan Karpinski and Viral B. Shah (2017) SIAM Review, 59: 65–98.
-	\bibitem{web:JuMP}
-	JuMP - Julia for Mathematical Optimization, https://jump.readthedocs.io/en/latest/index.html
-	\bibitem{web:StructJuMP}
-	StructJuMP - Parallel algebraic modeling framework for block structured optimization models in Julia, https://github.com/StructJuMP/StructJuMP.jl
-	\bibitem{journal:MPT2014}
-	F. Maggioni, G. Perboli, and R. Tadei, The multi-path traveling salesman problem with stochastic travel socts: Building realistic instances for city ligistics applications, Transportation Research Procedia, 2014
-	\bibitem{journal:PGM2017}
-	G. Perboli, L. Gobbato, and F. Maggioni, A progressive hedging method for the multi-path travelling salesman problem with stochastic travel times, IMA Journal of Management Mathematics, 2017
-	\bibitem{journal:TPP2017}
-	R. Tadei, G. Perboli, and F. Perfetti, The multi-path traveling salesman problem with stochastic travel costs, EURO Journal on Transportation and Logistics, 2017
-	\bibitem{journal:LSD1990}
-	Andre Langevin, Francois Soumis, and Jacques Desrosiers, Classification of travelling salesman problem formulations, Operations Research Letters, 1990
-	\bibitem{journal:JSW1999}
-	Soheila Jorjani, Carlton H. Scott, and David L. Woodruff, Selection of an optimal subset of sizes, International Journal of Production Research, 1999	
-	\bibitem{journal:GG1978}
-	B. Gavish and S.C. Graves, The travelling salesman problem and related problems, Working paper GR-078-78, Operations Research Center, Massachusetts Institute of Technology, 1978
-	\bibitem{journal:AAD2014}
-	Gustavo Angulo, Shabbir Ahmed, and Santanu S. Dey, Improving the integer L-shaped method, 2014.
-	\bibitem{journal:PO2013}
-	Anthony Papavasiliou and Shmuel S. Oren, Multiarea stochastic unit commitment for high wind penetration in a transmission constrained network, Operations Research, 2013
-	\bibitem{journal:KYZC2017}
-	Kibaek Kim, Fan Yang, Victor M. Zavala, and Andrew A. Chien, Data centers as dispatchable loads to harness stranded power, IEEE Transactions on sustainable energy, 2017
-	\bibitem{journal:NS2005}
-	Lewis Ntaimo and Suvrajeet Sen, The million-variable ``March'' for stochastic combinatorial optimization, Journal of Global Optimization, 2005
-	\bibitem{MIPLIB}
-	Koch et al., MIPLIB 2010, Mathmatical Programming Computation, 2011
-	\bibitem{journal:LLMS2014}
-	Lee, C., Liu, C., Mehrotra, S., Shahidehpour, M, MOdeling transmission line constraints in two-stage robust unit commitment problem, IEEE Transactions on Power Systems, 2014
-\end{thebibliography}
+\appendix
+\section*{Appendices}
+\input{sec00_probdesc}
 
-\input{probdesc}
+\input{sec00_references} % This will be replaces by a bibtex format file later.
 
 \end{document}
 % end of file template.tex
