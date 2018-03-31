@@ -15,7 +15,7 @@ type MPTSPsModel
     Cs  # nonnegative unit random travel time cost under the time scenario s ∈ S : Cs[s][i][j][p]
     Ce  # nonnegative estimation of the mean unit travel time cost : Ce[i][j]
     E   # the error on the travel time cost estimated for the path k ∈ K under time scenario s ∈ S : E[s][i][j][p] ≡ Cs[s][i][j][p] - Ce[i][j]
-    Pr   # probability distribution of scenario s ∈ S : Pr[s] ≡ 1/nScenario
+    Pr  # probability distribution of scenario s ∈ S : Pr[s] ≡ 1/nScenario
 
     MPTSPsModel() = new()
 end

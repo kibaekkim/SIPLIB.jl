@@ -1,34 +1,23 @@
-#=
-Main file to generate MPTSPS instance (w/ or w/o storing data) with parameters
-  - D: node distribution stratedy (D0, D1, D2 ,D3)
-  - nN: number of nodes
-  - nS: number of scenarios (any integer)
-=#
+# main file to generate MPTSPS instance with parameters
+
+## global parameters
+const RADIUS = 7.0      # radius of the area
+const NK = 3            # number of paths between two nodes
+const VC = 40.0         # deterministic velocity profile for central node
+const VS = 80.0         # deterministic velocity profile for suburban node
+
+## include files
 cd(dirname(Base.source_path()))
-include("./mptsps_functions.jl")
 include("./mptsps_models.jl")
 include("../../../src/SmpsWriter.jl")
-using SmpsWriter
 
-########################
-# Parameters to set
+## set parameters for instance
+D = "D0"                # node distribution strategy (D0, D1, D2 ,D3)
+nN = 50                 # number of nodes
+nS = 10                 # number of scenarios (any integer)
 
-D = "D0"
-nN = 50
-nS = 100
-########################
-
-# Write SMPS files (for SIPLIB 2.0)
-INSTANCE = "MPTSPs_$(D)_N$(nN)_S$(nS)"  # for SIPLIB 2.0 instances
+## write SMPS files
+INSTANCE = "MPTSPs_$(D)_$(nN)_$(nS)"
 SMPS_PATH = "../SMPS/$INSTANCE"
-mkdir(SMPS_PATH)
-model = @time mptsps_flow(INSTANCE)
-@time SmpsWriter.writeSmps(model, SMPS_PATH)
-
-
-# Write SMPS files (for SIPLIB)
-INSTANCE = "MPTSPs_$(D)_$(nN)"  # for SIPLIB instances
-SMPS_PATH = "../SMPS/$INSTANCE"
-mkdir(SMPS_PATH)
-model = mptsps_flow_SIPLIB(100, INSTANCE)
+model = mptsps_flow(D, nN, nS)
 SmpsWriter.writeSmps(model, SMPS_PATH)
