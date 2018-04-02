@@ -1,4 +1,4 @@
-# main file to generate SMKP instance with parameters
+# main file to generate SSLP instance with parameters
 
 ## include files
 cd(dirname(Base.source_path()))

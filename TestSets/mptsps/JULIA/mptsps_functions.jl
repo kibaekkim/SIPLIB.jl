@@ -10,7 +10,7 @@ function isCentral(center::Node, P::Node)::Bool
     return euclidean_distance(center, P) <= central_radius ? true : false
 end
 
-function generate_nodes(D::String, nN::Integer, radius::Float64=RADIUS)::Array{Node}    # N: number of nodes, D: node partition strategy
+function generate_nodes(D::String, nN::Integer, radius::Float64=RADIUS)::Array{Node}    # nN: number of nodes, D: node partition strategy
 
     Nodes = Node[]
     center = Node(radius, radius, true)

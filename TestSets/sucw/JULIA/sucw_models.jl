@@ -3,6 +3,7 @@ Source:
   A. Papavasiliou and S. Oren. (2013) Multiarea Stochastic Unit Commitment for High Wind
   Penetration in a Transmission Constrained Network. Operations Research 61(3):578-592
 =#
+
 include("./sucw_types.jl")
 include("./sucw_functions.jl")
 using StructJuMP, JuMP
@@ -26,7 +27,7 @@ function sucw(Season::AbstractString, nScenarios::Integer)::JuMP.Model
     @constraint(model, [g=uc.Gs,t=uc.T], z[g,t] >= w[g,t] - w[g,t-1])
 
     for j in 1:nScenarios
-        sb = StructuredModel(parent=model, id = j, prob = uc.π[j])
+        sb = StructuredModel(parent=model, id = j, prob = uc.Pr[j])
 
         @variable(sb, u[g=uc.Gf,t=uc.T0], Bin)
         @variable(sb, 0 <= v[g=uc.Gf,t=uc.T] <= 1)

@@ -48,7 +48,7 @@ type UnitCommitmentModel
     fbus       # bus from which line l flows
     tbus       # bus to which line l flows
 
-    π # probability
+    Pr # probability
 
     UnitCommitmentModel() = new()
 end

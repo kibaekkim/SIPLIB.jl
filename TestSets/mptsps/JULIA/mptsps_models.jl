@@ -26,9 +26,9 @@ function mptsps_flow(D::String, nN::Integer, nS::Integer)::JuMP.Model
     ## add 2nd stage components
     for s in tsp.S
         sb = StructuredModel(parent = model, id = s, prob = tsp.Pr[s])
-        @variable(sb, x[s = tsp.S, i = tsp.N, j = tsp.N, k = tsp.K], Bin)
-        @objective(sb, Min, sum(tsp.E[s,i,j,k]*x[s,i,j,k] for i in tsp.N for j in tsp.N for k in tsp.K))
-        @constraint(sb, [i = tsp.N, j = tsp.N], sum(x[s,i,j,k] for k in tsp.K) == y[i,j])
+        @variable(sb, x[i = tsp.N, j = tsp.N, k = tsp.K], Bin)
+        @objective(sb, Min, sum(tsp.E[s,i,j,k]*x[i,j,k] for i in tsp.N for j in tsp.N for k in tsp.K))
+        @constraint(sb, [i = tsp.N, j = tsp.N], sum(x[i,j,k] for k in tsp.K) == y[i,j])
     end
 
     return model

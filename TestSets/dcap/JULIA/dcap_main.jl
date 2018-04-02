@@ -7,7 +7,7 @@ include("../../../src/SmpsWriter.jl")
 
 ## set parameters for instance
 nR = 3      # number of items
-nN = 3      # number of taskts
+nN = 3      # number of tasks
 nT = 3      # number of time periods
 nS = 500    # number of scenarios
 

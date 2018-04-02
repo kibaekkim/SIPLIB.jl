@@ -1,4 +1,4 @@
-# main file to generate MPTSPS instance with parameters
+# main file to generate MPTSPs instance with parameters
 
 ## global parameters
 const RADIUS = 7.0      # radius of the area
