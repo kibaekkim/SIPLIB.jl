@@ -6,14 +6,14 @@ In this section, we introduce details for each problem in \texttt{SIPLIB 2.0}. W
 \texttt{DCAP} is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. In \texttt{SIPLIB}, 12 instances are available in \texttt{SMPS} format with the largest instance comprises of 500 scenarios correspond to the size of 9,012 rows and 18,018 columns. We refer to \cite{journal:AG2004} for writing \texttt{Julia} scripts.
 %\texttt{DCAP} is a problem of deciding the capacity expansion schedule for $m$ resources over $T$ time periods in order to satisfy the processing requirements of $n$ tasks.
 \subsubsection{\texttt{DCAP}: Mathematical formulation}
-We consider the problem of deciding the capacity expansion schedule for $|R|$ resources over $|T|$ time periods to satisfy the processing requirements of $|N|$ tasks where $R$, $T$, and $N$ denote set of resources, set of time periods, and set of tasks, respectively. We define decision variables: the first-stage continuous variable $x_{it}$ for the capacity acquisition of resource $i$ in period $t$ and the second-stage binary variable $y_{ijt}^s$ to indicate whether resource $i$ is assigned to task $j$ in period $t$ under scenario $s$. Additional first-stage binary variable $u_{it}$ is for logical constraint whether or not we decided to acquire more capacity of resource $i$ in period $t$. Hence, for all resource $i\in M$ and time $t\in T$, $u_{it}=1$ if $x_{it}>0$, $u_{it}=0$ otherwise. 
+We consider the problem of deciding the capacity expansion schedule for $|R|$ resources over $|T|$ time periods to satisfy the processing requirements of $|N|$ tasks where $R$, $T$, and $N$ denote set of resources, set of time periods, and set of tasks, respectively. We define decision variables: the first-stage continuous variable $x_{it}$ for the capacity acquisition of resource $i$ in period $t$ and the second-stage binary variable $y_{ijt}^s$ to indicate whether resource $i$ is assigned to task $j$ in period $t$ under scenario $s$. Additional first-stage binary variable $u_{it}$ is for logical constraint whether or not we decided to acquire more capacity of resource $i$ in period $t$. Hence, for all resource $i\in R$ and time $t\in T$, $u_{it}=1$ if $x_{it}>0$, $u_{it}=0$ otherwise. 
 
 Under the definition of the decision variables, the extensive form of \texttt{DCAP} is written below and the summarized notation is available in Table \ref{dcap:notation}.
 
 \begin{subequations}
 	\begin{align}
-	(\texttt{DCAP})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in R}\left(\alpha_{it}x_{it}+\beta_{it}u_{it}\right)+\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T}\sum_{i\in M\cup\{0\}}\sum_{j\in N}c_{ijt}^{s}y_{ij}^s	\label{dcap:obj} \\
-	\textrm{s.t.}\ & \textcolor{red}{x_{it}\le Mu_{it}},\quad\forall i\in R,\ \forall t\in T,	\label{dcap:b}\\
+	(\texttt{DCAP})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in R}\left(\alpha_{it}x_{it}+\beta_{it}u_{it}\right)+\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T}\sum_{i\in R\cup\{0\}}\sum_{j\in N}c_{ijt}^{s}y_{ijt}^s	\label{dcap:obj} \\
+	\textrm{s.t.}\ & \textcolor{red}{x_{it}\le \textrm{M}u_{it}},\quad\forall i\in R,\ \forall t\in T,	\label{dcap:b}\\
 	&\sum_{j\in N}d_{jt}^s y_{ijt}^s\le\sum_{\tau=1}^{t}x_{i\tau},\quad\forall i\in R,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:c}\\
 	&\sum_{i\in R\cup \{0\}}y_{ijt}^s=1,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \label{dcap:d} \\
 	&x_{it}\ge 0,\quad\forall i\in R\cup\{0\},\ \forall t\in T,\label{dcap:e} \\
@@ -21,7 +21,7 @@ Under the definition of the decision variables, the extensive form of \texttt{DC
 	&y_{ijt}^s\in\{0,1\},\quad\forall i\in R\cup\{0\},\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:g}
 	\end{align}
 \end{subequations}
-The objective function (\ref{dcap:obj}) is to minimize total expected cost for the capacity expansion schedule. The first double summation denotes the expansion cost for resource $i$ in period $t$ where $\alpha_{it}$ and $\beta_{it}$ are the variable and fixed cost, respectively. The second term in the objective function represents the expected assignment cost in period $t$ over all scenario $s\in\mathcal{S}$. Note that a dummy resource $i=0$ is included with infinite capacity. The cost $c_{0jt}^s$ denotes the penalty of failing to assign a resource to task $j$. The dummy resource enforces the \textit{complete recourse property}, which ensures that there is a feasible second-stage assignment in all periods and all scenarios for any capacity acquisition schedule \cite{journal:AG2004}. Constraint (\ref{dcap:b}) is the logical constraint containing a suitably large value $M$ to define the cost for capacity expansion. Constraint (\ref{dcap:c}) reflects that the processing requirement of all tasks assigned to a resource in any period cannot exceed the installed capacity in that period under all scenarios. Constraint (\ref{dcap:d}) guarantees that each task needs to be assigned to exactly one resource in each period under all scenarios. Finally, constraints (\ref{dcap:e})-(\ref{dcap:g}) restrict the space from which the variables take values.
+The objective function (\ref{dcap:obj}) is to minimize total expected cost for the capacity expansion schedule. The first double summation denotes the expansion cost for resource $i$ in period $t$ where $\alpha_{it}$ and $\beta_{it}$ are the variable and fixed cost, respectively. The second term in the objective function represents the expected assignment cost in period $t$ over all scenario $s\in\mathcal{S}$. Note that a dummy resource $i=0$ is included with infinite capacity. The cost $c_{0jt}^s$ denotes the penalty of failing to assign a resource to task $j$. The dummy resource enforces the \textit{complete recourse property}, which ensures that there is a feasible second-stage assignment in all periods and all scenarios for any capacity acquisition schedule \cite{journal:AG2004}. Constraint (\ref{dcap:b}) is the logical constraint containing a suitably large value M \textcolor{red}{(e.g., we set $\textrm{M}\leftarrow \textrm{M}_{t}\equiv \max_{s\in\mathcal{S}} \sum_{j\in N} d_{jt}^s$)} to define the cost for capacity expansion. Constraint (\ref{dcap:c}) reflects that the processing requirement of all tasks assigned to a resource in any period cannot exceed the installed capacity in that period under all scenarios. Constraint (\ref{dcap:d}) guarantees that each task needs to be assigned to exactly one resource in each period under all scenarios. Finally, constraints (\ref{dcap:e})-(\ref{dcap:g}) restrict the space from which the variables take values.
 
 
 \begin{table}[H]
@@ -175,8 +175,8 @@ The objective function (\ref{sslp:obj}) is to maximize total expected revenue of
 		\begin{tabular}{ll}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
-			$I$ 		  & index set of clients ($i\in I$)  \\ 
 			$J$ 		  & index set of server locations ($j\in J$)\\ 
+			$I$ 		  & index set of clients ($i\in I$)  \\ 
 			$Z$ 		  & index set of zones ($z\in Z$) \\
 			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$)	\\ \midrule
 			\multicolumn{2}{l}{\textbf{Parameters:}} \\
@@ -200,7 +200,7 @@ The objective function (\ref{sslp:obj}) is to maximize total expected revenue of
 \end{table} 
 
 \subsubsection{\texttt{SSLP}: Data generation}
-For each instance of \texttt{SSLP}, we determine $n_I=|I|$, $n_J=|J|$, and $n_\mathcal{S}=|\mathcal{S}|$. Then, the instance is named by \texttt{SSLP\_$n_I$\_$n_J$\_$n_\mathcal{S}$}. The client-server revenue are set to be 1 per unit of client demand. Some of deterministic parameters are randomly generated from the discrete uniform distribution while scenario data are generated from the Bernoulli distribution. In summary, the parameters are generated as follows:
+For each instance of \texttt{SSLP}, we determine the number of potential server locations $n_J=|J|$, the number of clients $n_I=|I|$, and the number of scenarios $n_\mathcal{S}=|\mathcal{S}|$. Then, the instance is named by \texttt{SSLP\_$n_J$\_$n_I$\_$n_\mathcal{S}$}. The client-server revenue are set to be 1 per unit of client demand. Some of deterministic parameters are randomly generated from the discrete uniform distribution while scenario data are generated from the Bernoulli distribution. In summary, the parameters are generated as follows:
 \begin{align*}
 c_j	&=Unif[40,80],\quad\forall j\in J,\\
 q_{ij}^s	&= d_{ij},\quad\forall i\in I,\ \forall j\in J,\ \forall s\in\mathcal{S},\\

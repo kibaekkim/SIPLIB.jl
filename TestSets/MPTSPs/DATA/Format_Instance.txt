@@ -1,0 +1,61 @@
+----------------------------------------
+PROBLEM
+----------------------------------------
+Multi Path Traveling Salesman Problem with Stochastic travel time
+
+prob.txt	: instance file
+ScenarioX.dat	: stochastic data of the scenario X
+
+----------------------------------------
+FORMAT OF THE INSTANCE
+----------------------------------------
+Name of the problem
+Comment
+Type of problem 	= {MPTSPs}
+Number of nodes		= {N}
+Number of path		= {3}
+Type of weight of edges	= {EXPLICIT} -> the weight of edges are explicitly given in EDGE_WEIGHT_SECTION
+Format of edge		= {EDGE_LIST}-> the existing edges of the graph are given in EDGE_WEIGHT_SECTION
+NODE_COORD_SECTION
+id_node pos_X pos_Y
+EDGE_WEIGHT_SECTION
+id_node_1 id_node_2 weight
+
+----------------------------------------
+FORMAT OF SCENARIOS
+----------------------------------------
+C_ijk
+weight of the path 1 between node 0 and node 0
+weight of the path 2 between node 0 and node 0
+weight of the path 3 between node 0 and node 0
+weight of the path 1 between node 0 and node 1
+weight of the path 2 between node 0 and node 1
+weight of the path 3 between node 0 and node 1
+...
+weight of the path 1 between node N-1 and node N-1
+weight of the path 2 between node N-1 and node N-1
+weight of the path 3 between node N-1 and node N-1
+
+
+----------------------------------------
+SOLUTIONS
+----------------------------------------
+EV.txt 		: solution of the Expected Value Problem
+EEV.txt 	: solution of the Expected of Expected Value Problem
+ESSV_25.txt 	: solution of the Generalized Expected Skeleton Solution Value Problem (25% fixed variable)
+ESSV_50.txt 	: solution of the Generalized Expected Skeleton Solution Value Problem (250% fixed variable)
+ESSV_75.txt 	: solution of the Generalized Expected Skeleton Solution Value Problem (75% fixed variable)
+ESSV_100.txt 	: solution of the Generalized Expected Skeleton Solution Value Problem (100% fixed variable)
+RP.txt 		: solution of the Recourse Problem
+
+----------------------------------------
+FORMAT OF SOLUTIONS
+----------------------------------------
+obj function
+id_node_i id_node_j -> edge between node i and node j belonging to the tour (variable y_ij = 1)
+
+----------------------------------------
+SECOND STAGE VARIABLE
+----------------------------------------
+Given the first stage solution (y), the second stage variables (x) may be computed by fixing y and solving 
+each scenario.
