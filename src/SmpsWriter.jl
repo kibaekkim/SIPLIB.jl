@@ -172,20 +172,17 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
     for j in 1:ncols
 
         if !marker_started && in(ctype[j], "BI")
-            @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTORG'")
+            #@printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTORG'")
+            @printf(fp,"    MARKER    'MARKER'                'INTORG'\n")
             marker_started = true
         end
 
-        if abs(obj[j]) >= 0 || length(nzrange(mat,j)) > 0
+        if abs(obj[j]) > 0 || length(nzrange(mat,j)) > 0
             @printf(fp, "    %-8s", "x"*string(j))
             pos = 1
             if abs(obj[j]) > 0
                 @printf(fp, "  %-8s", "obj")
                 @printf(fp, "  %-12f", obj[j])
-                pos += 1
-            else # abs(obj[j]) == 0
-                @printf(fp, "  %-8s", "obj")
-                @printf(fp, "  %-12f", 0)
                 pos += 1
             end
 
@@ -199,11 +196,19 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
                 pos += 1
             end
             @printf(fp, "\n")
+        else # abs(obj[j]) == 0 && length(nzrange(mat,j)) == 0
+            println("Warning: The JuMP model contains unused variable. Remove this to reduce file size.")
+            @printf(fp, "    %-8s", "x"*string(j))
+            @printf(fp, "  %-8s", "obj")
+            @printf(fp, "  %-12f", 0)
+            @printf(fp, "\n")
+            pos += 1
         end
 
         if marker_started
             if j == ncols || !in(ctype[j+1], "BI")
-                @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTEND'")
+                #@printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTEND'")
+                @printf(fp,"    MARKER    'MARKER'                 'INTEND'\n")
                 marker_started = false
             end
         end
@@ -248,7 +253,7 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
             end
             continue
         end
-        #######################################################################################
+        ####################################################################
 
         if ctype[j] == 'B'
             @printf(fp, " BV %-8s  %-8s\n", "BOUND", "x"*string(j))
@@ -323,7 +328,7 @@ end
 function getModelData(m::JuMP.Model)::ModelData
     # Get a column-wise sparse matrix
     #mat = prepConstrMatrix(m)
-    mat = SmpsWriter.prepConstrMatrix(m)   # 바꿔봄
+    mat = SmpsWriter.prepConstrMatrix(m)
 
     # column type
     ctype = ""
