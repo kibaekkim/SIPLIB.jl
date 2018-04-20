@@ -22,7 +22,8 @@ function sizes(nScenarios::Integer)::JuMP.Model
     end
     for l in L
         sb = StructuredModel(parent = model, id = l, prob = Pr[l])
-        @variable(sb, x[i = N, j = N, t = T] >= 0, Int)
+        @variable(sb, x[i = N, j = N, t = T; i >= j] >= 0, Int)
+        #@variable(sb, x[i = N, j = N, t = T] >= 0, Int)
         @objective(sb, Min, sum(( sizes.r*sum(sum(x[i,j,t] for j in N[1:i-1]) for i in N[2:end]) ) for t in T) )
         @constraint(sb, [j = N, t = T], sum(x[i,j,t2] for t2 in T[1:t] for i in N[j:end]) >= D[j,t,l] )
         @constraint(sb, [i = N, t = T], sum(x[i,j,t2] for t2 in T[1:t] for j in N[1:i]) <= sum(y[i,t2] for t2 in T[1:t]) )
