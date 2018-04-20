@@ -35,7 +35,7 @@ using JuMP, StructJuMP
 function dcap(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
 
     #srand(seed)
-    srand()
+    srand(seed)
     R = 1:nR
     N = 1:nN
     T = 1:nT

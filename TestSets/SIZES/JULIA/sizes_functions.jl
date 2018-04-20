@@ -1,7 +1,10 @@
 include("./sizes_types.jl")
+using Distributions
+
 
 function sizesdata(nScenarios::Integer)::SIZESModelData
 
+    srand(1)
     sizes = SIZESModelData()
 
     # ---------------------------------------------
@@ -22,19 +25,19 @@ function sizesdata(nScenarios::Integer)::SIZESModelData
     nT = 2
 
     sizes.N = 1:nN
-    sizes.T = 1:nT
     sizes.L = 1:nL
+    sizes.T = 1:nT
 
     #---------------------------------------------------------
     # Generate scenario data (random demand for each period)
     #---------------------------------------------------------
 
-    sizes.C = fill(c1, nT, nL)
+    sizes.C = fill(c1, nT)
     demand_variability = linspace(0.5, 1.5, nL)
     sizes.D = zeros(nN, nT, nL)
     for l in sizes.L
         sizes.D[:,1,l] = D1
-        sizes.D[:,2,l] = D1*demand_variability[l]
+        sizes.D[:,2,l] = rand(Uniform(0.5,1.5))*D1*demand_variability[l]
     end
 
     sizes.Pr = ones(nL)/nL

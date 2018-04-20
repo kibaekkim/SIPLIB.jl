@@ -8,7 +8,7 @@ include("../../../src/SmpsWriter.jl")
 ## set parameters for instance
 nJ = 10    # number of potential server locations
 nI = 50    # number of clients
-nS = 100   # number of scenarios 
+nS = 100   # number of scenarios
 
 ## write SMPS files
 INSTANCE = "SSLP_$(nJ)_$(nI)_$(nS)"

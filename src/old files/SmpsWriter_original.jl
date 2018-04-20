@@ -17,11 +17,11 @@ For example, set the folloing environment variable in terminal.
     export JULIA_NUM_THREADS=16
 =#
 
-module SmpsWriter
-
+#module SmpsWriter
+cd(dirname(@__FILE__))
 using StructJuMP
 
-export writeAll, writeSmps, writeMps
+#export writeAll, writeSmps, writeMps
 
 type ModelData
     mat::SparseMatrixCSC{Float64}
@@ -64,7 +64,7 @@ function writeSmps(m::JuMP.Model, filename::String="SmpsWriter")
     # Check if this is a StructJuMP model
     if !haskey(m.ext, :Stochastic)
         writeMPS(m, "$filename.mps")
-        warn("This is not a stochastic model. $filename.mps was generated.")
+        warn("This is not a stochastic model. $filename.mps was geneerated.")
         return
     end
 
@@ -106,14 +106,12 @@ function writeMps(m::JuMP.Model, mdata_all::Array{ModelData,1}, filename::String
 
     mat   = [mdata_all[1].mat zeros(nrows0, ncols1*num_scenarios(m))]
     mat   = [mat ; zeros(nrows1*num_scenarios(m), ncols0+ncols1*num_scenarios(m))]
-
     rhs   = mdata_all[1].rhs
     sense = mdata_all[1].sense
     obj   = mdata_all[1].obj
     clbd  = mdata_all[1].clbd
     cubd  = mdata_all[1].cubd
     ctype = mdata_all[1].ctype
-
 
     for s = 1:num_scenarios(m)
         # @show full(mat_all[s+1])
@@ -176,16 +174,12 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
             marker_started = true
         end
 
-        if abs(obj[j]) >= 0 || length(nzrange(mat,j)) > 0
+        if abs(obj[j]) > 0 || length(nzrange(mat,j)) > 0
             @printf(fp, "    %-8s", "x"*string(j))
             pos = 1
             if abs(obj[j]) > 0
                 @printf(fp, "  %-8s", "obj")
                 @printf(fp, "  %-12f", obj[j])
-                pos += 1
-            else # abs(obj[j]) == 0
-                @printf(fp, "  %-8s", "obj")
-                @printf(fp, "  %-12f", 0)
                 pos += 1
             end
 
@@ -225,33 +219,9 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
 
     println(fp, "BOUNDS")
     for j in 1:ncols
-        ############## Integer part #######################################
-        if ctype[j] == 'I'
-            if clbd[j] <= -Inf
-                if cubd[j] >= Inf
-                    @printf(fp, " FR %-8s  %-8s\n", "BOUND", "x"*string(j))
-                else # cubd[j] < Inf
-                    @printf(fp, " MI %-8s  %-8s\n", "BOUND", "x"*string(j))
-                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
-                end
-            elseif clbd[j] == 0
-                if cubd[j] >= Inf
-                    @printf(fp, " LI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), 0)
-                else # cubd[j] < Inf
-                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
-                end
-            else # clbd[j] > -Inf
-                @printf(fp, " LI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
-                if cubd[j] < Inf
-                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
-                end
-            end
-            continue
-        end
-        #######################################################################################
 
         if ctype[j] == 'B'
-            @printf(fp, " BV %-8s  %-8s\n", "BOUND", "x"*string(j))
+            @printf(fp, " BV BOUND  %-8s\n", "x"*string(j))
             continue
         end
 
@@ -262,7 +232,7 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
 
         if clbd[j] <= -Inf
             if cubd[j] >= Inf
-                @printf(fp, " FR %-8s  %-8s\n", "BOUND", "x"*string(j))
+                @printf(fp, " FR BOUND  %-8s\n", "x"*string(j))
             else
                 @printf(fp, " MI %-8s  %-8s\n", "BOUND", "x"*string(j))
                 if cubd[j] != 0
@@ -322,8 +292,7 @@ end
 
 function getModelData(m::JuMP.Model)::ModelData
     # Get a column-wise sparse matrix
-    #mat = prepConstrMatrix(m)
-    mat = SmpsWriter.prepConstrMatrix(m)   # 바꿔봄
+    mat = prepConstrMatrix(m)
 
     # column type
     ctype = ""
@@ -368,7 +337,7 @@ function prepConstrMatrix(m::JuMP.Model)
         return JuMP.prepConstrMatrix(m)
     end
 
-    if getparent(m) == nothing # i.e., this model is parent
+    if getparent(m) == nothing
         return JuMP.prepConstrMatrix(m)
     else
         rind = Int[]
@@ -403,7 +372,7 @@ function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
     nrows1, ncols = size(mdata_all[2].mat)
     ncols1 = ncols - ncols0
 
-    # core data (includes 1st stage & 2nd stage's 1st scenario data)
+    # core data
     rhs      = [mdata_all[1].rhs  ; mdata_all[2].rhs]
     sense    = [mdata_all[1].sense; mdata_all[2].sense]
     obj      = [mdata_all[1].obj  ; mdata_all[2].obj]
@@ -436,7 +405,6 @@ function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
     end
 
     mdata_core = ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype)
-
     writeMps("$filename.cor", basename(filename), mdata_core)
 
     println("done")
@@ -525,4 +493,4 @@ function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, 
     println("done")
 end
 
-end
+#end
