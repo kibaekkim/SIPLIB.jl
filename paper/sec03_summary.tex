@@ -60,7 +60,43 @@
 	\end{tabular}
 \end{table}
 
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
 
+% \usepackage{graphicx}
+\begin{table}[H]
+	\centering
+	\caption{Number of components in each problem (for convenience, we skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes $|S|$)}
+	\label{table:num_components}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}cccccc@{}}
+			\toprule
+			&                & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
+			&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
+			\multirow{3}{*}{\texttt{DCAP}}   & 1$^{st}$ stage & $RT$           & $RT$                               & -                    & $RT$                      \\
+			& 2$^{nd}$ stage & -              & $\left(1+R\right)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
+			& Total          & $RT$           & $RT+\left(1+R\right)NT\mathcal{S}$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
+			\multirow{3}{*}{\texttt{DCLP}}   & 1$^{st}$ stage &                &                                    &                      &                           \\
+			& 2$^{nd}$ stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
+			& Total          &                &                                    &                      &                           \\ \midrule
+			\multirow{3}{*}{\texttt{MPTSPs}} & 1$^{st}$ stage & $N^2$          & $N^2$                              & -                    & $N^2+2N-1$                \\
+			& 2$^{nd}$ stage & -              & $N^2 K$                            & -                    & $N^2$                     \\ \cmidrule(l){2-6} 
+			& Total          & $N^2$          & $(1+\mathcal{S}K)N^2$              & -                    & $(1+\mathcal{S})N^2+2N-1$ \\ \midrule
+			\multirow{3}{*}{\texttt{SIZES}}  & 1$^{st}$ stage & -              & $NT$                               & $NT$                 & $(1+N)T$                  \\
+			& 2$^{nd}$ stage & -              & -                                  & $N^2 T$              & $2NT$                     \\ \cmidrule(l){2-6} 
+			& Total          & -              & $NT$                               & $(1+N\mathcal{L})NT$ & $(1+N+2N\mathcal{L})T$    \\ \midrule
+			\multirow{3}{*}{\texttt{SMKP}}   & 1$^{st}$ stage & -              & $2I$                               & -                    & $J$                       \\
+			& 2$^{nd}$ stage & -              & $I$                                & -                    & $K$                       \\ \cmidrule(l){2-6} 
+			& Total          & -              & $(2+\mathcal{S})I$                 & -                    & $J+K\mathcal{S}$          \\ \midrule
+			\multirow{3}{*}{\texttt{SSLP}}   & 1$^{st}$ stage & -              & $J$                                & -                    & $1$                       \\
+			& 2$^{nd}$ stage & $J$            & $IJ$                               & -                    & $I+J$                     \\ \cmidrule(l){2-6} 
+			& Total          & $J\mathcal{S}$ & $(1+I\mathcal{S})J$                & -                    & $1+(I+J)\mathcal{S}$      \\ \midrule
+			\multirow{3}{*}{\texttt{SUCW}}   & 1$^{st}$ stage &                &                                    &                      &                           \\
+			& 2$^{nd}$ stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
+			& Total          &                &                                    &                      &                           \\ \bottomrule
+		\end{tabular}%
+	}
+\end{table}
 
 \subsection{Instance catalog}
 
@@ -75,13 +111,13 @@
 		\begin{tabular}{@{}lll@{}}
 			\toprule
 			Problem & Instance name                 & Description                                                                    					      \\ \midrule
-			\texttt{DCAP}    & \texttt{DCAP\_w\_x\_y\_z}    &   w: number of resources, x: number of tasks, y: number of time periods, z: number of scenarios        \\
+			\texttt{DCAP}    & \texttt{DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$}    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
 			\texttt{DCLP}	 &								&																										\\
-			\texttt{MPTSPs}  & \texttt{MPTSPs\_Dx\_y\_z} &\texttt{D}x: node distribution strategy, y: number of nodes, z: number of scenarios\\
-			\texttt{SIZES}   & \texttt{SIZES\_z}                            & z: number of scenario   															\\
-			\texttt{SMKP}    &   \texttt{SMKP\_y\_z}    &   y:number of types for item, z: number of scenarios  													 \\
-			\texttt{SSLP}    &   \texttt{SSLP\_x\_y\_z}      &    x: number of clients, y: number of servers, z: number of scenarios                 				   \\
-			\texttt{SUCW}    & 	\texttt{SUCW\_y\_z}    &  y: day type, z: number of scenarios                                                 						 \\ \bottomrule
+			\texttt{MPTSPs}  & \texttt{MPTSPs\_$D$\_$N$\_$\mathcal{S}$} &$D$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
+			\texttt{SIZES}   & \texttt{SIZES\_$\mathcal{L}$}                            & $\mathcal{L}$: number of scenario   															\\
+			\texttt{SMKP}    &   \texttt{SMKP\_$I$\_$\mathcal{S}$}    &   $I$:number of types for item, $\mathcal{S}$: number of scenarios  													 \\
+			\texttt{SSLP}    &   \texttt{SSLP\_$I$\_$J$\_$\mathcal{S}$}      &    $I$: number of clients, $J$: number of server locations, $\mathcal{S}$: number of scenarios                 				   \\
+			\texttt{SUCW}    & 	\texttt{SUCW\_$D$\_$\mathcal{S}$}    &  $D$: day type, $\mathcal{S}$: number of scenarios                                                 						 \\ \bottomrule
 		\end{tabular}%
 	}
 \end{table}

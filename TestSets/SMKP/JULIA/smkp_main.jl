@@ -10,8 +10,8 @@ include("./smkp_models.jl")
 include("../../../src/SmpsWriter.jl")
 
 ## set parameters for instance
-nI = 5  # number of items
-nS = 3  # number of scenarios (any integer)
+nI = 20  # number of items
+nS = 20  # number of scenarios (any integer)
 
 ## write SMPS files
 INSTANCE = "SMKP_$(nI)_$(nS)"

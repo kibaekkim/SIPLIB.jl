@@ -69,6 +69,223 @@ There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, 
 \subsubsection{\texttt{DCLP}: Data generation}
 
 
+\subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
+\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. 
+
+In \texttt{SIPLIB}, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \texttt{SMPS} file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to break subtours. Combining the two references, we construct the forthcoming single commodity flow-based formulation \texttt{MPTSPs} that is used for \texttt{SIPLIB 2.0}. 
+\subsubsection{\texttt{MPTSPs}: Mathematical formulation}
+We consider a two-stage SIP with recourse. The travel time oscillation $e_{ij}^k$ by using path $k$ between nodes $i$ and $j$. We present each realization (scenario) of random travel time oscillation by $e_{ijk}^{s}$ where $s$ indicates the scenario. In \texttt{MPTSPs}, at the first stage, the decision-maker does not have any information about the travel time oscillation. The tour paths among the nodes, however, should be determined before the complete information is available. The first stage decision variable $y_{ij}$ is represented by the selection of nodes $i$ and $j$ to be visited in a tour. In the second stage where the random travel time $c_{ijk}^{s}$ are avilable, the paths $k$ between each couple of nodes $i$ and $j$ under scenario $s$, $x_{ijk}^{s}$ can be calculated. 
+
+Let $N$ and $K_{ij}$, respectively, bethe finite set of nodes of the graph and the set of paths between the pair of nodes $i,j\in N$. We denote with $\mathcal{S}$ the set of scenarios with associated equally distributed probability of each scenario $\PP(s)$, i.e., $\PP(s)\equiv 1/|\mathcal{S}|$. Each path $k\in K_{ij}$ between nodes $i,j\in N$ is chracterized by a non-negative estimation of the mean unit travel time $\bar{c}_{ij}$ and a non-negative unit random travel time $c_{ijk}^{s}$ under the scenario $s\in S$. Let $e_{ijk}^{s}\equiv c_{ijk}^{s}-\bar{c}_{ij}$ be the error on the travel time estimated for the path $k\in K_{ij}$ under time scenario $s\in S$.
+
+The first stage binary variables $y_{ij}=1$ if node $j\in N$ is visited right after node $i\in N$, 0 otherwise. The second stage binary variables $x_{ijk}^{s}=1$ if path $k\in K_{ij}$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise. We have one more set of first stage variables $\phi_{ij}$ which is introduced to break the subtours \cite{journal:LSD1990}. The non-negative continuous variables $\phi_{ij}$ describe the flow of a single commodity to node 1 from every other nodes (without loss of generality, 1 is the starting node). 
+
+The extensive form of \texttt{MPTSPs} is as follows and the notations used are summrized in Table \ref{mptsps:notation}.
+\begin{subequations}
+	\begin{align}
+	(\texttt{MPTSPs})\ \textrm{min}\ &\sum_{i\in N}\sum_{j\in N}\bar{c}_{ij}y_{ij}+\sum_{s\in \mathcal{S}}\PP(s)\sum_{i\in N}\sum_{j\in N}\sum_{k\in K_{ij}}e_{ijk}^{s}x_{ijk}^{s} \label{mptsps:obj} \\ 
+	\textrm{s.t.}\ &\sum_{j\in N:j\neq i}y_{ij}=1,\quad\forall i\in N, \label{mptsps:con1} \\ 
+	&\sum_{i\in N:i\neq j}y_{ij}=1,\quad\forall j\in N,\label{mptsps:con2} \\ 
+	&\sum_{j\in N}\phi_{lj}-\sum_{i\in N\backslash\{1\}}\phi_{il}=1,\quad\forall l\in N\backslash\{1\}, \label{mptsps:con3}  \\ 
+	&\phi_{ij}\le \left(|N|-1\right)y_{ij},\quad\forall i\in N\backslash\{1\},\ \forall j\in N,  \label{mptsps:con4} \\ 
+	&\sum_{k\in K_{ij}}x_{ijk}^{s}=y_{ij},\quad\forall i\in N,\ \forall j\in N,\ \forall s\in \mathcal{S}, \label{mptsps:con5} \\ 
+	&y_{ij}\in \{0,1\},\quad \forall i\in N,\ \forall j\in N, \label{mptsps:con6} \\ 
+	&\phi_{ij} \ge 0, \quad \forall i\in N,\ \forall j\in N. \label{mptsps:con7} \\
+	&x_{ijk}^{s}\in\{0,1\},\quad\forall i\in N,\ \forall j\in N,\ \forall k\in K_{ij},\ \forall s\in \mathcal{S}, \label{mptsps:con8} 
+	\end{align}
+\end{subequations}
+The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{journal:GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the space from which the variables take values.
+
+\begin{table}[H]
+	\caption{Notations for \texttt{MPTSPs}}
+	\label{mptsps:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$N$ & \textrm{index set of nodes ($i,j,l\in N$)} \\ 
+			$K_{ij}$ & \textrm{index set of paths between nodes $i$ and $j$ ($k\in K_{ij}$)} \\ 
+			$\mathcal{S}$ & \textrm{index set of scenarios ($s\in \mathcal{S}$)}\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$c_{ijk}^{s}$ & \textrm{unit random travel time of path $k$ between nodes $i,j$ under scenario $s$} \\ 
+			$\bar{c}_{ij}$ & \textrm{estimation of the mean unit travel time (expectation of $c_{ijk}^{s}$ over all $s$ and $k$)} \\ 
+			$e_{ijk}^{s}$ & \textrm{the error on the travel time on estimated for arc $(i,j)$ and path $k$ under scenario $s$} \\ 
+			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\  \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$\phi_{ij}$ ($1^{\textrm{st}}$ stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
+			$y_{ij}$ ($1^{\textrm{st}}$ stage)& \textrm{1 if path $k$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise} \\  
+			$x_{ijk}^{s}$ ($2^{\textrm{nd}}$ stage) & \textrm{1 if node $j$ is visited just after node $i$, 0 otherwise} \\ 
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+
+\subsubsection{\texttt{MPTSPs}: Data generation}
+We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPs}, there are three mainly distinguished characteristics for each instance: the nodes partition strategy ($D\in\{D0,D1,D2,D3\}$, explanation on each strategy is forthcoming), the number of nodes ($|N|\in\{2,3,\ldots\}$), and the number of scenarios ($|S|\in\{1,2,\ldots\}$). Another important charicteristic $|K_{ij}|\in\{1,2,3,\ldots\}$ is the number of paths for each edge which is fixed by 3 as a default following \cite{journal:TPP2017}. Once we decide $D$, $|N|$, and $|S|$ by $D=Dx$, $|N|=n_N$, and $|\mathcal{S}|=n_\mathcal{S}$, each instance is named by \texttt{MPTSPs\_$Dx$\_$n_N$\_$n_\mathcal{S}$}.
+
+The nodes are distributed in a circle with radius equal to $r$ km. We use Cartesian coordinate system where the geometric center of the circle is $(r,r)$. The nodes are distinguished by two subsets: \textit{central} and \textit{suburban}. If the Euclidean distance between a node and the geometric center is less than or equal to the half of the radius ($r/2$), then the node is of \textit{central} type. Otherwise, if the Euclidean distance is greater than the half of the radius, the node is of \textit{suburban} type. Each arc between any two nodes $i$ and $j$ is either \textit{homogeneous} or \textit{heterogeneous}. If the two nodes are of the same type of node, i.e., both are \textit{central} or both are \textit{suburban}, the type of the arc is \textit{homogeneous}. Otherwise, the type of the arc is \textit{heterogeneous}. Later, the travel time of each path between two nodes are affected by the type of arc. 
+
+The nodes are generated by one of the following distribution strategies:
+\begin{itemize}
+	\item $D0$: All the nodes are \textit{central}.
+	\item $D1$: All the nodes are \textit{suburban}.
+	\item $D2$: 3/4 of the nodes are \textit{central} and the remaining 1/4 are \textit{suburban}.
+	\item $D3$: 1/2 of the nodes are \textit{central} and the remaining 1/2 are \textit{suburban}.
+\end{itemize}
+
+Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
+\begin{enumerate}
+	\item Generate $|N|$ nodes based on the predetermined strategy $D$. Then, the nodes are generated by acceptance-rejection procedure with uniform random number generation. Again following \cite{journal:TPP2017}, we fix $r=7$\textit{km}. 
+	\item Calculate Euclidean distances between the nodes ($EC_{ij}$).
+	\item We guess and fix the deterministic velocity profile by 40\textit{km/h} for the \textit{central} nodes and 80\textit{km/h} for the \textit{suburban} nodes: $v_{cntr}=40$ and $v_{sbrb}=80$.
+	\item Generate random travel times ($c_{ijk}^{s}$) for each scenario $s$.
+	\begin{itemize}
+		\item The velocity for traveling arc $(i,j)$ is affected by its arc type.
+		%\item Each arc has $|K_{ij}|$ paths (we have fixed it $|K_{ij}|=3$ for all $i,j$).
+		\item If the arc is \textit{homogeneous}, the random travel time of all the paths are generated only based on the corresponding velocity profile.
+		\item If the arc is \textit{heterogeneous}, $\ceil*{\frac{|K_{ij}|}{3}}$ paths are generated based on $v_{cntr}=40$ and the remaining paths are generated based on $v_{sbrb}=80$. 
+		\item The velocities are distributed by $Unif(\frac{v}{2},2v)$ for $v=v_{cntr},v_{sbrb}$.
+		\item In summary, if the arc $(i,j)$ is \textit{homogeneous}, 
+		\begin{align*}
+		c_{ijk}^{s}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v_{cntr}}{2},2v_{cntr})} & \textrm{if $i,j$ are both \textit{central},} \\
+		\frac{EC_{ij}}{Unif(\frac{v_{sbrb}}{2},2v_{sbrb})} & \textrm{if $i,j$ are both \textit{suburban},}	\end{array} \right.\ \forall k\in K_{ij}.
+		\end{align*}
+		\item Otherwise, if $(i,j)$ is \textit{heterogeneous},
+		\begin{align*}
+		c_{ijk}^{s}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v_{cntr}}{2},2v_{cntr})} & \textrm{for $k\in\left\{1,\ldots,\ceil*{\frac{|K_{ij}|}{3}}\right\}$,} \\
+		\frac{EC_{ij}}{Unif(\frac{v_{sbrb}}{2},2v_{sbrb})} & \textrm{for $k\in\left\{\ceil*{\frac{|K_{ij}|}{3}}+1,\ldots,|K_{ij}|\right\}$.}	\end{array} \right.
+		\end{align*}
+	\end{itemize}
+	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
+\end{enumerate}
+
+
+\subsection{\texttt{SIZES}: Selection of an optimal subset of sizes}
+\texttt{SIZES} is a simplified version of the cutting-stock problem with multi-period stochastic demand. We only consider the two-periods (i.e., two stage) model to follow \cite{journal:JSW1999} as well as the SIP of interest discussed in Section \ref{sec:sip}. The first period demand is deterministic whereas demand for the second period are stochastic. 
+
+In \texttt{SIPLIB}, only three instances are available in \texttt{SMPS} files. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \texttt{JuMP.Model}. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \texttt{SIPLIB 2.0}.
+
+\subsubsection{\texttt{SIZES}: Mathematical formulation}
+% here needs to be modified. I change the formulation.
+\textcolor{red}{
+	Suppose a product is available in a finite number $|N|$ of sizes where 1 is the index of the smallest size and $|N|$ is the index of the largest size. Further, suppose size $i$ is substitutable for size $j$ if $i>j$, i.e., larger-sized items may fulfill demand for smaller sizes. Unlike typical cutting-stock problem, an item cannot be substituted into several pieces. 
+	Let $p_i$ be the unit production cost for size $i$. Generally $p_i>p_j$ for $i>j$. Let $s$ be the setup cost for producing units of any size and $r$ be the unit penalty cost of meeting demand for size $j$ with a larger size $i$. Let $d_{jt}^l$ be the stochastic demand for size $j$ at time $t$ under scenario $l$. Let $c_t^l$ be the stochastic production capacity at time $t$ under scenario $l$. $\PP(l)$ is the equiprobable probability of occurence for scenario $l$.
+	We introduce three decision variables. The first-stage integer variable $y_{it}$ is the number of units of sizes $i$ produced at time $t$. The second-stage integer variable $x_{ijt}^l$ denotes the number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$. The second-stage binary variable $z_i$ denotes whether or not we produce size $i$ item at time $t$ under scenario $l$. 
+	Based on the above definitions, \texttt{SIZES} can be fomulated by the following extensive form.
+}
+%\begin{subequations}
+%	\begin{align}
+%	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\left(\sum_{i\in N} sz_{it}^l+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijt}^l\right) \label{sizes:obj}\\
+%	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{t}^l,\quad \forall t\in T,\ \forall l\in \mathcal{L}, \label{sizes:b}\\
+%	&\sum_{i=j}^{|N|} x_{ijt}^l \ge d_{jt}^l,\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\label{sizes:c}\\
+%	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^l\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:d}\\
+%	&y_{it}\le c_{t}^l z_{it}^l,\quad\forall i \in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:e}\\
+%	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\label{sizes:f}\\
+%	&x_{ijt}^l\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:g}\\
+%	&z_{it}^l\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.\label{sizes:h}
+%	\end{align}
+%\end{subequations}
+
+\begin{subequations}
+	\begin{align}
+	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} \left(p_i y_{it}+sz_{it} \right) + 
+	\sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}rx_{ijt}^l \label{sizes:obj}\\
+	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{t},\quad \forall t\in T, \label{sizes:b}\\
+	&y_{it}\le c_{t} z_{it},\quad\forall i \in N,\ \forall t\in T,\label{sizes:e}\\
+	&\sum_{t'=1}^{t}\sum_{i=j}^{|N|} x_{ijt'}^l \ge d_{jt}^l,\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\label{sizes:c}\\
+	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^l\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:d}\\
+	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\label{sizes:f}\\
+	&z_{it}\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\label{sizes:h}\\
+	&x_{ijt}^l\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.\label{sizes:g}
+	\end{align}
+\end{subequations}
+\textcolor{red}{
+	The first sum of the objective function (\ref{sizes:obj}) is the unit costs for producing items for all time periods. The second term corresponds to the expectation of the setup costs and penalty costs for substituting items. Constraint (\ref{sizes:b}) ensures the production for each period cannot exceed the capacity under all scenarios. Constraint (\ref{sizes:c}) and (\ref{sizes:d}) guarantee the demand for each item can be met for all time periods and for all scenarios. In particular, constraint (\ref{sizes:d}) means the demand can be met by the items that are produced in the previous periods. Constraint (\ref{sizes:e}) enforces the production limits. Constraints (\ref{sizes:f})-(\ref{sizes:h}) are binary or integer restrictions of decision variables.
+}
+\begin{table}[H]
+	\caption{Notations for \texttt{SIZES}}
+	\label{sizes:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets}} \\
+			$N$ & \textrm{index set of items ($i,j\in N$)} \\ 
+			$T$ & \textrm{index set of time periods ($t\in T$)} \\ 
+			$\mathcal{L}$ & \textrm{index set of scenarios ($l\in\mathcal{L}$)}\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters}} \\
+			$p_{i}$ & unit production cost for item $i$\\
+			$s$	& setup cost for producing any item\\
+			$r$ & unit cutting cost\\ 
+			$c_{t}$ & production capacity at time $t$\\
+			$d_{it}^l$ &	demand for item $i$ at time $t$ under scenario $l$\\
+			$\PP(l)$ & the probability of occurence of scenario $l$\\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables}} \\
+			$y_{it}$ ($1^{\textrm{st}}$ stage)  & number of units of size $i$ produced at time $t$ \\
+			$z_{it}$ ($1^{\textrm{nd}}$ stage)& 1 if we produce size $i$ at time $t$, 0 otherwise\\
+			$x_{ijt}^l$ ($2^{\textrm{nd}}$ stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+%\begin{table}[H]
+%	\caption{Notations for \texttt{SIZES}}
+%	\label{sizes:notation}
+%	\resizebox{\textwidth}{!}
+%	{
+%		\begin{tabular}{ll}
+%			\toprule
+%			\multicolumn{2}{l}{\textbf{Index sets}} \\
+%			$N$ & \textrm{index set of items ($i,j\in N$)} \\ 
+%			$T$ & \textrm{index set of time periods ($t\in T$)} \\ 
+%			$\mathcal{L}$ & \textrm{index set of scenarios ($l\in\mathcal{L}$)}\\ \midrule
+%			\multicolumn{2}{l}{\textbf{Parameters}} \\
+%			$d_{it}^l$ &	demand for item $i$ at time $t$ under scenario $l$\\
+%			$p_{i}$ & unit production cost for item $i$\\
+%			$s$	& setup cost for producing any item\\
+%			$r$ & unit cutting cost\\ 
+%			$c_{t}^l$ & production capacity at time $t$ under scenario $l$\\
+%			$\PP(l)$ & the probability of occurence of scenario $l$\\ \midrule
+%			\multicolumn{2}{l}{\textbf{Decision variables}} \\
+%			$y_{it}$ ($1^{\textrm{st}}$ stage)  & number of units of size $i$ produced at time $t$ \\
+%			$x_{ijt}^l$ ($2^{\textrm{nd}}$ stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
+%			$z_{it}^l$ ($2^{\textrm{nd}}$ stage)& 1 if we produce size $i$ at time $t$ under scenario $l$, 0 otherwise\\
+%			\bottomrule
+%		\end{tabular}
+%	}
+%\end{table} 
+
+\subsubsection{\texttt{SIZES}: Data generation}
+\textcolor{red}{
+	Instances of \texttt{SIZES} are generated based on the one-period data given in Table \ref{sizes:data}. Note that although the table includes sleeve length data, we do not use this information for \texttt{SIZES}. Following \cite{journal:JSW1999}, we set the stochstic parameter $c_t^l=200,000$ to be deterministic for all $t\in T$ and $l\in\mathcal{L}$, hence only the demand parameter ($d_i^l$) is stochastic throughout the scenarios. The stochastic demand data in generated based on Table \ref{sizes:data}. First, we decide the number of scenarios to be generated by $n_\mathcal{L}=|\mathcal{L}|$. Then, the demand data is specified by a vector of multipliers: one multiplier for each scenario that is multiplied times the demand vector from Table \ref{sizes:data}. For example, if $n_\mathcal{L}=3$, the instance is defined by $(0.7,1,1.3)$. Or if $n_\mathcal{L}=5$, the instance is defined by $(0.6,0.8,1,1.2,1.4)$. Since \texttt{SIPLIB} provides instances with $n_\mathcal{L}\le 20$, we recommend the users to use \texttt{SIPLIB 2.0} to only generate instances with $n_\mathcal{L} \ge 20$. In \texttt{SIPLIB 2.0}, the multiplier vector is defined by the equally split set of subintervals between $[0.5,1.5]$, e.g., when $n_\mathcal{L}=20$, the multiplier vector is $(0.5,0.55,0.6,\ldots,1.4,1.45,1.5)$. With larger value of $n_\mathcal{L}$, we will have vector with finer granularity. After that, the instance is named by \texttt{SIZES\_$n_\mathcal{L}$}.
+}
+\begin{table}[]
+	\centering
+	\caption{Base data for \texttt{SIZES} scenarios \cite{journal:JSW1999}}
+	\label{sizes:data}
+	\begin{tabular}{cccc}
+		\hline
+		$i$  & sleeve length & unit production cost ($p_i$) & demand ($d_i$) \\ \hline
+		1  & 25            & 0.748                & 2500   \\
+		2  & 30            & 0.7584               & 7500   \\
+		3  & 35            & 0.7688               & 12500  \\
+		4  & 40            & 0.7792               & 10000  \\
+		5  & 45            & 0.7896               & 35000  \\
+		6  & 50            & 0.8                  & 25000  \\
+		7  & 55            & 0.8014               & 15000  \\
+		8  & 60            & 0.8208               & 12500  \\
+		9  & 65            & 0.8312               & 12500  \\
+		10 & 70            & 0.8416               & 5000   \\ \hline
+		\multicolumn{4}{c}{unit cutting cost ($u$): \$0.008}     \\
+		\multicolumn{4}{c}{setup cost ($s$): \$453}              \\ 
+		\multicolumn{4}{c}{production capacity ($c_t$): 200,000} \\ \hline
+	\end{tabular}
+\end{table}
+
+
 \subsection{\texttt{SMKP}: Stochastic multiple knapsack problem}
 \texttt{SMKP} is a class of stochastic multiple binary knapsack problems. Unlike typical knapsack problems where the objective is to maximize total profits under the restriction of the weight capacity of each knapsack, \texttt{SMKP} is to minimize total weights while satisfying a certain required profit for each knapsack. 
 
@@ -158,7 +375,7 @@ Based on the above, the extensive form of \texttt{SSLP} can be stated as follows
 	\begin{align}
 	(\texttt{SSLP})\ \textrm{min}\ &	\sum_{j\in J}c_j x_j - \sum_{s\in\mathcal{S}}\PP(s)\left(\sum_{i\in I}\sum_{j\in J}q_{ij}^s y_{ij}^s - \sum_{j\in J}q_{0j}^s y_{0j}^s \right) \label{sslp:obj} \\ 
 	\textrm{s.t.}\ &\sum_{j\in J}x_j\le v,\label{sslp:b}\\ 
-	&\sum_{j\in J_z}x_j\ge w_z,\quad\forall z\in Z,\label{sslp:c}\\
+	&\textcolor{red}{\sum_{j\in J_z}x_j\ge w_z,\quad\forall z\in Z,}\label{sslp:c}\\
 	&\sum_{i\in I}d_{ij}y_{ij}^s - y_{0j}^s\le ux_j,\quad\forall j\in J,\ \stkout{\textcolor{red}{\forall i\in I,}}\ \forall s\in\mathcal{S}, \label{sslp:d} \\
 	&\sum_{j\in J}y_{ij}^s=h_i^s,\quad\forall i\in I,\ \forall s\in \mathcal{S}, \label{sslp:e}\\
 	&x_j\in\{0,1\},\quad\forall j\in J,\label{sslp:f}\\
@@ -213,221 +430,6 @@ v 		&= |J|	\\
 \textcolor{red}{J_z	}&\textcolor{red}{=	}
 \end{align*}
 
-\subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}
-\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. 
-
-In \texttt{SIPLIB}, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \texttt{SMPS} file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to break subtours. Combining the two references, we construct the forthcoming single commodity flow-based formulation \texttt{MPTSPs} that is used for \texttt{SIPLIB 2.0}. 
-\subsubsection{\texttt{MPTSPs}: Mathematical formulation}
-We consider a two-stage SIP with recourse. The travel time oscillation $e_{ij}^k$ by using path $k$ between nodes $i$ and $j$. We present each realization (scenario) of random travel time oscillation by $e_{ijk}^{s}$ where $s$ indicates the scenario. In \texttt{MPTSPs}, at the first stage, the decision-maker does not have any information about the travel time oscillation. The tour paths among the nodes, however, should be determined before the complete information is available. The first stage decision variable $y_{ij}$ is represented by the selection of nodes $i$ and $j$ to be visited in a tour. In the second stage where the random travel time $c_{ijk}^{s}$ are avilable, the paths $k$ between each couple of nodes $i$ and $j$ under scenario $s$, $x_{ijk}^{s}$ can be calculated. 
-
-Let $N$ and $K_{ij}$, respectively, bethe finite set of nodes of the graph and the set of paths between the pair of nodes $i,j\in N$. We denote with $\mathcal{S}$ the set of scenarios with associated equally distributed probability of each scenario $\PP(s)$, i.e., $\PP(s)\equiv 1/|\mathcal{S}|$. Each path $k\in K_{ij}$ between nodes $i,j\in N$ is chracterized by a non-negative estimation of the mean unit travel time $\bar{c}_{ij}$ and a non-negative unit random travel time $c_{ijk}^{s}$ under the scenario $s\in S$. Let $e_{ijk}^{s}\equiv c_{ijk}^{s}-\bar{c}_{ij}$ be the error on the travel time estimated for the path $k\in K_{ij}$ under time scenario $s\in S$.
-
-The first stage binary variables $y_{ij}=1$ if node $j\in N$ is visited right after node $i\in N$, 0 otherwise. The second stage binary variables $x_{ijk}^{s}=1$ if path $k\in K_{ij}$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise. We have one more set of first stage variables $\phi_{ij}$ which is introduced to break the subtours \cite{journal:LSD1990}. The non-negative continuous variables $\phi_{ij}$ describe the flow of a single commodity to node 1 from every other nodes (without loss of generality, 1 is the starting node). 
-
-The extensive form of \texttt{MPTSPs} is as follows and the notations used are summrized in Table \ref{mptsps:notation}.
-\begin{subequations}
-\begin{align}
-(\texttt{MPTSPs})\ \textrm{min}\ &\sum_{i\in N}\sum_{j\in N}\bar{c}_{ij}y_{ij}+\sum_{s\in \mathcal{S}}\PP(s)\sum_{i\in N}\sum_{j\in N}\sum_{k\in K_{ij}}e_{ijk}^{s}x_{ijk}^{s} \label{mptsps:obj} \\ 
-	\textrm{s.t.}\ &\sum_{j\in N:j\neq i}y_{ij}=1,\quad\forall i\in N, \label{mptsps:con1} \\ 
-&\sum_{i\in N:i\neq j}y_{ij}=1,\quad\forall j\in N,\label{mptsps:con2} \\ 
-&\sum_{j\in N}\phi_{lj}-\sum_{i\in N\backslash\{1\}}\phi_{il}=1,\quad\forall l\in N\backslash\{1\}, \label{mptsps:con3}  \\ 
-&\phi_{ij}\le \left(|N|-1\right)y_{ij},\quad\forall i\in N\backslash\{1\},\ \forall j\in N,  \label{mptsps:con4} \\ 
-&\sum_{k\in K_{ij}}x_{ijk}^{s}=y_{ij},\quad\forall i\in N,\ \forall j\in N,\ \forall s\in \mathcal{S}, \label{mptsps:con5} \\ 
-&x_{ijk}^{s}\in\{0,1\},\quad\forall i\in N,\ \forall j\in N,\ \forall k\in K_{ij},\ \forall s\in \mathcal{S}, \label{mptsps:con6}  \\ 
-&y_{ij}\in \{0,1\},\quad \forall i\in N,\ \forall j\in N, \label{mptsps:con7} \\ 
-&\phi_{ij} \ge 0, \quad \forall i\in N,\ \forall j\in N. \label{mptsps:con8}
-\end{align}
-\end{subequations}
-The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{journal:GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the space from which the variables take values.
-
-\begin{table}[H]
-	\caption{Notations for \texttt{MPTSPs}}
-	\label{mptsps:notation}
-	\resizebox{\textwidth}{!}
-	{
-		\begin{tabular}{ll}
-			\toprule
-			\multicolumn{2}{l}{\textbf{Index sets:}} \\
-			$N$ & \textrm{index set of nodes ($i,j,l\in N$)} \\ 
-			$K_{ij}$ & \textrm{index set of paths between nodes $i$ and $j$ ($k\in K_{ij}$)} \\ 
-			$\mathcal{S}$ & \textrm{index set of scenarios ($s\in \mathcal{S}$)}\\ \midrule
-			\multicolumn{2}{l}{\textbf{Parameters:}} \\
-			$c_{ijk}^{s}$ & \textrm{unit random travel time of path $k$ between nodes $i,j$ under scenario $s$} \\ 
-			$\bar{c}_{ij}$ & \textrm{estimation of the mean unit travel time (expectation of $c_{ijk}^{s}$ over all $s$ and $k$)} \\ 
-			$e_{ijk}^{s}$ & \textrm{the error on the travel time on estimated for arc $(i,j)$ and path $k$ under scenario $s$} \\ 
-			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\  \midrule
-			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$\phi_{ij}$ ($1^{\textrm{st}}$ stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
-			$y_{ij}$ ($1^{\textrm{st}}$ stage)& \textrm{1 if path $k$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise} \\  
-			$x_{ijk}^{s}$ ($2^{\textrm{nd}}$ stage) & \textrm{1 if node $j$ is visited just after node $i$, 0 otherwise} \\ 
-			\bottomrule
-		\end{tabular}
-	}
-\end{table} 
-
-
-\subsubsection{\texttt{MPTSPs}: Data generation}
-We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPs}, there are three mainly distinguished characteristics for each instance: the nodes partition strategy ($D\in\{D0,D1,D2,D3\}$, explanation on each strategy is forthcoming), the number of nodes ($|N|\in\{2,3,\ldots\}$), and the number of scenarios ($|S|\in\{1,2,\ldots\}$). Another important charicteristic $|K_{ij}|\in\{1,2,3,\ldots\}$ is the number of paths for each edge which is fixed by 3 as a default following \cite{journal:TPP2017}. Once we decide $D$, $|N|$, and $|S|$ by $D=Dx$, $|N|=n_N$, and $|\mathcal{S}|=n_\mathcal{S}$, each instance is named by \texttt{MPTSPs\_$Dx$\_$n_N$\_$n_\mathcal{S}$}.
-
-The nodes are distributed in a circle with radius equal to $r$ km. We use Cartesian coordinate system where the geometric center of the circle is $(r,r)$. The nodes are distinguished by two subsets: \textit{central} and \textit{suburban}. If the Euclidean distance between a node and the geometric center is less than or equal to the half of the radius ($r/2$), then the node is of \textit{central} type. Otherwise, if the Euclidean distance is greater than the half of the radius, the node is of \textit{suburban} type. Each arc between any two nodes $i$ and $j$ is either \textit{homogeneous} or \textit{heterogeneous}. If the two nodes are of the same type of node, i.e., both are \textit{central} or both are \textit{suburban}, the type of the arc is \textit{homogeneous}. Otherwise, the type of the arc is \textit{heterogeneous}. Later, the travel time of each path between two nodes are affected by the type of arc. 
-
-The nodes are generated by one of the following distribution strategies:
-\begin{itemize}
-	\item $D0$: All the nodes are \textit{central}.
-	\item $D1$: All the nodes are \textit{suburban}.
-	\item $D2$: 3/4 of the nodes are \textit{central} and the remaining 1/4 are \textit{suburban}.
-	\item $D3$: 1/2 of the nodes are \textit{central} and the remaining 1/2 are \textit{suburban}.
-\end{itemize}
-
-Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
-\begin{enumerate}
-	\item Generate $|N|$ nodes based on the predetermined strategy $D$. Then, the nodes are generated by acceptance-rejection procedure with uniform random number generation. Again following \cite{journal:TPP2017}, we fix $r=7$\textit{km}. 
-	\item Calculate Euclidean distances between the nodes ($EC_{ij}$).
-	\item We guess and fix the deterministic velocity profile by 40\textit{km/h} for the \textit{central} nodes and 80\textit{km/h} for the \textit{suburban} nodes: $v_{cntr}=40$ and $v_{sbrb}=80$.
-	\item Generate random travel times ($c_{ijk}^{s}$) for each scenario $s$.
-	\begin{itemize}
-		\item The velocity for traveling arc $(i,j)$ is affected by its arc type.
-		%\item Each arc has $|K_{ij}|$ paths (we have fixed it $|K_{ij}|=3$ for all $i,j$).
-		\item If the arc is \textit{homogeneous}, the random travel time of all the paths are generated only based on the corresponding velocity profile.
-		\item If the arc is \textit{heterogeneous}, $\ceil*{\frac{|K_{ij}|}{3}}$ paths are generated based on $v_{cntr}=40$ and the remaining paths are generated based on $v_{sbrb}=80$. 
-		\item The velocities are distributed by $Unif(\frac{v}{2},2v)$ for $v=v_{cntr},v_{sbrb}$.
-		\item In summary, if the arc $(i,j)$ is \textit{homogeneous}, 
-		\begin{align*}
-		c_{ijk}^{s}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v_{cntr}}{2},2v_{cntr})} & \textrm{if $i,j$ are both \textit{central},} \\
-		\frac{EC_{ij}}{Unif(\frac{v_{sbrb}}{2},2v_{sbrb})} & \textrm{if $i,j$ are both \textit{suburban},}	\end{array} \right.\ \forall k\in K_{ij}.
-		\end{align*}
-		\item Otherwise, if $(i,j)$ is \textit{heterogeneous},
-		\begin{align*}
-		c_{ijk}^{s}\sim\left\{ \begin{array}{ll} \frac{EC_{ij}}{Unif(\frac{v_{cntr}}{2},2v_{cntr})} & \textrm{for $k\in\left\{1,\ldots,\ceil*{\frac{|K_{ij}|}{3}}\right\}$,} \\
-		\frac{EC_{ij}}{Unif(\frac{v_{sbrb}}{2},2v_{sbrb})} & \textrm{for $k\in\left\{\ceil*{\frac{|K_{ij}|}{3}}+1,\ldots,|K_{ij}|\right\}$.}	\end{array} \right.
-		\end{align*}
-	\end{itemize}
-	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
-\end{enumerate}
-
-
-\subsection{\texttt{SIZES}: Selection of an optimal subset of sizes}
-\texttt{SIZES} is a simplified version of the cutting-stock problem with multi-period stochastic demand. We only consider the two-periods (i.e., two stage) model to follow \cite{journal:JSW1999} as well as the SIP of interest discussed in Section \ref{sec:sip}. The first period demand is deterministic whereas demand for the second period are stochastic. 
-
-In \texttt{SIPLIB}, only three instances are available in \texttt{SMPS} files. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \texttt{JuMP.Model}. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \texttt{SIPLIB 2.0}.
-
-\subsubsection{\texttt{SIZES}: Mathematical formulation}
-% here needs to be modified. I change the formulation.
-\textcolor{red}{
-Suppose a product is available in a finite number $|N|$ of sizes where 1 is the index of the smallest size and $|N|$ is the index of the largest size. Further, suppose size $i$ is substitutable for size $j$ if $i>j$, i.e., larger-sized items may fulfill demand for smaller sizes. Unlike typical cutting-stock problem, an item cannot be substituted into several pieces. 
-Let $p_i$ be the unit production cost for size $i$. Generally $p_i>p_j$ for $i>j$. Let $s$ be the setup cost for producing units of any size and $r$ be the unit penalty cost of meeting demand for size $j$ with a larger size $i$. Let $d_{jt}^l$ be the stochastic demand for size $j$ at time $t$ under scenario $l$. Let $c_t^l$ be the stochastic production capacity at time $t$ under scenario $l$. $\PP(l)$ is the equiprobable probability of occurence for scenario $l$.
-We introduce three decision variables. The first-stage integer variable $y_{it}$ is the number of units of sizes $i$ produced at time $t$. The second-stage integer variable $x_{ijt}^l$ denotes the number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$. The second-stage binary variable $z_i$ denotes whether or not we produce size $i$ item at time $t$ under scenario $l$. 
-Based on the above definitions, \texttt{SIZES} can be fomulated by the following extensive form.
-}
-%\begin{subequations}
-%	\begin{align}
-%	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} p_i y_{it} + \sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\left(\sum_{i\in N} sz_{it}^l+r\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}x_{ijt}^l\right) \label{sizes:obj}\\
-%	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{t}^l,\quad \forall t\in T,\ \forall l\in \mathcal{L}, \label{sizes:b}\\
-%	&\sum_{i=j}^{|N|} x_{ijt}^l \ge d_{jt}^l,\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\label{sizes:c}\\
-%	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^l\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:d}\\
-%	&y_{it}\le c_{t}^l z_{it}^l,\quad\forall i \in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:e}\\
-%	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\label{sizes:f}\\
-%	&x_{ijt}^l\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:g}\\
-%	&z_{it}^l\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.\label{sizes:h}
-%	\end{align}
-%\end{subequations}
-
-\begin{subequations}
-	\begin{align}
-	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} \left(p_i y_{it}+sz_{it} \right) + 
-	\sum_{l\in \mathcal{L}} \PP(l)\sum_{t\in T}\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}rx_{ijt}^l \label{sizes:obj}\\
-	\textrm{s.t.}\ &\sum_{i\in N}y_{it}\le c_{t},\quad \forall t\in T, \label{sizes:b}\\
-	&y_{it}\le c_{t} z_{it},\quad\forall i \in N,\ \forall t\in T,\label{sizes:e}\\
-	&\sum_{t'=1}^{t}\sum_{i=j}^{|N|} x_{ijt'}^l \ge d_{jt}^l,\quad\forall j\in N,\ \forall t\in T,\  \forall l\in \mathcal{L},\label{sizes:c}\\
-	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^l\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall l\in \mathcal{L},\label{sizes:d}\\
-	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\label{sizes:f}\\
-	&z_{it}\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\label{sizes:h}\\
-	&x_{ijt}^l\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall l\in \mathcal{L}.\label{sizes:g}
-	\end{align}
-\end{subequations}
-\textcolor{red}{
-The first sum of the objective function (\ref{sizes:obj}) is the unit costs for producing items for all time periods. The second term corresponds to the expectation of the setup costs and penalty costs for substituting items. Constraint (\ref{sizes:b}) ensures the production for each period cannot exceed the capacity under all scenarios. Constraint (\ref{sizes:c}) and (\ref{sizes:d}) guarantee the demand for each item can be met for all time periods and for all scenarios. In particular, constraint (\ref{sizes:d}) means the demand can be met by the items that are produced in the previous periods. Constraint (\ref{sizes:e}) enforces the production limits. Constraints (\ref{sizes:f})-(\ref{sizes:h}) are binary or integer restrictions of decision variables.
-}
-\begin{table}[H]
-	\caption{Notations for \texttt{SIZES}}
-	\label{sizes:notation}
-	\resizebox{\textwidth}{!}
-	{
-		\begin{tabular}{ll}
-			\toprule
-			\multicolumn{2}{l}{\textbf{Index sets}} \\
-			$N$ & \textrm{index set of items ($i,j\in N$)} \\ 
-			$T$ & \textrm{index set of time periods ($t\in T$)} \\ 
-			$\mathcal{L}$ & \textrm{index set of scenarios ($l\in\mathcal{L}$)}\\ \midrule
-			\multicolumn{2}{l}{\textbf{Parameters}} \\
-			$p_{i}$ & unit production cost for item $i$\\
-			$s$	& setup cost for producing any item\\
-			$r$ & unit cutting cost\\ 
-			$c_{t}$ & production capacity at time $t$\\
-			$d_{it}^l$ &	demand for item $i$ at time $t$ under scenario $l$\\
-			$\PP(l)$ & the probability of occurence of scenario $l$\\ \midrule
-			\multicolumn{2}{l}{\textbf{Decision variables}} \\
-			$y_{it}$ ($1^{\textrm{st}}$ stage)  & number of units of size $i$ produced at time $t$ \\
-			$z_{it}$ ($1^{\textrm{nd}}$ stage)& 1 if we produce size $i$ at time $t$, 0 otherwise\\
-			$x_{ijt}^l$ ($2^{\textrm{nd}}$ stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
-			\bottomrule
-		\end{tabular}
-	}
-\end{table} 
-
-%\begin{table}[H]
-%	\caption{Notations for \texttt{SIZES}}
-%	\label{sizes:notation}
-%	\resizebox{\textwidth}{!}
-%	{
-%		\begin{tabular}{ll}
-%			\toprule
-%			\multicolumn{2}{l}{\textbf{Index sets}} \\
-%			$N$ & \textrm{index set of items ($i,j\in N$)} \\ 
-%			$T$ & \textrm{index set of time periods ($t\in T$)} \\ 
-%			$\mathcal{L}$ & \textrm{index set of scenarios ($l\in\mathcal{L}$)}\\ \midrule
-%			\multicolumn{2}{l}{\textbf{Parameters}} \\
-%			$d_{it}^l$ &	demand for item $i$ at time $t$ under scenario $l$\\
-%			$p_{i}$ & unit production cost for item $i$\\
-%			$s$	& setup cost for producing any item\\
-%			$r$ & unit cutting cost\\ 
-%			$c_{t}^l$ & production capacity at time $t$ under scenario $l$\\
-%			$\PP(l)$ & the probability of occurence of scenario $l$\\ \midrule
-%			\multicolumn{2}{l}{\textbf{Decision variables}} \\
-%			$y_{it}$ ($1^{\textrm{st}}$ stage)  & number of units of size $i$ produced at time $t$ \\
-%			$x_{ijt}^l$ ($2^{\textrm{nd}}$ stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $l$\\ 
-%			$z_{it}^l$ ($2^{\textrm{nd}}$ stage)& 1 if we produce size $i$ at time $t$ under scenario $l$, 0 otherwise\\
-%			\bottomrule
-%		\end{tabular}
-%	}
-%\end{table} 
-
-\subsubsection{\texttt{SIZES}: Data generation}
-\textcolor{red}{
-Instances of \texttt{SIZES} are generated based on the one-period data given in Table \ref{sizes:data}. Note that although the table includes sleeve length data, we do not use this information for \texttt{SIZES}. Following \cite{journal:JSW1999}, we set the stochstic parameter $c_t^l=200,000$ to be deterministic for all $t\in T$ and $l\in\mathcal{L}$, hence only the demand parameter ($d_i^l$) is stochastic throughout the scenarios. The stochastic demand data in generated based on Table \ref{sizes:data}. First, we decide the number of scenarios to be generated by $n_\mathcal{L}=|\mathcal{L}|$. Then, the demand data is specified by a vector of multipliers: one multiplier for each scenario that is multiplied times the demand vector from Table \ref{sizes:data}. For example, if $n_\mathcal{L}=3$, the instance is defined by $(0.7,1,1.3)$. Or if $n_\mathcal{L}=5$, the instance is defined by $(0.6,0.8,1,1.2,1.4)$. Since \texttt{SIPLIB} provides instances with $n_\mathcal{L}\le 20$, we recommend the users to use \texttt{SIPLIB 2.0} to only generate instances with $n_\mathcal{L} \ge 20$. In \texttt{SIPLIB 2.0}, the multiplier vector is defined by the equally split set of subintervals between $[0.5,1.5]$, e.g., when $n_\mathcal{L}=20$, the multiplier vector is $(0.5,0.55,0.6,\ldots,1.4,1.45,1.5)$. With larger value of $n_\mathcal{L}$, we will have vector with finer granularity. After that, the instance is named by \texttt{SIZES\_$n_\mathcal{L}$}.
-}
-\begin{table}[]
-	\centering
-	\caption{Base data for \texttt{SIZES} scenarios \cite{journal:JSW1999}}
-	\label{sizes:data}
-	\begin{tabular}{cccc}
-		\hline
-		$i$  & sleeve length & unit production cost ($p_i$) & demand ($d_i$) \\ \hline
-		1  & 25            & 0.748                & 2500   \\
-		2  & 30            & 0.7584               & 7500   \\
-		3  & 35            & 0.7688               & 12500  \\
-		4  & 40            & 0.7792               & 10000  \\
-		5  & 45            & 0.7896               & 35000  \\
-		6  & 50            & 0.8                  & 25000  \\
-		7  & 55            & 0.8014               & 15000  \\
-		8  & 60            & 0.8208               & 12500  \\
-		9  & 65            & 0.8312               & 12500  \\
-		10 & 70            & 0.8416               & 5000   \\ \hline
-		\multicolumn{4}{c}{unit cutting cost ($u$): \$0.008}     \\
-		\multicolumn{4}{c}{setup cost ($s$): \$453}              \\ 
-		\multicolumn{4}{c}{production capacity ($c_t$): 200,000} \\ \hline
-	\end{tabular}
-\end{table}
 
 
 \subsection{\texttt{SUCW}: Stochastic unit commitment problem with wind power}
