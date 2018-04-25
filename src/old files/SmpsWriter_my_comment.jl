@@ -104,6 +104,9 @@ function writeMps(m::JuMP.Model, mdata_all::Array{ModelData,1}, filename::String
     nrows1, ncols = size(mdata_all[2].mat)
     ncols1 = ncols - ncols0
 
+    # mata_all[1]은 1st stage 데이터를 포함하고 있는 sparse matrix임
+    # mat은 1st-stage 데이터 + 모든 2nd-stage 시나리오 데이터까지 포함하려는 sparse matrix임
+    # 아래 두 줄에서는 일단 데이터를 0으로 채워 넣어 틀만 갖춤
     mat   = [mdata_all[1].mat zeros(nrows0, ncols1*num_scenarios(m))]
     mat   = [mat ; zeros(nrows1*num_scenarios(m), ncols0+ncols1*num_scenarios(m))]
 
@@ -114,16 +117,17 @@ function writeMps(m::JuMP.Model, mdata_all::Array{ModelData,1}, filename::String
     cubd  = mdata_all[1].cubd
     ctype = mdata_all[1].ctype
 
-
+    # 지금 mat에는 1st stage + 1st scenario 데이터만 있고, 나머지는 다 0으로 들어가있는데,
+    # 요놈의 값들을 바꿔주는 for loop인 것 같다
     for s = 1:num_scenarios(m)
         # @show full(mat_all[s+1])
-        mat_rows = rowvals(mdata_all[s+1].mat)
-        mat_vals = nonzeros(mdata_all[s+1].mat)
-        for j in 1:ncols
-            for i in nzrange(mdata_all[s+1].mat,j)
-                if j > ncols0
+        mat_rows = rowvals(mdata_all[s+1].mat) # scen s의 sparse matrix의 rows
+        mat_vals = nonzeros(mdata_all[s+1].mat) # scen s의 sparse matrix의 values
+        for j in 1:ncols # mdata_all의 sparse matrix의 data의 column enumerate
+            for i in nzrange(mdata_all[s+1].mat,j)  # scen s의 sparse matrix의 data를 enumerate
+                if j > ncols0 # 2nd stage에 관련
                     mat[nrows0 + (s-1)*nrows1 + mat_rows[i], (s-1)*ncols1 + j] = mat_vals[i]
-                else
+                else # 1st stage에 관련
                     mat[nrows0 + (s-1)*nrows1 + mat_rows[i], j] = mat_vals[i]
                 end
             end
@@ -172,11 +176,10 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
     for j in 1:ncols
 
         if !marker_started && in(ctype[j], "BI")
-            #@printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTORG'")
-            @printf(fp,"    MARKER    'MARKER'                'INTORG'\n")
+            @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTORG'")
             marker_started = true
         end
-
+#=
         if abs(obj[j]) > 0 || length(nzrange(mat,j)) > 0
             @printf(fp, "    %-8s", "x"*string(j))
             pos = 1
@@ -196,18 +199,37 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
                 pos += 1
             end
             @printf(fp, "\n")
-        else # abs(obj[j]) == 0 && length(nzrange(mat,j)) == 0
-            println("Warning: The JuMP model contains unused variable. Remove this to reduce file size.")
+        end
+=#
+
+        if abs(obj[j]) >= 0 || length(nzrange(mat,j)) > 0
             @printf(fp, "    %-8s", "x"*string(j))
-            @printf(fp, "  %-8s", "obj")
-            @printf(fp, "  %-12f", 0)
+            pos = 1
+            if abs(obj[j]) > 0
+                @printf(fp, "  %-8s", "obj")
+                @printf(fp, "  %-12f", obj[j])
+                pos += 1
+            else # abs(obj[j]) == 0
+                @printf(fp, "  %-8s", "obj")
+                @printf(fp, "  %-12f", 0)
+                pos += 1
+            end
+
+            for i in nzrange(mat,j)
+                if pos >= 3
+                    @printf(fp, "\n    %-8s", "x"*string(j))
+                    pos = 1
+                end
+                @printf(fp, "  %-8s", "c"*string(mat_rows[i]))
+                @printf(fp, "  %-12f", mat_vals[i])
+                pos += 1
+            end
             @printf(fp, "\n")
         end
 
         if marker_started
             if j == ncols || !in(ctype[j+1], "BI")
-                #@printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTEND'")
-                @printf(fp,"    MARKER    'MARKER'                 'INTEND'\n")
+                @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTEND'")
                 marker_started = false
             end
         end
@@ -229,7 +251,7 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
 
     println(fp, "BOUNDS")
     for j in 1:ncols
-        ############## Integer part #######################################
+        ############## Integer part (added by Yongkyu) ########################################################################################################
         if ctype[j] == 'I'
             if clbd[j] <= -Inf
                 if cubd[j] >= Inf
@@ -252,7 +274,7 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
             end
             continue
         end
-        ####################################################################
+        ######################################################################################################################################################
 
         if ctype[j] == 'B'
             @printf(fp, " BV %-8s  %-8s\n", "BOUND", "x"*string(j))
@@ -292,6 +314,153 @@ end
 
 writeMps(filename, probname, mdata::ModelData) = writeMps(filename, probname, mdata.mat, mdata.rhs, mdata.sense, mdata.obj, mdata.objsense, mdata.clbd, mdata.cubd, mdata.ctype)
 
+#=
+function writeMps(filename, probname, mdata::ModelData)
+
+    mat = mdata.mat
+    rhs = mdata.rhs
+    sense = mdata.sense
+    obj = mdata.obj
+    objsense = mdata.objsense
+    clbd = mdata.clbd
+    cubd = mdata.cubd
+    ctype = mdata.ctype
+
+
+    nrows, ncols = size(mat)
+    if objsense == :Max
+        obj *= -1
+        warn("The problem is converted to minimization problem.")
+    end
+
+    fp = open(filename, "w")
+
+    #                 123456789 123456789
+    println(fp, "NAME          $probname")
+
+    println(fp, "ROWS")
+    println(fp, " N  obj")
+    for i in 1:nrows
+        @printf(fp, " %s  c%d\n", sense[i], i)
+    end
+
+    marker_started = false
+    mat_rows = rowvals(mat)
+    mat_vals = nonzeros(mat)
+    println(fp, "COLUMNS")
+    for j in 1:ncols
+
+        if !marker_started && in(ctype[j], "BI")
+            @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTORG'")
+            marker_started = true
+        end
+
+        if abs(obj[j]) > 0 || length(nzrange(mat,j)) > 0
+            @printf(fp, "    %-8s", "x"*string(j))
+            pos = 1
+            if abs(obj[j]) > 0
+                @printf(fp, "  %-8s", "obj")
+                @printf(fp, "  %-12f", obj[j])
+                pos += 1
+            end
+
+            for i in nzrange(mat,j)
+                if pos >= 3
+                    @printf(fp, "\n    %-8s", "x"*string(j))
+                    pos = 1
+                end
+                @printf(fp, "  %-8s", "c"*string(mat_rows[i]))
+                @printf(fp, "  %-12f", mat_vals[i])
+                pos += 1
+            end
+            @printf(fp, "\n")
+        end
+
+        if marker_started
+            if j == ncols || !in(ctype[j+1], "BI")
+                @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTEND'")
+                marker_started = false
+            end
+        end
+    end
+
+    println(fp, "RHS")
+    pos = 1
+    @printf(fp, "    %-8s", "rhs")
+    for i in 1:nrows
+        if pos >= 3
+            @printf(fp, "\n    %-8s", "rhs")
+            pos = 1
+        end
+        @printf(fp, "  %-8s", "c"*string(i))
+        @printf(fp, "  %-12f", rhs[i])
+        pos += 1
+    end
+    @printf(fp, "\n")
+
+    println(fp, "BOUNDS")
+    for j in 1:ncols
+        #TODO
+        if ctype[j] == 'I'
+            if clbd[j] <= -Inf
+                if cubd[j] >= Inf   # free variable 선언, is it effective for Integers as well? does it change the integrality? need to be checked
+                    @printf(fp, " FR %-8s  %-8s\n", "BOUND", "x"*string(j))
+                else # cubd[j] < Inf
+                    @printf(fp, " MI %-8s  %-8s\n", "BOUND", "x"*string(j)) # -infinity lower bound 선언. need to be checked
+                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            elseif clbd[j] == 0
+                if cubd[j] >= Inf
+                    @printf(fp, " LI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), 0) # need to check: upper bound가 자동으로 infinity로 잡히는지
+                else # cubd[j] < Inf
+                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            else # clbd[j] > -Inf
+                @printf(fp, " LI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
+                if cubd[j] < Inf
+                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            end
+            continue
+        end
+
+        if ctype[j] == 'B'
+            @printf(fp, " BV %-8s  %-8s\n", "BOUND", "x"*string(j))
+            continue
+        end
+
+        if clbd[j] == cubd[j]
+            @printf(fp, " FX %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
+            continue
+        end
+
+        if clbd[j] <= -Inf
+            if cubd[j] >= Inf
+                @printf(fp, " FR %-8s  %-8s\n", "BOUND", "x"*string(j))
+            else
+                @printf(fp, " MI %-8s  %-8s\n", "BOUND", "x"*string(j))
+                if cubd[j] != 0
+                    @printf(fp, " UP %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            end
+        elseif clbd[j] == 0
+            # cubd[j] >= Inf is default.
+            if cubd[j] < Inf
+                @printf(fp, " UP %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+            end
+        else # clbd[j] > -Inf
+            @printf(fp, " LO %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
+            if cubd[j] < Inf
+                @printf(fp, " UP %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+            end
+        end
+    end
+
+    println(fp, "ENDATA")
+    close(fp)
+end
+=#
+
 function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
 
     println("Reading all data from StructJuMP model")
@@ -300,16 +469,17 @@ function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
     mdata_all = Array{ModelData,1}()
 
     # get model data for the first stage
-    @time begin
+#    @time begin
         mdata = getModelData(m)
-    end
+#    end
     push!(mdata_all, mdata)
 
     # @show Threads.nthreads()
     # println("You can set the number of threads as follows:\n\texport JULIA_NUM_THREADS=4")
 
     # get model data for the second stage
-    @time Threads.@threads for i = 1:num_scenarios(m)
+    #@time Threads.@threads for i = 1:num_scenarios(m)
+    for i = 1:num_scenarios(m)
         mdata = getModelData(getchildren(m)[i])
         push!(mdata_all, mdata)
     end
@@ -327,7 +497,7 @@ end
 function getModelData(m::JuMP.Model)::ModelData
     # Get a column-wise sparse matrix
     #mat = prepConstrMatrix(m)
-    mat = SmpsWriter.prepConstrMatrix(m)
+    mat = SmpsWriter.prepConstrMatrix(m)   # 바꿔봄
 
     # column type
     ctype = ""
@@ -366,6 +536,12 @@ function getModelData(m::JuMP.Model)::ModelData
     return ModelData(mat, rhs, sense, obj, m.objSense, m.colLower, m.colUpper, ctype)
 end
 
+# TODO 여기가 하나의 문제
+# SmpsWriter.prepConstrMatrix(m)을 하면, m의 constraint data들이 사라짐 (memory를 절약하기 이렇게 했나?).
+# SmpsWriter.prepConstrMatrix()을 새롭게 만든 이유: JuMP.prepConstrMatrix()을 child model에 쓰면,
+# child model은 정의되지 않은 1st-stage variable을 포함하고 있을 수 있기 때문에,
+# Variable not owned error가 발생할 수 있음
+# (1st-stage variable은 child model에 정의되어 있지 않기 때문에)
 function prepConstrMatrix(m::JuMP.Model)
     if !haskey(m.ext, :Stochastic)
         error("This is not a StructJuMP model.")
@@ -374,7 +550,7 @@ function prepConstrMatrix(m::JuMP.Model)
 
     if getparent(m) == nothing # i.e., this model is parent
         return JuMP.prepConstrMatrix(m)
-    else
+    else    # i.e., this model is one of the children
         rind = Int[]
         cind = Int[]
         value = Float64[]
@@ -423,8 +599,8 @@ function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
     for s = 3:length(mdata_all)
         mat_rows = rowvals(mdata_all[s].mat)
         for j in 1:ncols1
-            if obj[ncols0+j] == 0 && mdata_all[s].obj[j] != 0
-                obj[ncols0+j] = 1
+            if obj[ncols0+j] == 0 && mdata_all[s].obj[j] != 0   # Scen 1의 j번째 변수의 obj가 0이고, Scen s-1의 j번째 변수의 obj가 0이 아니면
+                obj[ncols0+j] = 1   # Scen 1의 j번째 변수의 obj  1로 ???
             end
             for i in nzrange(mdata_all[s].mat,j)
                 if mat[nrows0+mat_rows[i],j] == 0.0
