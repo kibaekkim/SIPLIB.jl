@@ -149,13 +149,3 @@ function weccdata(Season::AbstractString, nScenarios::Integer)::UnitCommitmentMo
 
     return uc
 end
-
-# include("../../../src/SmpsWriter.jl")
-# using SmpsWriter
-
-# @time begin
-#     model = suc_wecc(3, "FallWD")
-# end
-
-# # Write SMPS files
-# @time writeSmps(model, "../../SMPS/suc_3")

@@ -10,7 +10,9 @@ function isCentral(center::Node, P::Node)::Bool
     return euclidean_distance(center, P) <= central_radius ? true : false
 end
 
-function generate_nodes(D::String, nN::Integer, radius::Float64=RADIUS)::Array{Node}    # nN: number of nodes, D: node partition strategy
+function generate_nodes(D::String, nN::Int, seed::Int, radius::Float64=RADIUS)::Array{Node}    # nN: number of nodes, D: node partition strategy
+
+    rand(seed)
 
     Nodes = Node[]
     center = Node(radius, radius, true)
@@ -89,7 +91,9 @@ function calculate_euclidean_distances(Nodes::Array{Node})::Matrix{Float64}
     return EC
 end
 
-function generate_scenario_data(Nodes::Array{Node}, D::String, nN::Int, nS::Int, nK::Int=NK, radius::Float64=RADIUS, vc::Float64=VC, vs::Float64=VS)
+function generate_scenario_data(Nodes::Array{Node}, D::String, nN::Int, nS::Int, seed::Int, nK::Int=NK, radius::Float64=RADIUS, vc::Float64=VC, vs::Float64=VS)
+
+    rand(seed)
 
     EC = calculate_euclidean_distances(Nodes)
     Cs = zeros(nS, nN, nN, nK)
@@ -144,15 +148,15 @@ function store_scenario_data(DIR::String, Cs::Array{Float64,4}, D, nN, nS)
     end
 end
 
-function mptspsdata(D::String, nN::Integer, nS::Integer)::MPTSPsModel
+function mptspsdata(D::String, nN::Int, nS::Int, seed::Int)::MPTSPsModel
 
     tsp = MPTSPsModel()
     tsp.N = 1:nN
     tsp.K = 1:NK
     tsp.S = 1:nS
 
-    Nodes = generate_nodes(D, nN)
-    tsp.Cs = generate_scenario_data(Nodes, D, nN, nS)
+    Nodes = generate_nodes(D, nN, seed)
+    tsp.Cs = generate_scenario_data(Nodes, D, nN, nS, seed)
     tsp.Ce = Array{Float64}[]
     for i in tsp.N
         push!(tsp.Ce, Float64[])

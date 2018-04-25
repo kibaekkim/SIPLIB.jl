@@ -202,7 +202,6 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
             @printf(fp, "  %-8s", "obj")
             @printf(fp, "  %-12f", 0)
             @printf(fp, "\n")
-            pos += 1
         end
 
         if marker_started

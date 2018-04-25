@@ -34,7 +34,7 @@ using JuMP, StructJuMP
 
 function dcap(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
 
-    #srand(seed)
+    # generate a model data
     srand(seed)
     R = 1:nR
     N = 1:nN
@@ -49,6 +49,7 @@ function dcap(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
 #    M = [maximum([sum(D[:,t,s]) for s in S]) for t in T]
     Pr = ones(nS)/nS
 
+    # construct the model
     model = StructuredModel(num_scenarios = nS)
     @variable(model, x[i=R,t=T] >= 0)
     @variable(model, u[i=R,t=T], Bin)
