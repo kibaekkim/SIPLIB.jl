@@ -9,7 +9,7 @@ using SmpsWriter, SparsityAnalyzer
 
 ## set parameters for instance
 SD = "FallWD"       # Season-Day
-nS = 3             # number of scenarios
+nS = 1             # number of scenarios
 
 ## set file name and path
 INSTANCE = "SUCW_$(SD)_$(nS)"
