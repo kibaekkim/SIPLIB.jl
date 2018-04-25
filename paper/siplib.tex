@@ -59,8 +59,15 @@ grestore
 \usepackage{caption}
 \usepackage{filecontents}
 \usepackage[normalem]{ulem}
+\usepackage[flushleft]{threeparttable}
+\usepackage{stfloats}
 
+% figures folder
 \graphicspath{{./figures/}}
+
+% contents depth
+\setcounter{tocdepth}{2}
+
 
 \newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
 \DeclareMathOperator*{\PP}{\mathbb{P}}
@@ -81,8 +88,8 @@ grestore
 % Insert the name of "your journal" with
 % \journalname{myjournal}
 %
-\begin{document}
 
+\begin{document}
 \title{SIPLIB 2.0
 %\thanks{Grants or other notes
 %about the article that should go on the front page should be
@@ -122,6 +129,16 @@ grestore
 We present a collection of stochastic integer programming problem instances.
 \keywords{Stochastic Integer Programming \and Problem Instances}
 \end{abstract}
+\pagebreak
+
+\tableofcontents
+\pagebreak
+
+\listoffigures
+\pagebreak
+
+\listoftables
+\pagebreak
 
 \section{Introduction}\label{sec:intro}
 \input{./sections/sec01_intro.tex}
@@ -156,8 +173,8 @@ We present a collection of stochastic integer programming problem instances.
 
 \appendix
 \section*{Appendices}
-\input{./sections/sec00_probdesc.tex}
-\input{./sections/sec00_references.tex} % This will be replaces by a bibtex format file later.
+\input{./sections/app00_probdesc.tex}
+\input{./sections/references.tex} % This will be replaces by a bibtex format file later.
 
 \end{document}
 % end of file template.tex

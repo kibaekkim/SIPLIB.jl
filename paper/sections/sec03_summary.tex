@@ -63,54 +63,68 @@
 
 \begin{table}[H]
 	\centering
-	\caption{Components of the problems ($\mathbb{C},\mathbb{B},\mathbb{I}$: continuous, binary, integer variables)}
+	\caption{Components of the problems}
 	\label{table:prob_class}
-	\begin{tabular}{@{}lllll@{}}
-		\toprule
-		& \multicolumn{2}{l}{1st stage}                              				  	& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
-		Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
-		\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
-		\texttt{DCLP}	 &							   &								& $\mathbb{C}$			 	  &													\\				
-		\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\
-		\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}, \texttt{GEN} 	& $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}             						\\
-		\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}                	& $\mathbb{B}$                & \texttt{KNA}              						\\
-		\texttt{SSLP}    & $\mathbb{B}$                & \texttt{IVK}, \texttt{GEN} 	& $\mathbb{C}$, $\mathbb{B}$  & \texttt{GEN}             						\\
-		\texttt{SUCW}    & $\emptyset$                 &                              	& $\mathbb{C}$, $\mathbb{B}$  &                             					\\ \bottomrule
-	\end{tabular}
+	\begin{threeparttable}
+		\begin{tabular}{@{}lllll@{}}
+			\toprule
+			& \multicolumn{2}{l}{1st stage}                              				  	& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
+			Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
+			\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
+			\texttt{DCLP}	 &							   &								& $\mathbb{C}$			 	  &													\\				
+			\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\
+			\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}, \texttt{GEN} 	& $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}             						\\
+			\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}                	& $\mathbb{B}$                & \texttt{KNA}              						\\
+			\texttt{SSLP}    & $\mathbb{B}$                & \texttt{IVK}, \texttt{GEN} 	& $\mathbb{C}$, $\mathbb{B}$  & \texttt{GEN}             						\\
+			\texttt{SUCW}    & $\emptyset$                 &                              	& $\mathbb{C}$, $\mathbb{B}$  &                             					\\ \bottomrule
+		\end{tabular}
+		
+		\begin{tablenotes}
+			\small
+			\item $\mathbb{C}$: continuous, $\mathbb{B}$: binary, $\mathbb{I}$: integer
+		\end{tablenotes}
+	\end{threeparttable}
 \end{table}
 
 
 \begin{table}[H]
 	\centering
-	\caption{Number of the components in each problem (for convenience, we skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in this table)}
-	\label{table:num_components}
 	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}cccccc@{}}
-			\toprule
-			&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
-			&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
-			\multirow{3}{*}{\texttt{DCAP}}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
-			& 2nd stage & -              & $\left(1+R\right)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
-			& Total          & $RT$           & $RT+\left(1+R\right)NT\mathcal{S}$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
-			\multirow{3}{*}{\texttt{DCLP}}   & 1st stage &                &                                    &                      &                           \\
-			& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
-			& Total          &                &                                    &                      &                           \\ \midrule
-			\multirow{3}{*}{\texttt{MPTSPs}} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
-			& 2nd stage & -              & $(N-1)NK$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
-			& Total          & $(N-1)N$          & $(N-1)(1+K\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
-			\multirow{3}{*}{\texttt{SIZES}}  & 1st stage & -              & $NT$                               & $NT$                 & $(1+N)T$                  \\
-			& 2nd stage & -              & -                                  & $N^2 T$              & $2NT$                     \\ \cmidrule(l){2-6} 
-			& Total          & -              & $NT$                               & $(1+N\mathcal{S})NT$ & $(1+N+2N\mathcal{S})T$    \\ \midrule
-			\multirow{3}{*}{\texttt{SMKP}}   & 1st stage & -              & $2I$                               & -                    & $J$                       \\
-			& 2nd stage & -              & $I$                                & -                    & $K$                       \\ \cmidrule(l){2-6} 
-			& Total          & -              & $(2+\mathcal{S})I$                 & -                    & $J+K\mathcal{S}$          \\ \midrule
-			\multirow{3}{*}{\texttt{SSLP}}   & 1st stage & -              & $J$                                & -                    & $1$                       \\
-			& 2nd stage & $J$            & $IJ$                               & -                    & $I+J$                     \\ \cmidrule(l){2-6} 
-			& Total          & $J\mathcal{S}$ & $(1+I\mathcal{S})J$                & -                    & $1+(I+J)\mathcal{S}$      \\ \midrule
-			\multirow{3}{*}{\texttt{SUCW}}   & 1st stage &                &                                    &                      &                           \\
-			& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
-			& Total          &                &                                    &                      &                           \\ \bottomrule
-		\end{tabular}%
+		\begin{threeparttable}
+			\caption{Number of the components in each problem}
+			\label{table:num_components}
+			\begin{tabular}{@{}cccccc@{}}
+				\toprule
+				&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
+				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
+				\multirow{3}{*}{\texttt{DCAP}}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
+				& 2nd stage & -              & $\left(1+R\right)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
+				& Total          & $RT$           & $RT+\left(1+R\right)NT\mathcal{S}$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
+				\multirow{3}{*}{\texttt{DCLP}}   & 1st stage &                &                                    &                      &                           \\
+				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
+				& Total          &                &                                    &                      &                           \\ \midrule
+				\multirow{3}{*}{\texttt{MPTSPs}} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
+				& 2nd stage & -              & $(N-1)NK$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
+				& Total          & $(N-1)N$          & $(N-1)(1+K\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
+				\multirow{3}{*}{\texttt{SIZES}}  & 1st stage & -              & $NT$                               & $NT$                 & $(1+N)T$                  \\
+				& 2nd stage & -              & -                                  & $N^2 T$              & $2NT$                     \\ \cmidrule(l){2-6} 
+				& Total          & -              & $NT$                               & $(1+N\mathcal{S})NT$ & $(1+N+2N\mathcal{S})T$    \\ \midrule
+				\multirow{3}{*}{\texttt{SMKP}}   & 1st stage & -              & $2I$                               & -                    & $J$                       \\
+				& 2nd stage & -              & $I$                                & -                    & $K$                       \\ \cmidrule(l){2-6} 
+				& Total          & -              & $(2+\mathcal{S})I$                 & -                    & $J+K\mathcal{S}$          \\ \midrule
+				\multirow{3}{*}{\texttt{SSLP}}   & 1st stage & -              & $J$                                & -                    & $1$                       \\
+				& 2nd stage & $J$            & $IJ$                               & -                    & $I+J$                     \\ \cmidrule(l){2-6} 
+				& Total          & $J\mathcal{S}$ & $(1+I\mathcal{S})J$                & -                    & $1+(I+J)\mathcal{S}$      \\ \midrule
+				\multirow{3}{*}{\texttt{SUCW}}   & 1st stage &                &                                    &                      &                           \\
+				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
+				& Total          &                &                                    &                      &                           \\ \bottomrule
+			\end{tabular}
+	
+			\begin{tablenotes}
+				\small
+				\item For convenience, we skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in this table.
+			\end{tablenotes}
+		\end{threeparttable}
 	}
 \end{table}
 
@@ -147,15 +161,19 @@
 		\label{fig:sparsity_sslp}
 	}
 	~
-	\subfloat[][\texttt{SUCW\_FALLWD\_1}]
+	\subfloat[][\texttt{SUCW\_FallWD\_1}]
 	{
 		\centering\includegraphics[width=0.45\linewidth]{SUCW_FallWD_1}
 		\label{fig:sparsity_sucw}
 	}
-	\caption{Sparsity pattern for each problem (\texttt{SUCW} instance is too huge to draw more than 1 scenario)}
+
+	\caption{Sparsity pattern for each problem}
+	\begin{minipage}
+		{0.65\textwidth}{\footnotesize (\texttt{SUCW} instance is too huge to plot more than 1 scenario)}
+	\end{minipage}\subsection{Instance catalog}
 	\label{fig:sparsity}
 \end{figure}
 
-\subsection{Instance catalog}
+
 
 
