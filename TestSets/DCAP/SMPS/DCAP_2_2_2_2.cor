@@ -1,0 +1,71 @@
+NAME          DCAP_2_2_2_2
+ROWS
+ N  obj
+ L  c1
+ L  c2
+ L  c3
+ L  c4
+ L  c5
+ L  c6
+ L  c7
+ L  c8
+ E  c9
+ E  c10
+ E  c11
+ E  c12
+COLUMNS
+    x1        obj       6.180167      c1        1.000000    
+    x1        c5        -1.000000     c6        -1.000000   
+    x2        obj       6.563535      c2        1.000000    
+    x2        c6        -1.000000   
+    x3        obj       6.732585      c3        1.000000    
+    x3        c7        -1.000000     c8        -1.000000   
+    x4        obj       5.039546      c4        1.000000    
+    x4        c8        -1.000000   
+    MARKER    'MARKER'                'INTORG'
+    x5        obj       29.544513     c1        -1.000000   
+    x6        obj       48.076654     c2        -1.000000   
+    x7        obj       18.438728     c3        -1.000000   
+    x8        obj       49.996186     c4        -1.000000   
+    x9        obj       6.258311      c5        0.576951    
+    x9        c9        1.000000    
+    x10       obj       7.123589      c6        1.373544    
+    x10       c10       1.000000    
+    x11       obj       7.778755      c5        1.140396    
+    x11       c11       1.000000    
+    x12       obj       6.405951      c6        0.778582    
+    x12       c12       1.000000    
+    x13       obj       9.933332      c7        0.576951    
+    x13       c9        1.000000    
+    x14       obj       8.866115      c8        1.373544    
+    x14       c10       1.000000    
+    x15       obj       7.185540      c7        1.140396    
+    x15       c11       1.000000    
+    x16       obj       6.047362      c8        0.778582    
+    x16       c12       1.000000    
+    MARKER    'MARKER'                 'INTEND'
+    x17       obj       625.689605    c9        1.000000    
+    x18       obj       643.850756    c10       1.000000    
+    x19       obj       510.187434    c11       1.000000    
+    x20       obj       929.756068    c12       1.000000    
+RHS
+    rhs       c1        -0.000000     c2        -0.000000   
+    rhs       c3        -0.000000     c4        -0.000000   
+    rhs       c5        -0.000000     c6        -0.000000   
+    rhs       c7        -0.000000     c8        -0.000000   
+    rhs       c9        1.000000      c10       1.000000    
+    rhs       c11       1.000000      c12       1.000000    
+BOUNDS
+ BV BOUND     x5      
+ BV BOUND     x6      
+ BV BOUND     x7      
+ BV BOUND     x8      
+ BV BOUND     x9      
+ BV BOUND     x10     
+ BV BOUND     x11     
+ BV BOUND     x12     
+ BV BOUND     x13     
+ BV BOUND     x14     
+ BV BOUND     x15     
+ BV BOUND     x16     
+ENDATA

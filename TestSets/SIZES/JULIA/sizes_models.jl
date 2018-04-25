@@ -1,56 +1,32 @@
 include("./sizes_functions.jl")
 using JuMP, StructJuMP
 
-function sizes(nScenarios::Integer)::JuMP.Model
+function sizes(nScenarios::Integer, seed::Int=1)::JuMP.Model
 
-    sizes = sizesdata(nScenarios)
+    # read & generate model data
+    sizes = sizesdata(nScenarios, seed)
+
+    # sets
+    N, T, S = sizes.N, sizes.T, sizes.S
+
+    # parameters
+    f, r, P, C, D, Pr = sizes.f, sizes.r, sizes.P, sizes.C, sizes.D, sizes.Pr
 
     model = StructuredModel(num_scenarios = nScenarios)
-    @variable(model, y[i = sizes.N, t = sizes.T] >= 0, Int)
-    @objective(model, Min, sum(sizes.P[i]*y[i,t] for i in sizes.N for t in sizes.T))
-
-    for l in sizes.L
-        sb = StructuredModel(parent = model, id = l, prob = sizes.Pr[l])
-        @variables sb begin
-            x[i = sizes.N, j = sizes.N, t = sizes.T] >= 0, Int
-            z[i = sizes.N, t = sizes.T], Bin
-        end
-        @objective(sb, Min, sum((sum(sizes.s*z[i,t] for i in sizes.N) + sizes.r*sum(x[i,j,t] for i in sizes.N[2:end] for j in 1:i-1)) for t in sizes.T[2:end]) )
-        @constraints sb begin
-            [t = sizes.T], sum(y[i,t] for i in sizes.N) <= sizes.C[t,l]
-            [j = sizes.N, t = sizes.T], sum(x[i,j,t] for i in sizes.N[j:end]) >= sizes.D[j,t,l]
-            [i = sizes.N, t = sizes.T], sum(x[i,j,t2] for t2 in 1:t for j in 1:i) <= sum(y[i,t2] for t2 in 1:t)
-            [i = sizes.N, t = sizes.T], y[i,t] <= sizes.C[t,l]*z[i,t]
-        end
+    @variable(model, y[i = N, t = T] >= 0, Int)
+    @variable(model, z[i = N, t = T], Bin)
+    @objective(model, Min, sum(P[i]*y[i,t] + f*z[i,t] for i in N for t in T) )
+    @constraints model begin
+        [t = T], sum(y[i,t] for i in N) <= C[t]
+        [i = N, t = T], y[i,t] <= C[t]*z[i,t]
+    end
+    for s in S
+        sb = StructuredModel(parent = model, id = s, prob = Pr[s])
+        @variable(sb, x[i = N, j = N, t = T; i >= j] >= 0, Int)
+        @objective(sb, Min, sum(( sizes.r*sum(sum(x[i,j,t] for j in N[1:i-1]) for i in N[2:end]) ) for t in T) )
+        @constraint(sb, [j = N, t = T], sum(x[i,j,t2] for t2 in T[1:t] for i in N[j:end]) >= D[j,t,s] )
+        @constraint(sb, [i = N, t = T], sum(x[i,j,t2] for t2 in T[1:t] for j in N[1:i]) <= sum(y[i,t2] for t2 in T[1:t]) )
     end
 
     return model
 end
-
-#=
-function sizes(nScenarios::Integer)::JuMP.Model
-
-    sizes = sizesdata(nScenarios)
-
-    model = StructuredModel(num_scenarios = nScenarios)
-    @variable(model, y[i = sizes.N, t = sizes.T] >= 0, Int)
-    @objective(model, Min, sum(sizes.P[i]*y[i,t] for i in sizes.N for t in sizes.T))
-
-    for l in sizes.L
-        sb = StructuredModel(parent = model, id = l, prob = sizes.Pr[l])
-        @variables sb begin
-            x[i = sizes.N, j = sizes.N, t = sizes.T] >= 0, Int
-            z[i = sizes.N, t = sizes.T], Bin
-        end
-        @objective(sb, Min, sum((sum(sizes.s*z[i,t] for i in sizes.N) + sizes.r*sum(x[i,j,t] for i in sizes.N[2:end] for j in 1:i-1)) for t in sizes.T[2:end]) )
-        @constraints sb begin
-            [t = sizes.T], sum(y[i,t] for i in sizes.N) <= sizes.C[t,l]
-            [j = sizes.N, t = sizes.T], sum(x[i,j,t] for i in sizes.N[j:end]) >= sizes.D[j,t,l]
-            [i = sizes.N, t = sizes.T], sum(x[i,j,t2] for t2 in 1:t for j in 1:i) <= sum(y[i,t2] for t2 in 1:t)
-            [i = sizes.N, t = sizes.T], y[i,t] <= sizes.C[t,l]*z[i,t]
-        end
-    end
-
-    return model
-end
-=#

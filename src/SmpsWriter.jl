@@ -8,7 +8,7 @@ s.t.  A_0 x_0           (sign_0) b_0
       A_j x_0 + B_j x_j (sign_j) h_j for j = 1,...,J,
       clbd_j <= x_j <= cubd_j for j = 0,1,...,J
 
-where (sign_j) represents either <=, >=, or ==, and 
+where (sign_j) represents either <=, >=, or ==, and
       (Bounds) define the column bounds.
 
 It may take long time to generate a large number of scenarios. To reduce the time you can use multithreads.
@@ -64,7 +64,7 @@ function writeSmps(m::JuMP.Model, filename::String="SmpsWriter")
     # Check if this is a StructJuMP model
     if !haskey(m.ext, :Stochastic)
         writeMPS(m, "$filename.mps")
-        warn("This is not a stochastic model. $filename.mps was geneerated.")
+        warn("This is not a stochastic model. $filename.mps was generated.")
         return
     end
 
@@ -106,12 +106,14 @@ function writeMps(m::JuMP.Model, mdata_all::Array{ModelData,1}, filename::String
 
     mat   = [mdata_all[1].mat zeros(nrows0, ncols1*num_scenarios(m))]
     mat   = [mat ; zeros(nrows1*num_scenarios(m), ncols0+ncols1*num_scenarios(m))]
+
     rhs   = mdata_all[1].rhs
     sense = mdata_all[1].sense
     obj   = mdata_all[1].obj
     clbd  = mdata_all[1].clbd
     cubd  = mdata_all[1].cubd
     ctype = mdata_all[1].ctype
+
 
     for s = 1:num_scenarios(m)
         # @show full(mat_all[s+1])
@@ -170,7 +172,8 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
     for j in 1:ncols
 
         if !marker_started && in(ctype[j], "BI")
-            @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTORG'")
+            #@printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTORG'")
+            @printf(fp,"    MARKER    'MARKER'                'INTORG'\n")
             marker_started = true
         end
 
@@ -193,11 +196,18 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
                 pos += 1
             end
             @printf(fp, "\n")
+        else # abs(obj[j]) == 0 && length(nzrange(mat,j)) == 0
+            println("Warning: The JuMP model contains unused variable. Remove this to reduce file size.")
+            @printf(fp, "    %-8s", "x"*string(j))
+            @printf(fp, "  %-8s", "obj")
+            @printf(fp, "  %-12f", 0)
+            @printf(fp, "\n")
         end
 
         if marker_started
             if j == ncols || !in(ctype[j+1], "BI")
-                @printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTEND'")
+                #@printf(fp, "    %-8s  %-8s  %-12s\n", "MARKER", "'MARKER'", "'INTEND'")
+                @printf(fp,"    MARKER    'MARKER'                 'INTEND'\n")
                 marker_started = false
             end
         end
@@ -219,9 +229,33 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
 
     println(fp, "BOUNDS")
     for j in 1:ncols
+        ############## Integer part #######################################
+        if ctype[j] == 'I'
+            if clbd[j] <= -Inf
+                if cubd[j] >= Inf
+                    @printf(fp, " FR %-8s  %-8s\n", "BOUND", "x"*string(j))
+                else # cubd[j] < Inf
+                    @printf(fp, " MI %-8s  %-8s\n", "BOUND", "x"*string(j))
+                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            elseif clbd[j] == 0
+                if cubd[j] >= Inf
+                    @printf(fp, " LI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), 0)
+                else # cubd[j] < Inf
+                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            else # clbd[j] > -Inf
+                @printf(fp, " LI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), clbd[j])
+                if cubd[j] < Inf
+                    @printf(fp, " UI %-8s  %-8s  %-12f\n", "BOUND", "x"*string(j), cubd[j])
+                end
+            end
+            continue
+        end
+        ####################################################################
 
         if ctype[j] == 'B'
-            @printf(fp, " BV BOUND  %-8s\n", "x"*string(j))
+            @printf(fp, " BV %-8s  %-8s\n", "BOUND", "x"*string(j))
             continue
         end
 
@@ -232,7 +266,7 @@ function writeMps(filename, probname, mat, rhs, sense, obj, objsense, clbd, cubd
 
         if clbd[j] <= -Inf
             if cubd[j] >= Inf
-                @printf(fp, " FR BOUND  %-8s\n", "x"*string(j))
+                @printf(fp, " FR %-8s  %-8s\n", "BOUND", "x"*string(j))
             else
                 @printf(fp, " MI %-8s  %-8s\n", "BOUND", "x"*string(j))
                 if cubd[j] != 0
@@ -292,7 +326,8 @@ end
 
 function getModelData(m::JuMP.Model)::ModelData
     # Get a column-wise sparse matrix
-    mat = prepConstrMatrix(m)
+    #mat = prepConstrMatrix(m)
+    mat = SmpsWriter.prepConstrMatrix(m)
 
     # column type
     ctype = ""
@@ -337,7 +372,7 @@ function prepConstrMatrix(m::JuMP.Model)
         return JuMP.prepConstrMatrix(m)
     end
 
-    if getparent(m) == nothing
+    if getparent(m) == nothing # i.e., this model is parent
         return JuMP.prepConstrMatrix(m)
     else
         rind = Int[]
@@ -372,7 +407,7 @@ function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
     nrows1, ncols = size(mdata_all[2].mat)
     ncols1 = ncols - ncols0
 
-    # core data
+    # core data (includes 1st stage & 2nd stage's 1st scenario data)
     rhs      = [mdata_all[1].rhs  ; mdata_all[2].rhs]
     sense    = [mdata_all[1].sense; mdata_all[2].sense]
     obj      = [mdata_all[1].obj  ; mdata_all[2].obj]
@@ -405,6 +440,7 @@ function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
     end
 
     mdata_core = ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype)
+
     writeMps("$filename.cor", basename(filename), mdata_core)
 
     println("done")
@@ -453,7 +489,7 @@ function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, 
     println(fp, "SCENARIOS")
     for s in 1:nscen
         @printf(fp, " SC %-8s  %-8s  %-8f  PERIOD2\n", "SCEN"*string(s), "ROOT", probability[s])
-        
+
         # row bounds
         for i in 1:nrows1
             if mdata_core.rhs[nrows0+i] != mdata_all[s+1].rhs[i]
@@ -494,4 +530,3 @@ function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, 
 end
 
 end
-
