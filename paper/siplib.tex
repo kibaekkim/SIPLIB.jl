@@ -47,7 +47,6 @@ grestore
 %
 \usepackage{graphicx}
 \usepackage{hyperref}
-\usepackage{float}
 \usepackage{mathrsfs,amsmath,amssymb,amscd,mathtools}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -56,7 +55,12 @@ grestore
 \usepackage{multirow}
 \usepackage{booktabs}
 \usepackage{subfig}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{filecontents}
 \usepackage[normalem]{ulem}
+
+\graphicspath{{./figures/}}
 
 \newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
 \DeclareMathOperator*{\PP}{\mathbb{P}}
@@ -120,29 +124,27 @@ We present a collection of stochastic integer programming problem instances.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
-\input{sec01_intro}
+\input{./sections/sec01_intro.tex}
 \pagebreak
 
 \section{Stochastic integer programming}\label{sec:sip}
-\input{sec02_sip}
+\input{./sections/sec02_sip.tex}
 \pagebreak
  
 \section{Summary of the test sets}\label{sec:summary}
-\input{sec03_summary}
+\input{./sections/sec03_summary.tex}
 \pagebreak
 
 \section{How to run a test, generate new instance, and convert to \texttt{SMPS}}\label{sec:tutorial}
-\input{sec04_tutorial}
-
-
+\input{./sections/sec04_tutorial.tex}
 \pagebreak
 
 \section{Implementation of SmpsWriter.jl}\label{sec:smps_writer}
-\input{sec05_smpswriter}
+\input{./sections/sec05_smpswriter.tex}
 \pagebreak
 
 \section{Solution report}\label{sec:solution}
-\input{sec06_solution}
+\input{./sections/sec06_solution.tex}
 \pagebreak
 
 \section{Concluding remarks}
@@ -154,8 +156,8 @@ We present a collection of stochastic integer programming problem instances.
 
 \appendix
 \section*{Appendices}
-\input{sec00_probdesc}
-\input{sec00_references} % This will be replaces by a bibtex format file later.
+\input{./sections/sec00_probdesc.tex}
+\input{./sections/sec00_references.tex} % This will be replaces by a bibtex format file later.
 
 \end{document}
 % end of file template.tex
