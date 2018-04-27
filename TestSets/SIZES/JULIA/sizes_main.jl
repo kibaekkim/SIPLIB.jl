@@ -19,7 +19,7 @@ SMPS_PATH = "../SMPS/$INSTANCE"
 model = @time sizes(nS)
 
 ## sparsity analyze
-SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
+#SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
 #SparsityAnalyzer.calcSparsity(model, INSTANCE)
 
 ## write SMPS files

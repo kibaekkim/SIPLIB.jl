@@ -62,13 +62,13 @@ grestore
 \usepackage[flushleft]{threeparttable}
 \usepackage{stfloats}
 
-% figures folder
+% include the folder contatining figures
 \graphicspath{{./figures/}}
 
-% contents depth
+% set table of contents depths
 \setcounter{tocdepth}{2}
 
-
+% set shortcuts
 \newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
 \DeclareMathOperator*{\PP}{\mathbb{P}}
 \DeclareMathOperator*{\EE}{\mathbb{E}}
@@ -97,7 +97,7 @@ grestore
 }
 \subtitle{Stochastic Integer Programming Library version 2.0}
 
-\titlerunning{SIPLIB 2.0}        % if too long for running head
+\titlerunning{SIPLIB 2.0}        
 
 \author{Yongkyu Cho \and 
 		Kibaek Kim \and
@@ -125,20 +125,12 @@ grestore
 
 \maketitle
 
-\begin{abstract}
-We present a collection of stochastic integer programming problem instances.
-\keywords{Stochastic Integer Programming \and Problem Instances}
-\end{abstract}
+% abstract
+\input{./sections/sec00_abstract.tex}
 \pagebreak
 
-\tableofcontents
-\pagebreak
-
-\listoftables
-\pagebreak
-
-\listoffigures
-\pagebreak
+% lists (tableofcontents, figures, tables)
+\input{./sections/sec00_lists.tex}
 
 \section{Introduction}\label{sec:intro}
 \input{./sections/sec01_intro.tex}
@@ -165,7 +157,7 @@ We present a collection of stochastic integer programming problem instances.
 \pagebreak
 
 \section{Concluding remarks}
-\textcolor{red}{(not finished yet) Any further contribution or suggestions for \texttt{SIPLIB 2.0} are always welcomed. Better solutions than discovered so far, more functions, more problems with \texttt{Julia} scripts for instance generation, more effective classification rules, etc.}
+\input{./sections/sec07_conclusion.tex}
 \pagebreak
 
 %\begin{acknowledgements}
@@ -173,9 +165,12 @@ We present a collection of stochastic integer programming problem instances.
 
 \appendix
 \section*{Appendices}
-\input{./sections/app00_probdesc.tex}
+% problem-specific description 
+\input{./sections/app01_probdesc.tex}
+
+% references
 \input{./sections/references.tex} % This will be replaces by a bibtex format file later.
 
 \end{document}
-% end of file template.tex
+
 

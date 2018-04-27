@@ -11,7 +11,7 @@ using SmpsWriter, SparsityAnalyzer
 nR = 3      # number of items
 nN = 3      # number of tasks
 nT = 3      # number of time periods
-nS = 30 # number of scenarios
+nS = 100 # number of scenarios
 
 ## set file name and path
 INSTANCE = "DCAP_$(nR)_$(nN)_$(nT)_$(nS)"
@@ -19,11 +19,11 @@ PLOT_PATH = "../../../plot/$INSTANCE.pdf"
 SMPS_PATH = "../SMPS/$INSTANCE"
 
 ## generate JuMP.Model
-model = @time dcap(nR, nN, nT, nS)
+model = dcap(nR, nN, nT, nS)
 
 ## sparsity analyze
-SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
+#SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
 #SparsityAnalyzer.calcSparsity(model, INSTANCE)
 
 ## write SMPS files
-SmpsWriter.writeSmps(model, SMPS_PATH)
+writeSmps(model, SMPS_PATH)

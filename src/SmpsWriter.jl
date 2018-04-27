@@ -297,8 +297,8 @@ function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
     println("Reading all data from StructJuMP model")
 
     # create the model data array
-    mdata_all = Array{ModelData,1}()
-
+    #mdata_all = Array{ModelData,1}()
+    mdata_all = ModelData[]
     # get model data for the first stage
     @time begin
         mdata = getModelData(m)
@@ -309,7 +309,8 @@ function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
     # println("You can set the number of threads as follows:\n\texport JULIA_NUM_THREADS=4")
 
     # get model data for the second stage
-    @time Threads.@threads for i = 1:num_scenarios(m)
+#    @time Threads.@threads for i = 1:num_scenarios(m) # multi-threading sometimes causes error.
+    for i = 1:num_scenarios(m)
         mdata = getModelData(getchildren(m)[i])
         push!(mdata_all, mdata)
     end
@@ -326,8 +327,8 @@ end
 
 function getModelData(m::JuMP.Model)::ModelData
     # Get a column-wise sparse matrix
-    #mat = prepConstrMatrix(m)
-    mat = SmpsWriter.prepConstrMatrix(m)
+    mat = prepConstrMatrix(m)
+    #mat = SmpsWriter.prepConstrMatrix(m)
 
     # column type
     ctype = ""
@@ -487,6 +488,7 @@ function writeStoc(filename, nscen, probability, mdata_all::Array{ModelData,1}, 
     #            123456789 123456789
     println(fp, "STOCH         ", basename(filename))
     println(fp, "SCENARIOS")
+
     for s in 1:nscen
         @printf(fp, " SC %-8s  %-8s  %-8f  PERIOD2\n", "SCEN"*string(s), "ROOT", probability[s])
 

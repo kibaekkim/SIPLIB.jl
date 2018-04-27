@@ -1,4 +1,3 @@
-
 module SparsityAnalyzer
 
 using PyPlot
@@ -47,6 +46,7 @@ function plotConstraintMatrix(m::JuMP.Model, INSTANCE:: String="", PATH::String=
     plt.yticks([])
     plt.tight_layout()
 
+    # if one inputs PATH, save the figure to the PATH.
     if PATH != ""
         plt.savefig(PATH)
         plt.close()

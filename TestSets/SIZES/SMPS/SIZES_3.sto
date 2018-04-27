@@ -1,0 +1,26 @@
+STOCH         SIZES_3
+SCENARIOS
+ SC SCEN1     ROOT      0.333333  PERIOD2
+ SC SCEN2     ROOT      0.333333  PERIOD2
+    rhs       c24       920.041682  
+    rhs       c26       2760.125046 
+    rhs       c28       4600.208410 
+    rhs       c30       3680.166728 
+    rhs       c32       12880.583549
+    rhs       c34       9200.416821 
+    rhs       c36       5520.250092 
+    rhs       c38       4600.208410 
+    rhs       c40       4600.208410 
+    rhs       c42       1840.083364 
+ SC SCEN3     ROOT      0.333333  PERIOD2
+    rhs       c24       2116.292535 
+    rhs       c26       6348.877606 
+    rhs       c28       10581.462677
+    rhs       c30       8465.170142 
+    rhs       c32       29628.095497
+    rhs       c34       21162.925355
+    rhs       c36       12697.755213
+    rhs       c38       10581.462677
+    rhs       c40       10581.462677
+    rhs       c42       4232.585071 
+ENDATA
