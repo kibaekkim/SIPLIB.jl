@@ -11,6 +11,7 @@
 #
 
 int  LOG_LEVEL          1    # Display level
+int  DD/SUB/LOG_LEVEL   0    # Display level for DD subproblems
 int  SCIP/DISPLAY_FREQ  100  # SCIP display frequency
 
 #
@@ -28,10 +29,10 @@ int     BD/DD/ITER_LIM  10       # Iteration limit
 int     DD/ITER_LIM     1000000  # Iteration limit
 double  DE/WALL_LIM     1000000  # Wall clock limit
 double  BD/WALL_LIM     1000000  # Wall clock limit
-double  DD/WALL_LIM     1000000  # Wall clock limit
+double  DD/WALL_LIM     100  # Wall clock limit
 double  DD/STOP_TOL     0.00001  # Stopping tolerance
 double  MIP/GAP_TOL     0.00001  # Duality gap tolerance
-double  MIP/TIME_LIM    300      # Time limit
+double  MIP/TIME_LIM    5      # Time limit
 
 # Benders lower bound method
 #   0 = solve separate LP relaxation problems
@@ -53,7 +54,7 @@ int  DD/NUM_CUTS_PER_ITER  1   # number of cuts to add per iteration
 #    1 : enabled
 int  DD/FEAS_CUTS    -1
 int  DD/OPT_CUTS     -1
-int  DD/EVAL_UB      -1
+int  DD/EVAL_UB      1
 int  DD/MAX_EVAL_UB  100  # maximum number of solutions to evaluate
 
 # Asynchronous (experimental)
