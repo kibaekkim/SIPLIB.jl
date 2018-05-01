@@ -12,8 +12,8 @@ include("../../../src/SparsityAnalyzer.jl")
 using SmpsWriter, SparsityAnalyzer
 
 ## set parameters for instance
-nI = 10  # number of items
-nS = 3  # number of scenarios (any integer)
+nI = 120  # number of items
+nS = 100000  # number of scenarios (any integer)
 
 ## set file name and path
 INSTANCE = "SMKP_$(nI)_$(nS)"
@@ -24,7 +24,7 @@ SMPS_PATH = "../SMPS/$INSTANCE"
 model = smkp(nI, nS)
 
 ## sparsity analyze
-SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
+#SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
 #SparsityAnalyzer.calcSparsity(model, INSTANCE)
 
 ## write SMPS files

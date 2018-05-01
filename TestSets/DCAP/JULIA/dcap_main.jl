@@ -8,7 +8,7 @@ include("../../../src/SparsityAnalyzer.jl")
 using SmpsWriter, SparsityAnalyzer
 
 ## set parameters for instance
-nR = 3      # number of items
+nR = 2      # number of items
 nN = 3      # number of tasks
 nT = 3      # number of time periods
 nS = 100 # number of scenarios

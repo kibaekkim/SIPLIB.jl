@@ -14,9 +14,9 @@ include("../../../src/SparsityAnalyzer.jl")
 using SmpsWriter, SparsityAnalyzer
 
 ## set parameters for instance
-D = "D0"                # node distribution strategy (D0, D1, D2 ,D3)
-nN = 5                 # number of nodes
-nS = 3                # number of scenarios (any integer)
+D = "D1"                # node distribution strategy (D0, D1, D2 ,D3)
+nN = 50                 # number of nodes
+nS = 1000                # number of scenarios (any integer)
 
 ## set file name and path
 INSTANCE = "MPTSPs_$(D)_$(nN)_$(nS)"
@@ -27,7 +27,7 @@ SMPS_PATH = "../SMPS/$INSTANCE"
 model = mptsps_flow(D, nN, nS)
 
 ## sparsity analyze
-SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
+#SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
 #SparsityAnalyzer.calcSparsity(model, INSTANCE)
 
 ## write SMPS files

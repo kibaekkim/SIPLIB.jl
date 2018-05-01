@@ -8,7 +8,7 @@ include("../../../src/SparsityAnalyzer.jl")
 using SmpsWriter, SparsityAnalyzer
 
 ## set parameters for instance
-nS = 3         # number of scenarios
+nS = 1000000         # number of scenarios
 
 ## set file name and path
 INSTANCE = "SIZES_$(nS)"  # for SIPLIB 2.0 instances

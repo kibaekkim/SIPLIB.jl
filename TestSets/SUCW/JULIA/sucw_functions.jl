@@ -26,6 +26,7 @@ function weccdata(Season::AbstractString, nScenarios::Integer)::UnitCommitmentMo
     end
 
     # Set paths
+    cd(dirname(@__FILE__))
     DATA_DIR = "../DATA";
     WIND_DIR = "$DATA_DIR/WIND/$Season";
 

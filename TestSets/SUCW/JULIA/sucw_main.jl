@@ -8,8 +8,8 @@ include("../../../src/SparsityAnalyzer.jl")
 using SmpsWriter, SparsityAnalyzer
 
 ## set parameters for instance
-SD = "FallWD"       # Season-Day
-nS = 1             # number of scenarios
+SD = "WinterWE"       # Season-Day
+nS = 10             # number of scenarios
 
 ## set file name and path
 INSTANCE = "SUCW_$(SD)_$(nS)"
@@ -20,8 +20,8 @@ SMPS_PATH = "../SMPS/$INSTANCE"
 model = sucw(SD, nS)
 
 ## sparsity analyze
-SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
+#SparsityAnalyzer.plotConstraintMatrix(model, INSTANCE, PLOT_PATH)
 #SparsityAnalyzer.calcSparsity(model, INSTANCE)
 
 ## write SMPS files
-#SmpsWriter.writeSmps(model, SMPS_PATH)
+SmpsWriter.writeSmps(model, SMPS_PATH)
