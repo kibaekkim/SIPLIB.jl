@@ -35,7 +35,7 @@ const VS = 80.0         # deterministic velocity profile for suburban node
 
 problem = "MPTSPs"
 params_set = [("D0",50), ("D1",50), ("D2",50), ("D3",50), ("D0",100), ("D1",100), ("D2",100), ("D3",100)]
-nS_set = [100, 1000, 10000, 100000]
+nS_set = [100, 1000]
 FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
