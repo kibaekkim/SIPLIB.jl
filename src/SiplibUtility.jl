@@ -1,8 +1,6 @@
-cd(dirname(@__FILE__))
-
-##########################
-## Generating instances ##
-##########################
+#################################
+## Generating instances: Start ##
+#################################
 
 ## Instance name (S is always the number of scenarios)
 ### DCAP_R_N_T_S: param_set = (R::Int, N::Int, T::Int)
@@ -13,13 +11,15 @@ cd(dirname(@__FILE__))
 ### SUCW_D_S: param_set = (D::String)  # D ∈ ("FallWD", "FallWE", "SpringWD", "SpringWE", "SummerWD", "SummerWE", "WinterWD", "WinterWE")
 
 # include generator file
+cd(dirname(@__FILE__))
 include("./SiplibInstanceGenerator.jl")
+SMPS_PATH = "$(pwd())/../experiment/SMPS"
 
 # DCAP
 problem = "DCAP"
 params_set = [(2,3,3), (2,4,3), (3,3,2), (3,4,2)]
 nS_set = [500, 1000, 10000, 100000]
-FILE_PATH = "/home/yoc/GitLab/Argonne/SIPLIB/experiment/SMPS/$problem"
+FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
         generateInstance(FILE_PATH, problem, params, nS)
@@ -36,7 +36,7 @@ const VS = 80.0         # deterministic velocity profile for suburban node
 problem = "MPTSPs"
 params_set = [("D0",50), ("D1",50), ("D2",50), ("D3",50), ("D0",100), ("D1",100), ("D2",100), ("D3",100)]
 nS_set = [100, 1000, 10000, 100000]
-FILE_PATH = "/home/yoc/GitLab/Argonne/SIPLIB/experiment/SMPS/$problem"
+FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
         generateInstance(FILE_PATH, problem, params, nS)
@@ -47,7 +47,7 @@ end
 problem = "SIZES"
 params_set = [()] # no user-modifiable parameter
 nS_set = [10, 100, 1000, 10000, 100000, 1000000]
-FILE_PATH = "/home/yoc/GitLab/Argonne/SIPLIB/experiment/SMPS/$problem"
+FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
         generateInstance(FILE_PATH, problem, params, nS)
@@ -62,7 +62,7 @@ const NXY = 5       # number of xy-knapsacks, default: 5
 problem = "SMKP"
 params_set = [(120,)]
 nS_set = [20, 100, 1000, 10000, 100000]
-FILE_PATH = "/home/yoc/GitLab/Argonne/SIPLIB/experiment/SMPS/$problem"
+FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
         generateInstance(FILE_PATH, problem, params, nS)
@@ -73,7 +73,7 @@ end
 problem = "SSLP"
 params_set = [(5,25), (5,50), (10,50), (15,45)]
 nS_set = [100, 1000, 10000, 100000]
-FILE_PATH = "/home/yoc/GitLab/Argonne/SIPLIB/experiment/SMPS/$problem"
+FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
         generateInstance(FILE_PATH, problem, params, nS)
@@ -84,7 +84,7 @@ end
 problem = "SUCW"
 params_set = [("FallWD",), ("FallWE",), ("SpringWD",), ("SpringWE",), ("SummerWD",), ("SummerWE",), ("WinterWD",), ("WinterWE",)]
 nS_set = [10, 100, 1000]
-FILE_PATH = "/home/yoc/GitLab/Argonne/SIPLIB/experiment/SMPS/$problem"
+FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
         generateInstance(FILE_PATH, problem, params, nS)
@@ -92,6 +92,6 @@ for params in params_set
 end
 
 
-#####################################
-## End of the generating instances ##
-#####################################
+#################################
+##  Generating instances: End  ##
+#################################
