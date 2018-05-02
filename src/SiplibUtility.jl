@@ -15,6 +15,7 @@ cd(dirname(@__FILE__))
 include("./SiplibInstanceGenerator.jl")
 SMPS_PATH = "$(pwd())/../experiment/SMPS"
 
+#=
 # DCAP
 problem = "DCAP"
 params_set = [(2,3,3), (2,4,3), (3,3,2), (3,4,2)]
@@ -35,13 +36,15 @@ const VS = 80.0         # deterministic velocity profile for suburban node
 
 problem = "MPTSPs"
 params_set = [("D0",50), ("D1",50), ("D2",50), ("D3",50), ("D0",100), ("D1",100), ("D2",100), ("D3",100)]
-nS_set = [100, 1000]
+nS_set = [100, 200, 300, 400, 500]
 FILE_PATH = "$SMPS_PATH/$problem"
 for params in params_set
     for nS in nS_set
         generateInstance(FILE_PATH, problem, params, nS)
     end
 end
+
+=#
 
 # SIZES
 problem = "SIZES"
