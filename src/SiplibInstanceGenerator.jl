@@ -2,7 +2,6 @@ cd(dirname(@__FILE__))
 
 # include utility files
 include("./SmpsWriter.jl")
-include("./SparsityAnalyzer.jl")
 
 # include JuMP modeling files
 include("../TestSets/DCAP/JULIA/dcap_models.jl")
@@ -12,7 +11,7 @@ include("../TestSets/SMKP/JULIA/smkp_models.jl")
 include("../TestSets/SSLP/JULIA/sslp_models.jl")
 include("../TestSets/SUCW/JULIA/sucw_models.jl")
 
-using SmpsWriter, SparsityAnalyzer
+using SmpsWriter
 
 # generate instance in SMPS format
 function generateInstance(FILE_PATH::String, problem::String, params::Any, nS::Int)
@@ -42,11 +41,3 @@ function generateInstance(FILE_PATH::String, problem::String, params::Any, nS::I
     # save instance
     SmpsWriter.writeSmps(model, "$FILE_PATH/$INSTANCE")
 end
-
-#=
-FILE_PATH = "/home/yoc/GitLab/Argonne/SIPLIB/experiment/SMPS"
-problem = "SIZES"
-param_set = ()
-nS = 10
-generateInstance(FILE_PATH, problem, param_set, nS)
-=#
