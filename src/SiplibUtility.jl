@@ -29,6 +29,20 @@ end
 
 # MPTSPs
 ## global parameters
+params_set = [()] # no user-modifiable parameter
+nS_set = [10, 100, 1000, 10000, 100000, 1000000]
+FILE_PATH = "$SMPS_PATH/$problem"
+for params in params_set
+    for nS in nS_set
+        generateInstance(FILE_PATH, problem, params, nS)
+    end
+end
+
+# SMKP
+## global parameters
+const NXZ = 50      # number of xz-knapsack, default: 50
+const NXY = 5       # number of xy-knapsacks, default: 5
+
 const RADIUS = 7.0      # radius of the area
 const NK = 3            # number of paths between two nodes
 const VC = 40.0         # deterministic velocity profile for central node
