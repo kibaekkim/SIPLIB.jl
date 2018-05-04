@@ -1,12 +1,11 @@
 module SparsityAnalyzer
 
-using PyPlot
 include("./SmpsWriter.jl")
-include("../TestSets/SIZES/JULIA/sizes_models.jl")
+using PyPlot, SmpsWriter
 
 export plotConstraintMatrix, getSparsity
 
-# this function plots constriant matrix and calculate sparsity
+# this function 1) plots constriant matrix, 2) calculate sparsity
 function plotConstraintMatrix(m::JuMP.Model, INSTANCE:: String="", PATH::String="")
 
     mdata_all = SmpsWriter.getStructModelData(m)
@@ -46,7 +45,7 @@ function plotConstraintMatrix(m::JuMP.Model, INSTANCE:: String="", PATH::String=
     plt.yticks([])
     plt.tight_layout()
 
-    # if one inputs PATH, save the figure to the PATH.
+    # if a user input PATH, save the figure to the PATH.
     if PATH != ""
         plt.savefig(PATH)
         plt.close()
@@ -55,7 +54,7 @@ function plotConstraintMatrix(m::JuMP.Model, INSTANCE:: String="", PATH::String=
     return sparsity
 end
 
-# this function only calculates sparsity
+# TODO: this function ONLY calculates sparsity
 function calcSparsity(m::JuMP.Model, INSTANCE::String)
 
     mdata_all = SmpsWriter.getStructModelData(m)
@@ -85,4 +84,5 @@ function calcSparsity(m::JuMP.Model, INSTANCE::String)
     return sparsity
 end
 
-end
+
+end # end of module
