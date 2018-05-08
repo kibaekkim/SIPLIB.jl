@@ -61,14 +61,17 @@ grestore
 \usepackage[normalem]{ulem}
 \usepackage[flushleft]{threeparttable}
 \usepackage{stfloats}
+\usepackage{lscape}
+\usepackage{longtable}
 
-% include the folder contatining figures
 \graphicspath{{./figures/}}
 
 % set table of contents depths
 \setcounter{tocdepth}{2}
 
 % set shortcuts
+\newcommand{\siplibtwo}{\texttt{SIPLIB 2.0}}
+\newcommand{\siplib}{\texttt{SIPLIB}}
 \newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
 \DeclareMathOperator*{\PP}{\mathbb{P}}
 \DeclareMathOperator*{\EE}{\mathbb{E}}
@@ -144,7 +147,7 @@ grestore
 \input{./sections/sec03_summary.tex}
 \pagebreak
 
-\section{How to run a test, generate new instance, and convert to \texttt{SMPS}}\label{sec:tutorial}
+\section{How to generate new instance, analyze the instance, and convert to \texttt{SMPS}}\label{sec:tutorial}
 \input{./sections/sec04_tutorial.tex}
 \pagebreak
 

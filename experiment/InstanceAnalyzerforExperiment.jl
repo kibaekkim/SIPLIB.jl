@@ -5,7 +5,9 @@ include("$(dirname(@__FILE__))/../src/SiplibInstanceGenerator.jl")
 SMPS_PATH = "$(dirname(@__FILE__))/../experiment/SMPS"
 using SizeAnalyzer, DataFrames, CSV
 
-# parameter setting
+##############################
+## parameter setting: Start ##
+##############################
 params_set_DCAP = [(2,3,3), (2,4,3), (3,3,2), (3,4,2)]
 nS_set_DCAP = [500, 1000, 5000, 10000]
 
@@ -23,6 +25,9 @@ nS_set_SSLP = [100, 500, 1000, 2000, 4000, 8000]
 
 params_set_SUCW = [("FallWD",), ("FallWE",), ("SpringWD",), ("SpringWE",), ("SummerWD",), ("SummerWE",), ("WinterWD",), ("WinterWE",)]
 nS_set_SUCW = [10, 50 ,100]
+############################
+## parameter setting: End ##
+############################
 
 # construct a DataFrame object
 df = DataFrame(instance=Any[], cont1=Any[], bin1=Any[], int1=Any[], cont2=Any[], bin2=Any[], int2=Any[], cont=Any[], bin=Any[], int=Any[], rows=Any[], cols=Any[], nonzeros=Any[], density=Any[])

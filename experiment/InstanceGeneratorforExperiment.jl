@@ -15,7 +15,9 @@ THIS_FILE_PATH = dirname(@__FILE__)
 include("$THIS_FILE_PATH/../src/SiplibInstanceGenerator.jl")
 SMPS_PATH = "$THIS_FILE_PATH/../experiment/SMPS"
 
-# parameter setting
+##############################
+## parameter setting: Start ##
+##############################
 params_set_DCAP = [(2,3,3), (2,4,3), (3,3,2), (3,4,2)]
 nS_set_DCAP = [500, 1000, 5000, 10000]
 
@@ -33,7 +35,9 @@ nS_set_SSLP = [100, 500, 1000, 2000, 4000, 8000]
 
 params_set_SUCW = [("FallWD",), ("FallWE",), ("SpringWD",), ("SpringWE",), ("SummerWD",), ("SummerWE",), ("WinterWD",), ("WinterWE",)]
 nS_set_SUCW = [10, 50 ,100]
-
+############################
+## parameter setting: End ##
+############################
 
 # DCAP
 problem = "DCAP"
