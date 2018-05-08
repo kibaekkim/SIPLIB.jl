@@ -1,6 +1,6 @@
-####################################################################################################################
-## This module reads StructJuMP-type object and return a InstanceSizeInfo-type object containing size information ##
-####################################################################################################################
+#######################################################################################################################
+## This module reads StructJuMP-type object and return a InstanceSizeInfo-type object that contains size information ##
+#######################################################################################################################
 
 # include SmpsWriter (to use the function SmpsWriter.getStructModelData)
 include("$(dirname(@__FILE__))/SmpsWriter.jl")
