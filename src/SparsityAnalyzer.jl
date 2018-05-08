@@ -1,7 +1,7 @@
 module SparsityAnalyzer
 
 include("./SmpsWriter.jl")
-using PyPlot, SmpsWriter
+using PyPlot, SmpsWriter, JuMP
 
 export plotConstraintMatrix, getSparsity
 
