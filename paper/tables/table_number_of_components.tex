@@ -1,0 +1,41 @@
+
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{threeparttable}
+			\caption{Number of components in each problem}
+			\label{table:num_components}
+			\begin{tabular}{@{}cccccc@{}}
+				\toprule
+				&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
+				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
+				\multirow{3}{*}{\texttt{DCAP} (\ref{dcap:notation})}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
+				& 2nd stage & -              & $\left(1+R\right)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
+				& Total          & $RT$           & $RT+\left(1+R\right)NT\mathcal{S}$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
+				\multirow{3}{*}{\texttt{DCLP} }   & 1st stage &                &                                    &                      &                           \\
+				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
+				& Total          &                &                                    &                      &                           \\ \midrule
+				\multirow{3}{*}{\texttt{MPTSPs} (\ref{mptsps:notation})} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
+				& 2nd stage & -              & $(N-1)NK$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
+				& Total          & $(N-1)N$          & $(N-1)(1+K\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
+				\multirow{3}{*}{\texttt{SIZES} (\ref{sizes:notation})}  & 1st stage & -              & $NT$                               & $NT$                 & $(1+N)T$                  \\
+				& 2nd stage & -              & -                                  & $N^2 T$              & $2NT$                     \\ \cmidrule(l){2-6} 
+				& Total          & -              & $NT$                               & $(1+N\mathcal{S})NT$ & $(1+N+2N\mathcal{S})T$    \\ \midrule
+				\multirow{3}{*}{\texttt{SMKP} (\ref{smkp:notation})}   & 1st stage & -              & $2I$                               & -                    & $J$                       \\
+				& 2nd stage & -              & $I$                                & -                    & $K$                       \\ \cmidrule(l){2-6} 
+				& Total          & -              & $(2+\mathcal{S})I$                 & -                    & $J+K\mathcal{S}$          \\ \midrule
+				\multirow{3}{*}{\texttt{SSLP} (\ref{sslp:notation})}   & 1st stage & -              & $J$                                & -                    & $1$                       \\
+				& 2nd stage & $J$            & $IJ$                               & -                    & $I+J$                     \\ \cmidrule(l){2-6} 
+				& Total          & $J\mathcal{S}$ & $(1+I\mathcal{S})J$                & -                    & $1+(I+J)\mathcal{S}$      \\ \midrule
+				\multirow{3}{*}{\texttt{SUCW} (\ref{sucw:notation})}   & 1st stage &                &                                    &                      &                           \\
+				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
+				& Total          &                &                                    &                      &                           \\ \bottomrule
+			\end{tabular}
+	
+			\begin{tablenotes}
+				\small
+				\item For convenience, we skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in this table.
+			\end{tablenotes}
+		\end{threeparttable}
+	}
+\end{table}

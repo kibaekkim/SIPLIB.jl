@@ -10,7 +10,7 @@ We consider the problem of deciding the capacity expansion schedule for $|R|$ re
 
 Under the definition of the decision variables, the extensive form of \texttt{DCAP} is written below and the summarized notation is available in Table \ref{dcap:notation}.
 
-\begin{subequations}
+\begin{subequations} \label{dcap:formulation}
 	\begin{align}
 	(\texttt{DCAP})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in R}\left(\alpha_{it}x_{it}+\beta_{it}u_{it}\right)+\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T}\sum_{i\in R\cup\{0\}}\sum_{j\in N}c_{ijt}^{s}y_{ijt}^s	\label{dcap:obj} \\
 	\textrm{s.t.}\ & \textcolor{red}{x_{it}\le \textrm{M}u_{it}},\quad\forall i\in R,\ \forall t\in T,	\label{dcap:b}\\
@@ -81,7 +81,7 @@ Let $N$ and $K_{ij}$, respectively, bethe finite set of nodes of the graph and t
 The first stage binary variables $y_{ij}=1$ if node $j\in N$ is visited right after node $i\in N$, 0 otherwise. The second stage binary variables $x_{ijk}^{s}=1$ if path $k\in K_{ij}$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise. We have one more set of first stage variables $\phi_{ij}$ which is introduced to break the subtours \cite{journal:LSD1990}. The non-negative continuous variables $\phi_{ij}$ describe the flow of a single commodity to node 1 from every other nodes (without loss of generality, 1 is the starting node). 
 
 The extensive form of \texttt{MPTSPs} is as follows and the notations used are summrized in Table \ref{mptsps:notation}.
-\begin{subequations}
+\begin{subequations} \label{mptsps:formulation}
 	\begin{align}
 	(\texttt{MPTSPs})\ \textrm{min}\ &\sum_{i\in N}\sum_{j\in N\backslash\{i\}}\bar{c}_{ij}y_{ij}+\sum_{s\in \mathcal{S}}\PP(s)\sum_{i\in N}\sum_{j\in N\backslash\{i\}}\sum_{k\in K_{ij}}e_{ijk}^{s}x_{ijk}^{s} \label{mptsps:obj} \\ 
 	\textrm{s.t.}\ &\sum_{j\in N\backslash\{i\}}y_{ij}=1,\quad\forall i\in N, \label{mptsps:con1} \\ 
@@ -186,7 +186,7 @@ Based on the above definitions, \texttt{SIZES} can be fomulated by the following
 %	\end{align}
 %\end{subequations}
 
-\begin{subequations}
+\begin{subequations} \label{sizes:formulation}
 	\begin{align}
 	(\texttt{SIZES})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in N} \left(fz_{it} + p_i y_{it} \right) + 
 	\sum_{s\in \mathcal{S}} \PP(s)\sum_{t\in T}\sum_{i\in N\backslash\{1\}}\sum_{j=1}^{i-1}rx_{ijt}^s \label{sizes:obj}\\
@@ -294,7 +294,7 @@ We have three types of items $x$, $z$, and $y$ where the first two types are of 
 Each parameter $c_i$, $d_i$, and $q_i^s$ denotes the gain of weight when including items of type $x$, $z$, and $y$, respectively. Here, $c_i$ and $d_i$ are deterministic and $q_i^s$ is stochastic. Parameters $a_{ji}$, $e_{ji}$, $t_{ki}$, and $w_{ki}$ are all deterministic and denote the profits for including items in the knapsacks. The RHS parameters $b_j$ and $h_k$ are the minimum levels of profit requirements for \texttt{xz}-knapsacks and \texttt{xy}-knapsacks, respectively.
 
 The extensive form of \texttt{SMKP} is as follows and the notations used are summrized in Table \ref{smkp:notation}.
-\begin{subequations}
+\begin{subequations} \label{smkp:formulation}
 	\begin{align}
 	(\texttt{SMKP})\ \textrm{min}\ &\sum_{i \in I}\left(c_i x_i + d_i z_i\right) + \sum_{s\in\mathcal{S}}\PP(s)\sum_{i\in I}q_i^s y_i^s \label{smkp:obj}\\
 	\textrm{s.t.}\ &  \sum_{i\in I}a_{ji}x_{i} + \sum_{i \in I}e_{ji}z_i\ge b_j,\quad\forall j\in J, \label{smkp:b}\\
@@ -368,7 +368,7 @@ Suppose that we place a server at location $j$. Then, the allocation costs $c_j$
 The first-stage binary variables $x_j$ decide whether or not a server is located at location $j$. The second-stage binary variables $y_{ij}^s$ are referred to as recourse decision under scenario $s$ and associated with the decision on serving client $i$ by server $j$. The variables $y_{ij}^s$ will be implemented in the future, when scenario $s$ is finally observed.
 
 Based on the above, the extensive form of \texttt{SSLP} can be stated as follows:
-\begin{subequations}
+\begin{subequations} \label{sslp:formulation}
 	\begin{align}
 	(\texttt{SSLP})\ \textrm{min}\ &	\sum_{j\in J}c_j x_j - \sum_{s\in\mathcal{S}}\PP(s)\left(\sum_{i\in I}\sum_{j\in J}q_{ij}^s y_{ij}^s - \sum_{j\in J}q_{0j}^s y_{0j}^s \right) \label{sslp:obj} \\ 
 	\textrm{s.t.}\ &\sum_{j\in J}x_j\le v,\label{sslp:b}\\ 
@@ -433,7 +433,7 @@ v 		&= |J|	\\
 The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an exteded time horizon. \texttt{SUCW} is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} and \cite{journal:KZ2015} for mathematical models.
 \subsubsection{\texttt{SUCW}: Mathematical formulation}
 A two-stage stochastic unit commitment model \texttt{SUCW} is presented, where we make decision on slow generators in the first stage and make the commitment decisions for fast generators and the power dispatch decision in the second stage. In \texttt{SUCW}, we also incorporate ramping constraints, reserve constraints and transmission line capacity constraints. We assume the piecewise linear convex cost function for the power generation.
-\begin{subequations}
+\begin{subequations} \label{sucw:formulation}
 	\begin{align}
 	\min \ & \sum_{\sigma \in \mathcal{S}} \PP(\sigma) \sum_{t\in T} \sum_{g\in G}\left( C^\text{fx}_g x_{gt}^\sigma + C^\text{up}_g u_{gt}^\sigma  + C^\text{dn}_g v_{gt}^\sigma  + \sum_{k\in K} C^\text{mar}_{gk} q_{gkt}^\sigma\right) \label{sucw:obj}\\
 	\text{s.t.} \
@@ -478,6 +478,7 @@ The objective function (\ref{sucw:obj}) is to minimize the expected value of the
 \begin{table}[H]
 	\centering
 	\caption{Notations for the \texttt{SUCW}}
+	\label{sucw:notation}
 	\begin{tabular}{ll}
 		\toprule
 		\multicolumn{2}{l}{\textbf{Index sets:}} \\

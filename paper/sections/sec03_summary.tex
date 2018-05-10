@@ -1,189 +1,36 @@
 In this section, we explain information about the test problems and corresponding instances in summarized manner. This includes problem type, components (variables and constraints), and instances for each problem.  
 
-\subsection{Type of problems}
+\subsection{Type of the problems}
 Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on problem parameters, e.g., random numbers in scenarios. We developed our own way to implement the problems as long as it does not harm the problem's own characteristic. We explain detailed problem-specific information in Section \ref{sec:prob_desc} for those who are interested in.
-\begin{table}[H]
-	\centering
-	\caption{Problems in \texttt{SIPLIB 2.0}}
-	\label{table:problems}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}llll@{}}
-			\toprule
-			Problem		  		  & Description                                                        & Main reference              \\ \midrule
-			\texttt{DCAP}         & Dynamic capacity planning with stochastic demand \ref{DCAP}                   & Ahmed and Garcia \cite{journal:AG2004}                          \\
-			\texttt{DCLP}		  &	Data center location problem	\ref{DCLP}								   & Kim et al. \cite{journal:KYZC2017}								\\	
-			\texttt{MPTSPs}       & Multi-path traveling salesman problem with stochastic travel costs \ref{MPTSPs}& Tadei et al. \cite{journal:TPP2017}                            \\
-			\texttt{SIZES}        & Optimal product substitution with stochastic demand \ref{SIZES}         & Jorjani et al. \cite{journal:JSW1999}          \\
-			\texttt{SMKP}		  & Stochastic multiple knapsack problem \ref{SMKP}                              & Angulo et al. \cite{journal:AAD2014}                            \\
-			\texttt{SSLP}         & Stochastic server location problem \ref{SSLP}                                & Ntaimo and Sen \cite{journal:NS2005}                           \\
-			\texttt{SUCW}         & Wind power stochastic unit commitment	\ref{SUCW}			               & Papavasiliou and Oren \cite{journal:PO2013}                       \\ \bottomrule
-		\end{tabular}%
-	}
-\end{table}
+\input{tables/table_siplib2_problems}
 
 Table \ref{table:naming_rule} shows how we name the instances. The capital Roman letters mean the sets defining the problems and the calligraphic letters mean the scenario sets. For notational convenience, we sometimes skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in Table \ref{table:naming_rule} and \ref{table:num_components}. Note that not all sets are used to define an instance. The sets that do not appear in the instance name are fixed by some pre-determined value by the original references so we follow them. For example, in \texttt{SMKP} there are 4 sets in total, $I,J,K,\mathcal{S}$, but the numbers of knapsacks $|J|$ and $|K|$ are fixed by 50 and 5.
-
-\begin{table}[H]
-	\centering
-	\caption{Instance naming rules}
-	\label{table:naming_rule}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}lll@{}}
-			\toprule
-			Problem & Instance name                 & Remark                                                                    					      \\ \midrule
-			\texttt{DCAP}    & \texttt{DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$}    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
-			\texttt{DCLP}	 &								&																										\\
-			\texttt{MPTSPs}  & \texttt{MPTSPs\_$D$\_$N$\_$\mathcal{S}$} &$D$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
-			\texttt{SIZES}   & \texttt{SIZES\_$\mathcal{S}$}                            & $\mathcal{S}$: number of scenarios   															\\
-			\texttt{SMKP}    &   \texttt{SMKP\_$I$\_$\mathcal{S}$}    &   $I$:number of types for item, $\mathcal{S}$: number of scenarios  													 \\
-			\texttt{SSLP}    &   \texttt{SSLP\_$I$\_$J$\_$\mathcal{S}$}      &    $I$: number of clients, $J$: number of server locations, $\mathcal{S}$: number of scenarios                 				   \\
-			\texttt{SUCW}    & 	\texttt{SUCW\_$D$\_$\mathcal{S}$}    &  $D$: day type, $\mathcal{S}$: number of scenarios                                                 						 \\ \bottomrule
-		\end{tabular}%
-	}
-\end{table}
+\input{tables/table_instance_naming_rule}
 
 In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation on the constraints, we refer \texttt{MIPLIB 2010} \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification and let this future work since it can cause too much varieties, which we cannot easily capture the insight from the problem type classification. 
-\begin{table}[H]
+\input{tables/table_components_of_problems}
+
+Table \ref{table:num_components} summarizes the number of components (variables and constraints) in each problem from \siplibtwo. The numbers can be calculated based on the cardinality of the sets that define the problems. Although there is no universally effective way to measure the difficulty of MILP yet, the number of components in instance is one of the closely related factor. For example, instances tend to be more difficult as the number of discrete variables increases. For those who want to generate instances with some desired number of components can utilize Table \ref{table:num_components}.
+\input{tables/table_number_of_components}
+
+
+\subsection{Sparsity}
+Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MILP where the sparsity pattern varies problem by problem. In particular,the block-diagonal structure results always in very high sparsity (i.e., low density of nonzeros) as scenario increases. It does not seem to be meaningful to just provide the sparsity information of the whole coefficient matrix since various decomposition-based algorithms in SIP can efficiently handle the sparsity. 
+
+Hence, we provide block-wise sparsity information together. As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure in it. Every other block is the duplication of block B or C hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and B are only related with their own stage while block C is related with both. We call the block C \textit{complicating} block. 
+
+\input{figures/figure_sparsity_pattern}
+
+\begin{figure}
 	\centering
-	\caption{Components of the problems}
-	\label{table:prob_class}
-	\begin{threeparttable}
-		\begin{tabular}{@{}lllll@{}}
-			\toprule
-			& \multicolumn{2}{l}{1st stage}                              				  	& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
-			Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
-			\texttt{DCAP}    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
-			\texttt{DCLP}	 &							   &								& 			 	  &													\\				
-			\texttt{MPTSPs}  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\
-			\texttt{SIZES}   & $\mathbb{I}$ 			   & \texttt{VBD}, \texttt{GEN} 	& $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}             						\\
-			\texttt{SMKP}    & $\mathbb{B}$                & \texttt{KNA}                	& $\mathbb{B}$                & \texttt{KNA}              						\\
-			\texttt{SSLP}    & $\mathbb{B}$                & \texttt{IVK}, \texttt{GEN} 	& $\mathbb{C}$, $\mathbb{B}$  & \texttt{GEN}             						\\
-			\texttt{SUCW}    & $\mathbb{C}$, $\mathbb{B}$                 &                              	& $\mathbb{C}$, $\mathbb{B}$  &                             					\\ \bottomrule
-		\end{tabular}
-		
-		\begin{tablenotes}
-			\small
-			\item $\mathbb{C}$: continuous, $\mathbb{B}$: binary, $\mathbb{I}$: integer
-		\end{tablenotes}
-	\end{threeparttable}
-\end{table}
-
-Table 
-
-%\begin{table}[H]
-%	\centering
-%	\caption{Constraint type legend \cite{MIPLIB}}
-%	\label{table:constraint_type}
-%	\begin{tabular}{@{}lll@{}}
-%		\toprule
-%		Type           & Description        & Constraint form                                                                                           \\ \midrule
-%		\texttt{AGG} & Aggregation        & $a_i x_i+a_k x_k=b,\ x_i , x_k$ int. or cont., $a_i , a_k , b \in \mathbb{R}$                  \\
-%		\texttt{VBD} & Variable bound     & $x_i \le a_k x_k + b$ or $x_i\ge a_k x_k + b$, $x_i, x_k$ int. or cont., $a_k, b\in\mathbb{R}$ \\
-%		\texttt{PAR} & Set partition      & $\sum x_i = 1,$ $x_i$ binary                                                                   \\
-%		\texttt{PAC} & Set packing        & $\sum x_i \le 1,$ $x_i$ binary                                                                 \\
-%		\texttt{COV} & Set cover          & $\sum x_i \ge 1,$ $x_i$ binary                                                                 \\
-%		\texttt{CAR} & Cardinality        & $\sum x_i = b,$ $x_i$ binary, $b\in\mathbb{N}$                                                 \\
-%		\texttt{EQK} & Equality knapsack  & $\sum a_i x_i = b,$ $x_i$ binary, $a_i , b\in\mathbb{N}$                                       \\
-%		\texttt{BIN} & Bin packing        & $\sum a_i x_i  + a_k x_k \le a_k,$ $x_i$ binary, $a_i , a_k\in\mathbb{N}$                      \\
-%		\texttt{IVK} & Invariant knapsack & $\sum x_i \le b,$ $x_i$ binary, $b\in\mathbb{N}$                                               \\
-%		\texttt{KNA} & Knapsack           & $a_i x_i \le b$, $x_i$ binary, $a_i,b\in\mathbb{N}$                                            \\
-%		\texttt{IKN} & Integer knapsack   & $a_i x_i \le b$, $x_i\ge 0$ integer, $a_i,b\in\mathbb{N}$                                      \\
-%		\texttt{M01} & Mixed binary       & $\sum a_i x_i + \sum p_j s_j \le$ or $=b$, $x_i$ binary, $s_j$ cont., $a_i, p_j\in\mathbb{R}$  \\
-%		\texttt{GEN} & General            & All other constraint types                                                                     \\ \bottomrule
-%	\end{tabular}
-%\end{table}
-
-
-
-\begin{table}[H]
-	\centering
-	\resizebox{\textwidth}{!}{%
-		\begin{threeparttable}
-			\caption{Number of the components in each problem}
-			\label{table:num_components}
-			\begin{tabular}{@{}cccccc@{}}
-				\toprule
-				&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
-				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
-				\multirow{3}{*}{\texttt{DCAP}}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
-				& 2nd stage & -              & $\left(1+R\right)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
-				& Total          & $RT$           & $RT+\left(1+R\right)NT\mathcal{S}$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
-				\multirow{3}{*}{\texttt{DCLP}}   & 1st stage &                &                                    &                      &                           \\
-				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
-				& Total          &                &                                    &                      &                           \\ \midrule
-				\multirow{3}{*}{\texttt{MPTSPs}} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
-				& 2nd stage & -              & $(N-1)NK$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
-				& Total          & $(N-1)N$          & $(N-1)(1+K\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
-				\multirow{3}{*}{\texttt{SIZES}}  & 1st stage & -              & $NT$                               & $NT$                 & $(1+N)T$                  \\
-				& 2nd stage & -              & -                                  & $N^2 T$              & $2NT$                     \\ \cmidrule(l){2-6} 
-				& Total          & -              & $NT$                               & $(1+N\mathcal{S})NT$ & $(1+N+2N\mathcal{S})T$    \\ \midrule
-				\multirow{3}{*}{\texttt{SMKP}}   & 1st stage & -              & $2I$                               & -                    & $J$                       \\
-				& 2nd stage & -              & $I$                                & -                    & $K$                       \\ \cmidrule(l){2-6} 
-				& Total          & -              & $(2+\mathcal{S})I$                 & -                    & $J+K\mathcal{S}$          \\ \midrule
-				\multirow{3}{*}{\texttt{SSLP}}   & 1st stage & -              & $J$                                & -                    & $1$                       \\
-				& 2nd stage & $J$            & $IJ$                               & -                    & $I+J$                     \\ \cmidrule(l){2-6} 
-				& Total          & $J\mathcal{S}$ & $(1+I\mathcal{S})J$                & -                    & $1+(I+J)\mathcal{S}$      \\ \midrule
-				\multirow{3}{*}{\texttt{SUCW}}   & 1st stage &                &                                    &                      &                           \\
-				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
-				& Total          &                &                                    &                      &                           \\ \bottomrule
-			\end{tabular}
-	
-			\begin{tablenotes}
-				\small
-				\item For convenience, we skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in this table.
-			\end{tablenotes}
-		\end{threeparttable}
-	}
-\end{table}
-
-
-\begin{figure}[H]
-	\centering
-	\subfloat[][\texttt{DCAP\_3\_3\_3\_3}]
-	{
-		\centering\includegraphics[width=0.45\linewidth]{DCAP_3_3_3_3}
-		\label{fig:sparsity_dcap}
-	}
-	~
-	\subfloat[][\texttt{MPTSPs\_D0\_3\_3}]
-	{
-		\centering\includegraphics[width=0.45\linewidth]{MPTSPs_D0_3_3}
-		\label{fig:sparsity_mptsps}
-	}
-	
-	\subfloat[][\texttt{SIZES\_3}]
-	{
-		\centering\includegraphics[width=0.45\linewidth]{SIZES_3}
-		\label{fig:sparsity_sizes}
-	}
-	~
-	\subfloat[][\texttt{SMKP\_120\_3}]
-	{
-		\centering\includegraphics[width=0.45\linewidth]{SMKP_120_3}
-		\label{fig:sparsity_smkp}
-	}
-	
-	\subfloat[][\texttt{SSLP\_5\_10\_3}]
-	{
-		\centering\includegraphics[width=0.45\linewidth]{SSLP_5_10_3}
-		\label{fig:sparsity_sslp}
-	}
-	~
-	\subfloat[][\texttt{SUCW\_FallWD\_1}]
-	{
-		\centering\includegraphics[width=0.45\linewidth]{SUCW_FallWD_1}
-		\label{fig:sparsity_sucw}
-	}
-
-	\caption{Sparsity pattern for each problem}
-	\begin{minipage}
-		{0.65\textwidth}{\footnotesize (\texttt{SUCW} instance is too huge and extremely sparse to plot more than 1 scenario)}
-	\end{minipage}
-	\label{fig:sparsity}
+	\includegraphics[width=0.7\linewidth]{drawings/stagewise_sparsity}
+	\caption{Three independent blocks in SIP}
+	\label{fig:stagewise_sparsity}
 \end{figure}
 
 
-\subsection{Instance catalog}
-\input{./tables/table_instance_size_information}
+
+
+
 
 
