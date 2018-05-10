@@ -30,9 +30,7 @@ Three input files are required to specify an SP in \texttt{SMPS} format:
 \end{itemize}
 
 \subsection{Literature review} \label{subsec:literaturereview}
-The optimizers, not only SIP researchers, have always needed test instances to figure out the performances of newly developed solver and algorithm. \texttt{MIPLIB 2010} \cite{MIPLIB} is one good example of the collections of test instances for optimization problems hence the main motif of \siplibtwo. 
-
-\texttt{MIPLIB 2010} comprises 361 instances with detailed discussion. The authors collected the instances from various sources. Then, they classified the instances into 8 categories after the computational experiments. \texttt{MIPLIB 2010} provides instances in \texttt{MPS} format by website with a test engine developed to run different solvers in a defined way to check the answers for consistency. 
+The optimizers, not only SIP researchers, have always needed test instances to figure out the performances of newly developed solver and algorithm. \texttt{MIPLIB 2010} \cite{MIPLIB} is one good example of test instances for optimization problems hence the main motivation of this study. \texttt{MIPLIB 2010} comprises 361 instances with detailed discussion. The authors collected the instances from various sources. Then, they classified the instances into 8 categories after the computational experiments. \texttt{MIPLIB 2010} provides instances in \texttt{MPS} format by website with a test engine developed to run different solvers in a defined way to check the answers for consistency. 
 
 %(website: Derek Holmes, POSTS, 1993)
 For stochastic programming, to the best of our knowledge, the first such approach is Holmes and Birge's \textit{portable stochastic programming test set} (POSTS) \cite{POSTS} since 1994. POSTS is still available now and provides a small test set of stochastic programming recourse problems in \texttt{SMPS} format. POSTS consists of 15 stochastic linear programming problems but not dedicated to SIP. Birge provides some computational results of the POSTS instances \cite{POSTSresults}, but most of them are quite outdated. Moreover, analysis on the instances is not sufficient. 
@@ -50,11 +48,11 @@ Although \siplib\ provides basic ingredient to be exploited for SIP research, it
 \subsection{Contribution} \label{subsec:contribution}
 The contributions of this work can be summarized as follows.
 \begin{itemize}
-	\item We provide ready-made SIP test instances more various in terms of problem size and types than the former \siplib.
+	\item We provide ready-made SIP test instances that are more various in terms of problem size and types than the former \siplib.
 	\item We provide summarized problem-specific details: mathematical formulation, stochastic data generation.
-	\item We provide utilities for generating/pre-analyzing instances.
-	\item We provide pre-analysis on the ready-made instances.
-	\item We provide systematically summarized benchmarking experimental results.
+	\item We provide \texttt{Julia}-based utilities for generating/pre-analyzing/testing instances.
+	\item We provide pre-analysis on the instances.
+	\item We provide well-summarized benchmarking experimental results.
 \end{itemize}
 
 
