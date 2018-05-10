@@ -14,30 +14,30 @@
 \contentsline {section}{\numberline {3}Summary of the test sets}{11}{section.3}
 \contentsline {subsection}{\numberline {3.1}Type of problems}{11}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Instance catalog}{14}{subsection.3.2}
-\contentsline {section}{\numberline {4}How to generate new instance, analyze the instance, and convert to \texttt {SMPS}}{19}{section.4}
-\contentsline {section}{\numberline {5}Implementation of SmpsWriter.jl}{20}{section.5}
-\contentsline {section}{\numberline {6}Solution report}{21}{section.6}
-\contentsline {section}{\numberline {7}Concluding remarks}{22}{section.7}
-\contentsline {section}{\numberline {A}Problem descriptions}{23}{appendix.A}
-\contentsline {subsection}{\numberline {A.1}\texttt {DCAP}: Dynamic capacity planning with stochastic demand}{23}{subsection.A.1}
-\contentsline {subsubsection}{\numberline {A.1.1}\texttt {DCAP}: Mathematical formulation}{23}{subsubsection.A.1.1}
-\contentsline {subsubsection}{\numberline {A.1.2}\texttt {DCAP}: Data generation}{24}{subsubsection.A.1.2}
-\contentsline {subsection}{\numberline {A.2}\texttt {DCLP}: Data center location problem}{24}{subsection.A.2}
-\contentsline {subsubsection}{\numberline {A.2.1}\texttt {DCLP}: Mathematical formulation}{24}{subsubsection.A.2.1}
-\contentsline {subsubsection}{\numberline {A.2.2}\texttt {DCLP}: Data generation}{24}{subsubsection.A.2.2}
-\contentsline {subsection}{\numberline {A.3}\texttt {MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}{24}{subsection.A.3}
-\contentsline {subsubsection}{\numberline {A.3.1}\texttt {MPTSPs}: Mathematical formulation}{25}{subsubsection.A.3.1}
-\contentsline {subsubsection}{\numberline {A.3.2}\texttt {MPTSPs}: Data generation}{26}{subsubsection.A.3.2}
-\contentsline {subsection}{\numberline {A.4}\texttt {SIZES}: Selection of an optimal subset of sizes}{27}{subsection.A.4}
-\contentsline {subsubsection}{\numberline {A.4.1}\texttt {SIZES}: Mathematical formulation}{27}{subsubsection.A.4.1}
-\contentsline {subsubsection}{\numberline {A.4.2}\texttt {SIZES}: Data generation}{28}{subsubsection.A.4.2}
-\contentsline {subsection}{\numberline {A.5}\texttt {SMKP}: Stochastic multiple knapsack problem}{29}{subsection.A.5}
-\contentsline {subsubsection}{\numberline {A.5.1}\texttt {SMKP}: Mathematical formulation}{29}{subsubsection.A.5.1}
-\contentsline {subsubsection}{\numberline {A.5.2}\texttt {SMKP}: Data generation}{30}{subsubsection.A.5.2}
-\contentsline {subsection}{\numberline {A.6}\texttt {SSLP}: Stochastic server location problem}{31}{subsection.A.6}
-\contentsline {subsubsection}{\numberline {A.6.1}\texttt {SSLP}: Mathematical formulation}{31}{subsubsection.A.6.1}
-\contentsline {subsubsection}{\numberline {A.6.2}\texttt {SSLP}: Data generation}{33}{subsubsection.A.6.2}
-\contentsline {subsection}{\numberline {A.7}\texttt {SUCW}: Stochastic unit commitment problem with wind power}{33}{subsection.A.7}
-\contentsline {subsubsection}{\numberline {A.7.1}\texttt {SUCW}: Mathematical formulation}{33}{subsubsection.A.7.1}
-\contentsline {subsubsection}{\numberline {A.7.2}\texttt {SUCW}: Data generation}{35}{subsubsection.A.7.2}
+\contentsline {section}{\numberline {4}How to generate new instance, analyze the instance, convert to \texttt {SMPS}, and run test}{15}{section.4}
+\contentsline {section}{\numberline {5}Implementation of SmpsWriter.jl}{16}{section.5}
+\contentsline {section}{\numberline {6}Solution report}{17}{section.6}
+\contentsline {section}{\numberline {7}Concluding remarks}{18}{section.7}
+\contentsline {section}{\numberline {A}Problem descriptions}{19}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}\texttt {DCAP}: Dynamic capacity planning with stochastic demand}{19}{subsection.A.1}
+\contentsline {subsubsection}{\numberline {A.1.1}\texttt {DCAP}: Mathematical formulation}{19}{subsubsection.A.1.1}
+\contentsline {subsubsection}{\numberline {A.1.2}\texttt {DCAP}: Data generation}{20}{subsubsection.A.1.2}
+\contentsline {subsection}{\numberline {A.2}\texttt {DCLP}: Data center location problem}{20}{subsection.A.2}
+\contentsline {subsubsection}{\numberline {A.2.1}\texttt {DCLP}: Mathematical formulation}{20}{subsubsection.A.2.1}
+\contentsline {subsubsection}{\numberline {A.2.2}\texttt {DCLP}: Data generation}{20}{subsubsection.A.2.2}
+\contentsline {subsection}{\numberline {A.3}\texttt {MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times}{20}{subsection.A.3}
+\contentsline {subsubsection}{\numberline {A.3.1}\texttt {MPTSPs}: Mathematical formulation}{21}{subsubsection.A.3.1}
+\contentsline {subsubsection}{\numberline {A.3.2}\texttt {MPTSPs}: Data generation}{22}{subsubsection.A.3.2}
+\contentsline {subsection}{\numberline {A.4}\texttt {SIZES}: Selection of an optimal subset of sizes}{23}{subsection.A.4}
+\contentsline {subsubsection}{\numberline {A.4.1}\texttt {SIZES}: Mathematical formulation}{23}{subsubsection.A.4.1}
+\contentsline {subsubsection}{\numberline {A.4.2}\texttt {SIZES}: Data generation}{24}{subsubsection.A.4.2}
+\contentsline {subsection}{\numberline {A.5}\texttt {SMKP}: Stochastic multiple knapsack problem}{25}{subsection.A.5}
+\contentsline {subsubsection}{\numberline {A.5.1}\texttt {SMKP}: Mathematical formulation}{25}{subsubsection.A.5.1}
+\contentsline {subsubsection}{\numberline {A.5.2}\texttt {SMKP}: Data generation}{26}{subsubsection.A.5.2}
+\contentsline {subsection}{\numberline {A.6}\texttt {SSLP}: Stochastic server location problem}{27}{subsection.A.6}
+\contentsline {subsubsection}{\numberline {A.6.1}\texttt {SSLP}: Mathematical formulation}{27}{subsubsection.A.6.1}
+\contentsline {subsubsection}{\numberline {A.6.2}\texttt {SSLP}: Data generation}{29}{subsubsection.A.6.2}
+\contentsline {subsection}{\numberline {A.7}\texttt {SUCW}: Stochastic unit commitment problem with wind power}{29}{subsection.A.7}
+\contentsline {subsubsection}{\numberline {A.7.1}\texttt {SUCW}: Mathematical formulation}{29}{subsubsection.A.7.1}
+\contentsline {subsubsection}{\numberline {A.7.2}\texttt {SUCW}: Data generation}{31}{subsubsection.A.7.2}
 \endgroup 
