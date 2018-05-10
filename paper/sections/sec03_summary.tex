@@ -1,4 +1,5 @@
-In this section, we explain information about the test problems and corresponding instances in summarized manner. This includes problem type, components (variables and constraints), and instances for each problem. More detailed problem-specific explanation is available in Section \ref{sec:prob_desc}.
+In this section, we explain information about the test problems and corresponding instances in summarized manner. This includes problem type, components (variables and constraints), and instances for each problem.  
+
 \subsection{Type of problems}
 Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on problem parameters, e.g., random numbers in scenarios. We developed our own way to implement the problems as long as it does not harm the problem's own characteristic. We explain detailed problem-specific information in Section \ref{sec:prob_desc} for those who are interested in.
 \begin{table}[H]
@@ -9,18 +10,18 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 		\begin{tabular}{@{}llll@{}}
 			\toprule
 			Problem		  		  & Description                                                        & Main reference              \\ \midrule
-			\texttt{DCAP}         & Dynamic capacity planning with stochastic demand                   & Ahmed and Garcia \cite{journal:AG2004}                          \\
-			\texttt{DCLP}		  &	Data center location problem									   & Kim et al. \cite{journal:KYZC2017}								\\	
-			\texttt{MPTSPs}       & Multi-path traveling salesman problem with stochastic travel costs & Tadei et al. \cite{journal:TPP2017}                            \\
-			\texttt{SIZES}        & Optimal product substitution with stochastic demand                & Jorjani et al. \cite{journal:JSW1999}          \\
-			\texttt{SMKP}		  & Stochastic multiple knapsack problem                               & Angulo et al. \cite{journal:AAD2014}                            \\
-			\texttt{SSLP}         & Stochastic server location problem                                 & Ntaimo and Sen \cite{journal:NS2005}                           \\
-			\texttt{SUCW}         & Wind power stochastic unit commitment				               & Papavasiliou and Oren \cite{journal:PO2013}                       \\ \bottomrule
+			\texttt{DCAP}         & Dynamic capacity planning with stochastic demand \ref{DCAP}                   & Ahmed and Garcia \cite{journal:AG2004}                          \\
+			\texttt{DCLP}		  &	Data center location problem	\ref{DCLP}								   & Kim et al. \cite{journal:KYZC2017}								\\	
+			\texttt{MPTSPs}       & Multi-path traveling salesman problem with stochastic travel costs \ref{MPTSPs}& Tadei et al. \cite{journal:TPP2017}                            \\
+			\texttt{SIZES}        & Optimal product substitution with stochastic demand \ref{SIZES}         & Jorjani et al. \cite{journal:JSW1999}          \\
+			\texttt{SMKP}		  & Stochastic multiple knapsack problem \ref{SMKP}                              & Angulo et al. \cite{journal:AAD2014}                            \\
+			\texttt{SSLP}         & Stochastic server location problem \ref{SSLP}                                & Ntaimo and Sen \cite{journal:NS2005}                           \\
+			\texttt{SUCW}         & Wind power stochastic unit commitment	\ref{SUCW}			               & Papavasiliou and Oren \cite{journal:PO2013}                       \\ \bottomrule
 		\end{tabular}%
 	}
 \end{table}
 
-Table \ref{table:naming_rule} summarizes how we name the instances. The capital Roman letters mean the sets defining the problems and the calligraphic letters mean the scenario sets. For convenience, we sometimes skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in Table \ref{table:naming_rule} and \ref{table:num_components}. There are also some fixed sets that are not willing to be 
+Table \ref{table:naming_rule} shows how we name the instances. The capital Roman letters mean the sets defining the problems and the calligraphic letters mean the scenario sets. For notational convenience, we sometimes skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in Table \ref{table:naming_rule} and \ref{table:num_components}. Note that not all sets are used to define an instance. The sets that do not appear in the instance name are fixed by some pre-determined value by the original references so we follow them. For example, in \texttt{SMKP} there are 4 sets in total, $I,J,K,\mathcal{S}$, but the numbers of knapsacks $|J|$ and $|K|$ are fixed by 50 and 5.
 
 \begin{table}[H]
 	\centering
@@ -29,7 +30,7 @@ Table \ref{table:naming_rule} summarizes how we name the instances. The capital 
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{@{}lll@{}}
 			\toprule
-			Problem & Instance name                 & Description                                                                    					      \\ \midrule
+			Problem & Instance name                 & Remark                                                                    					      \\ \midrule
 			\texttt{DCAP}    & \texttt{DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$}    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
 			\texttt{DCLP}	 &								&																										\\
 			\texttt{MPTSPs}  & \texttt{MPTSPs\_$D$\_$N$\_$\mathcal{S}$} &$D$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
@@ -40,7 +41,6 @@ Table \ref{table:naming_rule} summarizes how we name the instances. The capital 
 		\end{tabular}%
 	}
 \end{table}
-
 
 In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation on the constraints, we refer \texttt{MIPLIB 2010} \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification and let this future work since it can cause too much varieties, which we cannot easily capture the insight from the problem type classification. 
 \begin{table}[H]
