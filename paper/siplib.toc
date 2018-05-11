@@ -1,6 +1,6 @@
 \begingroup \small 
 \contentsline {section}{\numberline {1}Introduction}{5}{section.1}
-\contentsline {subsection}{\numberline {1.1}\texttt {SMPS} format}{6}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.1}\texttt {SMPS} format for stochastic programming instances}{6}{subsection.1.1}
 \contentsline {subsection}{\numberline {1.2}Literature review}{7}{subsection.1.2}
 \contentsline {section}{\numberline {2}Stochastic integer programming}{9}{section.2}
 \contentsline {subsection}{\numberline {2.1}Formulation}{9}{subsection.2.1}
@@ -12,7 +12,7 @@
 \contentsline {subsubsection}{\numberline {2.3.2}Solvers}{10}{subsubsection.2.3.2}
 \contentsline {section}{\numberline {3}Summary of the test problems}{11}{section.3}
 \contentsline {subsection}{\numberline {3.1}Type of the problems}{11}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}Sparsity}{13}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.2}Sparsity in SIP}{13}{subsection.3.2}
 \contentsline {section}{\numberline {4}How to generate new instances, analyze the instances, convert to \texttt {SMPS}, and run test}{15}{section.4}
 \contentsline {section}{\numberline {5}Implementation of SmpsWriter.jl}{16}{section.5}
 \contentsline {section}{\numberline {6}The instance catalog}{17}{section.6}

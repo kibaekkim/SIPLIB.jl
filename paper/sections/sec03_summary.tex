@@ -14,7 +14,7 @@ Table \ref{table:num_components} summarizes the number of components (variables 
 \input{tables/table_number_of_components}
 
 
-\subsection{Sparsity}
+\subsection{Sparsity in SIP}
 Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MILP where the sparsity pattern varies problem by problem. In particular,the block-diagonal structure results always in very high sparsity (i.e., low density of nonzeros) as scenario increases. It does not seem to be meaningful to just provide the sparsity information of the whole coefficient matrix since various decomposition-based algorithms in SIP can efficiently handle the sparsity. 
 
 Hence, we provide block-wise sparsity information together. As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure in it. Every other block is the duplication of block B or C hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and B are only related with their own stage while block C is related with both. We call the block C \textit{complicating} block. 
@@ -24,7 +24,7 @@ Hence, we provide block-wise sparsity information together. As can be seen in Fi
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{drawings/stagewise_sparsity}
-	\caption{Three independent blocks in SIP}
+	\caption{Three (structurally) independent blocks in SIP}
 	\label{fig:stagewise_sparsity}
 \end{figure}
 
