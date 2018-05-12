@@ -19,6 +19,10 @@ Every SIP has a block-diagonal structure in its coefficient matrix of the extens
 
 Hence, we provide block-wise sparsity information together. As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure in it. Every other block is the duplication of block B or C hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and B are only related with their own stage while block C is related with both. We call the block C \textit{complicating} block. 
 
+In computational perspective, dense coefficient matrix usually causes slowdown in linear algebraic packages. 
+
+In SIP algorithmic perspective, dense coefficient matrix blah~ blah~
+
 \input{figures/figure_sparsity_pattern}
 
 \begin{figure}

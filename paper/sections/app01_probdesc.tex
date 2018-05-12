@@ -433,47 +433,15 @@ v 		&= |J|	\\
 The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an exteded time horizon. \texttt{SUCW} is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} and \cite{journal:KZ2015} for mathematical models.
 \subsubsection{\texttt{SUCW}: Mathematical formulation}
 A two-stage stochastic unit commitment model \texttt{SUCW} is presented, where we make decision on slow generators in the first stage and make the commitment decisions for fast generators and the power dispatch decision in the second stage. In \texttt{SUCW}, we also incorporate ramping constraints, reserve constraints and transmission line capacity constraints. We assume the piecewise linear convex cost function for the power generation.
+
 \begin{subequations} \label{sucw:formulation}
 	\begin{align}
-	\min \ & \sum_{\sigma \in \mathcal{S}} \PP(\sigma) \sum_{t\in T} \sum_{g\in G}\left( C^\text{fx}_g x_{gt}^\sigma + C^\text{up}_g u_{gt}^\sigma  + C^\text{dn}_g v_{gt}^\sigma  + \sum_{k\in K} C^\text{mar}_{gk} q_{gkt}^\sigma\right) \label{sucw:obj}\\
-	\text{s.t.} \
-	%% Constraints for commitment, start-up, and shut-down
-	& 1 - x_{g(t-1)}^\sigma \geq u_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:b} \\
-	& x_{g(t-1)}^\sigma \geq v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:c} \\
-	& x_{gt}^\sigma - x_{g(t-1)}^\sigma = u_{gt}^\sigma  - v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:d} \\
-	%% Constraints for minimum down/up time
-	& x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-UT_g+1\}}^t u_{g\tau}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:e} \\
-	& 1 - x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-DT_g+1\}}^t u_{g\tau}^\sigma,\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:f} \\
-	%% Ramping constraint
-	& -RD_g \leq p_{gt}^\sigma - p_{g(t-1)}^\sigma \leq RU_g - s_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:g} \\
-	& s_{gt}^\sigma \leq RC_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:h} \\
-	%% Spinning reserve constraint
-	& \sum_{g\in G} s_{gt}^\sigma \geq SR_t, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:i} \\
-	%% Minimum/maximum power generation level
-	& p_{gt}^\sigma = P^\text{min}_g x_{gt}^\sigma + \sum_{k\in K} q_{gkt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G, t\in T,\ \label{sucw:j} \\
-	& p_{gt}^\sigma + s_{gt}^\sigma \leq P^\text{max}_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:k} \\
-	%% Marginal power generation cost
-	& q_{gkt}^\sigma \leq Q^\text{max}_{gk} x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ k\in K,\ t\in T, \label{sucw:l} \\
-	%% System balance
-	& \sum_{g\in G} p_{gt}^\sigma = \sum_{n\in N} D_{nt}^\sigma - \sum_{w\in W} W_{wt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:m} \\
-	%% maximum power flow on each transmission lines
-	& -F^\text{max}_l \leq \sum_{g\in G} LSF_{lg} p_{gt}^\sigma - \sum_{n\in N} LSF_{ln} D_{nt}^\sigma \notag	\\
-	&\quad\quad\quad\quad\quad + \sum_{w\in W} LSF_{lw} W_{wt}^\sigma \leq F^\text{max}_l,\quad \forall \sigma \in \mathcal{S},\ l\in L,\ t\in T, \label{sucw:n} \\
-	%% Non-anticipativity constraint
-	& x_{gt}^{\sigma_1} = x_{gt}^{\sigma_2},\ u_{gt}^{\sigma_1} = u_{gt}^{\sigma_2},\ v_{gt}^{\sigma_1} = v_{gt}^{\sigma_2},\quad \forall \sigma_1,\sigma_2 \in \mathcal{S},\ g\in G_s,\ t\in T, \label{sucw:o} \\
-	%% Initial conditions
-	& x_{g0}^\sigma = X^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G, \label{sucw:p} \\
-	& x_{gt}^\sigma = 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, UT^\text{init}_g\}, \label{sucw:q} \\
-	& x_{gt}^\sigma = 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, DT^\text{init}_g\}, \label{sucw:r} \\
-	& p_{g0}^\sigma = P^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ \label{sucw:s} \\
-	%% bound constraints
-	%& x_{gt}^\sigma \in \{0,1\},\quad 0\leq u_{gt}^\sigma , v_{gt}^\sigma  \leq 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{eq:suc:cons19} \\
-	& \textcolor{red}{x_{gt}^\sigma , u_{gt}^\sigma , v_{gt}^\sigma \in \{0,1\},\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, }\label{sucw:t} \\
-	& p_{gt}^\sigma , q_{gkt}^\sigma,s_{gt}^\sigma \geq 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T. \label{sucw:u} 
-	\end{align}
+	(\texttt{SUCW})\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
+	\Bigg[	 \sum_{g\in G_f} \left(K_g u_{gt}+S_g v_{gt}\right) + \sum_{g\in G}C_g p_{gt} + \sum_{j\in J} C^{J}\lambda_{dt} \\&\qquad\qquad\qquad\qquad  + \sum_{i\in I} C^{I}\mu_{it} + \sum_{r\in R} C^{R}\lambda_{rt} + \sum_{k\in W} C^{W}\omega_{kt} \Bigg]
+	\label{smkp:obj}\\
+	\textrm{s.t.}\ &  \sum_{i\in I}a_{ji}x_{i} + \sum_{i \in I}e_{ji}z_i\ge b_j,\quad\forall j\in J, \label{smkp:b}\\
+	\end{align}	
 \end{subequations}
-The objective function (\ref{sucw:obj}) is to minimize the expected value of the sum of operating, start-up, shut-down, and production cost. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for logical relationships amongst the commitment, start-up, and shut-down decisions. Constraints (\ref{sucw:e}) and (\ref{sucw:f}) represent the minimum downtime and uptime of generators in each time period. Constraints (\ref{sucw:g}) and (\ref{sucw:h}) are ramping restrictions, and (\ref{sucw:i}) is a spinning reserve constraint. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) ensure the amount of power generation is restricted by its minimum and maximum limits. Constraint (\ref{sucw:l}) represents the piecewise linearized power generation cost. Constraint (\ref{sucw:m}) guarantees the balanced flow. Constraint (\ref{sucw:n}) is for the transmission line flow. Constraint (\ref{sucw:o}) is a \textit{nonanticipativity} constraint that enforces the decisions do not change over scenarios. Constraints (\ref{sucw:p})-(\ref{sucw:s}) represent the initial conditions of generators and production level. Finally, constraints (\ref{sucw:t}) and (\ref{sucw:u}) restrict the space from which the decision variables can take values by binary or non-negative continuous. 
-
 
 \begin{table}[H]
 	\centering
@@ -485,45 +453,154 @@ The objective function (\ref{sucw:obj}) is to minimize the expected value of the
 		$G$ & index set of all generators ($g\in G$)\\
 		$G_s$ & index set of slow generators ($g\in G_s$)\\
 		$G_f$ & index set of fast generators ($g\in G_f$)\\
-		$K$ & index set of linear segments of the piece-wise linear power generation cost ($k\in K$)\\
 		$L$ & index set of transmission lines ($l\in L$) \\
 		$N$ & index set of buses ($n\in N$)\\
 		$T$ & index set of time periods ($t\in T$)\\
-		$W$ & index set of wind power generators ($w\in W$)\\
-		$\mathcal{S}$ & index set of scenarios ($\sigma\in\mathcal{S}$) 		\\ \midrule
+		$J$ & index set of loads for shedding ($j\in J$)\\
+		$I$ & index set of import points ($i\in I$)\\
+		$W$ & index set of wind power generators ($k\in W$)\\
+		$R$ & index set of non-wind renewable generators ($r\in R$)\\
+		$L_n^{+}$ & index set of outgoing transmission lines from bus $n$ \\
+		$L_n^{-}$ & index set of incoming transmission lines to bus $n$ \\
+		$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\ \midrule
 		\multicolumn{2}{l}{\textbf{Parameters:}} \\
-		$C^\text{up}_g$ & start-up cost of generator $g$ \\
-		$C^\text{dn}_g$ & shut-down cost of generator $g$ \\
-		$C^\text{fx}_g$ & fixed cost of operating the generator $g$ \\
-		$C^\text{mar}_{gk}$ & $k^\textrm{th}$ marginal cost of production of generator $g$ \\
-		$X^\text{init}_g$ & initial on/off status of generator $g$ \\
-		$UT^\text{init}_g$ & initial minimum uptime of generator $g$ \\
-		$UT_g$ & minimum uptime of generator $g$ \\
-		$DT^\text{init}_g$ & initial minimum downtime of generator $g$ \\
-		$DT_g$ & minimum downtime of generator $g$ \\
-		$RU_g$ & ramp-up limit of generator $g$ \\
-		$RD_g$ & ramp-down limit of generator $g$ \\
-		$RC_g$ & ramping capacity of generator $g$ \\
-		$P^\text{init}_g$ & initial power output of generator $g$ \\
-		$P^\text{min}_g$ & minimum power output of generator $g$ \\
-		$P^\text{max}_g$ & maximum power output of generator $g$ \\
-		$Q^\text{max}_{gk}$ & maximum power output of generator $g$ with the $k^\textrm{th}$ marginal cost \\
-		$SR_t$ & spinning reserve required at time $t$ \\
-		$F^\text{max}_l$ & maximum power flow of transmission line $l$ \\
-		$LSF_{ln}$ & load-shift factor of transmission line $l$ with respect to bus $n$ \\
-		$\PP(\sigma)$ & probability of scenario $\sigma$ \\
-		$D_{nt}^\sigma$ & demand load at bus $n$ at time $t$ in scenario $\sigma$ \\
-		$W_{wt}^\sigma$ & wind power generation from generator $w$ at time $t$ in scenario $\sigma$ \\ \midrule
+		\multicolumn{2}{l}{\textbf{(cost)}} \\
+		$K_g$ & fixed commitment cost of generator $g$ \\
+		$S_g$ & fixed startup cost of generator $g$\\
+		$C_g$ & marginal generation cost of generator $g$	\\
+		$C^J$ & marginal load shedding cost of loads in $J$	\\
+		$C^I$ & marginal spillage cost of import points in $I$ \\
+		$C^R$ & marginal spillage cost of renewable generators in $R$ \\ 
+		$C^W$ & marginal spillage cost of wind generators in $W$ \\
+		\multicolumn{2}{l}{\textbf{(capacity)}} \\
+		$B_{ls}$ & susceptance of line $l$ under scenario $s$\\
+		$P_{gs}^+$ & maximum generation capacity of generator $g$ under scenario $s$\\
+		$P_{gs}^-$ & minimum generation capacity of generator $g$ under scenario $s$\\
+		$R_{gs}^+$ & maximum ramping capacity of generator $g$ under scenario $s$\\
+		$R_{gs}^-$ & minimum ramping capacity of generator $g$ under scenario $s$\\
+		$TC_l$ & capacity of transmission line $l$\\
+		$UT_{g}$ & minimum up time of generator $g$\\
+		$DT_{g}$ & minimum down time of generator $g$\\
+		\multicolumn{2}{l}{\textbf{(supply/demand)}} \\
+		$D_{nts}$ & net demand in bus $n$ at time $t$ under scenario $s$\\
+		$IC_i^I$ & generation from import point $i$\\
+		$IC_r^R$ & generation from renewable generator $r$\\
+		$IC_k^W$ & generation from wind generator $k$\\
+		$IC_j^J$ & shedding from load $j$\\
+		\multicolumn{2}{l}{\textbf{(mapping to bus)}} \\
+		$m^{G}(g)$ & the index of the bus connected by generator $g$ \\
+		$m^{I}(i)$ & the index of the bus connected by import point $i$ \\
+		$m^{J}(j)$ & the index of the bus that can shed load $j$ \\
+		$m^{R}(r)$ & the index of the bus connected by renewable generator $r$ \\
+		$m^{W}(k)$ & the index of the bus connected by wind generator $k$ \\ \midrule
 		\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-		$x_{gt}^\sigma$ & on/off indicator of generator $g$ at time $t$ in scenario $\sigma$\\
-		$u_{gt}^\sigma $ & start-up indicator of generator $g$ at time $t$ in scenario $\sigma$\\
-		$v_{gt}^\sigma $ & shut-down indicator of generator $g$ at time $t$ in scenario $\sigma$ \\
-		$p_{gt}^\sigma$ & power output of generator $g$ at time $t$ in scenario $\sigma$ \\
-		$q_{gkt}^\sigma$ & power output of generator $g$ at time $t$ with the $k^\textrm{th}$ marginal cost in scenario $\sigma$\\
-		\textcolor{red}{$s_{gt}^\sigma$} & \textcolor{red}{spinning reserve of generator $g$ at time $t$ in scenario $\sigma$} \\
+		$w_{gt}$ (1$^{\textrm{st}}$ stage) 	& commitment of slow generator $g$ at time $t$\\
+		$z_{gt}$ (1$^{\textrm{st}}$ stage)	&	start-up of slow generator $g$ at time $t$\\
+		$u_{gts}$ (2$^{\textrm{nd}}$ stage)	&	commitment of fast generator $g$ at time $t$ under scenario $s$\\
+		$v_{gts}$ (2$^{\textrm{nd}}$ stage)	&	startup of fast generator $g$ at time $t$ under scenario $s$\\
+		$\theta_{gts}$ (2$^{\textrm{nd}}$ stage)	&	phase angle of generator $g$ at time $t$ under scenario $s$\\
+		$e_{lts}$ (2$^{\textrm{nd}}$ stage)	&	power flow on line $l$ at time $t$ under scenario $s$\\
+		$p_{gts}$ (2$^{\textrm{nd}}$ stage)	&	production of generator $g$ at time $t$ under scenario $s$\\
+		$\lambda_{jts}$	(2$^{\textrm{nd}}$ stage) & load shedding for load $j$ at time $t$ under scenario $s$	\\
+		$\mu_{its}$	(2$^{\textrm{nd}}$ stage) &	spillage for import point $i$ at time $t$ under scenario $s$\\
+		$\rho_{rts}$ (2$^{\textrm{nd}}$ stage)	& spillage for non-wind renewable generator $r$ at time $t$ under scenario $s$  	\\
+		$\omega_{kts}$ (2$^{\textrm{nd}}$ stage)	& spillage for wind generator $k$ at time $t$ under scenario $s$ 	\\
 		\hline
 	\end{tabular}
 \end{table}
+
+
+%\begin{subequations} \label{sucw:formulation}
+%	\begin{align}
+%	\min \ & \sum_{\sigma \in \mathcal{S}} \PP(\sigma) \sum_{t\in T} \sum_{g\in G}\left( C^\text{fx}_g x_{gt}^\sigma + C^\text{up}_g u_{gt}^\sigma  + C^\text{dn}_g v_{gt}^\sigma  + \sum_{k\in K} C^\text{mar}_{gk} q_{gkt}^\sigma\right) \label{sucw:obj}\\
+%	\text{s.t.} \
+%	% Constraints for commitment, start-up, and shut-down
+%	& 1 - x_{g(t-1)}^\sigma \geq u_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:b} \\
+%	& x_{g(t-1)}^\sigma \geq v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:c} \\
+%	& x_{gt}^\sigma - x_{g(t-1)}^\sigma = u_{gt}^\sigma  - v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:d} \\
+%	% Constraints for minimum down/up time
+%	& x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-UT_g+1\}}^t u_{g\tau}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:e} \\
+%	& 1 - x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-DT_g+1\}}^t u_{g\tau}^\sigma,\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:f} \\
+%	% Ramping constraint
+%	& -RD_g \leq p_{gt}^\sigma - p_{g(t-1)}^\sigma \leq RU_g - s_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:g} \\
+%	& s_{gt}^\sigma \leq RC_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:h} \\
+%	% Spinning reserve constraint
+%	& \sum_{g\in G} s_{gt}^\sigma \geq SR_t, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:i} \\
+%	% Minimum/maximum power generation level
+%	& p_{gt}^\sigma = P^\text{min}_g x_{gt}^\sigma + \sum_{k\in K} q_{gkt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G, t\in T,\ \label{sucw:j} \\
+%	& p_{gt}^\sigma + s_{gt}^\sigma \leq P^\text{max}_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:k} \\
+%	% Marginal power generation cost
+%	& q_{gkt}^\sigma \leq Q^\text{max}_{gk} x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ k\in K,\ t\in T, \label{sucw:l} \\
+%	% System balance
+%	& \sum_{g\in G} p_{gt}^\sigma = \sum_{n\in N} D_{nt}^\sigma - \sum_{w\in W} W_{wt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:m} \\
+%	% maximum power flow on each transmission lines
+%	& -F^\text{max}_l \leq \sum_{g\in G} LSF_{lg} p_{gt}^\sigma - \sum_{n\in N} LSF_{ln} D_{nt}^\sigma \notag	\\
+%	&\quad\quad\quad\quad\quad + \sum_{w\in W} LSF_{lw} W_{wt}^\sigma \leq F^\text{max}_l,\quad \forall \sigma \in \mathcal{S},\ l\in L,\ t\in T, \label{sucw:n} \\
+%	% Non-anticipativity constraint
+%	& x_{gt}^{\sigma_1} = x_{gt}^{\sigma_2},\ u_{gt}^{\sigma_1} = u_{gt}^{\sigma_2},\ v_{gt}^{\sigma_1} = v_{gt}^{\sigma_2},\quad \forall \sigma_1,\sigma_2 \in \mathcal{S},\ g\in G_s,\ t\in T, \label{sucw:o} \\
+%	% Initial conditions
+%	& x_{g0}^\sigma = X^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G, \label{sucw:p} \\
+%	& x_{gt}^\sigma = 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, UT^\text{init}_g\}, \label{sucw:q} \\
+%	& x_{gt}^\sigma = 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, DT^\text{init}_g\}, \label{sucw:r} \\
+%	& p_{g0}^\sigma = P^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ \label{sucw:s} \\
+%	% bound constraints
+%	& x_{gt}^\sigma \in \{0,1\},\quad 0\leq u_{gt}^\sigma , v_{gt}^\sigma  \leq 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{eq:suc:cons19} \\
+%	& \textcolor{red}{x_{gt}^\sigma , u_{gt}^\sigma , v_{gt}^\sigma \in \{0,1\},\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, }\label{sucw:t} \\
+%	& p_{gt}^\sigma , q_{gkt}^\sigma,s_{gt}^\sigma \geq 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T. \label{sucw:u} 
+%	\end{align}
+%\end{subequations}
+%The objective function (\ref{sucw:obj}) is to minimize the expected value of the sum of operating, start-up, shut-down, and production cost. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for logical relationships amongst the commitment, start-up, and shut-down decisions. Constraints (\ref{sucw:e}) and (\ref{sucw:f}) represent the minimum downtime and uptime of generators in each time period. Constraints (\ref{sucw:g}) and (\ref{sucw:h}) are ramping restrictions, and (\ref{sucw:i}) is a spinning reserve constraint. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) ensure the amount of power generation is restricted by its minimum and maximum limits. Constraint (\ref{sucw:l}) represents the piecewise linearized power generation cost. Constraint (\ref{sucw:m}) guarantees the balanced flow. Constraint (\ref{sucw:n}) is for the transmission line flow. Constraint (\ref{sucw:o}) is a \textit{nonanticipativity} constraint that enforces the decisions do not change over scenarios. Constraints (\ref{sucw:p})-(\ref{sucw:s}) represent the initial conditions of generators and production level. Finally, constraints (\ref{sucw:t}) and (\ref{sucw:u}) restrict the space from which the decision variables can take values by binary or non-negative continuous. 
+
+
+%\begin{table}[H]
+%	\centering
+%	\caption{Notations for the \texttt{SUCW}}
+%	\label{sucw:notation}
+%	\begin{tabular}{ll}
+%		\toprule
+%		\multicolumn{2}{l}{\textbf{Index sets:}} \\
+%		$G$ & index set of all generators ($g\in G$)\\
+%		$G_s$ & index set of slow generators ($g\in G_s$)\\
+%		$G_f$ & index set of fast generators ($g\in G_f$)\\
+%		$K$ & index set of linear segments of the piece-wise linear power generation cost ($k\in K$)\\
+%		$L$ & index set of transmission lines ($l\in L$) \\
+%		$N$ & index set of buses ($n\in N$)\\
+%		$T$ & index set of time periods ($t\in T$)\\
+%		$W$ & index set of wind power generators ($w\in W$)\\
+%		$\mathcal{S}$ & index set of scenarios ($\sigma\in\mathcal{S}$) 		\\ \midrule
+%		\multicolumn{2}{l}{\textbf{Parameters:}} \\
+%		$C^\text{up}_g$ & start-up cost of generator $g$ \\
+%		$C^\text{dn}_g$ & shut-down cost of generator $g$ \\
+%		$C^\text{fx}_g$ & fixed cost of operating the generator $g$ \\
+%		$C^\text{mar}_{gk}$ & $k^\textrm{th}$ marginal cost of production of generator $g$ \\
+%		$X^\text{init}_g$ & initial on/off status of generator $g$ \\
+%		$UT^\text{init}_g$ & initial minimum uptime of generator $g$ \\
+%		$UT_g$ & minimum uptime of generator $g$ \\
+%		$DT^\text{init}_g$ & initial minimum downtime of generator $g$ \\
+%		$DT_g$ & minimum downtime of generator $g$ \\
+%		$RU_g$ & ramp-up limit of generator $g$ \\
+%		$RD_g$ & ramp-down limit of generator $g$ \\
+%		$RC_g$ & ramping capacity of generator $g$ \\
+%		$P^\text{init}_g$ & initial power output of generator $g$ \\
+%		$P^\text{min}_g$ & minimum power output of generator $g$ \\
+%		$P^\text{max}_g$ & maximum power output of generator $g$ \\
+%		$Q^\text{max}_{gk}$ & maximum power output of generator $g$ with the $k^\textrm{th}$ marginal cost \\
+%		$SR_t$ & spinning reserve required at time $t$ \\
+%		$F^\text{max}_l$ & maximum power flow of transmission line $l$ \\
+%		$LSF_{ln}$ & load-shift factor of transmission line $l$ with respect to bus $n$ \\
+%		$\PP(\sigma)$ & probability of scenario $\sigma$ \\
+%		$D_{nt}^\sigma$ & demand load at bus $n$ at time $t$ in scenario $\sigma$ \\
+%		$W_{wt}^\sigma$ & wind power generation from generator $w$ at time $t$ in scenario $\sigma$ \\ \midrule
+%		\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+%		$x_{gt}^\sigma$ & on/off indicator of generator $g$ at time $t$ in scenario $\sigma$\\
+%		$u_{gt}^\sigma $ & start-up indicator of generator $g$ at time $t$ in scenario $\sigma$\\
+%		$v_{gt}^\sigma $ & shut-down indicator of generator $g$ at time $t$ in scenario $\sigma$ \\
+%		$p_{gt}^\sigma$ & power output of generator $g$ at time $t$ in scenario $\sigma$ \\
+%		$q_{gkt}^\sigma$ & power output of generator $g$ at time $t$ with the $k^\textrm{th}$ marginal cost in scenario $\sigma$\\
+%		\textcolor{red}{$s_{gt}^\sigma$} & \textcolor{red}{spinning reserve of generator $g$ at time $t$ in scenario $\sigma$} \\
+%		\hline
+%	\end{tabular}
+%\end{table}
 
 
 \subsubsection{\texttt{SUCW}: Data generation}
