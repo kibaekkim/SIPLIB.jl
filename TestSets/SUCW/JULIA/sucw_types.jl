@@ -1,17 +1,17 @@
 type UnitCommitmentModel
 
     # Sets
-    IMPORT # import points
     G      # generators
     Gf     # fast generators
     Gs     # slow generators
     L      # transmission lines
-    LOAD   # loads
     N      # buses
-    RE     # renewable generators
     T      # time periods
     T0     # 0..|T|
+    LOAD   # loads
+    IMPORT # import points
     WIND   # wind farms
+    RE     # renewable generators
 
     # Cost parameters
     C  # generation cost
@@ -33,7 +33,7 @@ type UnitCommitmentModel
     UT   # minimum uptime of generator g
 
     # Supply/demand parameters
-    D    # netload in bus n, time t, scenarion j
+    D    # netload in bus n, time t, scenario j
     Igen # generation from import points
     Rgen # generation from renewable
     Wgen # wind generation
