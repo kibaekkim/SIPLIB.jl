@@ -4,7 +4,7 @@ In this subsection, we introduce the form of SIP of interest. The notations and 
 \begin{align}
 z:=\min_{x\in X}{\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
 \end{align}
-where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $\PP(1),\cdots,\PP(r)$, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ for $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is continuous, we can approximate it by a suitably discretized distribution. The real-valued map $\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
+where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $\PP(1),\cdots,\PP(r)$, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ for $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is continuous, we assume that we can reasonably approximate it by a suitably discretized distribution. The real-valued map $\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
 \begin{align}
 \phi_{\xi_s}(t):=\min_{y_s\in Y}\left\{ q(\xi_s)^\top y_s:\ W(\xi_s)y_s \ge t \right\},\ t\in\mathbb{R}^{m_2},
 \end{align}
@@ -12,7 +12,7 @@ where $\xi_s$ is an arbitrarily realized scenario.
 The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent integer or binary restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
 The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_s,W_s,h_s,q_s)$.
 The SIP (\ref{eq:SIP_1}) can be rewritten in the extensive form
-\begin{subequations}
+\begin{subequations}\label{sip:ef}
 \begin{align}
 z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\ 
 \mathrm{s.t.}\ &Ax\ge b,  \\
@@ -21,6 +21,7 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\
 	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}.
 \end{align}
 \end{subequations}
+
 %The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations $x_1=x_r$ and $x_j=x_{j-1}$ for $j=2,\ldots,r$, and $H_j$ is a suitable $rn_1\times n_1$ matrix. We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_j$ for some $j$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
 
 \begin{table}[H]
@@ -63,8 +64,47 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\
 \end{table} 
 
 \subsection{Solution methods}
-\subsubsection{Stage-wise decomposition algorithm}
-\subsubsection{Scenario-wise decompostion algorithm}
+\subsubsection{Sample-average approximation (using distributional information)}
+\subsubsection{Convex approximations of the value function}
+\subsubsection{Stage-wise decomposition (Benders type)}
+This type of algorithms exploit the natural viewpoint of optimizing the objective function in Equation (\ref{eq:SIP_1}).
+
+\subsubsection{Scenario-wise decomposition}
+In this type algorithms, we first introduce the copies of the first stage variables into the second stage. Then, the extensive form in (\ref{sip:ef}) is changed as below.
+\begin{subequations}
+	\begin{align}
+	z=\min_{x_s,y_s}\ &\sum_{s=1}^{r}p_s\left(c^{\top}x_s+q_s^{\top}y_s\right)	\label{eq:SIP_2-1}\\ 
+	\mathrm{s.t.}\ &\sum_{s=1}^{r}H_s x_s=0 \label{eq:SIP_2-2} \\
+	\ &(x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	\label{eq:SIP_2-3}
+	\end{align}
+\end{subequations}
+where the scenario feasibility set $G_s$ is defined as
+\begin{align}
+G_s:=\left\{ (x_s,y_s): \ Ax_s\ge b,\  T_s x_s+W_s y_s\ge h_s,\ (x_s,y_s)\in X\times Y  \right\}. \label{eq:SIP_2-4}
+\end{align}
+The newly added constraints (\ref{eq:SIP_2-2}) (called \textit{nonanticipativity}) guarantee $x_1=x_r$ and $x_s=x_{s-1}$ for $s=2,\ldots,r$ with a suitable $rn_1\times n_1$ coefficient matrix $H_s$. This can be presented in another expression other than the one above that Car\o e and Schultz \cite{CS1999} proposed.
+%We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_s$ for some $s$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
+
+Two representative scenario-wise decomposition algorithms are Dual Decomposition (DD, \cite{CS1999}) and Progressive Hedging (PH, \cite{RW1991}). The main idea of DD algorithm is to relax the nonanticipativity constraints using Lagrange multipliers and then to restore the nonanticipativity. Given set of multipliers, the problem is separable by scenarios hence the associated dual function can be optimized scenario-wise independently. Due to the nonconvexities, there can exist a duality gap between relaxed problem and the original problem so the optimality needs to be attained branch-and-bound scheme.
+
+PH algorithm is developed by Rockafellar and Wets motivated by augmented Lagrangian theory. To briefly introduce the idea of PH, we define the following terms for solution systems.
+\begin{itemize}
+	\item admissible: a solution that satisfies the constraints for all scenarios
+	\item implementable (or nonanticipative): a solution in which the first stage decisions are indifferent over all scenarios
+	\item feasible: a solution that is both admissible and implementable
+\end{itemize}
+The basic idea of PH can be summarized as follows \cite{book:pyomo}.
+\begin{enumerate}
+	\item For each scenario $s$, solutions are obtained for the single-scenario problem of minimizing, subject to the problem constraints, the formulation (\ref{eq:SIP_2-1})-(\ref{eq:SIP_2-3}), and (\ref{eq:SIP_2-4}).
+	\item The variable values for an implementable---but likely not admissible---solution are obtained by averaging over all scenarios at a scenario tree node.
+	\item For each scenario $s$, solutions are obtained for the problem of minimizing, subject to the problem constraints, the deterministic solution as in Step 1. plus terms that penalize the lack of implementability using a subgradient estimator for the nonanticipativity constraints and a squared penalty term.
+	\item If the solutions have not converged sufficiently and the allocated compute time is not exceeded, goto Step 2.
+	\item Post-process, if needed, to produce a fully admissible and implementable solution.
+\end{enumerate}
+
+One advantage of scenario-wise decomposition over the stage-wise methods is their availability to mitigate the computational difficulty associated with large number of scenarios by decomposing the problem by scenario and solving the descendant subproblems in parallel manners.
+
+
 
 \subsection{Software libraries}
 \subsubsection{Modeling languages}
