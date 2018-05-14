@@ -427,70 +427,72 @@ v 		&= |J|	\\
 \textcolor{red}{J_z	}&\textcolor{red}{=	}
 \end{align*}
 
-
-
-\subsection{\texttt{SUCW}: Stochastic unit commitment problem with wind power} \label{SUCW}
-The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an exteded time horizon. \texttt{SUCW} is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} and \cite{journal:KZ2015} for mathematical models.
+\subsection{\texttt{SUCW}: Stochastic unit commitment problem with wind power generators} \label{SUCW}
+The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an exteded time horizon. \texttt{SUCW} is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
 \subsubsection{\texttt{SUCW}: Mathematical formulation}
-A two-stage stochastic unit commitment model \texttt{SUCW} is presented, where we make decision on slow generators in the first stage and make the commitment decisions for fast generators and the power dispatch decision in the second stage. In \texttt{SUCW}, we also incorporate ramping constraints, reserve constraints and transmission line capacity constraints. We assume the piecewise linear convex cost function for the power generation.
+A two-stage stochastic unit commitment model \texttt{SUCW} is presented. We make commitment decision on slow generators in the first stage. In the second stage, the commitment decisions of fast generators, wind generators, and non-wind renewable generators, shedding decisions of loads, and import decisions from other points are determined. In addition, phase angle for each transmission line is decided in the second stage. In \texttt{SUCW}, we also consider ramping constraints, transmission line capacity constraints, phase angle constraints, and minimum up/down time constraints. We assume the piecewise linear convex cost function for the power generation.
+
+Using the notation in Table \ref{sucw:notation}, the extensive form of \texttt{SUCW} can be stated as in the following model \ref{sucw:formulation}.
 
 \begin{subequations} \label{sucw:formulation}
 	\begin{align}
 	(\texttt{SUCW})\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
 	\Bigg[	 \sum_{g\in G_f} \left(K_g u_{gt}+S_g v_{gt}\right) + \sum_{g\in G}C_g p_{gt} + \sum_{j\in J} C^{J}\lambda_{dt} \nonumber \\&\qquad\qquad\qquad\qquad\qquad\quad  + \sum_{i\in I} C^{I}\mu_{it} + \sum_{r\in R} C^{R}\lambda_{rt} + \sum_{k\in W} C^{W}\omega_{kt} \Bigg]
-	\label{smkp:obj}\\
-	\textrm{s.t.}\ &  \sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,\\
-	&\sum_{q=t+1}^{t+DT_g} z_{gq}\le 1-w_{gt},\quad\forall g\in G_s,\ \forall t\le |T|-DT_g,\\
-	&z_{gt}\ge w_{gt}-w_{g,t-1},\quad\forall g\in G_s,\ \forall t\in T,\\
-	&  \sum_{q=t-UT_g+1}^t v_{gqs}\le u_{qts},\quad\forall g\in G_f,\ \forall t\ge UT_g,\ \forall s\in\mathcal{S},\\
-	&\sum_{q=t+1}^{t+DT_g} v_{gqs}\le 1-u_{gts},\quad\forall g\in G_f,\ \forall t\le |T|-DT_g,\ \forall s\in\mathcal{S},\\
-	&v_{gts}\ge u_{gts}-u_{g,t-1,s},\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\\
+	\label{sucw:obj}\\
+	\textrm{s.t.}\ &  \sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,	\label{sucw:b}\\
+	&\sum_{q=t+1}^{t+DT_g} z_{gq}\le 1-w_{gt},\quad\forall g\in G_s,\ \forall t\le |T|-DT_g,\label{sucw:c}\\
+	&z_{gt}\ge w_{gt}-w_{g,t-1},\quad\forall g\in G_s,\ \forall t\in T,\label{sucw:d}\\
+	&  \sum_{q=t-UT_g+1}^t v_{gqs}\le u_{qts},\quad\forall g\in G_f,\ \forall t\ge UT_g,\ \forall s\in\mathcal{S},\label{sucw:e}\\
+	&\sum_{q=t+1}^{t+DT_g} v_{gqs}\le 1-u_{gts},\quad\forall g\in G_f,\ \forall t\le |T|-DT_g,\ \forall s\in\mathcal{S},\label{sucw:f}\\
+	&v_{gts}\ge u_{gts}-u_{g,t-1,s},\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:g}\\
 	&\sum_{l\in L_n^-}e_{lts}+\sum_{g\in G_n} p_{gts}+\sum_{\lambda\in IG_n^\mathcal{L}}x_{\lambda ts}^\mathcal{L} +\sum_{\omega\in IG_n^\mathcal{W}} IC_{\omega ts}^\mathcal{W} \nonumber \\ 
 	&= D_{nt}+\sum_{l\in L_n^+}e_{lts}+\sum_{\iota\in IG_n^\mathcal{I}}x_{\iota ts}^\mathcal{I} + \sum_{\rho\in IG_n^\mathcal{R}} x_{\rho ts}^\mathcal{R} +\sum_{\omega\in IG_n^\mathcal{W}} x_{\omega ts}^\mathcal{W}, \nonumber \\
-	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&e_{lts}=B_l\left(  \theta_{n_1 ts}-\theta_{n_2 ts}  \right),\quad\forall l\equiv (n_1, n_2)\in L,\ t\in T, s\in\mathcal{S},\\
-	&P_g^- w_{gt} \le p_{gts} \le P_g^+ w_{gt},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\\
-	&P_g^- u_{gts} \le p_{gts} \le P_g^+ u_{gts},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\\
-	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&w_{gt}\in\{0,1\},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\\
-	& 0\le z_{gt}\le 1,\quad\forall g\in G_s,\ \forall t\in T,\\
-	&u_{gts}\in\{0,1\},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\\
-	&0\le v_{gts}\le 1,\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&-TC_l\le e_{lts}\le TC_l,\quad\forall l\in L,\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&p_{gts}\ge 0,\quad\forall g\in G,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\\
-	&0\le x_{\lambda ts}^\mathcal{L}\le IC_{\lambda t}^\mathcal{L},\quad\forall \lambda\in \mathcal{L},\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&0\le x_{\iota ts}^\mathcal{I}\le IC_{\iota t}^\mathcal{I},\quad\forall \iota \in \mathcal{I},\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&0\le x_{\rho ts}^\mathcal{R} \le IC_{\rho t}^\mathcal{R},\quad\forall \rho\in\mathcal{R},\ \forall t\in T,\ \forall s\in\mathcal{S},\\
-	&0\le x_{\omega ts}^\mathcal{W}\le IC_{\omega t}^W,\quad\forall \omega\in\mathcal{W},\ \forall t\in T,\ \forall s\in\mathcal{S}.
+	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:h}\\
+	&e_{lts}=B_l\left(  \theta_{n_1 ts}-\theta_{n_2 ts}  \right),\quad\forall l\equiv (n_1, n_2)\in L,\ t\in T, s\in\mathcal{S},\label{sucw:i}\\
+	&P_g^- w_{gt} \le p_{gts} \le P_g^+ w_{gt},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:j}\\
+	&P_g^- u_{gts} \le p_{gts} \le P_g^+ u_{gts},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:k}\\
+	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:l}\\
+	&w_{gt}\in\{0,1\},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\label{sucw:m}\\
+	& 0\le z_{gt}\le 1,\quad\forall g\in G_s,\ \forall t\in T,\label{sucw:n}\\
+	&u_{gts}\in\{0,1\},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:o}\\
+	&0\le v_{gts}\le 1,\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:p}\\
+	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:q}\\
+	&-TC_l\le e_{lts}\le TC_l,\quad\forall l\in L,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:r}\\
+	&p_{gts}\ge 0,\quad\forall g\in G,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:s}\\
+	&0\le x_{\lambda ts}^\mathcal{L}\le IC_{\lambda t}^\mathcal{L},\quad\forall \lambda\in \mathcal{L},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:t}\\
+	&0\le x_{\iota ts}^\mathcal{I}\le IC_{\iota t}^\mathcal{I},\quad\forall \iota \in \mathcal{I},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:u}\\
+	&0\le x_{\rho ts}^\mathcal{R} \le IC_{\rho t}^\mathcal{R},\quad\forall \rho\in\mathcal{R},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:v}\\
+	&0\le x_{\omega ts}^\mathcal{W}\le IC_{\omega t}^W,\quad\forall \omega\in\mathcal{W},\ \forall t\in T,\ \forall s\in\mathcal{S}.\label{sucw:w}
 	\end{align}	
 \end{subequations}
 
-\begin{table}[H]
+The objective function (\ref{sucw:obj}) is to minimize expected operating costs. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for the first-stage so constraints for the slow generators. Constraint (\ref{sucw:b}) and (\ref{sucw:c}) represent the minimum up/down time of the slow generators. The transition rule for slow generator start-up variables is imposed by constraint (\ref{sucw:d}).  Constraints (\ref{sucw:e})-(\ref{sucw:f}) represent the minimum up/down time of the fast generators. Constraint (\ref{sucw:g}) impose the transition rule for the fast generator start-up variables. Constraint (\ref{sucw:h}) requires balancing the amount of power that flows in and out of each bus. Constraint (\ref{sucw:i}) represents a linearized, lossless model of the power flow equations (Kirchhoff's law) according to which the power flow on a line $l$ is proportional to the phase angle difference between the two end buses of the line. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) restrict minimum/maximum capacity limits for both slow and fast generators. Constraint (\ref{sucw:l}) represents ramping restriction on the rate of change of generator output. Constraint (\ref{sucw:m})-(\ref{sucw:w}) define the types and bounds for decision variables.
+\begin{table}[]
 	\centering
 	\caption{Notations for the \texttt{SUCW}}
 	\label{sucw:notation}
 	\begin{tabular}{ll}
 		\toprule
 		\multicolumn{2}{l}{\textbf{Index sets:}} \\
-		$L$ & index set of all transmission lines ($l\in L$) \\
+		$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\ 		
 		$N$ & index set of all buses ($n\in N$)\\
 		$T$ & index set of all time periods ($t\in T$)\\
+		$L$ & index set of all transmission lines ($l\in L$) \\
 		$\mathcal{L}$ & index set of all loads for shedding ($\lambda \in \mathcal{L}$)\\
 		$\mathcal{I}$ & index set of all import points ($\iota\in \mathcal{I}$)\\
 		$\mathcal{R}$ & index set of all non-wind renewable generators ($\rho\in \mathcal{R}$)\\
 		$\mathcal{W}$ & index set of all wind generators ($\omega\in \mathcal{W}$)\\
-		$L_n^{+}$ & index set of outgoing transmission lines from bus $n$ ($l\in L_n^+$)\\
-		$L_n^{-}$ & index set of incoming transmission lines to bus $n$ ($l\in L_n^-$)\\
 		$G$ & index set of all generators ($g\in G$)\\
 		$G_s$ & index set of slow generators ($g\in G_s$)\\
 		$G_f$ & index set of fast generators ($g\in G_f$)\\
+		\multicolumn{2}{l}{\textbf{(mapping sets)}} \\
 		$G_n$ & index set of generators that are located in bus $n$ ($g\in G_n$)\\
 		$IG_n^\mathcal{L}$ & index set of loads that bus $n$ can shed ($\lambda\in IG_n^\mathcal{L}$)\\
 		$IG_n^\mathcal{I}$ & index set of import points that can supply bus $n$ ($\iota\in IG_n^\mathcal{I}$) \\
 		$IG_n^\mathcal{R}$ & index set of non-wind renewable generators that can supply bus $n$ ($\rho\in IG_n^\mathcal{R}$) \\
 		$IG_n^\mathcal{W}$ & index set of wind generators that can supply bus $n$ ($\omega\in IG_n^\mathcal{W}$)\\
-		$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\  \midrule
+		$L_n^{+}$ & index set of outgoing transmission lines from bus $n$ ($l\in L_n^+$)\\
+		$L_n^{-}$ & index set of incoming transmission lines to bus $n$ ($l\in L_n^-$)\\ \midrule
 		\multicolumn{2}{l}{\textbf{Parameters:}} \\
 		\multicolumn{2}{l}{\textbf{(cost)}} \\
 		$K_g$ & fixed commitment cost of generator $g$ \\
@@ -531,101 +533,32 @@ A two-stage stochastic unit commitment model \texttt{SUCW} is presented, where w
 	\end{tabular}
 \end{table}
 
-
-%\begin{subequations} \label{sucw:formulation}
-%	\begin{align}
-%	\min \ & \sum_{\sigma \in \mathcal{S}} \PP(\sigma) \sum_{t\in T} \sum_{g\in G}\left( C^\text{fx}_g x_{gt}^\sigma + C^\text{up}_g u_{gt}^\sigma  + C^\text{dn}_g v_{gt}^\sigma  + \sum_{k\in K} C^\text{mar}_{gk} q_{gkt}^\sigma\right) \label{sucw:obj}\\
-%	\text{s.t.} \
-%	% Constraints for commitment, start-up, and shut-down
-%	& 1 - x_{g(t-1)}^\sigma \geq u_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:b} \\
-%	& x_{g(t-1)}^\sigma \geq v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:c} \\
-%	& x_{gt}^\sigma - x_{g(t-1)}^\sigma = u_{gt}^\sigma  - v_{gt}^\sigma , \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:d} \\
-%	% Constraints for minimum down/up time
-%	& x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-UT_g+1\}}^t u_{g\tau}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:e} \\
-%	& 1 - x_{gt}^\sigma \geq \sum_{\tau=\max\{1,t-DT_g+1\}}^t u_{g\tau}^\sigma,\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:f} \\
-%	% Ramping constraint
-%	& -RD_g \leq p_{gt}^\sigma - p_{g(t-1)}^\sigma \leq RU_g - s_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:g} \\
-%	& s_{gt}^\sigma \leq RC_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:h} \\
-%	% Spinning reserve constraint
-%	& \sum_{g\in G} s_{gt}^\sigma \geq SR_t, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:i} \\
-%	% Minimum/maximum power generation level
-%	& p_{gt}^\sigma = P^\text{min}_g x_{gt}^\sigma + \sum_{k\in K} q_{gkt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G, t\in T,\ \label{sucw:j} \\
-%	& p_{gt}^\sigma + s_{gt}^\sigma \leq P^\text{max}_g x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{sucw:k} \\
-%	% Marginal power generation cost
-%	& q_{gkt}^\sigma \leq Q^\text{max}_{gk} x_{gt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ k\in K,\ t\in T, \label{sucw:l} \\
-%	% System balance
-%	& \sum_{g\in G} p_{gt}^\sigma = \sum_{n\in N} D_{nt}^\sigma - \sum_{w\in W} W_{wt}^\sigma, \quad \forall \sigma \in \mathcal{S},\ t\in T,\ \label{sucw:m} \\
-%	% maximum power flow on each transmission lines
-%	& -F^\text{max}_l \leq \sum_{g\in G} LSF_{lg} p_{gt}^\sigma - \sum_{n\in N} LSF_{ln} D_{nt}^\sigma \notag	\\
-%	&\quad\quad\quad\quad\quad + \sum_{w\in W} LSF_{lw} W_{wt}^\sigma \leq F^\text{max}_l,\quad \forall \sigma \in \mathcal{S},\ l\in L,\ t\in T, \label{sucw:n} \\
-%	% Non-anticipativity constraint
-%	& x_{gt}^{\sigma_1} = x_{gt}^{\sigma_2},\ u_{gt}^{\sigma_1} = u_{gt}^{\sigma_2},\ v_{gt}^{\sigma_1} = v_{gt}^{\sigma_2},\quad \forall \sigma_1,\sigma_2 \in \mathcal{S},\ g\in G_s,\ t\in T, \label{sucw:o} \\
-%	% Initial conditions
-%	& x_{g0}^\sigma = X^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G, \label{sucw:p} \\
-%	& x_{gt}^\sigma = 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, UT^\text{init}_g\}, \label{sucw:q} \\
-%	& x_{gt}^\sigma = 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in \{1, \dots, DT^\text{init}_g\}, \label{sucw:r} \\
-%	& p_{g0}^\sigma = P^\text{init}_g, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ \label{sucw:s} \\
-%	% bound constraints
-%	& x_{gt}^\sigma \in \{0,1\},\quad 0\leq u_{gt}^\sigma , v_{gt}^\sigma  \leq 1, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, \label{eq:suc:cons19} \\
-%	& \textcolor{red}{x_{gt}^\sigma , u_{gt}^\sigma , v_{gt}^\sigma \in \{0,1\},\quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T, }\label{sucw:t} \\
-%	& p_{gt}^\sigma , q_{gkt}^\sigma,s_{gt}^\sigma \geq 0, \quad \forall \sigma \in \mathcal{S},\ g\in G,\ t\in T. \label{sucw:u} 
-%	\end{align}
-%\end{subequations}
-%The objective function (\ref{sucw:obj}) is to minimize the expected value of the sum of operating, start-up, shut-down, and production cost. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for logical relationships amongst the commitment, start-up, and shut-down decisions. Constraints (\ref{sucw:e}) and (\ref{sucw:f}) represent the minimum downtime and uptime of generators in each time period. Constraints (\ref{sucw:g}) and (\ref{sucw:h}) are ramping restrictions, and (\ref{sucw:i}) is a spinning reserve constraint. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) ensure the amount of power generation is restricted by its minimum and maximum limits. Constraint (\ref{sucw:l}) represents the piecewise linearized power generation cost. Constraint (\ref{sucw:m}) guarantees the balanced flow. Constraint (\ref{sucw:n}) is for the transmission line flow. Constraint (\ref{sucw:o}) is a \textit{nonanticipativity} constraint that enforces the decisions do not change over scenarios. Constraints (\ref{sucw:p})-(\ref{sucw:s}) represent the initial conditions of generators and production level. Finally, constraints (\ref{sucw:t}) and (\ref{sucw:u}) restrict the space from which the decision variables can take values by binary or non-negative continuous. 
-
-
-%\begin{table}[H]
-%	\centering
-%	\caption{Notations for the \texttt{SUCW}}
-%	\label{sucw:notation}
-%	\begin{tabular}{ll}
-%		\toprule
-%		\multicolumn{2}{l}{\textbf{Index sets:}} \\
-%		$G$ & index set of all generators ($g\in G$)\\
-%		$G_s$ & index set of slow generators ($g\in G_s$)\\
-%		$G_f$ & index set of fast generators ($g\in G_f$)\\
-%		$K$ & index set of linear segments of the piece-wise linear power generation cost ($k\in K$)\\
-%		$L$ & index set of transmission lines ($l\in L$) \\
-%		$N$ & index set of buses ($n\in N$)\\
-%		$T$ & index set of time periods ($t\in T$)\\
-%		$W$ & index set of wind power generators ($w\in W$)\\
-%		$\mathcal{S}$ & index set of scenarios ($\sigma\in\mathcal{S}$) 		\\ \midrule
-%		\multicolumn{2}{l}{\textbf{Parameters:}} \\
-%		$C^\text{up}_g$ & start-up cost of generator $g$ \\
-%		$C^\text{dn}_g$ & shut-down cost of generator $g$ \\
-%		$C^\text{fx}_g$ & fixed cost of operating the generator $g$ \\
-%		$C^\text{mar}_{gk}$ & $k^\textrm{th}$ marginal cost of production of generator $g$ \\
-%		$X^\text{init}_g$ & initial on/off status of generator $g$ \\
-%		$UT^\text{init}_g$ & initial minimum uptime of generator $g$ \\
-%		$UT_g$ & minimum uptime of generator $g$ \\
-%		$DT^\text{init}_g$ & initial minimum downtime of generator $g$ \\
-%		$DT_g$ & minimum downtime of generator $g$ \\
-%		$RU_g$ & ramp-up limit of generator $g$ \\
-%		$RD_g$ & ramp-down limit of generator $g$ \\
-%		$RC_g$ & ramping capacity of generator $g$ \\
-%		$P^\text{init}_g$ & initial power output of generator $g$ \\
-%		$P^\text{min}_g$ & minimum power output of generator $g$ \\
-%		$P^\text{max}_g$ & maximum power output of generator $g$ \\
-%		$Q^\text{max}_{gk}$ & maximum power output of generator $g$ with the $k^\textrm{th}$ marginal cost \\
-%		$SR_t$ & spinning reserve required at time $t$ \\
-%		$F^\text{max}_l$ & maximum power flow of transmission line $l$ \\
-%		$LSF_{ln}$ & load-shift factor of transmission line $l$ with respect to bus $n$ \\
-%		$\PP(\sigma)$ & probability of scenario $\sigma$ \\
-%		$D_{nt}^\sigma$ & demand load at bus $n$ at time $t$ in scenario $\sigma$ \\
-%		$W_{wt}^\sigma$ & wind power generation from generator $w$ at time $t$ in scenario $\sigma$ \\ \midrule
-%		\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-%		$x_{gt}^\sigma$ & on/off indicator of generator $g$ at time $t$ in scenario $\sigma$\\
-%		$u_{gt}^\sigma $ & start-up indicator of generator $g$ at time $t$ in scenario $\sigma$\\
-%		$v_{gt}^\sigma $ & shut-down indicator of generator $g$ at time $t$ in scenario $\sigma$ \\
-%		$p_{gt}^\sigma$ & power output of generator $g$ at time $t$ in scenario $\sigma$ \\
-%		$q_{gkt}^\sigma$ & power output of generator $g$ at time $t$ with the $k^\textrm{th}$ marginal cost in scenario $\sigma$\\
-%		\textcolor{red}{$s_{gt}^\sigma$} & \textcolor{red}{spinning reserve of generator $g$ at time $t$ in scenario $\sigma$} \\
-%		\hline
-%	\end{tabular}
-%\end{table}
-
-
 \subsubsection{\texttt{SUCW}: Data generation}
-For \texttt{SUCW} instances, thermal power generators are scheduled over a day. The schedules are subjected to uncertainty in wind power. We use a modified IEEE 188-bus system with 54 generators, 118 buses, and 186 transmission lines provided in \cite{journal:LLMS2014}. 17 of the 54 generators are assumed to be allowed to start on demand (second-stage) while the other generators should be scheduled in advance (first-stage). We consider 3 identical wind farms. Each of them consts of  120 wind turbines. We used real wind speed data predicted from the observations of 31 weather stations in Illinois.
+For model parameters, we follow the reference \cite{AF2004}. We use a reduced model of the CAISO. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
+Based on the WECC, set cardinalities in \texttt{SUCW} are as follows.
+\begin{align*}
+|N|&=225 \\
+|T|&=24 \\
+|L|&=375 \\
+|\mathcal{L}|&=40\\
+|\mathcal{I}|&=5\\
+|\mathcal{R}|&=11\\
+|\mathcal{W}|&=5\\
+|G|&=130\\
+|G_s|&=40\\
+|G_f|&=90
+\end{align*}
 
-\textcolor{red}{Amongst the parameters, only the wind power generation data $W_{wt}^\sigma$ is stochastic subjected to be generated randomly.}
+The maginal cost parameters for additional sources (load, import, non-wind renewable, wind) are fixed by
+\begin{align*}
+C^\mathcal{L}&=5000,\\
+C^\mathcal{I}&=C^\mathcal{R}=C^\mathcal{W}=0,
+\end{align*}
+which means the value of any lost load ($\lambda\in\mathcal{L}$) is 5,000 \$/MWh and no penalty cost for spilling the import, non-wind renewable, and wind sources.
+
+The demand data $D_{nt}$ is assumed to be constant over all scenarios and generated based on the load, import, and non-wind renewable source data as follows.
+\begin{align*}
+D_{nt}=\sum_{n\in N} \sum_{t\in T}\left(  \sum_{\lambda\in IG_n^\mathcal{L}}IC_{\lambda t}^\mathcal{L} - \sum_{\iota\in IG_n^\mathcal{I}}IC_{\iota t}^\mathcal{I} - \sum_{\rho\in IG_n^\mathcal{R}}IC_{\rho t}^\mathcal{R}    \right),\quad\forall n\in N,\ \forall t\in T.
+\end{align*}
+
+By \texttt{SUCW} in \siplibtwo, we provide up to 1,000 wind power production profiles for each day type. This data is included in ``/SUCW/DATA'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$.
