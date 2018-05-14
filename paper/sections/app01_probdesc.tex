@@ -466,7 +466,7 @@ Using the notation in Table \ref{sucw:notation}, the extensive form of \texttt{S
 	\end{align}	
 \end{subequations}
 
-The objective function (\ref{sucw:obj}) is to minimize expected operating costs. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for the first-stage so constraints for the slow generators. Constraint (\ref{sucw:b}) and (\ref{sucw:c}) represent the minimum up/down time of the slow generators. The transition rule for slow generator start-up variables is imposed by constraint (\ref{sucw:d}).  Constraints (\ref{sucw:e})-(\ref{sucw:f}) represent the minimum up/down time of the fast generators. Constraint (\ref{sucw:g}) impose the transition rule for the fast generator start-up variables. Constraint (\ref{sucw:h}) requires balancing the amount of power that flows in and out of each bus. Constraint (\ref{sucw:i}) represents a linearized, lossless model of the power flow equations (Kirchhoff's law) according to which the power flow on a line $l$ is proportional to the phase angle difference between the two end buses of the line. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) restrict minimum/maximum capacity limits for both slow and fast generators. Constraint (\ref{sucw:l}) represents ramping restriction on the rate of change of generator output. Constraint (\ref{sucw:m})-(\ref{sucw:w}) define the types and bounds for decision variables.
+The objective function (\ref{sucw:obj}) is to minimize expected operating costs. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for the first-stage so constraints for the slow generators. Constraint (\ref{sucw:b}) and (\ref{sucw:c}) represent the minimum up/down time of the slow generators. The transition rule for slow generator start-up variables is imposed by constraint (\ref{sucw:d}).  Constraints (\ref{sucw:e})-(\ref{sucw:g}) are stochastic version of the constraints (\ref{sucw:b})-(\ref{sucw:d}) so represent the minimum up/down time and the transition rule of the fast generators. Constraint (\ref{sucw:h}) requires balancing the amount of power that flows in and out of each bus. Constraint (\ref{sucw:i}) represents a linearized, lossless model of the power flow equations (Kirchhoff's law) according to which the power flow on a line $l$ is proportional to the phase angle difference between the two end buses of the line. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) restrict minimum/maximum capacity limits for both slow and fast generators. Constraint (\ref{sucw:l}) represents ramping restriction on the rate of change of generator output. Constraints (\ref{sucw:m})-(\ref{sucw:w}) define the types and bounds for decision variables.
 \begin{table}[]
 	\centering
 	\caption{Notations for the \texttt{SUCW}}
@@ -494,6 +494,7 @@ The objective function (\ref{sucw:obj}) is to minimize expected operating costs.
 		$L_n^{+}$ & index set of outgoing transmission lines from bus $n$ ($l\in L_n^+$)\\
 		$L_n^{-}$ & index set of incoming transmission lines to bus $n$ ($l\in L_n^-$)\\ \midrule
 		\multicolumn{2}{l}{\textbf{Parameters:}} \\
+		$\PP(s)$	&probability of occurence for scenario $s$\\
 		\multicolumn{2}{l}{\textbf{(cost)}} \\
 		$K_g$ & fixed commitment cost of generator $g$ \\
 		$S_g$ & fixed startup cost of generator $g$\\
@@ -518,17 +519,17 @@ The objective function (\ref{sucw:obj}) is to minimize expected operating costs.
 		$IC_{\rho t}^\mathcal{R}$ & generation from renewable generator $\rho$\\
 		$IC_{\omega ts}^\mathcal{W}$ & generation from wind generator $\omega$ under scenario $s$\\ \midrule
 		\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-		$w_{gt}$ (1$^{\textrm{st}}$ stage) 	& commitment of slow generator $g$ at time $t$\\
-		$z_{gt}$ (1$^{\textrm{st}}$ stage)	&	start-up of slow generator $g$ at time $t$\\
-		$u_{gts}$ (2$^{\textrm{nd}}$ stage)	&	commitment of fast generator $g$ at time $t$ under scenario $s$\\
-		$v_{gts}$ (2$^{\textrm{nd}}$ stage)	&	startup of fast generator $g$ at time $t$ under scenario $s$\\
-		$\theta_{gts}$ (2$^{\textrm{nd}}$ stage)	&	phase angle of generator $g$ at time $t$ under scenario $s$\\
-		$e_{lts}$ (2$^{\textrm{nd}}$ stage)	&	power flow on line $l$ at time $t$ under scenario $s$\\
-		$p_{gts}$ (2$^{\textrm{nd}}$ stage)	&	production of generator $g$ at time $t$ under scenario $s$\\
-		$x_{\lambda ts}^\mathcal{L}$	(2$^{\textrm{nd}}$ stage) & load shedding for load $\lambda$ at time $t$ under scenario $s$	\\
-		$x_{\iota ts}^\mathcal{I}$	(2$^{\textrm{nd}}$ stage) &	spillage for import point $\iota$ at time $t$ under scenario $s$\\
-		$x_{\rho ts}^\mathcal{R}$ (2$^{\textrm{nd}}$ stage)	& spillage for non-wind renewable generator $\rho$ at time $t$ under scenario $s$  	\\
-		$x_{\omega ts}^\mathcal{W}$ (2$^{\textrm{nd}}$ stage)	& spillage for wind generator $\omega$ at time $t$ under scenario $s$ 	\\
+		$w_{gt}$ (1$^{\textrm{st}}$ stage) 	& (binary) commitment of slow generator $g$ at time $t$\\
+		$z_{gt}$ (1$^{\textrm{st}}$ stage)	&	(continuous) start-up of slow generator $g$ at time $t$\\
+		$u_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(binary) commitment of fast generator $g$ at time $t$ under scenario $s$\\
+		$v_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) startup of fast generator $g$ at time $t$ under scenario $s$\\
+		$\theta_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) phase angle of generator $g$ at time $t$ under scenario $s$\\
+		$e_{lts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) power flow on line $l$ at time $t$ under scenario $s$\\
+		$p_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) production of generator $g$ at time $t$ under scenario $s$\\
+		$x_{\lambda ts}^\mathcal{L}$	(2$^{\textrm{nd}}$ stage) & (continuous) load shedding for load $\lambda$ at time $t$ under scenario $s$	\\
+		$x_{\iota ts}^\mathcal{I}$	(2$^{\textrm{nd}}$ stage) &	(continuous) spillage for import point $\iota$ at time $t$ under scenario $s$\\
+		$x_{\rho ts}^\mathcal{R}$ (2$^{\textrm{nd}}$ stage)	& (continuous) spillage for non-wind renewable generator $\rho$ at time $t$ under scenario $s$  	\\
+		$x_{\omega ts}^\mathcal{W}$ (2$^{\textrm{nd}}$ stage)	& (continuous) spillage for wind generator $\omega$ at time $t$ under scenario $s$ 	\\
 		\hline
 	\end{tabular}
 \end{table}
