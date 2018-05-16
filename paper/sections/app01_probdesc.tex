@@ -13,7 +13,7 @@ Under the definition of the decision variables, the extensive form of \texttt{DC
 \begin{subequations} \label{dcap:formulation}
 	\begin{align}
 	(\texttt{DCAP})\ \textrm{min}\ &\sum_{t\in T}\sum_{i\in R}\left(\alpha_{it}x_{it}+\beta_{it}u_{it}\right)+\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T}\sum_{i\in R\cup\{0\}}\sum_{j\in N}c_{ijt}^{s}y_{ijt}^s	\label{dcap:obj} \\
-	\textrm{s.t.}\ & \textcolor{red}{x_{it}\le \textrm{M}u_{it}},\quad\forall i\in R,\ \forall t\in T,	\label{dcap:b}\\
+	\textrm{s.t.}\ & x_{it}\le \textrm{M}u_{it},\quad\forall i\in R,\ \forall t\in T,	\label{dcap:b}\\
 	&\sum_{j\in N}d_{jt}^s y_{ijt}^s\le\sum_{\tau=1}^{t}x_{i\tau},\quad\forall i\in R,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:c}\\
 	&\sum_{i\in R\cup \{0\}}y_{ijt}^s=1,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \label{dcap:d} \\
 	&x_{it}\ge 0,\quad\forall i\in R,\ \forall t\in T,\label{dcap:e} \\
@@ -21,7 +21,7 @@ Under the definition of the decision variables, the extensive form of \texttt{DC
 	&y_{ijt}^s\in\{0,1\},\quad\forall i\in R\cup\{0\},\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{dcap:g}
 	\end{align}
 \end{subequations}
-The objective function (\ref{dcap:obj}) is to minimize total expected cost for the capacity expansion schedule. The first double summation denotes the expansion cost for resource $i$ in period $t$ where $\alpha_{it}$ and $\beta_{it}$ are the variable and fixed cost, respectively. The second term in the objective function represents the expected assignment cost in period $t$ over all scenario $s\in\mathcal{S}$. Note that a dummy resource $i=0$ is included with infinite capacity. The cost $c_{0jt}^s$ denotes the penalty of failing to assign a resource to task $j$. The dummy resource enforces the \textit{complete recourse property}, which ensures that there is a feasible second-stage assignment in all periods and all scenarios for any capacity acquisition schedule \cite{journal:AG2004}. Constraint (\ref{dcap:b}) is the logical constraint containing a suitably large value M \textcolor{red}{(e.g., we set $\textrm{M}\leftarrow \textrm{M}_{t}\equiv \max_{s\in\mathcal{S}} \sum_{j\in N} d_{jt}^s$)} to define the cost for capacity expansion. Constraint (\ref{dcap:c}) reflects that the processing requirement of all tasks assigned to a resource in any period cannot exceed the installed capacity in that period under all scenarios. Constraint (\ref{dcap:d}) guarantees that each task needs to be assigned to exactly one resource in each period under all scenarios. Finally, constraints (\ref{dcap:e})-(\ref{dcap:g}) restrict the space from which the variables take values.
+The objective function (\ref{dcap:obj}) is to minimize total expected cost for the capacity expansion schedule. The first double summation denotes the expansion cost for resource $i$ in period $t$ where $\alpha_{it}$ and $\beta_{it}$ are the variable and fixed cost, respectively. The second term in the objective function represents the expected assignment cost in period $t$ over all scenario $s\in\mathcal{S}$. Note that a dummy resource $i=0$ is included with infinite capacity. The cost $c_{0jt}^s$ denotes the penalty of failing to assign a resource to task $j$. The dummy resource enforces the \textit{complete recourse property}, which ensures that there is a feasible second-stage assignment in all periods and all scenarios for any capacity acquisition schedule \cite{journal:AG2004}. Constraint (\ref{dcap:b}) is the logical constraint containing a suitably large value M (we set M=1 in \siplibtwo\ to follow the original implementation in \siplib\, although it does not seem to be large enough) to define the cost for capacity expansion. Constraint (\ref{dcap:c}) reflects that the processing requirement of all tasks assigned to a resource in any period cannot exceed the installed capacity in that period under all scenarios. Constraint (\ref{dcap:d}) guarantees that each task needs to be assigned to exactly one resource in each period under all scenarios. Finally, constraints (\ref{dcap:e})-(\ref{dcap:g}) restrict the space from which the variables take values.
 
 
 \begin{table}[H]
@@ -52,7 +52,7 @@ The objective function (\ref{dcap:obj}) is to minimize total expected cost for t
 \end{table} 
 
 \subsubsection{\texttt{DCAP}: Data generation} 
-There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, $|T|$, and $|\mathcal{S}|$. Once we decide the factors by, $n_R=|R|$, $n_N=|N|$, $n_T=|T|$, and $n_\mathcal{S}=|\mathcal{S}|$, each instance is named by \texttt{DCAP\_$n_R$\_$n_N$\_$n_T$\_$n_\mathcal{S}$}. \textcolor{red}{Since no original parameter is available, we randomly generate the parameters as long as they are valid.} Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
+There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, $|T|$, and $|\mathcal{S}|$. Once we decide the factors by, $n_R=|R|$, $n_N=|N|$, $n_T=|T|$, and $n_\mathcal{S}=|\mathcal{S}|$, each instance is named by \texttt{DCAP\_$n_R$\_$n_N$\_$n_T$\_$n_\mathcal{S}$}. Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
 \begin{align*}
 	\alpha_{it}&=5U+5,\quad\forall i\in R,\ \forall t\in T, \\
 	\beta_{it} &=40U+10,\quad\forall i\in R,\ \forall t\in T, \\
@@ -60,7 +60,6 @@ There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, 
 	c_{0jt}^s  &=500U+500,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
 	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
 \end{align*}
-\textcolor{red}{For the first-stage parameters $\alpha_{it}$ and $\beta_{it}$, we fix the random seed to make it deterministic.}
 
 \subsection{\texttt{DCLP}: Data center location problem} \label{DCLP}
 
@@ -69,14 +68,14 @@ There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, 
 \subsubsection{\texttt{DCLP}: Data generation}
 
 
-\subsection{\texttt{MPTSPs}: Mutli-path Traveling Salesman Problem with Stochastic Travel Times} \label{MPTSPs}
-\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is chracterized by a random travel time. 
+\subsection{\texttt{MPTSPs}: Mutli-path traveling salesman problem with stochastic travel times} \label{MPTSPs}
+\texttt{MPTSPs} is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is characterized by a random travel time. 
 
 In \texttt{SIPLIB}, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \texttt{SMPS} file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to break subtours. Combining the two references, we construct the forthcoming single commodity flow-based formulation \texttt{MPTSPs} that is used for \texttt{SIPLIB 2.0}. 
 \subsubsection{\texttt{MPTSPs}: Mathematical formulation}
-We consider a two-stage SIP with recourse. The travel time oscillation $e_{ij}^k$ by using path $k$ between nodes $i$ and $j$. We present each realization (scenario) of random travel time oscillation by $e_{ijk}^{s}$ where $s$ indicates the scenario. In \texttt{MPTSPs}, at the first stage, the decision-maker does not have any information about the travel time oscillation. The tour paths among the nodes, however, should be determined before the complete information is available. The first stage decision variable $y_{ij}$ is represented by the selection of nodes $i$ and $j$ to be visited in a tour. In the second stage where the random travel time $c_{ijk}^{s}$ are avilable, the paths $k$ between each couple of nodes $i$ and $j$ under scenario $s$, $x_{ijk}^{s}$ can be calculated. 
+We consider a two-stage SIP with recourse. The travel time oscillation $e_{ij}^k$ by using path $k$ between nodes $i$ and $j$. We present each realization (scenario) of random travel time oscillation by $e_{ijk}^{s}$ where $s$ indicates the scenario. In \texttt{MPTSPs}, at the first stage, the decision-maker does not have any information about the travel time oscillation. The tour paths among the nodes, however, should be determined before the complete information is available. The first stage decision variable $y_{ij}$ is represented by the selection of nodes $i$ and $j$ to be visited in a tour. In the second stage where the random travel time $c_{ijk}^{s}$ are available, the paths $k$ between each couple of nodes $i$ and $j$ under scenario $s$, $x_{ijk}^{s}$ can be calculated. 
 
-Let $N$ and $K_{ij}$, respectively, bethe finite set of nodes of the graph and the set of paths between the pair of nodes $i,j\in N$. We denote with $\mathcal{S}$ the set of scenarios with associated equally distributed probability of each scenario $\PP(s)$, i.e., $\PP(s)\equiv 1/|\mathcal{S}|$. Each path $k\in K_{ij}$ between nodes $i,j\in N$ is chracterized by a non-negative estimation of the mean unit travel time $\bar{c}_{ij}$ and a non-negative unit random travel time $c_{ijk}^{s}$ under the scenario $s\in S$. Let $e_{ijk}^{s}\equiv c_{ijk}^{s}-\bar{c}_{ij}$ be the error on the travel time estimated for the path $k\in K_{ij}$ under time scenario $s\in S$.
+Let $N$ and $K_{ij}$, respectively, be the finite set of nodes of the graph and the set of paths between the pair of nodes $i,j\in N$. We denote with $\mathcal{S}$ the set of scenarios with associated equally distributed probability of each scenario $\PP(s)$, i.e., $\PP(s)\equiv 1/|\mathcal{S}|$. Each path $k\in K_{ij}$ between nodes $i,j\in N$ is characterized by a non-negative estimation of the mean unit travel time $\bar{c}_{ij}$ and a non-negative unit random travel time $c_{ijk}^{s}$ under the scenario $s\in S$. Let $e_{ijk}^{s}\equiv c_{ijk}^{s}-\bar{c}_{ij}$ be the error on the travel time estimated for the path $k\in K_{ij}$ under time scenario $s\in S$.
 
 The first stage binary variables $y_{ij}=1$ if node $j\in N$ is visited right after node $i\in N$, 0 otherwise. The second stage binary variables $x_{ijk}^{s}=1$ if path $k\in K_{ij}$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise. We have one more set of first stage variables $\phi_{ij}$ which is introduced to break the subtours \cite{journal:LSD1990}. The non-negative continuous variables $\phi_{ij}$ describe the flow of a single commodity to node 1 from every other nodes (without loss of generality, 1 is the starting node). 
 
@@ -123,7 +122,7 @@ The first sum in the objective function (\ref{mptsps:obj}) represents the first 
 
 
 \subsubsection{\texttt{MPTSPs}: Data generation}
-We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPs}, there are three mainly distinguished characteristics for each instance: the nodes partition strategy ($D\in\{D0,D1,D2,D3\}$, explanation on each strategy is forthcoming), the number of nodes ($|N|\in\{2,3,\ldots\}$), and the number of scenarios ($|S|\in\{1,2,\ldots\}$). Another important charicteristic $|K_{ij}|\in\{1,2,3,\ldots\}$ is the number of paths for each edge which is fixed by 3 as a default following \cite{journal:TPP2017}. Once we decide $D$, $|N|$, and $|S|$ by $D=Dx$, $|N|=n_N$, and $|\mathcal{S}|=n_\mathcal{S}$, each instance is named by \texttt{MPTSPs\_$Dx$\_$n_N$\_$n_\mathcal{S}$}.
+We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \texttt{MPTSPs}, there are three mainly distinguished characteristics for each instance: the nodes partition strategy ($D\in\{D0,D1,D2,D3\}$, explanation on each strategy is forthcoming), the number of nodes ($|N|\in\{2,3,\ldots\}$), and the number of scenarios ($|\mathcal{S}|\in\{1,2,\ldots\}$). Another important charicteristic $|K_{ij}|\in\{1,2,3,\ldots\}$ is the number of paths for each edge which is fixed by 3 as a default following \cite{journal:TPP2017}. Once we decide $D$, $|N|$, and $|S|$ by, each instance is named by \texttt{MPTSPs\_$D$\_$|N|$\_$|\mathcal{S}|$}.
 
 The nodes are distributed in a circle with radius equal to $r$ km. We use Cartesian coordinate system where the geometric center of the circle is $(r,r)$. The nodes are distinguished by two subsets: \textit{central} and \textit{suburban}. If the Euclidean distance between a node and the geometric center is less than or equal to the half of the radius ($r/2$), then the node is of \textit{central} type. Otherwise, if the Euclidean distance is greater than the half of the radius, the node is of \textit{suburban} type. Each arc between any two nodes $i$ and $j$ is either \textit{homogeneous} or \textit{heterogeneous}. If the two nodes are of the same type of node, i.e., both are \textit{central} or both are \textit{suburban}, the type of the arc is \textit{homogeneous}. Otherwise, the type of the arc is \textit{heterogeneous}. Later, the travel time of each path between two nodes are affected by the type of arc. 
 
@@ -135,7 +134,7 @@ The nodes are generated by one of the following distribution strategies:
 	\item $D3$: 1/2 of the nodes are \textit{central} and the remaining 1/2 are \textit{suburban}.
 \end{itemize}
 
-Given $D,|N|$ and $|S|$, the next procedure can be summarized as follows:
+Given $D,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follows:
 \begin{enumerate}
 	\item Generate $|N|$ nodes based on the predetermined strategy $D$. Then, the nodes are generated by acceptance-rejection procedure with uniform random number generation. Again following \cite{journal:TPP2017}, we fix $r=7$\textit{km}. 
 	\item Calculate Euclidean distances between the nodes ($EC_{ij}$).
@@ -257,7 +256,7 @@ The first sum of the objective function (\ref{sizes:obj}) is the costs for produ
 %\end{table} 
 
 \subsubsection{\texttt{SIZES}: Data generation}
-Instances of \texttt{SIZES} are generated based on the one-period data given in Table \ref{sizes:data}. Note that although the table includes sleeve length data, we do not use this information for \texttt{SIZES} since this is not a typical cutting stock problem. Following \cite{journal:JSW1999}, we set the stochstic parameter $c_t^s=200,000$ to be deterministic for all $t\in T$ and $s\in\mathcal{S}$, hence only the demand parameter ($d_i^s$) is stochastic throughout the scenarios. The stochastic demand data is generated based on Table \ref{sizes:data}. First, we decide the number of scenarios to be generated by $n_\mathcal{S}=|\mathcal{S}|$. Then, the demand data is specified by a vector of multipliers: one multiplier for each scenario that is multiplied times the demand vector from Table \ref{sizes:data}. For example, if $n_\mathcal{S}=3$, the instance is defined by $(0.7,1,1.3)$. Or if $n_\mathcal{S}=5$, the instance is defined by $(0.6,0.8,1,1.2,1.4)$. Since \texttt{SIPLIB} provides instances with $n_\mathcal{S}\le 20$, we recommend the users to use \texttt{SIPLIB 2.0} to only generate instances with $n_\mathcal{S} \ge 20$. In \texttt{SIPLIB 2.0}, the multiplier vector is defined by the equally split set of subintervals between $[0.5,1.5]$, e.g., when $n_\mathcal{S}=20$, the multiplier vector is $(0.5,0.55,0.6,\ldots,1.4,1.45,1.5)$. With larger value of $n_\mathcal{S}$, we will have vector with finer granularity. To generate more random instances, the demand vector is multiplied by a continuous random number $U$ that is uniformly distributed in $(0.5,1.5)$. After that, the instance is named by \texttt{SIZES\_$n_\mathcal{S}$}.
+Instances of \texttt{SIZES} are generated based on the one-period data given in Table \ref{sizes:data}. Note that although the table includes sleeve length data, we do not use this information for \texttt{SIZES} since this is not a typical cutting stock problem. Following \cite{journal:JSW1999}, we set the stochstic parameter $c_t^s=200,000$ to be deterministic for all $t\in T$ and $s\in\mathcal{S}$, hence only the demand parameter ($d_i^s$) is stochastic throughout the scenarios. The stochastic demand data is generated based on Table \ref{sizes:data}. First, we decide the number of scenarios to be generated by $|\mathcal{S}|$. Then, the demand data is specified by a vector of multipliers: one multiplier for each scenario that is multiplied times the demand vector from Table \ref{sizes:data}. For example, if $|\mathcal{S}|=3$, the instance is defined by $(0.7,1,1.3)$. Or if $|\mathcal{S}|=5$, the instance is defined by $(0.6,0.8,1,1.2,1.4)$. Since \texttt{SIPLIB} provides instances with $|\mathcal{S}|\le 20$, we recommend the users to use \texttt{SIPLIB 2.0} to only generate instances with $|\mathcal{S}| \ge 20$. In \texttt{SIPLIB 2.0}, the multiplier vector is defined by the equally split set of subintervals between $[0.5,1.5]$, e.g., when $|\mathcal{S}|=20$, the multiplier vector is $(0.5,0.55,0.6,\ldots,1.4,1.45,1.5)$. With larger value of $|\mathcal{S}|$, we will have vector with finer granularity. To generate more random instances, the demand vector is multiplied by a continuous random number $U$ that is uniformly distributed in $(0.5,1.5)$. After that, the instance is named by \texttt{SIZES\_$|\mathcal{S}|$}.
 
 \begin{table}[]
 	\centering
@@ -340,7 +339,7 @@ The objective (\ref{smkp:obj}) is to minimize the expected value of the total we
 \end{table} 
 
 \subsubsection{\texttt{SMKP}: Data generation}
-There are two factors that define the instance of \texttt{SMKP}: $|I|$ and $|\mathcal{S}|$. The sizes for another sets are fixed by $|J|=50$ and $|K|=5$ following \cite{journal:AAD2014}. Once we decide the factors by $n_I=|I|$, $n_S=|\mathcal{S}|$, $n_T=|T|$, and $n_\mathcal{S}=|\mathcal{S}|$, each instance is named by \texttt{SMKP\_$n_I$\_$n_\mathcal{S}$}. Again directly following \cite{journal:AAD2014}, we randomly generate the parameters. Let $U$ be a discrete uniform random variable: $U\sim Unif[1,100]$. Then, the parameters are generated as follows:
+There are two factors that define the instance of \texttt{SMKP}: $|I|$ and $|\mathcal{S}|$. The sizes for another sets are fixed by $|J|=50$ and $|K|=5$ following \cite{journal:AAD2014}. Once we decide the factors $|I|$, $|\mathcal{S}|$, $|T|$, and $|\mathcal{S}|$, each instance is named by \texttt{SMKP\_$|I|$\_$|\mathcal{S}|$}. Again directly following \cite{journal:AAD2014}, we randomly generate the parameters. Let $U$ be a discrete uniform random variable: $U\sim Unif[1,100]$. Then, the parameters are generated as follows:
 \begin{align*}
 c_i		&=	U,\quad\forall i\in I, \\
 d_i		&=	U,\quad\forall i\in I, \\
@@ -352,7 +351,6 @@ w_{ki}	&=	U,\quad\forall k\in K,\ \forall i\in I,  \\
 b_j		&=	\frac{3}{4}\sum_{i\in I}\left(a_{ji}+e_{ji}\right),\quad\forall j\in J, \\
 h_k		&=	\frac{3}{4}\sum_{i\in I}\left(t_{ji}+w_{ji}\right),\quad\forall k\in K. 
 \end{align*}
-\textcolor{red}{For the first-stage parameters, we fix the random seed to make it deterministic.}
 
 \subsection{\texttt{SSLP}: Stochastic server location problem} \label{SSLP}
 \texttt{SSLP} is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \texttt{SSLP} finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \texttt{SIPLIB} provides 12 instances with varying number of clients, server locations, and scenarios in \texttt{SMPS} format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables.
@@ -372,8 +370,8 @@ Based on the above, the extensive form of \texttt{SSLP} can be stated as follows
 	\begin{align}
 	(\texttt{SSLP})\ \textrm{min}\ &	\sum_{j\in J}c_j x_j - \sum_{s\in\mathcal{S}}\PP(s)\left(\sum_{i\in I}\sum_{j\in J}q_{ij}^s y_{ij}^s - \sum_{j\in J}q_{0j}^s y_{0j}^s \right) \label{sslp:obj} \\ 
 	\textrm{s.t.}\ &\sum_{j\in J}x_j\le v,\label{sslp:b}\\ 
-	&\textcolor{red}{\sum_{j\in J_z}x_j\ge w_z,\quad\forall z\in Z,}\label{sslp:c}\\
-	&\sum_{i\in I}d_{ij}y_{ij}^s - y_{0j}^s\le ux_j,\quad\forall j\in J,\ \stkout{\textcolor{red}{\forall i\in I,}}\ \forall s\in\mathcal{S}, \label{sslp:d} \\
+	&\sum_{j\in J_z}x_j\ge w_z,\quad\forall z\in Z,\label{sslp:c}\\
+	&\sum_{i\in I}d_{ij}y_{ij}^s - y_{0j}^s\le ux_j,\quad\forall j\in J,\ \forall s\in\mathcal{S}, \label{sslp:d} \\
 	&\sum_{j\in J}y_{ij}^s=h_i^s,\quad\forall i\in I,\ \forall s\in \mathcal{S}, \label{sslp:e}\\
 	&x_j\in\{0,1\},\quad\forall j\in J,\label{sslp:f}\\
 	&y_{ij}^s\in\{0,1\},\quad\forall i\in I,\ j\in J,\ s\in\mathcal{S}, \label{sslp:g}\\
@@ -414,63 +412,61 @@ The objective function (\ref{sslp:obj}) is to maximize total expected revenue of
 \end{table} 
 
 \subsubsection{\texttt{SSLP}: Data generation}
-For each instance of \texttt{SSLP}, we determine the number of potential server locations $n_J=|J|$, the number of clients $n_I=|I|$, and the number of scenarios $n_\mathcal{S}=|\mathcal{S}|$. Then, the instance is named by \texttt{SSLP\_$n_J$\_$n_I$\_$n_\mathcal{S}$}. The client-server revenue are set to be 1 per unit of client demand. Some of deterministic parameters are randomly generated from the discrete uniform distribution while scenario data are generated from the Bernoulli distribution. In summary, the parameters are generated as follows:
+For each instance of \texttt{SSLP}, we determine the number of potential server locations $|J|$, the number of clients $|I|$, and the number of scenarios $|\mathcal{S}|$. Then, the instance is named by \texttt{SSLP\_$|J|$\_$|I|$\_$|\mathcal{S}|$}. The client-server revenue are set to be 1 per unit of client demand. Some of deterministic parameters are randomly generated from the discrete uniform distribution while scenario data are generated from the Bernoulli distribution. In summary, the parameters are generated as follows:
 \begin{align*}
 c_j	&=Unif[40,80],\quad\forall j\in J,\\
-q_{ij}^s	&= d_{ij},\quad\forall i\in I,\ \forall j\in J,\ \forall s\in\mathcal{S},\\
-q_{0j}^s	&=	1000,\quad\forall j\in J,\ \forall s\in\mathcal{S},\\
 d_{ij}	&= Unif[0,25],\quad\forall i\in I,\ \forall j\in J,\\
 h_i^s	&= Bernoulli(0.5),\quad\forall i\in I,\ \forall s\in \mathcal{S},\\
+q_{ij}^s	&= d_{ij},\quad\forall i\in I,\ \forall j\in J,\ \forall s\in\mathcal{S},\\
+q_{0j}^s	&=	1000,\quad\forall j\in J,\ \forall s\in\mathcal{S},\\
 v 		&= |J|	\\
-\textcolor{red}{u	}&\textcolor{red}{=		}\\
-\textcolor{red}{w_z	}&\textcolor{red}{=		}\\
-\textcolor{red}{J_z	}&\textcolor{red}{=	}
+u	&= \frac{3}{2}\times\frac{\sum_{i\in I}\sum_{j\in J}d_{ij}}{|J|} 
 \end{align*}
+Note that the zonal data is omitted due to the lack of available information. Hence, constraint (\ref{sslp:c}) does not appear in \siplibtwo\ instances.
+\subsection{\texttt{SUC}: Stochastic unit commitment problem} \label{SUC}
+The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an extended time horizon. \texttt{SUC} is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
+\subsubsection{\texttt{SUC}: Mathematical formulation}
+In \texttt{SUC}, we make commitment decision on slow generators in the first stage. In the second stage, the commitment decisions of fast generators, wind generators, and non-wind renewable generators, shedding decisions of loads, and import decisions from other points are determined. In addition, phase angle for each transmission line is decided in the second stage. In \texttt{SUC}, we also consider ramping constraints, transmission line capacity constraints, phase angle constraints, and minimum up/down time constraints. We assume the piecewise linear convex cost function for the power generation.
 
-\subsection{\texttt{SUCW}: Stochastic unit commitment problem with wind power generators} \label{SUCW}
-The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an exteded time horizon. \texttt{SUCW} is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
-\subsubsection{\texttt{SUCW}: Mathematical formulation}
-A two-stage stochastic unit commitment model \texttt{SUCW} is presented. We make commitment decision on slow generators in the first stage. In the second stage, the commitment decisions of fast generators, wind generators, and non-wind renewable generators, shedding decisions of loads, and import decisions from other points are determined. In addition, phase angle for each transmission line is decided in the second stage. In \texttt{SUCW}, we also consider ramping constraints, transmission line capacity constraints, phase angle constraints, and minimum up/down time constraints. We assume the piecewise linear convex cost function for the power generation.
+Using the notation in Table \ref{SUC:notation}, the extensive form of \texttt{SUC} can be stated as in the following model \ref{SUC:formulation}.
 
-Using the notation in Table \ref{sucw:notation}, the extensive form of \texttt{SUCW} can be stated as in the following model \ref{sucw:formulation}.
-
-\begin{subequations} \label{sucw:formulation}
+\begin{subequations} \label{SUC:formulation}
 	\begin{align}
-	(\texttt{SUCW})\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
+	(\texttt{SUC})\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
 	\Bigg[	 \sum_{g\in G_f} \left(K_g u_{gt}+S_g v_{gt}\right) + \sum_{g\in G}C_g p_{gt} + \sum_{j\in J} C^{J}\lambda_{dt} \nonumber \\&\qquad\qquad\qquad\qquad\qquad\quad  + \sum_{i\in I} C^{I}\mu_{it} + \sum_{r\in R} C^{R}\lambda_{rt} + \sum_{k\in W} C^{W}\omega_{kt} \Bigg]
-	\label{sucw:obj}\\
-	\textrm{s.t.}\ &  \sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,	\label{sucw:b}\\
-	&\sum_{q=t+1}^{t+DT_g} z_{gq}\le 1-w_{gt},\quad\forall g\in G_s,\ \forall t\le |T|-DT_g,\label{sucw:c}\\
-	&z_{gt}\ge w_{gt}-w_{g,t-1},\quad\forall g\in G_s,\ \forall t\in T,\label{sucw:d}\\
-	&  \sum_{q=t-UT_g+1}^t v_{gqs}\le u_{qts},\quad\forall g\in G_f,\ \forall t\ge UT_g,\ \forall s\in\mathcal{S},\label{sucw:e}\\
-	&\sum_{q=t+1}^{t+DT_g} v_{gqs}\le 1-u_{gts},\quad\forall g\in G_f,\ \forall t\le |T|-DT_g,\ \forall s\in\mathcal{S},\label{sucw:f}\\
-	&v_{gts}\ge u_{gts}-u_{g,t-1,s},\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:g}\\
+	\label{SUC:obj}\\
+	\textrm{s.t.}\ &  \sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,	\label{SUC:b}\\
+	&\sum_{q=t+1}^{t+DT_g} z_{gq}\le 1-w_{gt},\quad\forall g\in G_s,\ \forall t\le |T|-DT_g,\label{SUC:c}\\
+	&z_{gt}\ge w_{gt}-w_{g,t-1},\quad\forall g\in G_s,\ \forall t\in T,\label{SUC:d}\\
+	&  \sum_{q=t-UT_g+1}^t v_{gqs}\le u_{qts},\quad\forall g\in G_f,\ \forall t\ge UT_g,\ \forall s\in\mathcal{S},\label{SUC:e}\\
+	&\sum_{q=t+1}^{t+DT_g} v_{gqs}\le 1-u_{gts},\quad\forall g\in G_f,\ \forall t\le |T|-DT_g,\ \forall s\in\mathcal{S},\label{SUC:f}\\
+	&v_{gts}\ge u_{gts}-u_{g,t-1,s},\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:g}\\
 	&\sum_{l\in L_n^-}e_{lts}+\sum_{g\in G_n} p_{gts}+\sum_{\lambda\in IG_n^\mathcal{L}}x_{\lambda ts}^\mathcal{L} +\sum_{\omega\in IG_n^\mathcal{W}} IC_{\omega ts}^\mathcal{W} \nonumber \\ 
 	&= D_{nt}+\sum_{l\in L_n^+}e_{lts}+\sum_{\iota\in IG_n^\mathcal{I}}x_{\iota ts}^\mathcal{I} + \sum_{\rho\in IG_n^\mathcal{R}} x_{\rho ts}^\mathcal{R} +\sum_{\omega\in IG_n^\mathcal{W}} x_{\omega ts}^\mathcal{W}, \nonumber \\
-	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:h}\\
-	&e_{lts}=B_l\left(  \theta_{n_1 ts}-\theta_{n_2 ts}  \right),\quad\forall l\equiv (n_1, n_2)\in L,\ t\in T, s\in\mathcal{S},\label{sucw:i}\\
-	&P_g^- w_{gt} \le p_{gts} \le P_g^+ w_{gt},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:j}\\
-	&P_g^- u_{gts} \le p_{gts} \le P_g^+ u_{gts},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:k}\\
-	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:l}\\
-	&w_{gt}\in\{0,1\},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\label{sucw:m}\\
-	& 0\le z_{gt}\le 1,\quad\forall g\in G_s,\ \forall t\in T,\label{sucw:n}\\
-	&u_{gts}\in\{0,1\},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:o}\\
-	&0\le v_{gts}\le 1,\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:p}\\
-	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:q}\\
-	&-TC_l\le e_{lts}\le TC_l,\quad\forall l\in L,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:r}\\
-	&p_{gts}\ge 0,\quad\forall g\in G,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sucw:s}\\
-	&0\le x_{\lambda ts}^\mathcal{L}\le IC_{\lambda t}^\mathcal{L},\quad\forall \lambda\in \mathcal{L},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:t}\\
-	&0\le x_{\iota ts}^\mathcal{I}\le IC_{\iota t}^\mathcal{I},\quad\forall \iota \in \mathcal{I},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:u}\\
-	&0\le x_{\rho ts}^\mathcal{R} \le IC_{\rho t}^\mathcal{R},\quad\forall \rho\in\mathcal{R},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sucw:v}\\
-	&0\le x_{\omega ts}^\mathcal{W}\le IC_{\omega t}^W,\quad\forall \omega\in\mathcal{W},\ \forall t\in T,\ \forall s\in\mathcal{S}.\label{sucw:w}
+	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:h}\\
+	&e_{lts}=B_l\left(  \theta_{n_1 ts}-\theta_{n_2 ts}  \right),\quad\forall l\equiv (n_1, n_2)\in L,\ t\in T, s\in\mathcal{S},\label{SUC:i}\\
+	&P_g^- w_{gt} \le p_{gts} \le P_g^+ w_{gt},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:j}\\
+	&P_g^- u_{gts} \le p_{gts} \le P_g^+ u_{gts},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:k}\\
+	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:l}\\
+	&w_{gt}\in\{0,1\},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\label{SUC:m}\\
+	& 0\le z_{gt}\le 1,\quad\forall g\in G_s,\ \forall t\in T,\label{SUC:n}\\
+	&u_{gts}\in\{0,1\},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:o}\\
+	&0\le v_{gts}\le 1,\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:p}\\
+	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:q}\\
+	&-TC_l\le e_{lts}\le TC_l,\quad\forall l\in L,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:r}\\
+	&p_{gts}\ge 0,\quad\forall g\in G,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:s}\\
+	&0\le x_{\lambda ts}^\mathcal{L}\le IC_{\lambda t}^\mathcal{L},\quad\forall \lambda\in \mathcal{L},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:t}\\
+	&0\le x_{\iota ts}^\mathcal{I}\le IC_{\iota t}^\mathcal{I},\quad\forall \iota \in \mathcal{I},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:u}\\
+	&0\le x_{\rho ts}^\mathcal{R} \le IC_{\rho t}^\mathcal{R},\quad\forall \rho\in\mathcal{R},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:v}\\
+	&0\le x_{\omega ts}^\mathcal{W}\le IC_{\omega t}^W,\quad\forall \omega\in\mathcal{W},\ \forall t\in T,\ \forall s\in\mathcal{S}.\label{SUC:w}
 	\end{align}	
 \end{subequations}
 
-The objective function (\ref{sucw:obj}) is to minimize expected operating costs. Constraints (\ref{sucw:b})-(\ref{sucw:d}) are for the first-stage so constraints for the slow generators. Constraint (\ref{sucw:b}) and (\ref{sucw:c}) represent the minimum up/down time of the slow generators. The transition rule for slow generator start-up variables is imposed by constraint (\ref{sucw:d}).  Constraints (\ref{sucw:e})-(\ref{sucw:g}) are stochastic version of the constraints (\ref{sucw:b})-(\ref{sucw:d}) so represent the minimum up/down time and the transition rule of the fast generators. Constraint (\ref{sucw:h}) requires balancing the amount of power that flows in and out of each bus. Constraint (\ref{sucw:i}) represents a linearized, lossless model of the power flow equations (Kirchhoff's law) according to which the power flow on a line $l$ is proportional to the phase angle difference between the two end buses of the line. Constraints (\ref{sucw:j}) and (\ref{sucw:k}) restrict minimum/maximum capacity limits for both slow and fast generators. Constraint (\ref{sucw:l}) represents ramping restriction on the rate of change of generator output. Constraints (\ref{sucw:m})-(\ref{sucw:w}) define the types and bounds for decision variables.
-\begin{table}[]
+The objective function (\ref{SUC:obj}) is to minimize expected operating costs. Constraints (\ref{SUC:b})-(\ref{SUC:d}) are for the first-stage so constraints for the slow generators. Constraint (\ref{SUC:b}) and (\ref{SUC:c}) represent the minimum up/down time of the slow generators. The transition rule for slow generator start-up variables is imposed by constraint (\ref{SUC:d}).  Constraints (\ref{SUC:e})-(\ref{SUC:g}) are stochastic version of the constraints (\ref{SUC:b})-(\ref{SUC:d}) so represent the minimum up/down time and the transition rule of the fast generators. Constraint (\ref{SUC:h}) requires balancing the amount of power that flows in and out of each bus. Constraint (\ref{SUC:i}) represents a linearized, lossless model of the power flow equations (Kirchhoff's law) according to which the power flow on a line $l$ is proportional to the phase angle difference between the two end buses of the line. Constraints (\ref{SUC:j}) and (\ref{SUC:k}) restrict minimum/maximum capacity limits for both slow and fast generators. Constraint (\ref{SUC:l}) represents ramping restriction on the rate of change of generator output. Constraints (\ref{SUC:m})-(\ref{SUC:w}) define the types and bounds for decision variables.
+\begin{table}[H]
 	\centering
-	\caption{Notations for the \texttt{SUCW}}
-	\label{sucw:notation}
+	\caption{Notations for the \texttt{SUC}}
+	\label{SUC:notation}
 	\begin{tabular}{ll}
 		\toprule
 		\multicolumn{2}{l}{\textbf{Index sets:}} \\
@@ -534,9 +530,9 @@ The objective function (\ref{sucw:obj}) is to minimize expected operating costs.
 	\end{tabular}
 \end{table}
 
-\subsubsection{\texttt{SUCW}: Data generation}
-For model parameters, we follow the reference \cite{AF2004}. We use a reduced model of the CAISO. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
-Based on the WECC, set cardinalities in \texttt{SUCW} are as follows.
+\subsubsection{\texttt{SUC}: Data generation}
+For model parameters, we use a reduced model of the CAISO to follow the reference \cite{AF2004}. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
+Based on the WECC, set cardinalities in \texttt{SUC} are as follows.
 \begin{align*}
 |N|&=225 \\
 |T|&=24 \\
@@ -555,11 +551,12 @@ The maginal cost parameters for additional sources (load, import, non-wind renew
 C^\mathcal{L}&=5000,\\
 C^\mathcal{I}&=C^\mathcal{R}=C^\mathcal{W}=0,
 \end{align*}
-which means the value of any lost load ($\lambda\in\mathcal{L}$) is 5,000 \$/MWh and no penalty cost for spilling the import, non-wind renewable, and wind sources.
+which means the cost of shedding any load $\lambda$ is 5,000 \$/MWh and no penalty cost for spilling the import, non-wind renewable, and wind sources.
 
 The demand data $D_{nt}$ is assumed to be constant over all scenarios and generated based on the load, import, and non-wind renewable source data as follows.
 \begin{align*}
 D_{nt}=\sum_{n\in N} \sum_{t\in T}\left(  \sum_{\lambda\in IG_n^\mathcal{L}}IC_{\lambda t}^\mathcal{L} - \sum_{\iota\in IG_n^\mathcal{I}}IC_{\iota t}^\mathcal{I} - \sum_{\rho\in IG_n^\mathcal{R}}IC_{\rho t}^\mathcal{R}    \right),\quad\forall n\in N,\ \forall t\in T.
 \end{align*}
 
-By \texttt{SUCW} in \siplibtwo, we provide up to 1,000 wind power production profiles for each day type. This data is included in ``/SUCW/DATA'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$.
+Unlike other problems where stochastic data is generated while \texttt{Julia} script is running, we pre-generate and provide up to 1,000 wind power production profiles for each day type. This data is included in ``/SUC/DATA'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$. Hence, the number of scenarios that can be considered in an instance is limited to 1,000, which we think is large enough regarding the intrinsic large-scale size of the problem \texttt{SUC}.
+

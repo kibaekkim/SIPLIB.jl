@@ -111,24 +111,22 @@ The basic idea of PH can be summarized as follows \cite{book:pyomo}.
 One advantage of scenario-wise decomposition over the stage-wise methods is their ability to mitigate the computational difficulty associated with large number of scenarios by decomposing the problem by scenario and solving the descendant subproblems in parallel manners.
 
 \subsection{Software libraries}
-Assuming discrete distribution, all SIP can be represented by any algebraic modeling languages and solved by any available MIP solvers. However, such manual implementation without exploiting characteristics in SIP can often result in inefficient computation and unnecessary memory allocation. 
+Assuming discrete distribution, all SIP can be represented by any algebraic modeling languages and solved by any available MIP solvers. However, such manual implementation without exploiting characteristics in SIP can often result in inefficient computation and unnecessary memory allocation. In this subsection, we introduce some open-source software libraries dedicated to SIP.
 
 \subsubsection{Solver}
-In this subsection, we introduce some open-source software libraries dedicated to SIP: \texttt{DSP} and \texttt{PySP}.
-
-\texttt{DSP} is an open-source SIP solver implemented in \texttt{C++}. \texttt{DSP} reads \texttt{SMPS} files as input sources and provides three ways to solve a SIP instance.
-\begin{enumerate}
+\texttt{DSP} is an open-source SIP solver implemented in \texttt{C++}. \texttt{DSP} reads \texttt{SMPS} files as input and provides three ways to solve a SIP instance.
+\begin{itemize}
 	\item extensive form SIP with standard MIP solver
 	\item L-shape method (Benders decomposition)
 	\item Dual Decomposition algorithm
-\end{enumerate}
-\texttt{DSP} provides parallel implementations for the two decomposition-based algorithms, which allows users exploit computing clusters and multi-core processors. 
+\end{itemize}
+\texttt{DSP} provides parallel implementations for the two decomposition-based algorithms, which allows users fully exploit computing clusters and multi-core processors. 
 
 \texttt{PySP} is a stochastic programming extension to \texttt{Pyomo}, a \texttt{Python}-based open source software package that supports variants of mathematical optimization. \texttt{PySP} enables the expression of stochastic programming problems as extensive form. To formulate a stochastic program instance in \texttt{PySP}, the user should specify both the deterministic base model and the scenario tree with stochastic data in \texttt{Pyomo}. \texttt{PySP} provides two ways to solve the instance. 
-\begin{enumerate}
+\begin{itemize}
 	\item extensive form SIP with standard MIP solver
 	\item Progressive Hedging algorithm
-\end{enumerate}
+\end{itemize}
 Similar to \texttt{DSP}, \texttt{PySP} can solve the extensive form SIP invoking standard MIP solver. To solve more complex and large-scale SIP, \texttt{PySP} implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.
 
 \subsubsection{Modeling language}
