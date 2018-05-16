@@ -16,8 +16,8 @@
 				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
 				& Total          &                &                                    &                      &                           \\ \midrule
 				\multirow{3}{*}{\texttt{MPTSPs} (\ref{mptsps:notation})} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
-				& 2nd stage & -              & $(N-1)NK$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
-				& Total          & $(N-1)N$          & $(N-1)(1+K\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
+				& 2nd stage & -              & $3(N-1)N$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
+				& Total          & $(N-1)N$          & $(N-1)(1+3\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
 				\multirow{3}{*}{\texttt{SIZES} (\ref{sizes:notation})}  & 1st stage & -              & $2N$                               & $2N$                 & $2(1+N)$                  \\
 				& 2nd stage & -              & -                                  & $2N^2 $              & $4N$                     \\ \cmidrule(l){2-6} 
 				& Total          & -              & $2N$                               & $2(1+N\mathcal{S})N$ & $2(1+N+2N\mathcal{S})$    \\ \midrule
@@ -27,15 +27,104 @@
 				\multirow{3}{*}{\texttt{SSLP} (\ref{sslp:notation})}   & 1st stage & -              & $J$                                & -                    & $1$                       \\
 				& 2nd stage & $J$            & $IJ$                               & -                    & $I+J$                     \\ \cmidrule(l){2-6} 
 				& Total          & $J\mathcal{S}$ & $(1+I\mathcal{S})J$                & -                    & $1+(I+J)\mathcal{S}$      \\ \midrule
-				\multirow{3}{*}{\texttt{SUCW} (\ref{sucw:notation})}   & 1st stage &                &                                    &                      &                           \\
-				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
-				& Total          &                &                                    &                      &                           \\ \bottomrule
+				\multirow{3}{*}{\texttt{SUC} (\ref{SUC:notation})}   & 1st stage & 960               &   1000                                 &     -                 &  2208                         \\
+				& 2nd stage & 21274               &     2250                               &   -                   & 24780                          \\ \cmidrule(l){2-6} 
+				& Total          & $960+21274\mathcal{S}$                &  $1000+2250\mathcal{S}$                                  &  -                    &  $2208+24780\mathcal{S}$                         \\ \bottomrule
 			\end{tabular}
-	
+			
 			\begin{tablenotes}
 				\small
-				\item For convenience, we skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in this table.
+				\item note 1. For convenience, we skip the cardinality sign $|\cdot|$ for sets.
+				\item note 2. For the predetermined set, we insert numerical value, e.g., for \texttt{SIZES}, we use $|T|=2$ and for \texttt{MPTSPs}, we use $|K_{ij}|=3$.
 			\end{tablenotes}
 		\end{threeparttable}
 	}
 \end{table}
+
+%\begin{table}[H]
+%	\centering
+%	\resizebox{\textwidth}{!}{%
+%		\begin{threeparttable}
+%			\caption{Number of components in each problem}
+%			\label{table:num_components}
+%			\begin{tabular}{ccccc}
+%				\hline
+%				&                & 1st stage  & 2nd stage & Total (including all scenarios)         \\ \hline
+%				\multirow{4}{*}{\texttt{DCAP}}   & $\mathbb{C}$ & $RT$       & -         & $RT$                                    \\
+%				& $\mathbb{B}$ & $RT$       & $NT(1+R)$ & $RT+NT(1+R)\mathcal{S}$                 \\
+%				& $\mathbb{I}$ & -          & -         & -                                       \\
+%				& constraint   & $RT$       & $T(R+N)$  & $RT+T(R+N)\mathcal{S}$                  \\ \hline
+%				\multirow{4}{*}{\texttt{DCLP}}   & $\mathbb{C}$ &            &           &                                         \\
+%				& $\mathbb{B}$ &            &           &                                         \\
+%				& $\mathbb{I}$ &            &           &                                         \\
+%				& constraint   &            &           &                                         \\ \hline
+%				\multirow{4}{*}{\texttt{MPTSPs}} & $\mathbb{C}$ & $N(N-1)$   & -         & $N(N-1)$                                \\
+%				& $\mathbb{B}$ & $N(N-1)$   & $NK(N-1)$ & $N(N-1)(1+K\mathcal{S})$                \\
+%				& $\mathbb{I}$ & -          & -         & -                                       \\
+%				& constraint   & $N^2+2N-1$ & $N(N-1)$  & $N^2(1-\mathcal{S})+N(2-\mathcal{S})-1$ \\ \hline
+%				\multirow{4}{*}{\texttt{SIZES}}  & $\mathbb{C}$ & -          & -         & -                                       \\
+%				& $\mathbb{B}$ & $2N$       & -         & $2N$                                    \\
+%				& $\mathbb{I}$ & $2N$       & $2N^2$    & $2N(1+N\mathcal{S})$                    \\
+%				& constraint   & $2(1+N)$   & $4N$      & $2(1+N+2N\mathcal{S})$                  \\ \hline
+%				\multirow{4}{*}{\texttt{SMKP}}   & $\mathbb{C}$ & -          & -         & -                                       \\
+%				& $\mathbb{B}$ & $2I$       & $I$       & $I(2+\mathcal{S})$                      \\
+%				& $\mathbb{I}$ & -          & -         & -                                       \\
+%				& constraint   & $J$        & $K$       & $J+K\mathcal{S}$                        \\ \hline
+%				\multirow{4}{*}{\texttt{SSLP}}   & $\mathbb{C}$ & -          & $J$       & $J\mathcal{S}$                          \\
+%				& $\mathbb{B}$ & $J$        & $IJ$      & $J(1+I\mathcal{S})$                     \\
+%				& $\mathbb{I}$ & -          & -         & -                                       \\
+%				& constraint   & 1          & $I+J$     & $1+\mathcal{S}(I+J)$                    \\ \hline
+%				\multirow{4}{*}{\texttt{SUC}}    & $\mathbb{C}$ & $960$      & $21274$   & $960+21274\mathcal{S}$                  \\
+%				& $\mathbb{B}$ & $1000$     & $2250$    & $1000+2250\mathcal{S}$                  \\
+%				& $\mathbb{I}$ & -          & -         & -                                       \\
+%				& constraint   & $2208$     & $24780$   & $2208+24780\mathcal{S}$                 \\ \hline
+%			\end{tabular}
+%			
+%			\begin{tablenotes}
+%				\small
+%				\item note 1. For convenience, we skip the cardinality sign $|\cdot|$ for sets.
+%				\item note 2. For the predetermined set, we insert numerical value, e.g., for \texttt{SIZES}, we use $|T|=2$ and for \texttt{MPTSPs}, we use $|K_{ij}|=3$.
+%			\end{tablenotes}
+%		\end{threeparttable}
+%	}
+%\end{table}
+
+%% Please add the following required packages to your document preamble:
+%% \usepackage{multirow}
+%\begin{table}[]
+%	\centering
+%	\caption{My caption}
+%	\label{my-label}
+%	\begin{tabular}{ccccc}
+%		\hline
+%		&                & 1st stage  & 2nd stage & Total (including all scenarios)         \\ \hline
+%		\multirow{4}{*}{\texttt{DCAP}}   & \#$\mathbb{C}$ & $RT$       & -         & $RT$                                    \\
+%		& \#$\mathbb{B}$ & $RT$       & $NT(1+R)$ & $RT+NT(1+R)\mathcal{S}$                 \\
+%		& \#$\mathbb{I}$ & -          & -         & -                                       \\
+%		& \#constraint   & $RT$       & $T(R+N)$  & $RT+T(R+N)\mathcal{S}$                  \\ \hline
+%		\multirow{4}{*}{\texttt{DCLP}}   & \#$\mathbb{C}$ &            &           &                                         \\
+%		& \#$\mathbb{B}$ &            &           &                                         \\
+%		& \#$\mathbb{I}$ &            &           &                                         \\
+%		& \#constraint   &            &           &                                         \\ \hline
+%		\multirow{4}{*}{\texttt{MPTSPs}} & \#$\mathbb{C}$ & $N(N-1)$   & -         & $N(N-1)$                                \\
+%		& \#$\mathbb{B}$ & $N(N-1)$   & $NK(N-1)$ & $N(N-1)(1+K\mathcal{S})$                \\
+%		& \#$\mathbb{I}$ & -          & -         & -                                       \\
+%		& \#constraint   & $N^2+2N-1$ & $N(N-1)$  & $N^2(1-\mathcal{S})+N(2-\mathcal{S})-1$ \\ \hline
+%		\multirow{4}{*}{\texttt{SIZES}}  & \#$\mathbb{C}$ & -          & -         & -                                       \\
+%		& \#$\mathbb{B}$ & $2N$       & -         & $2N$                                    \\
+%		& \#$\mathbb{I}$ & $2N$       & $2N^2$    & $2N(1+N\mathcal{S})$                    \\
+%		& \#constraint   & $2(1+N)$   & $4N$      & $2(1+N+2N\mathcal{S})$                  \\ \hline
+%		\multirow{4}{*}{\texttt{SMKP}}   & \#$\mathbb{C}$ & -          & -         & -                                       \\
+%		& \#$\mathbb{B}$ & $2I$       & $I$       & $I(2+\mathcal{S})$                      \\
+%		& \#$\mathbb{I}$ & -          & -         & -                                       \\
+%		& \#constraint   & $J$        & $K$       & $J+K\mathcal{S}$                        \\ \hline
+%		\multirow{4}{*}{\texttt{SSLP}}   & \#$\mathbb{C}$ & -          & $J$       & $J\mathcal{S}$                          \\
+%		& \#$\mathbb{B}$ & $J$        & $IJ$      & $J(1+I\mathcal{S})$                     \\
+%		& \#$\mathbb{I}$ & -          & -         & -                                       \\
+%		& \#constraint   & 1          & $I+J$     & $1+\mathcal{S}(I+J)$                    \\ \hline
+%		\multirow{4}{*}{\texttt{SUC}}    & \#$\mathbb{C}$ & $960$      & $21274$   & $960+21274\mathcal{S}$                  \\
+%		& \#$\mathbb{B}$ & $1000$     & $2250$    & $1000+2250\mathcal{S}$                  \\
+%		& \#$\mathbb{I}$ & -          & -         & -                                       \\
+%		& \#constraint   & $2208$     & $24780$   & $2208+24780\mathcal{S}$                 \\ \hline
+%	\end{tabular}
+%\end{table}
