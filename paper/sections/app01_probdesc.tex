@@ -61,11 +61,11 @@ There are four factors that define the instance of \texttt{DCAP}: $|R|$, $|N|$, 
 	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
 \end{align*}
 
-\subsection{\texttt{DCLP}: Data center location problem} \label{DCLP}
-
-\subsubsection{\texttt{DCLP}: Mathematical formulation}
-
-\subsubsection{\texttt{DCLP}: Data generation}
+%\subsection{\texttt{DCLP}: Data center location problem} \label{DCLP}
+%
+%\subsubsection{\texttt{DCLP}: Mathematical formulation}
+%
+%\subsubsection{\texttt{DCLP}: Data generation}
 
 
 \subsection{\texttt{MPTSPs}: Mutli-path traveling salesman problem with stochastic travel times} \label{MPTSPs}
@@ -86,7 +86,7 @@ The extensive form of \texttt{MPTSPs} is as follows and the notations used are s
 	\textrm{s.t.}\ &\sum_{j\in N\backslash\{i\}}y_{ij}=1,\quad\forall i\in N, \label{mptsps:con1} \\ 
 	&\sum_{i\in N\backslash\{j\}}y_{ij}=1,\quad\forall j\in N,\label{mptsps:con2} \\ 
 	&\sum_{j\in N}\phi_{lj}-\sum_{i\in N\backslash\{1\}}\phi_{il}=1,\quad\forall l\in N\backslash\{1\}, \label{mptsps:con3}  \\ 
-	&\phi_{ij}\le \left(|N|-1\right)y_{ij},\quad\forall i\in N\backslash\{1\},\ \forall j\in N,  \label{mptsps:con4} \\ 
+	&\phi_{ij}\le \left(|N|-1\right)y_{ij},\quad\forall i\in N\backslash\{1\},\ \forall j\in N\backslash\{i\}, \label{mptsps:con4} \\ 
 	&\sum_{k\in K_{ij}}x_{ijk}^{s}=y_{ij},\quad\forall i\in N,\ \forall j\in N\backslash\{i\},\ \forall s\in \mathcal{S}, \label{mptsps:con5} \\ 
 	&y_{ij}\in \{0,1\},\quad \forall i\in N,\ \forall j\in N\backslash\{i\}, \label{mptsps:con6} \\ 
 	&\phi_{ij} \ge 0, \quad \forall i\in N\backslash\{1\},\ \forall j\in N. \label{mptsps:con7} \\
@@ -195,7 +195,8 @@ Based on the above definitions, \texttt{SIZES} can be fomulated by the following
 	&\sum_{t'=1}^{t}\sum_{j=1}^{i}x_{ijt'}^s\le\sum_{t'=1}^{t}y_{it'}, \quad\forall i\in N,\ \forall t\in T,\ \forall s\in \mathcal{S},\label{sizes:e}\\
 	&y_{it}\in\mathbb{Z}_+,\quad \forall j\in N,\ \forall t\in T,\label{sizes:f}\\
 	&z_{it}\in\{0,1\},\quad\forall i\in N,\ \forall t\in T,\label{sizes:g}\\
-	&x_{ijt}^s\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall s\in \mathcal{S}.\label{sizes:h}
+	%&x_{ijt}^s\in\mathbb{Z}_+,\quad\forall i\in N,\ \forall j\in N,\ \forall t\in T,\ \forall s\in \mathcal{S}.\label{sizes:h} \\
+	&x_{ijt}^s\in\mathbb{Z}_+,\quad\forall (i,j:i\ge j)\in N\times N,\ \forall t\in T,\ \forall s\in \mathcal{S}.\label{sizes:h}
 	\end{align}
 \end{subequations}
 

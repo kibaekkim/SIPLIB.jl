@@ -64,12 +64,12 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\
 \end{table} 
 
 \subsection{Solution methods}
+Assuming finite and discrete distribution, much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation  \ref{eq:SIP_1}, that is, the sum of the first stage costs and the expected costs in the second stage. Most methods also assume that a single scenario evaluation of SIP is somehow tractable. In this section, we introduce representative approaches to resolve the difficulties in many scenario SIP.
 
-	\subsubsection{Convex approximations of recourse function}
-
+%\subsubsection{Convex approximations of recourse function}
 
 \subsubsection{Stage-wise decomposition }
-This type of algorithms exploit the natural viewpoint of optimizing the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible first-stage decisions.  The method used most frequently are based on building an outer linearization of the recourse cost function and a solution of the first stage problem plus this linearization. This  cutting plane technique is called the $L-shaped$ method or Benders decomposition \cite{B1962}, from which the variants of stage-wise decomposition methods are derived.
+This type of algorithms exploit the natural viewpoint of optimizing the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible first-stage decisions. The method used most frequently are based on building an outer linearization of the recourse cost function and a solution of the first stage problem plus this linearization. This cutting plane technique is called the \textit{L-shaped method} or \textit{Benders decomposition} \cite{B1962}, from which the variants of stage-wise decomposition methods are derived.
 
 For SIP with pure binary first stage variables and mixed-integer second stage, the integer L-shaped method \cite{LL1993} approximates the second stage value function by linear cuts that are exact at the binary solution where tue cut is generated and are under-estimates at other binary solutions. 
 
@@ -108,28 +108,33 @@ The basic idea of PH can be summarized as follows \cite{book:pyomo}.
 	\item Post-process, if needed, to produce a fully admissible and implementable solution.
 \end{enumerate}
 
-One advantage of scenario-wise decomposition over the stage-wise methods is their ability to mitigate the computational difficulty associated with large number of scenarios by decomposing the problem by scenario and solving the descendant subproblems in parallel manners.
+One advantage of scenario-wise decomposition over the stage-wise methods is their ability to relieve the computational difficulty associated with large number of scenarios by decomposing the problem by scenario and solving the descendant subproblems in parallel manners.
 
 \subsection{Software libraries}
-Assuming discrete distribution, all SIP can be represented by any algebraic modeling languages and solved by any available MIP solvers. However, such manual implementation without exploiting characteristics in SIP can often result in inefficient computation and unnecessary memory allocation. In this subsection, we introduce some open-source software libraries dedicated to SIP.
+Assuming discrete distribution, all SIP can be represented by any algebraic modeling languages and solved by any available MIP solvers. However, such manual implementation without exploiting structural characteristics in SIP can often result in inefficient computation and unnecessary memory allocation. In this subsection, we introduce some open-source software libraries dedicated to SIP.
 
 \subsubsection{Solver}
+We introduce two popular open source solver packages: \texttt{DSP} and \texttt{PySP}. 
+
+ 
 \texttt{DSP} is an open-source SIP solver implemented in \texttt{C++}. \texttt{DSP} reads \texttt{SMPS} files as input and provides three ways to solve a SIP instance.
 \begin{itemize}
-	\item extensive form SIP with standard MIP solver
+	\item Invoking standard MIP solver to solve the extensive form SIP
 	\item L-shape method (Benders decomposition)
 	\item Dual Decomposition algorithm
 \end{itemize}
-\texttt{DSP} provides parallel implementations for the two decomposition-based algorithms, which allows users fully exploit computing clusters and multi-core processors. 
+\texttt{DSP} provides parallel implementations for the two decomposition-based algorithms, which allows users fully exploit computing clusters and multi-core processors. \texttt{DSP} provides \texttt{Julia} interface to improve its usability.
 
 \texttt{PySP} is a stochastic programming extension to \texttt{Pyomo}, a \texttt{Python}-based open source software package that supports variants of mathematical optimization. \texttt{PySP} enables the expression of stochastic programming problems as extensive form. To formulate a stochastic program instance in \texttt{PySP}, the user should specify both the deterministic base model and the scenario tree with stochastic data in \texttt{Pyomo}. \texttt{PySP} provides two ways to solve the instance. 
 \begin{itemize}
-	\item extensive form SIP with standard MIP solver
+	\item Invoking standard MIP solver to solve the extensive form SIP
 	\item Progressive Hedging algorithm
 \end{itemize}
 Similar to \texttt{DSP}, \texttt{PySP} can solve the extensive form SIP invoking standard MIP solver. To solve more complex and large-scale SIP, \texttt{PySP} implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.
 
-\subsubsection{Modeling language}
-
+%\subsubsection{Modeling language}
+%StructJuMP
+%PySP
+%SAMPL
 
 
