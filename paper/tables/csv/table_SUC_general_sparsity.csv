@@ -1,0 +1,6 @@
+Block,#row,#col,#nonzero,"Density ([0,1])"
+A (1st stage),$\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$,$G_s (2T+1)$,$3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$ ,(DIY)
+W (2nd stage),$2G+(N+L+4G)T$,$G_f +G+(2G_f +G+N+L+\mathcal{L}$,$3G_f T + \sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$ ,(DIY)
+,$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$,+\mathcal{I}+\mathcal{R}+\mathcal{W})T$,$+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$,
+,,,$+3LT+2G_s (T+1)+4G_f (T+1) + 4GT$,
+T (complicating),$2G_s (T+1)$,$G_s (2T+1)$,$2G_s (T+1)$,(DIY)
