@@ -45,6 +45,7 @@ grestore
 %
 \smartqed  % flush right qed marks, e.g. at end of proof
 %
+\usepackage[usenames,dvipsnames]{xcolor}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{mathrsfs,amsmath,amssymb,amscd,mathtools}
@@ -63,6 +64,46 @@ grestore
 \usepackage{stfloats}
 \usepackage{lscape}
 \usepackage{longtable}
+\usepackage{listings}
+\usepackage{courier}
+
+
+\lstdefinelanguage{julia}
+{
+	sensitive=true,	
+           basicstyle=\ttfamily\scriptsize,
+	columns=fullflexible, % make sure to use fixed-width font, CM typewriter is NOT fixed width
+	numbers=left, 
+	numberstyle=\small\ttfamily\color{Gray},
+	stepnumber=0,              
+	numbersep=10pt, 
+	numberfirstline=true, 
+	numberblanklines=true, 
+	tabsize=4,
+	lineskip=-1.5pt,
+	extendedchars=true,
+	breaklines=true,        
+	keywordstyle=\color{Blue}\bfseries,
+	identifierstyle=, % using emph or index keywords
+	commentstyle=\sffamily\color{OliveGreen},
+	stringstyle=\color{Maroon},
+	showstringspaces=false,
+	showtabs=false,
+	upquote=false,
+	keywordsprefix=\@,
+	keywords={exit,whos,edit,load,is,isa,isequal,typeof,tuple,ntuple,uid,hash,finalizer,convert,promote,
+		subtype,typemin,typemax,realmin,realmax,sizeof,eps,promote_type,method_exists,applicable,
+		invoke,dlopen,dlsym,system,error,throw,assert,new,Inf,Nan,pi,im,begin,while,for,in,return,
+		break,continue,macro,quote,let,if,elseif,else,try,catch,end,bitstype,ccall,do,using,module,
+		import,export,importall,baremodule,immutable,local,global,const,Bool,Int,Int8,Int16,Int32,
+		Int64,Uint,Uint8,Uint16,Uint32,Uint64,Float32,Float64,Complex64,Complex128,Any,Nothing,None,
+		function,type,typealias,abstract},
+	comment=[l]{\#},
+	%morecomment=[s]{#=}{=#},
+	morestring=[d]\',
+	morestring=[b]\",
+}
+
 
 \graphicspath{{./figures/}}
 
