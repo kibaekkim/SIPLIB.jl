@@ -1,4 +1,4 @@
-\siplibtwo\ is implemented in \julia\ programming language with algebraic modeling packages \jump\ and \structjump. We implement and provide \julia\ package \siplibjl for users to utilize ingredients of \siplibtwo. In this section, we introduce how to use \siplibjl.
+\siplibtwo\ is implemented in \julia\ programming language with algebraic modeling packages \jump\ and \structjump. We implement and provide \julia\ package \siplibjl\ for users to utilize ingredients of \siplibtwo. In this section, we introduce how to use \siplibjl.
 
 To use \siplibjl, we need to perform the following steps.
 \begin{itemize}
@@ -9,11 +9,6 @@ To use \siplibjl, we need to perform the following steps.
 	\item excute \texttt{include("Siplib.jl")}
 	\item excute \texttt{using Siplib}
 \end{itemize}
-
-\begin{lstlisting}[frame=single,language=julia]
-function getJuMPModel(problem::Symbol, param_arr::Any)::JuMP.Model
-
-\end{lstlisting}
 
 \subsection{Generating instances: \texttt{JuMP.Model}-object and \texttt{SMPS} files}
 \jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in \siplibjl\ requires \jumpmodel-type object as one of its input arguments. \siplibjl\ provides two functions to construct the \jumpmodel-type object of an instance.
