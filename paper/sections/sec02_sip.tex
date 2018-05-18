@@ -99,7 +99,7 @@ PH algorithm is developed by Rockafellar and Wets motivated by augmented Lagrang
 	\item implementable (or nonanticipative): a solution in which the first stage decisions are indifferent over all scenarios
 	\item feasible: a solution that is both admissible and implementable
 \end{itemize}
-The basic idea of PH can be summarized as follows \cite{book:pyomo}.
+The basic idea of PH can be summarized as the following procedure \cite{book:pyomo}.
 \begin{enumerate}
 	\item For each scenario $s$, solutions are obtained for the single-scenario problem of minimizing, subject to the problem constraints, the formulation (\ref{eq:SIP_2-1})-(\ref{eq:SIP_2-3}), and (\ref{eq:SIP_2-4}).
 	\item The variable values for an implementable---but likely not admissible---solution are obtained by averaging over all scenarios at a scenario tree node.
@@ -130,7 +130,7 @@ We introduce two popular open source solver packages: \texttt{DSP} and \texttt{P
 	\item Invoking standard MIP solver to solve the extensive form SIP
 	\item Progressive Hedging algorithm
 \end{itemize}
-Similar to \texttt{DSP}, \texttt{PySP} can solve the extensive form SIP invoking standard MIP solver. To solve more complex and large-scale SIP, \texttt{PySP} implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.
+\texttt{PySP} can also solve the extensive form SIP invoking standard MIP solver. To solve more complex and large-scale SIP, \texttt{PySP} implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.
 
 %\subsubsection{Modeling language}
 %StructJuMP
