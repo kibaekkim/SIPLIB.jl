@@ -9,25 +9,25 @@
 				\toprule
 				&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
 				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
-				\multirow{3}{*}{\texttt{DCAP} (\ref{dcap:notation})}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
+				\multirow{3}{*}{\dcap\ (\ref{dcap:notation})}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
 				& 2nd stage & -              & $\left(1+R\right)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
 				& Total          & $RT$           & $RT+\left(1+R\right)NT\mathcal{S}$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
-				\multirow{3}{*}{\texttt{DCLP} }   & 1st stage &                &                                    &                      &                           \\
+				\multirow{3}{*}{\dclp\ }   & 1st stage &                &                                    &                      &                           \\
 				& 2nd stage &                &                                    &                      &                           \\ \cmidrule(l){2-6} 
 				& Total          &                &                                    &                      &                           \\ \midrule
-				\multirow{3}{*}{\texttt{MPTSPs} (\ref{mptsps:notation})} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
+				\multirow{3}{*}{\mptsps (\ref{mptsps:notation})} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
 				& 2nd stage & -              & $3(N-1)N$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
 				& Total          & $(N-1)N$          & $(N-1)(1+3\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
-				\multirow{3}{*}{\texttt{SIZES} (\ref{sizes:notation})}  & 1st stage & -              & $2N$                               & $2N$                 & $2(1+N)$                  \\
+				\multirow{3}{*}{\sizes\ (\ref{sizes:notation})}  & 1st stage & -              & $2N$                               & $2N$                 & $2(1+N)$                  \\
 				& 2nd stage & -              & -                                  & $N(N+1)$              & $4N$                     \\ \cmidrule(l){2-6} 
 				& Total          & -              & $2N$                               & $2N+N(N+1)\mathcal{S}$ & $2(1+N+2N\mathcal{S})$    \\ \midrule
-				\multirow{3}{*}{\texttt{SMKP} (\ref{smkp:notation})}   & 1st stage & -              & $2I$                               & -                    & $J$                       \\
+				\multirow{3}{*}{\smkp\ (\ref{smkp:notation})}   & 1st stage & -              & $2I$                               & -                    & $J$                       \\
 				& 2nd stage & -              & $I$                                & -                    & $K$                       \\ \cmidrule(l){2-6} 
 				& Total          & -              & $(2+\mathcal{S})I$                 & -                    & $J+K\mathcal{S}$          \\ \midrule
-				\multirow{3}{*}{\texttt{SSLP} (\ref{sslp:notation})}   & 1st stage & -              & $J$                                & -                    & $1$                       \\
+				\multirow{3}{*}{\sslp\ (\ref{sslp:notation})}   & 1st stage & -              & $J$                                & -                    & $1$                       \\
 				& 2nd stage & $J$            & $IJ$                               & -                    & $I+J$                     \\ \cmidrule(l){2-6} 
 				& Total          & $J\mathcal{S}$ & $(1+I\mathcal{S})J$                & -                    & $1+(I+J)\mathcal{S}$      \\ \midrule
-				\multirow{3}{*}{\texttt{SUC} (\ref{SUC:notation})}   & 1st stage & 960               &   1000                                 &     -                 &  2208                         \\
+				\multirow{3}{*}{\suc\ (\ref{SUC:notation})}   & 1st stage & 960               &   1000                                 &     -                 &  2208                         \\
 				& 2nd stage & 21274               &     2250                               &   -                   & 24780                          \\ \cmidrule(l){2-6} 
 				& Total          & $960+21274\mathcal{S}$                &  $1000+2250\mathcal{S}$                                  &  -                    &  $2208+24780\mathcal{S}$                         \\ \bottomrule
 			\end{tabular}
@@ -35,7 +35,7 @@
 			\begin{tablenotes}
 				\small
 				\item *For convenience, we skip the cardinality sign $|\cdot|$ for sets.
-				\item **We insert numerical value for the predetermined set, e.g., for \texttt{SIZES}, we use $|T|=2$ and for \texttt{MPTSPs}, we use $|K_{ij}|=3$. For \texttt{SUC}, all the sets are predetermined based on the given data other than the scenario set $\mathcal{S}$.
+				\item **We insert numerical value for the predetermined set, e.g., for \sizes, we use $|T|=2$ and for \mptsps, we use $|K_{ij}|=3$. In \suc, all the sets are predetermined based on the given data except for the scenario set $\mathcal{S}$.
 			\end{tablenotes}
 		\end{threeparttable}
 	}

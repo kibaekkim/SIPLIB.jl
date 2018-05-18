@@ -1,38 +1,38 @@
 type Size
-    InstanceName::String
-    nCont1::Int
-    nBin1::Int
-    nInt1::Int
-    nCont2::Int
-    nBin2::Int
-    nInt2::Int
-    nCont::Int
-    nBin::Int
-    nInt::Int
-    nRow::Int
-    nCol::Int
-    nNz::Int
+    InstanceName::String    # instance name
+    nCont1::Int             # number of continuous variables in 1st stage
+    nBin1::Int              # number of binary variables in 1st stage
+    nInt1::Int              # number of integer variables in 1st stage
+    nCont2::Int             # number of continuous variables in 2nd stage
+    nBin2::Int              # number of binary variables in 2nd stage
+    nInt2::Int              # number of integer variables in 2nd stage
+    nCont::Int              # number of continuous variables in total
+    nBin::Int               # number of binary variables in total
+    nInt::Int               # number of integer variables in total
+    nRow::Int               # number of rows in coefficient matrix in extensive form
+    nCol::Int               # number of columns in coefficient matrix in extensive form
+    nNz::Int                # number of nonzero values in coefficient matrix in extensive form
     Size() = new()
 end
 
 type Sparsity
-    InstanceName::String
-    nRow1::Int
-    nCol1::Int
-    nNz1::Int
-    sparsity1::Float64
-    nRow2::Int
-    nCol2::Int
-    nNz2::Int
-    sparsity2::Float64
-    nRowC::Int
-    nColC::Int
-    nNzC::Int
-    sparsityC::Float64
-    nRow::Int
-    nCol::Int
-    nNz::Int
-    sparsity::Float64
+    InstanceName::String    # instance name
+    nRow1::Int              # number of rows in 1st stage-only block (block A)
+    nCol1::Int              # number of columns in 1st stage-only block (block A)
+    nNz1::Int               # number of nonzero values in 1st stage-only block (block A)
+    sparsity1::Float64      # sparsity ([0,1] scale) of 1st stage-only block (block A)
+    nRow2::Int              # number of rows in 2nd stage-only block (block W)
+    nCol2::Int              # number of columns in 2nd stage-only block (block W)
+    nNz2::Int               # number of nonzero values in 2nd stage-only block (block W)
+    sparsity2::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
+    nRowC::Int              # number of rows in complicating block (block T)
+    nColC::Int              # number of columns in complicating block (block T)
+    nNzC::Int               # number of nonzero values in complicating block (block T)
+    sparsityC::Float64      # sparsity ([0,1] scale) of complicating block (block T)
+    nRow::Int               # number of rows in total
+    nCol::Int               # number of columns in total
+    nNz::Int                # number of nonzero values in total
+    sparsity::Float64       # sparsity ([0,1] scale) in total
     Sparsity() = new()
 end
 
@@ -161,6 +161,50 @@ function plotAllBlocks(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME:
     plt.tight_layout()
 
     plt.savefig("$DIR_NAME/$(INSTANCE)_block_T.pdf")
+    plt.close()
+end
+
+
+function plotAll(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+    mdata1 = getModelData(model)
+    mdata2 = getModelData(getchildren(model)[1])
+    nrows1, ncols1 = size(mdata1.mat)
+    nrows2, ncols = size(mdata2.mat)
+    ncols2 = ncols - ncols1
+
+    # plot Block A
+    mat = mdata1.mat
+    plt = PyPlot
+    plt.spy(mat)
+    plt.xticks([])
+    plt.yticks([])
+    plt.tight_layout()
+    plt.savefig("$DIR_NAME/$(INSTANCE)_block_A.pdf")
+    plt.close()
+
+    # plot Block W
+    mat = mdata2.mat[: , ncols1+1:end]
+    plt = PyPlot
+    plt.spy(mat)
+    plt.xticks([])
+    plt.yticks([])
+    plt.tight_layout()
+    plt.savefig("$DIR_NAME/$(INSTANCE)_block_W.pdf")
+    plt.close()
+
+    # plot Block T
+    mat = mdata2.mat[: , 1:ncols1]
+    plt = PyPlot
+    plt.spy(mat)
+    plt.xticks([])
+    plt.yticks([])
+    plt.tight_layout()
+
+    plt.savefig("$DIR_NAME/$(INSTANCE)_block_T.pdf")
+    plt.close()
+
+    # plot extensive form block
+    plotConstrMatrix(model, INSTANCE, DIR_NAME)
     plt.close()
 end
 
