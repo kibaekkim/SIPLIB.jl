@@ -17,12 +17,13 @@ For example, set the folloing environment variable in terminal.
     export JULIA_NUM_THREADS=16
 =#
 
+#=
 module SmpsWriter
 
     using StructJuMP
 
-    export writeAll, writeSmps, writeMps
-
+    export writeSmps, writeSmps_with_splice
+=#
     type ModelData
         mat::SparseMatrixCSC{Float64}
         rhs::Vector{Float64}
@@ -59,7 +60,33 @@ module SmpsWriter
     end
 
     # write SMPS files (cor, tim, and sto)
-    function writeSmps(m::JuMP.Model, filename::String="SmpsWriter")
+    function writeSmps_with_splice(m::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
+
+        filename = "$DIR_NAME/$INSTANCE"
+
+        # Check if this is a StructJuMP model
+        if !haskey(m.ext, :Stochastic)
+            writeMPS(m, "$filename.mps")
+            warn("This is not a stochastic model. $filename.mps was generated.")
+            return
+        end
+
+        # Get StructJuMP model data
+        mdata_all = getStructModelData_with_splice(m)
+
+        # Create and write a core model
+        mdata_core = writeCore(filename, mdata_all)
+
+        # Write tim and sto files
+        writeTime(filename, mdata_all[1].mat)
+        writeStoc(filename, num_scenarios(m), getprobability(m), mdata_all, mdata_core)
+
+        return
+    end
+
+    function writeSmps(m::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
+
+        filename = "$DIR_NAME/$INSTANCE"
 
         # Check if this is a StructJuMP model
         if !haskey(m.ext, :Stochastic)
@@ -100,12 +127,12 @@ module SmpsWriter
         print("Writing MPS file ...")
 
         # @show full(mat_all[1])
-        nrows0, ncols0 = size(mdata_all[1].mat)
-        nrows1, ncols = size(mdata_all[2].mat)
-        ncols1 = ncols - ncols0
+        nrows1, ncols1 = size(mdata_all[1].mat)
+        nrows2, ncols = size(mdata_all[2].mat)
+        ncols2 = ncols - ncols1
 
-        mat   = [mdata_all[1].mat zeros(nrows0, ncols1*num_scenarios(m))]
-        mat   = [mat ; zeros(nrows1*num_scenarios(m), ncols0+ncols1*num_scenarios(m))]
+        mat   = [mdata_all[1].mat zeros(nrows1, ncols2*num_scenarios(m))]
+        mat   = [mat ; zeros(nrows2*num_scenarios(m), ncols1+ncols2*num_scenarios(m))]
 
         rhs   = mdata_all[1].rhs
         sense = mdata_all[1].sense
@@ -121,10 +148,10 @@ module SmpsWriter
             mat_vals = nonzeros(mdata_all[s+1].mat)
             for j in 1:ncols
                 for i in nzrange(mdata_all[s+1].mat,j)
-                    if j > ncols0
-                        mat[nrows0 + (s-1)*nrows1 + mat_rows[i], (s-1)*ncols1 + j] = mat_vals[i]
+                    if j > ncols1
+                        mat[nrows1 + (s-1)*nrows2 + mat_rows[i], (s-1)*ncols2 + j] = mat_vals[i]
                     else
-                        mat[nrows0 + (s-1)*nrows1 + mat_rows[i], j] = mat_vals[i]
+                        mat[nrows1 + (s-1)*nrows2 + mat_rows[i], j] = mat_vals[i]
                     end
                 end
             end
@@ -292,6 +319,39 @@ module SmpsWriter
 
     writeMps(filename, probname, mdata::ModelData) = writeMps(filename, probname, mdata.mat, mdata.rhs, mdata.sense, mdata.obj, mdata.objsense, mdata.clbd, mdata.cubd, mdata.ctype)
 
+    function getStructModelData_with_splice(m::JuMP.Model)::Array{ModelData,1}
+
+        println("Reading all data from StructJuMP model")
+
+        # create the model data array
+        #mdata_all = Array{ModelData,1}()
+        mdata_all = ModelData[]
+        # get model data for the first stage
+        @time begin
+            mdata = getModelData_with_splice(m)
+        end
+        push!(mdata_all, mdata)
+
+        # @show Threads.nthreads()
+        # println("You can set the number of threads as follows:\n\texport JULIA_NUM_THREADS=4")
+
+        # get model data for the second stage
+    #    @time Threads.@threads for i = 1:num_scenarios(m) # multi-threading sometimes causes error.
+        for i = 1:num_scenarios(m)
+            mdata = getModelData_with_splice(getchildren(m)[i])
+            push!(mdata_all, mdata)
+        end
+
+        nrows1, ncols1 = size(mdata_all[1].mat)
+        nrows2, ncols  = size(mdata_all[2].mat)
+        ncols2 = ncols - ncols1
+        @printf("   First stage: vars (%d), cons (%d)\n", ncols1, nrows1)
+        @printf("  Second stage: vars (%d), cons (%d)\n", ncols2, nrows2)
+        @printf("  Number of scenarios: %d\n", num_scenarios(m))
+
+        return mdata_all
+    end
+
     function getStructModelData(m::JuMP.Model)::Array{ModelData,1}
 
         println("Reading all data from StructJuMP model")
@@ -315,20 +375,19 @@ module SmpsWriter
             push!(mdata_all, mdata)
         end
 
-        nrows0, ncols0 = size(mdata_all[1].mat)
-        nrows1, ncols  = size(mdata_all[2].mat)
-        ncols1 = ncols - ncols0
-        @printf("   First stage: vars (%d), cons (%d)\n", ncols0, nrows0)
-        @printf("  Second stage: vars (%d), cons (%d)\n", ncols1, nrows1)
+        nrows1, ncols1 = size(mdata_all[1].mat)
+        nrows2, ncols  = size(mdata_all[2].mat)
+        ncols2 = ncols - ncols1
+        @printf("   First stage: vars (%d), cons (%d)\n", ncols1, nrows1)
+        @printf("  Second stage: vars (%d), cons (%d)\n", ncols2, nrows2)
         @printf("  Number of scenarios: %d\n", num_scenarios(m))
 
         return mdata_all
     end
 
-    function getModelData(m::JuMP.Model)::ModelData
+    function getModelData_with_splice(m::JuMP.Model)::ModelData
         # Get a column-wise sparse matrix
-        mat = prepConstrMatrix(m)
-        #mat = SmpsWriter.prepConstrMatrix(m)
+        mat = prepConstrMatrix_with_splice(m)
 
         # column type
         ctype = ""
@@ -367,7 +426,48 @@ module SmpsWriter
         return ModelData(mat, rhs, sense, obj, m.objSense, m.colLower, m.colUpper, ctype)
     end
 
-    function prepConstrMatrix(m::JuMP.Model)
+    function getModelData(m::JuMP.Model)::ModelData
+        # Get a column-wise sparse matrix
+        mat = prepConstrMatrix(m)
+
+        # column type
+        ctype = ""
+        for i = 1:length(m.colCat)
+            if m.colCat[i] == :Int
+                ctype = ctype * "I";
+            elseif m.colCat[i] == :Bin
+                ctype = ctype * "B";
+            else
+                ctype = ctype * "C";
+            end
+        end
+
+        # objective coefficients
+        obj = JuMP.prepAffObjective(m)
+
+        # row bounds
+        rlbd, rubd = JuMP.prepConstrBounds(m)
+        rhs = Float64[]
+        sense = Symbol[]
+        for i = 1:length(rlbd)
+            if rlbd[i] == rubd[i]
+                push!(rhs, rlbd[i])
+                push!(sense, :E)
+            elseif rlbd[i] <= -Inf
+                push!(rhs, rubd[i])
+                push!(sense, :L)
+            elseif rubd[i] >= Inf
+                push!(rhs, rlbd[i])
+                push!(sense, :G)
+            else
+                error("The current version does not support range constraints.")
+            end
+        end
+
+        return ModelData(mat, rhs, sense, obj, m.objSense, m.colLower, m.colUpper, ctype)
+    end
+
+    function prepConstrMatrix_with_splice(m::JuMP.Model)
         if !haskey(m.ext, :Stochastic)
             error("This is not a StructJuMP model.")
             return JuMP.prepConstrMatrix(m)
@@ -397,16 +497,44 @@ module SmpsWriter
         return sparse(rind, cind, value, length(m.linconstr), getparent(m).numCols + m.numCols)
     end
 
+    function prepConstrMatrix(m::JuMP.Model)
+        if !haskey(m.ext, :Stochastic)
+            error("This is not a StructJuMP model.")
+            return JuMP.prepConstrMatrix(m)
+        end
+
+        if getparent(m) == nothing # i.e., this model is parent
+            return JuMP.prepConstrMatrix(m)
+        else
+            rind = Int[]
+            cind = Int[]
+            value = Float64[]
+            for (nrow,con) in enumerate(m.linconstr)
+                aff = con.terms
+                for (var,id) in zip(reverse(aff.vars), length(aff.vars):-1:1)
+                    push!(rind, nrow)
+                    if m.linconstr[nrow].terms.vars[id].m == getparent(m)
+                        push!(cind, var.col)
+                    elseif m.linconstr[nrow].terms.vars[id].m == m
+                        push!(cind, getparent(m).numCols + var.col)
+                    end
+                    push!(value, aff.coeffs[id])
+                end
+            end
+        end
+        return sparse(rind, cind, value, length(m.linconstr), getparent(m).numCols + m.numCols)
+    end
+
     function writeCore(filename, mdata_all::Array{ModelData,1})::ModelData
 
         print("Writing core file ... ")
 
         # get # of first-stage rows and columns
-        nrows0, ncols0 = size(mdata_all[1].mat)
+        nrows1, ncols1 = size(mdata_all[1].mat)
 
         # get # of rows and columns for the scenario block
-        nrows1, ncols = size(mdata_all[2].mat)
-        ncols1 = ncols - ncols0
+        nrows2, ncols = size(mdata_all[2].mat)
+        ncols2 = ncols - ncols1
 
         # core data (includes 1st stage & 2nd stage's 1st scenario data)
         rhs      = [mdata_all[1].rhs  ; mdata_all[2].rhs]
@@ -416,26 +544,26 @@ module SmpsWriter
         clbd     = [mdata_all[1].clbd ; mdata_all[2].clbd]
         cubd     = [mdata_all[1].cubd ; mdata_all[2].cubd]
         ctype    = mdata_all[1].ctype * mdata_all[2].ctype
-        mat      = [[mdata_all[1].mat zeros(nrows0, ncols-ncols0)] ; mdata_all[2].mat]
+        mat      = [[mdata_all[1].mat zeros(nrows1, ncols-ncols1)] ; mdata_all[2].mat]
         @assert length(clbd) == ncols
         @assert length(obj) == ncols
 
         # reserve the nonzero spaces
         for s = 3:length(mdata_all)
             mat_rows = rowvals(mdata_all[s].mat)
-            for j in 1:ncols1
-                if obj[ncols0+j] == 0 && mdata_all[s].obj[j] != 0
-                    obj[ncols0+j] = 1
+            for j in 1:ncols2
+                if obj[ncols1+j] == 0 && mdata_all[s].obj[j] != 0
+                    obj[ncols1+j] = 1
                 end
                 for i in nzrange(mdata_all[s].mat,j)
-                    if mat[nrows0+mat_rows[i],j] == 0.0
-                        mat[nrows0+mat_rows[i],j] = 1
+                    if mat[nrows1+mat_rows[i],j] == 0.0
+                        mat[nrows1+mat_rows[i],j] = 1
                     end
                 end
             end
-            for i in 1:nrows1
-                if rhs[nrows0+i] == 0 && mdata_all[s].rhs[i] != 0
-                    rhs[nrows0+i] = 1
+            for i in 1:nrows2
+                if rhs[nrows1+i] == 0 && mdata_all[s].rhs[i] != 0
+                    rhs[nrows1+i] = 1
                 end
             end
         end
@@ -476,9 +604,9 @@ module SmpsWriter
         print("Writing stochastic file ... ")
 
         # get # of first-stage rows and columns
-        nrows0, ncols0 = size(mdata_all[1].mat)
-        nrows1, ncols = size(mdata_all[2].mat)
-        ncols1 = ncols - ncols0
+        nrows1, ncols1 = size(mdata_all[1].mat)
+        nrows2, ncols = size(mdata_all[2].mat)
+        ncols2 = ncols - ncols1
 
         coremat_rows = rowvals(mdata_core.mat)
         coremat_vals = nonzeros(mdata_core.mat)
@@ -493,9 +621,9 @@ module SmpsWriter
             @printf(fp, " SC %-8s  %-8s  %-8f  PERIOD2\n", "SCEN"*string(s), "ROOT", probability[s])
 
             # row bounds
-            for i in 1:nrows1
-                if mdata_core.rhs[nrows0+i] != mdata_all[s+1].rhs[i]
-                    @printf(fp, "    %-8s  %-8s  %-12f\n", "rhs", "c"*string(nrows0+i), mdata_all[s+1].rhs[i])
+            for i in 1:nrows2
+                if mdata_core.rhs[nrows1+i] != mdata_all[s+1].rhs[i]
+                    @printf(fp, "    %-8s  %-8s  %-12f\n", "rhs", "c"*string(nrows1+i), mdata_all[s+1].rhs[i])
                 end
             end
 
@@ -503,20 +631,20 @@ module SmpsWriter
             mat_vals = nonzeros(mdata_all[s+1].mat)
             for j in 1:ncols
                 # objective coefficients
-                if j > ncols0 && mdata_core.obj[j] != mdata_all[s+1].obj[j-ncols0]
-                    @printf(fp, "    %-8s  %-8s  %-12f\n", "x"*string(j), "obj", mdata_all[s+1].obj[j-ncols0])
+                if j > ncols1 && mdata_core.obj[j] != mdata_all[s+1].obj[j-ncols1]
+                    @printf(fp, "    %-8s  %-8s  %-12f\n", "x"*string(j), "obj", mdata_all[s+1].obj[j-ncols1])
                 end
 
                 # constraint matrix
                 rows_to_modify = Dict{Int,Float64}()
                 for i in nzrange(mdata_all[s+1].mat,j)
-                    if mdata_core.mat[nrows0+mat_rows[i],j] != mat_vals[i]
-                        rows_to_modify[nrows0+mat_rows[i]] = mat_vals[i]
+                    if mdata_core.mat[nrows1+mat_rows[i],j] != mat_vals[i]
+                        rows_to_modify[nrows1+mat_rows[i]] = mat_vals[i]
                     end
                 end
                 for i in nzrange(mdata_core.mat,j)
-                    if coremat_rows[i] > nrows0 && mdata_all[s+1].mat[coremat_rows[i]-nrows0,j] != coremat_vals[i]
-                        rows_to_modify[coremat_rows[i]] = mdata_all[s+1].mat[coremat_rows[i]-nrows0,j]
+                    if coremat_rows[i] > nrows1 && mdata_all[s+1].mat[coremat_rows[i]-nrows1,j] != coremat_vals[i]
+                        rows_to_modify[coremat_rows[i]] = mdata_all[s+1].mat[coremat_rows[i]-nrows1,j]
                     end
                 end
                 for i in sort(collect(keys(rows_to_modify)))
@@ -531,4 +659,4 @@ module SmpsWriter
         println("done")
     end
 
-end
+#end

@@ -1,0 +1,4 @@
+Block,#row,#col,#nonzero,"Density ([0,1])"
+A (1st stage),$T(N+1)$,$2NT$,$3NT$,$\frac{3}{2T(N+1)}$
+W (2nd stage),$2NT$,$N(N+1)$,$\frac{1}{2}NT(T+1)(N+1)$,$\frac{T+1}{4N}$
+T (complicating),$2NT$,$2NT$,$\frac{1}{2}NT(T+1)$,$\frac{T+1}{8NT}$

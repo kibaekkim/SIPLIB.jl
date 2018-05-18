@@ -1,6 +1,3 @@
-using Dsp
-using MPI
-
 PROB_NAME = "DCAP"
 PARAMETER = "_3_3_3_500"
 INSTANCE_NAME = string(PROB_NAME,PARAMETER)
