@@ -5,7 +5,7 @@ In this section, we provide block-wise size information as well as the sparsity.
 % \usepackage{booktabs}
 \begin{table}[h]
 	\centering
-	\caption{\dcap: fully set cardinality based sparsity information}
+	\caption{\dcap: Block-wise sparsity information}
 	\label{table:sparsity_DCAP}
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
@@ -25,7 +25,7 @@ In this section, we provide block-wise size information as well as the sparsity.
 % \usepackage{booktabs}
 \begin{table}[h]
 	\centering
-	\caption{\mptsps: fully set cardinality based sparsity information}
+	\caption{\mptsps: Block-wise sparsity information}
 	\label{table:sparsity_MPTSPs}
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
@@ -42,7 +42,7 @@ In this section, we provide block-wise size information as well as the sparsity.
 % \usepackage{booktabs}
 \begin{table}[h]
 	\centering
-	\caption{\sizes: fully set cardinality based sparsity information}
+	\caption{\sizes: Block-wise sparsity information}
 	\label{table:sparsity_SIZES}
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
@@ -59,7 +59,7 @@ In this section, we provide block-wise size information as well as the sparsity.
 % \usepackage{booktabs}
 \begin{table}[h]
 	\centering
-	\caption{\smkp: fully set cardinality based sparsity information}
+	\caption{\smkp: Block-wise sparsity information}
 	\label{table:sparsity_SMKP}
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
@@ -75,7 +75,7 @@ In this section, we provide block-wise size information as well as the sparsity.
 % \usepackage{booktabs}
 \begin{table}[h]
 	\centering
-	\caption{\sslp: fully set cardinality based sparsity information}
+	\caption{\sslp: Block-wise sparsity information}
 	\label{table:sparsity_SSLP}
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
@@ -89,18 +89,18 @@ In this section, we provide block-wise size information as well as the sparsity.
 
 \begin{table}[H]
 	\centering
-	\caption{\suc: fully set cardinality based sparsity information}
+	\caption{\suc: Block-wise sparsity information}
 	\label{table:sparsity_SUC}
 	\begin{threeparttable}
 		\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}lcccc@{}}
+		\begin{tabular}{@{}lccc@{}}
 			\toprule
-			\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                 & Sparsity \\ \midrule
-			A (1st stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                      & -        \\
-			W (2nd stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N+L+\mathcal{L}$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}           & -        \\
-			& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$ &          \\
-			&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                              &          \\
-			T (complicating)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                              & -        \\ \bottomrule
+			\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                  \\ \midrule
+			A (1st stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                           \\
+			W (2nd stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}                  \\
+			& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+L+\mathcal{L}+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$          \\
+			&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                                       \\
+			T (complicating)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                                     \\ \bottomrule
 		\end{tabular}%
 		}
 		\begin{tablenotes}
@@ -109,3 +109,26 @@ In this section, we provide block-wise size information as well as the sparsity.
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
+%
+%\begin{table}[H]
+%	\centering
+%	\caption{\suc: Block-wise sparsity information}
+%	\label{table:sparsity_SUC}
+%	\begin{threeparttable}
+%		\resizebox{\textwidth}{!}{%
+%			\begin{tabular}{@{}lcccc@{}}
+%				\toprule
+%				\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                 & Sparsity \\ \midrule
+%				A (1st stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                      & -        \\
+%				W (2nd stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N+L+\mathcal{L}$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}           & -        \\
+%				& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$ &          \\
+%				&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                              &          \\
+%				T (complicating)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                              & -        \\ \bottomrule
+%			\end{tabular}%
+%		}
+%		\begin{tablenotes}
+%			\small
+%			\item *We skip sparsity equations due to the lack of space.
+%		\end{tablenotes}
+%	\end{threeparttable}
+%\end{table}
