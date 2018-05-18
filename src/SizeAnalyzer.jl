@@ -140,12 +140,9 @@ include("../TestSets/DCAP/JULIA/dcap_models.jl")
 nR = 2      # number of items
 nN = 3      # number of tasks
 nT = 3      # number of time periods
-nS = 100000 # number of scenarios
+nS = 500 # number of scenarios
 
 ## set file name and path
 INSTANCE = "DCAP_$(nR)_$(nN)_$(nT)_$(nS)"
 m = dcap(nR,nN,nT,nS)
-
-ISI = getInstanceSizeInfo(INSTANCE, m)
-
 =#

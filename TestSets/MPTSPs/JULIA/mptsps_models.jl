@@ -20,7 +20,8 @@ function mptsps_flow(D::String, nN::Integer, nS::Integer, seed::Int=1)::JuMP.Mod
         [i = tsp.N], sum(y[i,j] for j in tsp.N if j != i) == 1
         [j = tsp.N], sum(y[i,j] for i in tsp.N if i != j) == 1
         [l = tsp.N ; l != 1], sum(phi[l,j] for j in tsp.N) - sum(phi[i,l] for i in tsp.N if i != 1) == 1
-        [i = tsp.N, j = tsp.N ; i != 1 && i != j], phi[i,j] <= (length(tsp.N)-1)*y[i,j]
+#        [i = tsp.N, j = tsp.N ; i != 1 && i != j], phi[i,j] <= (length(tsp.N)-1)*y[i,j]
+        [i = tsp.N[2:end], j = tsp.N ; j != i], phi[i,j] <= (length(tsp.N)-1)*y[i,j]
     end
 
     ## add 2nd stage components
