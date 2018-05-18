@@ -436,9 +436,11 @@ Using the notation in Table \ref{SUC:notation}, the extensive form of \texttt{SU
 	(\texttt{SUC})\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
 	\Bigg[	 \sum_{g\in G_f} \left(K_g u_{gt}+S_g v_{gt}\right) + \sum_{g\in G}C_g p_{gt} + \sum_{j\in J} C^{J}\lambda_{dt} \nonumber \\&\qquad\qquad\qquad\qquad\qquad\quad  + \sum_{i\in I} C^{I}\mu_{it} + \sum_{r\in R} C^{R}\lambda_{rt} + \sum_{k\in W} C^{W}\omega_{kt} \Bigg]
 	\label{SUC:obj}\\
-	\textrm{s.t.}\ &  \sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,	\label{SUC:b}\\
+	\textrm{s.t.}\ &  \textrm{(First stage constraints)} \nonumber\\
+	&\sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,	\label{SUC:b}\\
 	&\sum_{q=t+1}^{t+DT_g} z_{gq}\le 1-w_{gt},\quad\forall g\in G_s,\ \forall t\le |T|-DT_g,\label{SUC:c}\\
 	&z_{gt}\ge w_{gt}-w_{g,t-1},\quad\forall g\in G_s,\ \forall t\in T,\label{SUC:d}\\
+	&  \textrm{(Second stage constraints)} \nonumber\\
 	&  \sum_{q=t-UT_g+1}^t v_{gqs}\le u_{qts},\quad\forall g\in G_f,\ \forall t\ge UT_g,\ \forall s\in\mathcal{S},\label{SUC:e}\\
 	&\sum_{q=t+1}^{t+DT_g} v_{gqs}\le 1-u_{gts},\quad\forall g\in G_f,\ \forall t\le |T|-DT_g,\ \forall s\in\mathcal{S},\label{SUC:f}\\
 	&v_{gts}\ge u_{gts}-u_{g,t-1,s},\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:g}\\
@@ -449,8 +451,10 @@ Using the notation in Table \ref{SUC:notation}, the extensive form of \texttt{SU
 	&P_g^- w_{gt} \le p_{gts} \le P_g^+ w_{gt},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:j}\\
 	&P_g^- u_{gts} \le p_{gts} \le P_g^+ u_{gts},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:k}\\
 	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:l}\\
+	&  \textrm{(First stage variable bounds)} \nonumber\\
 	&w_{gt}\in\{0,1\},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\label{SUC:m}\\
 	& 0\le z_{gt}\le 1,\quad\forall g\in G_s,\ \forall t\in T,\label{SUC:n}\\
+	&  \textrm{(Second stage variable bounds)} \nonumber\\
 	&u_{gts}\in\{0,1\},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:o}\\
 	&0\le v_{gts}\le 1,\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:p}\\
 	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:q}\\

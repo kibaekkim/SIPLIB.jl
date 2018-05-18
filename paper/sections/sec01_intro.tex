@@ -19,14 +19,14 @@ The contributions of this work can be summarized as follows.
 	\item We provide SIP test instances that are more various in terms of problem size and types than the former \siplib.
 	\item We collect, summarize, and open all the problem-specific details: mathematical formulation, stochastic data generation.
 	\item We provide pre-analysis on the instances (component type, size, sparsity).
-	\item We provide \texttt{Julia}-based utilities for generating/pre-analyzing/testing instances.
+	\item We implement an open source \texttt{Julia} package \texttt{Siplib.jl} for generating/pre-analyzing/testing instances.
 	\item We provide well-summarized benchmark experimental results.
 \end{itemize}
 
 %By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational and algorithmic research in SIP with benchmarking computational results, 2) not only \texttt{SMPS} files but also utilities for generating/analyzing instances. Hence, the users can obtain as large-sized instances as they need by generating new scenarios and including them into instances. For those who want to utilize the instances in the legacy \texttt{SIPLIB} with strong tailorability provided by \texttt{SIPLIB 2.0}, we include the original \texttt{SIPLIB} instances as well.
 
 %(Contents)
-This paper is organized as follows. In Section \ref{sec:sip}, we briefly review SIP. This includes the mathematical formulation with notation, solution methods, and available software packages. In Section \ref{sec:summary}, we provide summary of the test problems for users to quickly catch up what they need without investigating every detail. This consists of brief description with its origin, instance naming rule, problem type based on its components, and sparsity information. Problem specific detail is also provided in Section \ref{sec:prob_desc}. We present the tutorial of the functions provided by \siplibtwo\ in Section \ref{sec:tutorial}. In Section \ref{sec:instance_catalog}, we report the computational results of the accompanied instances in \texttt{SMPS} format. We conclude our research study with provision of future directions to improve this foregoing project in Section \ref{sec:conclusion}. 
+This paper is organized as follows. In Section \ref{sec:sip}, we briefly review SIP. This includes the mathematical formulation with notation, solution methods, and available software packages. In Section \ref{sec:summary}, we provide summary of the test problems for users to quickly catch up what they need without investigating every detail. This consists of origin of the problems with brief description, instance naming rule, problem type based on its components (variables and constraints), the number of the components, and sparsity information. Problem-specific detail is also provided in Section \ref{sec:prob_desc}. We present the implementation of a \texttt{Julia} package \texttt{Siplib.jl} in Section \ref{sec:tutorial}. Tutorials for utilizing the package are also accompanied. In Section \ref{sec:instance_catalog}, we report the computational results of the accompanied instances in \texttt{SMPS} format. We conclude our research study with provision of future directions to improve this ongoing project in Section \ref{sec:conclusion}. 
 
 
 
