@@ -36,7 +36,7 @@ module Siplib
 #    include("./solver.jl")
 
     export getInstanceName,         # return Instance name using problem & parameters
-           writeSmps, writeSMPS,     # write SMPS files from JuMP.Model
+           writeSmps, writeSMPS,    # write SMPS files from JuMP.Model
            writeSmps_with_splice,   # for memory-efficiency. not proper in case of reusing JuMP.Model-object.
            getJuMPModel,            # only return JuMP.Model object
            generateSMPS,            # return JuMP.Model object as well as generate SMPS files
@@ -45,13 +45,23 @@ module Siplib
            plotSecondStageBlock,    # plot block W (second stage only)
            plotComplicatingBlock,   # plot block T (complicating block)
            plotAllBlocks,           # plot block A, W, T simultaneously
+           plotAll,
            getSparsity,
            getSize
 
 end # end module Siplib
 
-#=
+
 using Siplib
+
+#=
+param_arr = [2,2,2,2]
+problem = :DCAP
+INSTANCE = getInstanceName(problem,param_arr)
+model = getJuMPModel(problem, param_arr)
+plotAll(model, INSTANCE)
+
+
 param_arr = [5,5,5,2]
 model = getJuMPModelInstance(:DCAP, param_arr)
 model = generateSMPSInstance(:DCAP, param_arr)

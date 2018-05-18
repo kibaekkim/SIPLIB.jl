@@ -15,37 +15,33 @@
 \contentsline {subsection}{\numberline {3.3}Type of the problems}{14}{subsection.3.3}
 \contentsline {subsection}{\numberline {3.4}Number of components}{15}{subsection.3.4}
 \contentsline {subsection}{\numberline {3.5}Sparsity}{15}{subsection.3.5}
-\contentsline {section}{\numberline {4}\texttt {Siplib.jl}: Implementation of a \texttt {Julia} package for \texttt {SIPLIB 2.0}}{18}{section.4}
+\contentsline {section}{\numberline {4}\texttt {Siplib.jl}: A \texttt {Julia} package for \textsf {SIPLIB 2.0}}{18}{section.4}
 \contentsline {subsection}{\numberline {4.1}Generating instances: \texttt {JuMP.Model}-object and \texttt {SMPS} files}{18}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Pre-analyzing instances: size, sparsity, plot}{19}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {4.2.1}Size information}{19}{subsubsection.4.2.1}
-\contentsline {subsubsection}{\numberline {4.2.2}Sparsity information}{19}{subsubsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.3}Plotting coefficient matrices}{19}{subsubsection.4.2.3}
-\contentsline {subsection}{\numberline {4.3}Solving instances: interfacing with \texttt {DSP} solver}{19}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Extensive form: Invoking standard MIP solver}{19}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}Dual decomposition}{19}{subsubsection.4.3.2}
-\contentsline {subsubsection}{\numberline {4.3.3}Benders decomposition}{19}{subsubsection.4.3.3}
-\contentsline {section}{\numberline {5}The instance catalog: Computational benchmarks for ready-made \texttt {SMPS} files}{20}{section.5}
-\contentsline {section}{\numberline {6}Concluding remarks}{21}{section.6}
-\contentsline {section}{\numberline {A}Problem descriptions}{22}{appendix.A}
-\contentsline {subsection}{\numberline {A.1}\texttt {DCAP}: Dynamic capacity planning with stochastic demand}{22}{subsection.A.1}
-\contentsline {subsubsection}{\numberline {A.1.1}\texttt {DCAP}: Mathematical formulation}{22}{subsubsection.A.1.1}
-\contentsline {subsubsection}{\numberline {A.1.2}\texttt {DCAP}: Data generation}{23}{subsubsection.A.1.2}
-\contentsline {subsection}{\numberline {A.2}\texttt {MPTSPs}: Mutli-path traveling salesman problem with stochastic travel times}{23}{subsection.A.2}
-\contentsline {subsubsection}{\numberline {A.2.1}\texttt {MPTSPs}: Mathematical formulation}{24}{subsubsection.A.2.1}
-\contentsline {subsubsection}{\numberline {A.2.2}\texttt {MPTSPs}: Data generation}{25}{subsubsection.A.2.2}
-\contentsline {subsection}{\numberline {A.3}\texttt {SIZES}: Selection of an optimal subset of sizes}{26}{subsection.A.3}
-\contentsline {subsubsection}{\numberline {A.3.1}\texttt {SIZES}: Mathematical formulation}{26}{subsubsection.A.3.1}
-\contentsline {subsubsection}{\numberline {A.3.2}\texttt {SIZES}: Data generation}{27}{subsubsection.A.3.2}
-\contentsline {subsection}{\numberline {A.4}\texttt {SMKP}: Stochastic multiple knapsack problem}{28}{subsection.A.4}
-\contentsline {subsubsection}{\numberline {A.4.1}\texttt {SMKP}: Mathematical formulation}{28}{subsubsection.A.4.1}
-\contentsline {subsubsection}{\numberline {A.4.2}\texttt {SMKP}: Data generation}{29}{subsubsection.A.4.2}
-\contentsline {subsection}{\numberline {A.5}\texttt {SSLP}: Stochastic server location problem}{30}{subsection.A.5}
-\contentsline {subsubsection}{\numberline {A.5.1}\texttt {SSLP}: Mathematical formulation}{30}{subsubsection.A.5.1}
-\contentsline {subsubsection}{\numberline {A.5.2}\texttt {SSLP}: Data generation}{32}{subsubsection.A.5.2}
-\contentsline {subsection}{\numberline {A.6}\texttt {SUC}: Stochastic unit commitment problem}{32}{subsection.A.6}
-\contentsline {subsubsection}{\numberline {A.6.1}\texttt {SUC}: Mathematical formulation}{32}{subsubsection.A.6.1}
-\contentsline {subsubsection}{\numberline {A.6.2}\texttt {SUC}: Data generation}{36}{subsubsection.A.6.2}
-\contentsline {section}{\numberline {B}Block-wise sparsity based on set cardinality}{37}{appendix.B}
-\contentsline {section}{\numberline {C}Constraint type legend from \texttt {MIPLIB 2010}}{39}{appendix.C}
+\contentsline {subsubsection}{\numberline {4.2.1}Get size information}{19}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Get sparsity information}{20}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.3}Plot sparsity patterns}{20}{subsubsection.4.2.3}
+\contentsline {section}{\numberline {5}The instance catalog: Computational benchmarks for accompanied \texttt {SMPS} files}{23}{section.5}
+\contentsline {section}{\numberline {6}Concluding remarks}{24}{section.6}
+\contentsline {section}{\numberline {A}Problem descriptions}{25}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}\textsf {DCAP}: Dynamic capacity planning with stochastic demand}{25}{subsection.A.1}
+\contentsline {subsubsection}{\numberline {A.1.1}\textsf {DCAP}: Mathematical formulation}{25}{subsubsection.A.1.1}
+\contentsline {subsubsection}{\numberline {A.1.2}\textsf {DCAP}: Data generation}{26}{subsubsection.A.1.2}
+\contentsline {subsection}{\numberline {A.2}\textsf {MPTSPs}: Mutli-path traveling salesman problem with stochastic travel times}{26}{subsection.A.2}
+\contentsline {subsubsection}{\numberline {A.2.1}\textsf {MPTSPs}: Mathematical formulation}{27}{subsubsection.A.2.1}
+\contentsline {subsubsection}{\numberline {A.2.2}\textsf {MPTSPs}: Data generation}{28}{subsubsection.A.2.2}
+\contentsline {subsection}{\numberline {A.3}\textsf {SIZES}: Selection of an optimal subset of sizes}{29}{subsection.A.3}
+\contentsline {subsubsection}{\numberline {A.3.1}\textsf {SIZES}: Mathematical formulation}{29}{subsubsection.A.3.1}
+\contentsline {subsubsection}{\numberline {A.3.2}\textsf {SIZES}: Data generation}{30}{subsubsection.A.3.2}
+\contentsline {subsection}{\numberline {A.4}\textsf {SMKP}: Stochastic multiple knapsack problem}{31}{subsection.A.4}
+\contentsline {subsubsection}{\numberline {A.4.1}\textsf {SMKP}: Mathematical formulation}{31}{subsubsection.A.4.1}
+\contentsline {subsubsection}{\numberline {A.4.2}\textsf {SMKP}: Data generation}{32}{subsubsection.A.4.2}
+\contentsline {subsection}{\numberline {A.5}\textsf {SSLP}: Stochastic server location problem}{33}{subsection.A.5}
+\contentsline {subsubsection}{\numberline {A.5.1}\textsf {SSLP}: Mathematical formulation}{33}{subsubsection.A.5.1}
+\contentsline {subsubsection}{\numberline {A.5.2}\textsf {SSLP}: Data generation}{35}{subsubsection.A.5.2}
+\contentsline {subsection}{\numberline {A.6}\textsf {SUC}: Stochastic unit commitment problem}{35}{subsection.A.6}
+\contentsline {subsubsection}{\numberline {A.6.1}\texttt {SUC}: Mathematical formulation}{35}{subsubsection.A.6.1}
+\contentsline {subsubsection}{\numberline {A.6.2}\textsf {SUC}: Data generation}{39}{subsubsection.A.6.2}
+\contentsline {section}{\numberline {B}Block-wise sparsity based on set cardinality}{40}{appendix.B}
+\contentsline {section}{\numberline {C}Constraint type legend from \texttt {MIPLIB 2010}}{42}{appendix.C}
 \endgroup 

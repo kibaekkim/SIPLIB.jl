@@ -96,7 +96,7 @@ grestore
 		invoke,dlopen,dlsym,system,error,throw,assert,new,Inf,Nan,pi,im,begin,while,for,in,return,
 		break,continue,macro,quote,let,if,elseif,else,try,catch,end,bitstype,ccall,do,using,module,
 		import,export,importall,baremodule,immutable,local,global,const,Bool,Int,Int8,Int16,Int32,
-		Int64,Uint,Uint8,Uint16,Uint32,Uint64,Float32,Float64,Complex64,Complex128,Any,Nothing,None,
+		Int64,Uint,Uint8,Uint16,Uint32,Uint64,Float32,Float64,Complex64,Complex128,String,Symbol,Any,Nothing,None,
 		function,type,typealias,abstract},
 	comment=[l]{\#},
 	%morecomment=[s]{#=}{=#},
@@ -111,8 +111,42 @@ grestore
 \setcounter{tocdepth}{2}
 
 % set shortcuts
-\newcommand{\siplibtwo}{\texttt{SIPLIB 2.0}}
-\newcommand{\siplib}{\texttt{SIPLIB}}
+%% Package, Library, abbreviate terms
+\newcommand{\siplibtwo}{\textsf{SIPLIB 2.0}}
+\newcommand{\siplib}{\textsf{SIPLIB}}
+\newcommand{\miplib}{\textsf{MIPLIB 2010}}
+\newcommand{\smps}{\textsf{SMPS}}
+\newcommand{\mps}{\textsf{MPS}}
+\newcommand{\mpsx}{\textsf{MPSX}}
+\newcommand{\jump}{\textsf{JuMP}}
+\newcommand{\structjump}{\textsf{StructJuMP}}
+
+% Problems
+\newcommand{\dcap}{\textsf{DCAP}}
+\newcommand{\dclp}{\textsf{DCLP}}
+\newcommand{\mptsps}{\textsf{MPTSPs}}
+\newcommand{\sizes}{\textsf{SIZES}}
+\newcommand{\smkp}{\textsf{SMKP}}
+\newcommand{\sslp}{\textsf{SSLP}}
+\newcommand{\suc}{\textsf{SUC}}
+
+% Solvers
+\newcommand{\dsp}{\textsf{DSP}}
+\newcommand{\pysp}{\textsf{PySP}}
+\newcommand{\pyomo}{\textsf{Pyomo}}
+\newcommand{\cplex}{\textsf{CPLEX}}
+
+%% Programming languages
+\newcommand{\julia}{\texttt{Julia}}
+\newcommand{\python}{\texttt{Python}}
+\newcommand{\clang}{\texttt{C}}
+\newcommand{\cpp}{\texttt{C++}}
+\newcommand{\matlab}{\texttt{MATLAB}}
+
+%% Siplib.jl related terms
+\newcommand{\jumpmodel}{\texttt{JuMP.Model}}
+\newcommand{\siplibjl}{\texttt{Siplib.jl}}
+
 \newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
 \DeclareMathOperator*{\PP}{\mathbb{P}}
 \DeclareMathOperator*{\EE}{\mathbb{E}}
@@ -188,15 +222,15 @@ grestore
 \input{./sections/sec03_summary.tex}
 \pagebreak
 
-\section{\texttt{Siplib.jl}: Implementation of a \texttt{Julia} package for \siplibtwo} \label{sec:tutorial}
-\input{./sections/sec04_tutorial.tex}
+\section{\siplibjl: A \texttt{Julia} package for \siplibtwo} \label{sec:siplibjl}
+\input{./sections/sec04_siplibjl.tex}
 \pagebreak
 
 %\section{Implementation of SmpsWriter.jl}\label{sec:smps_writer}
 %\input{./sections/sec05_smpswriter.tex}
 %\pagebreak
 
-\section{The instance catalog: Computational benchmarks for ready-made \texttt{SMPS} files}\label{sec:instance_catalog}
+\section{The instance catalog: Computational benchmarks for accompanied \texttt{SMPS} files}\label{sec:instance_catalog}
 \input{./sections/sec06_instance_catalog.tex}
 \pagebreak
 
