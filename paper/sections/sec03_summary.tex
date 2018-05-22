@@ -26,6 +26,7 @@ Table \ref{table:num_components} summarizes the number of components (variables 
 
 \subsection{Sparsity}
 In section \ref{sec:sparsity}, we append tables providing block-wise sparsity that is derived solely based on the set cardinality. Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP where the sparsity pattern varies instance by instance. In particular, the block-diagonal structure results always in very high sparsity (i.e., low density of non-zero values) as scenario increases. Unlike general MIP, it does not seem to be meaningful to just report the sparsity information of the extensive form coefficient matrix since decomposition-based algorithms in SIP can efficiently handle the sparsity. 
+\kk{Would it be better to present the sparsity structure for one-scenario problem, like the one in .cor file?}
 
 \input{figures/figure_sparsity_pattern}
 
