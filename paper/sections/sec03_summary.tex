@@ -30,7 +30,7 @@ In section \ref{sec:sparsity}, we append tables providing block-wise sparsity th
 
 \input{figures/figure_sparsity_pattern}
 
-As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. We call the block T \textit{complicating} block. 
+As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. We call the block T \textit{complicating} block. \kk{$T$ has been called ``technology matrix'' in the literature. Let's not introduce new term, unless we are proposing new concept related to the name.}
 
 Dense coefficient matrix usually causes slowdown in decomposition algorithms. For example, the Dual Decomposition based solver \dsp\ shows much slower convergence speed than the centralized solver \cplex\ in problems like \smkp\ which always have low sparsity (nonzero ratio: 50\%-100\%, refer to Table \ref{table:sparsity_SMKP}).
 \begin{figure}

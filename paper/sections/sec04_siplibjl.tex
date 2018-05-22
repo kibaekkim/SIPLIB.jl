@@ -10,6 +10,8 @@ To use \siplibjl, we need to perform the following steps.
 	\item excute \texttt{using Siplib}
 \end{itemize}
 
+\kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
+
 \subsection{Generating instances: \texttt{JuMP.Model}-object and \texttt{SMPS} files}
 \jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in \siplibjl\ requires \jumpmodel-type object as one of its input arguments. \siplibjl\ provides two functions to construct the \jumpmodel-type object of an instance.
 \begin{lstlisting}[frame=single,language=julia]
@@ -69,6 +71,8 @@ function getInstanceName(problem::Symbol, param_arr::Any)::String
 	\item Second stage-only block (block W)
 	\item Complicating block (block T)
 \end{itemize}
+
+\kk{This section looks more or less a manual; but, should provide more than that. For example, the section should contain the answers to the questions: Why do we care about this? What kind of information do we want to provide? Does it provide any information for testing algorithms? The manual-like information would better go to the package website (not research paper).}
 
 %\noindent\begin{minipage}{.45\textwidth}
 %\begin{lstlisting}[frame=single,language=julia]
@@ -210,6 +214,9 @@ plotAll(model, INSTANCE)               # plot all the plots above
 \end{lstlisting}
 \input{figures/figure_siplibjl_plots}
 By executing \texttt{plotAll}, one can obtain all the plots in Fig. \ref{fig:plotall}.
+
+\kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
+
 %
 %\subsection{Solving instances: interfacing with \texttt{DSP} solver}
 %\subsubsection{Extensive form: Invoking standard MIP solver}
