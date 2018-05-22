@@ -36,8 +36,10 @@ module Siplib
 #    include("./solver.jl")
 
     export getInstanceName,         # return Instance name using problem & parameters
-           writeSmps, writeSMPS,    # write SMPS files from JuMP.Model
+           writeSmps,               # write SMPS files from JuMP.Model
            writeSmps_with_splice,   # for memory-efficiency. not proper in case of reusing JuMP.Model-object.
+           writeSMPS,               # alias
+           writeSMPS_with_splice,   # alias
            getJuMPModel,            # only return JuMP.Model object
            generateSMPS,            # return JuMP.Model object as well as generate SMPS files
            plotConstrMatrix,        # plot constraint matrix of the extensive form

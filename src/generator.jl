@@ -54,3 +54,7 @@ end
 function writeSMPS(m::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
     writeSmps(m, INSTANCE, DIR_NAME)
 end
+
+function writeSMPS_with_splice(m::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
+    writeSmps_with_splice(m, INSTANCE, DIR_NAME)
+end
