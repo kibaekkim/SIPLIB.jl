@@ -1,8 +1,37 @@
 In this section, we explain information about the test problems in summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. This section reflects our philosophy in developing \siplibtwo. Detailed problem-specific information is available in Section \ref{sec:prob_desc} for those who are interested in.
 
 \subsection{Origin of the problems}
-Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We guess the missing links and develop our own way to implement the problems as long as it does not harm the endemic characteristic. 
+Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We guess the missing links and develop our own way to implement the problems. 
 \input{tables/table_siplib2_problems}
+
+\subsubsection{How we deal with missing links and errors in the former  \siplib}
+During implementation, we often have faced some missing links and errors from the former \siplib. The missing links are largely from the two parts: data generation and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ throughout the references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
+
+We also found some errors. The errors are not critical so the provided instances are still solvable but the result may be different from the originally intended. For example, the big-M in the logical constraint (\ref{dcap:b}) in \dcap\ is set to be 1 rather than suitably large value in the instances. 
+
+We obey the following rule to deal with such obstacles described above.
+\begin{enumerate}
+	\item Follow the original implementation including the errors whenever we are able to recover it.
+	\item Develop our own way as long as it does not harm the endemic characteristic.
+\end{enumerate}
+
+The notable remark for each problem briefly presents in Table \ref{table:remarks}.
+
+\begin{table}[]
+	\centering
+	\caption{Implementation remarks for each problem}
+	\label{table:remarks}
+	\begin{tabular}{@{}cl@{}}
+		\toprule
+		Problem & \multicolumn{1}{c}{Remarks}                                                \\ \midrule
+		\dcap   & Maintain the error in constraint (\ref{dcap:b})                                              \\
+		\mptsps & Adopt formulation from another reference \cite{journal:LSD1990}, Develop data generation procedure \\
+		\sizes  & Polish the formulation                                                    \\
+		\smkp   & -                                                                         \\
+		\sslp   & Maintain the zonal components empty, Maintain the redundant constraint (\ref{sslp:b})                                     \\
+		\suc    & Generate and provide 1,000 stochastic wind scenario data                                    \\ \bottomrule
+	\end{tabular}
+\end{table}
 
 \subsection{Instance naming rule}
 Table \ref{table:naming_rule} shows how we name the instances. We change the original naming convention for consistency and future extension. Some legacy naming rules do not consider the case when the set cardinality becomes larger than 1 digit number. Moreover, since some \siplibtwo\ instances can be generated using more sets other than used in \siplib, we needed to define a new naming convention. For example, we change the instance names of \dcap\ and \smkp\ as below.
@@ -31,8 +60,8 @@ In section \ref{sec:sparsity}, we append tables providing block-wise sparsity th
 
 \input{figures/figure_sparsity_pattern}
 
-As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. Block T is called \textit{technology matrix} . \kk{$T$ has been called ``technology matrix'' in the literature. Let's not introduce new term, unless we are proposing new concept related to the name.}
-\yoc{Thanks. I change the term throughout the paper and pacakge.}
+As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. Block T is called \textit{technology}  matrix. \kk{$T$ has been called ``technology matrix'' in the literature. Let's not introduce new term, unless we are proposing new concept related to the name.}
+\yoc{Thanks. I change the term throughout the paper and package.}
 
 Dense coefficient matrix usually causes slowdown in decomposition algorithms. For example, the Dual Decomposition based solver \dsp\ shows much slower convergence speed than the centralized solver \cplex\ in problems like \smkp\ which always have low sparsity (nonzero ratio: 50\%-100\%, refer to Table \ref{table:sparsity_SMKP}).
 \begin{figure}
