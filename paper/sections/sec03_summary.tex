@@ -27,10 +27,12 @@ Table \ref{table:num_components} summarizes the number of components (variables 
 \subsection{Sparsity}
 In section \ref{sec:sparsity}, we append tables providing block-wise sparsity that is derived solely based on the set cardinality. Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP where the sparsity pattern varies instance by instance. In particular, the block-diagonal structure results always in very high sparsity (i.e., low density of non-zero values) as scenario increases. Unlike general MIP, it does not seem to be meaningful to just report the sparsity information of the extensive form coefficient matrix since decomposition-based algorithms in SIP can efficiently handle the sparsity. 
 \kk{Would it be better to present the sparsity structure for one-scenario problem, like the one in .cor file?}
+\yoc{I tried to show the repeatedly duplicating patterns by looking at once. I think it would be good to add a subsection in section \ref{sec:prob_desc} to discuss problem-specific sparsity pattern for each problem and present the one-scenario instance sparsity pattern. Thank you.}
 
 \input{figures/figure_sparsity_pattern}
 
-As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. We call the block T \textit{complicating} block. \kk{$T$ has been called ``technology matrix'' in the literature. Let's not introduce new term, unless we are proposing new concept related to the name.}
+As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. Block T is called \textit{technology matrix} . \kk{$T$ has been called ``technology matrix'' in the literature. Let's not introduce new term, unless we are proposing new concept related to the name.}
+\yoc{Thanks. I change the term throughout the paper and pacakge.}
 
 Dense coefficient matrix usually causes slowdown in decomposition algorithms. For example, the Dual Decomposition based solver \dsp\ shows much slower convergence speed than the centralized solver \cplex\ in problems like \smkp\ which always have low sparsity (nonzero ratio: 50\%-100\%, refer to Table \ref{table:sparsity_SMKP}).
 \begin{figure}
