@@ -11,6 +11,7 @@ To use \siplibjl, we need to perform the following steps.
 \end{itemize}
 
 \kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
+\yoc{Thanks. First of all, this section is written by benchmarking the MIPLIB 2010 paper. There is a section like this (Section 4: How to run a test, add a solver, and what the scripts do) so I think the reviewers of MPC may want us to include the section like this. And I wanted this draft to be look of completeness (not being looked abstractly) to concretely describe what is in my mind. As the main developer of SIPLIB 2.0 and based on my experience of using the Julia scripts for preliminary computational experiments, I think the current syntax I propose is reasonable and compact. The better suggestion/discussion on the syntax is always welcome and can be applied. More detailed manual will be surely accompanied later with the release of this package.} 
 
 \subsection{Generating instances: \texttt{JuMP.Model}-object and \texttt{SMPS} files}
 \jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in \siplibjl\ requires \jumpmodel-type object as one of its input arguments. \siplibjl\ provides two functions to construct the \jumpmodel-type object of an instance.
@@ -69,10 +70,11 @@ function getInstanceName(problem::Symbol, param_arr::Any)::String
 	\item Coefficient matrix of extensive form
 	\item First stage-only block (block A)
 	\item Second stage-only block (block W)
-	\item Complicating block (block T)
+	\item Technology block (block T)
 \end{itemize}
 
 \kk{This section looks more or less a manual; but, should provide more than that. For example, the section should contain the answers to the questions: Why do we care about this? What kind of information do we want to provide? Does it provide any information for testing algorithms? The manual-like information would better go to the package website (not research paper).}
+%\yoc{Thanks. This section is written by benchmarking the MIPLIB 2010 paper published on MPC. There is a section like this (Section 4: How to run a test, add a solver, and what the scripts do) so I think the reviewers of MPC may want us to include the section like this. The answers to the questions are discussed in Section \ref{sec:summary}. More detailed manual will be surely accompanied later with the release of this package. This is a brief manual like the one in MIPLIB 2010.}
 
 %\noindent\begin{minipage}{.45\textwidth}
 %\begin{lstlisting}[frame=single,language=julia]
@@ -161,10 +163,10 @@ type Sparsity
 	nCol2::Int              # number of columns in 2nd stage-only block (block W)
 	nNz2::Int               # number of nonzero values in 2nd stage-only block (block W)
 	sparsity2::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
-	nRowC::Int              # number of rows in complicating block (block T)
-	nColC::Int              # number of columns in complicating block (block T)
-	nNzC::Int               # number of nonzero values in complicating block (block T)  
-	sparsityC::Float64      # sparsity ([0,1] scale) of complicating block (block T)
+	nRowC::Int              # number of rows in technology block (block T)
+	nColC::Int              # number of columns in technology block (block T)
+	nNzC::Int               # number of nonzero values in technology block (block T)  
+	sparsityC::Float64      # sparsity ([0,1] scale) of technology block (block T)
 	nRow::Int               # number of rows in total
 	nCol::Int               # number of columns in total
 	nNz::Int                # number of nonzero values in total
@@ -204,7 +206,7 @@ INSTANCE = getInstanceName(problem, param_arr)	# save instance name
 model = getJuMPModel(problem, param_arr)	    # construct JuMP.Model object
 plotFirstStageBlock(model, INSTANCE)               # plot 1st stage block
 plotSecondStageBlock(model, INSTANCE)               # plot 2nd stage block
-plotComplicatingBlock(model, INSTANCE)               # plot complicating block
+plotComplicatingBlock(model, INSTANCE)               # plot technology block
 \end{lstlisting}
 
 One might want to draw all the plots at once. The following two functions are defined to do that.
@@ -216,6 +218,7 @@ plotAll(model, INSTANCE)               # plot all the plots above
 By executing \texttt{plotAll}, one can obtain all the plots in Fig. \ref{fig:plotall}.
 
 \kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
+%\yoc{The why/how description is discussed in Section \ref{sec:summary}. This section is only for ``how it is structured" and ``how to utilize." In addition, like MIPLIB \cite{MIPLIB}, Ariyawansa and Felt's SLP library \cite{AF2004}, Dirske and Ferris's MCP library \cite{DF1995}, this kind of paper cannot be fully research-oriented.}
 
 %
 %\subsection{Solving instances: interfacing with \texttt{DSP} solver}
