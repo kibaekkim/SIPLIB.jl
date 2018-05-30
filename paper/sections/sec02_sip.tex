@@ -14,11 +14,11 @@ The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data a
 The SIP (\ref{eq:SIP_1}) can be rewritten in the extensive form
 \begin{subequations}\label{sip:ef}
 \begin{align}
-z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\ 
-\mathrm{s.t.}\ &Ax\ge b,  \\
-	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\},\\
-	&x\in X, \\
-	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}.
+z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \label{ef:obj}\\ 
+\mathrm{s.t.}\ &Ax\ge b,  \label{ef:b}\\
+	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\}, \label{ef:c} \\
+	&x\in X, \label{ef:d} \\
+	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}. \label{ef:e}
 \end{align}
 \end{subequations}
 
@@ -64,10 +64,10 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\
 \end{table} 
 
 \subsection{Solution methods}
-Assuming finite and discrete distribution, much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation  \ref{eq:SIP_1}, that is, the sum of the first stage costs and the expected costs in the second stage. Most methods also assume that a single scenario evaluation of SIP is somehow tractable. In this section, we introduce representative approaches to resolve the difficulties in SIP considering many scenarios.
-\kk{A deterministic equivalent form needs to be provided.}
-
-\subsubsection{Deterministic equivalent form}
+Assuming finite and discrete distribution, we can always formulate SIP in the full deterministic equivalent MIP or extensive form as in Equations (\ref{ef:obj})-(\ref{ef:e}).  %much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation \ref{eq:SIP_1}, 
+%Much of the solution methods in SIP is studied to resolve the difficulty of optimizing the extensive form. %That is, the sum of the first-stage costs and the expected costs in the second-stage. 
+Most methods in SIP assume that a single scenario evaluation is somehow tractable. With a number of realizations, however, the extensive form becomes a quite large. Solving the MIP without exploiting the special structure can easily go with inefficiency. In this section, we introduce representative approaches to resolve the difficulties in SIP considering many scenarios.
+\kk{A deterministic equivalent form needs to be provided.} \yoc{Extensive form is given by Equations (\ref{ef:obj})-(\ref{ef:e}). I modify some sentences here towards including the term ``extensive form."}
 
 \subsubsection{Stage-wise decomposition}
 This type of algorithms exploit the natural viewpoint of optimizing the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible first-stage decisions. The method used most frequently are based on building an outer linearization of the recourse cost function and a solution of the first-stage problem plus this linearization. This cutting plane technique is called the \textit{L-shaped method} or \textit{Benders decomposition} \cite{B1962}, from which the variants of stage-wise decomposition methods are derived.
