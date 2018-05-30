@@ -1,5 +1,3 @@
-\section{Problem descriptions} \label{sec:prob_desc}
-
 In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We also explain data generation procedures. Due to limited access to the original data in reference papers, we selectively choose the methods from several available references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
 
 \subsection{\dcap: Dynamic capacity planning with stochastic demand} \label{DCAP}
@@ -61,6 +59,9 @@ There are four factors that define the instance of \dcap\: $|R|$, $|N|$, $|T|$, 
 	c_{0jt}^s  &=500U+500,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
 	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
 \end{align*}
+
+\subsubsection{\dcap: Sparsity pattern}
+
 
 %\subsection{\texttt{DCLP}: Data center location problem} \label{DCLP}
 %
@@ -161,6 +162,7 @@ Given $D,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follo
 	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
 \end{enumerate}
 
+\subsubsection{\mptsps: Sparsity pattern}
 
 \subsection{\sizes: Selection of an optimal subset of sizes} \label{SIZES}
 \sizes\ is a simplified version of the cutting-stock problem with multi-period stochastic demand. We only consider the two-periods model to follow \cite{journal:JSW1999}. The first period demand is deterministic and the demand for the second period is stochastic. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \jumpmodel. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \siplibtwo.
@@ -283,6 +285,7 @@ Instances of \sizes\ are generated based on the one-period data given in Table \
 	\end{tabular}
 \end{table}
 
+\subsubsection{\sizes: Sparsity pattern}
 
 \subsection{\smkp: Stochastic multiple knapsack problem} \label{SMKP}
 \smkp\ is a class of stochastic multiple binary knapsack problems. Unlike typical knapsack problems where the objective is to maximize total profits under the restriction of the weight capacity of each knapsack, \smkp\ is to minimize total weights while satisfying a certain required profit for each knapsack. 
@@ -424,7 +427,10 @@ q_{0j}^s	&=	1000,\quad\forall j\in J,\ \forall s\in\mathcal{S},\\
 v 		&= |J|	\\
 u	&= \frac{3}{2}\times\frac{\sum_{i\in I}\sum_{j\in J}d_{ij}}{|J|} 
 \end{align*}
-Note that the zonal data is omitted due to the lack of available information. Hence, constraint (\ref{sslp:c}) does not appear in \siplibtwo\ instances.
+Note that the zonal data is omitted due to the lack of available information. Hence, constraint (\ref{sslp:c}) does not appear in \siplibtwo\ instances. Note also that constraint (\ref{sslp:b}) is redundant since we set $v=|J|$. We include this redundant constraint to follow the former \siplib\ implementation although it seems like a bug.
+
+\subsubsection{\sslp: Sparsity pattern}
+
 \subsection{\suc: Stochastic unit commitment problem} \label{SUC}
 The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an extended time horizon. \suc\ is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
 \subsubsection{\texttt{SUC}: Mathematical formulation}
@@ -566,3 +572,4 @@ D_{nt}=\sum_{n\in N} \sum_{t\in T}\left(  \sum_{\lambda\in IG_n^\mathcal{L}}IC_{
 
 Unlike other problems where stochastic data is generated while \julia\ script is running, we pre-generate and provide up to 1,000 wind power production profiles for each day type. This data is included in ``\texttt{$\sim$/Siplib/src/problems/SUC/data/WIND}'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$. Hence, the number of scenarios that can be considered in an instance is limited to 1,000, which we think is large enough regarding the intrinsic large-scale size of the problem \suc.
 
+\subsubsection{\suc: Sparsity pattern}

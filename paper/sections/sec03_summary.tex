@@ -4,34 +4,42 @@ In this section, we explain information about the test problems in summarized ma
 Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We guess the missing links and develop our own way to implement the problems. 
 \input{tables/table_siplib2_problems}
 
-\subsubsection{\textcolor{red}{How we deal with missing links and errors in the former \siplib}}
-\yoc{This subsection is added to discuss the issues on the former \siplib\ instances}
+\subsubsection{How we deal with missing links and errors in the former \siplib}
+\yoc{This subsection is added to discuss the issues on implementaion.}
 During implementation, we often have faced some missing links and errors. The missing links are largely from the two parts: data generation and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ throughout the references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
 
 We also found some errors. The errors are not critical so the accompanied instances are still solvable but the result may be different from the originally intended. For example, the big-M in the logical constraint (\ref{dcap:b}) in \dcap\ is set to be 1 rather than suitably large value in the \smps\ files. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
 
 We obey the following rule to deal with such obstacles described above.
 \begin{enumerate}
-	\item Follow the original implementation including the errors whenever we are able to recover it.
+	\item Follow the original implementation including the errors whenever we are able to reproduce it.
 	\item Develop our own way as long as it does not harm the endemic characteristic.
 \end{enumerate}
 
 The notable remark for each problem briefly presents in Table \ref{table:remarks}.
 
-\begin{table}[]
+\begin{table}[H]
 	\centering
-	\caption{Implementation remarks for each problem}
-	\label{table:remarks}
-	\begin{tabular}{@{}cl@{}}
-		\toprule
-		Problem & \multicolumn{1}{c}{Remarks}                                                \\ \midrule
-		\dcap   & Maintain the error in constraint (\ref{dcap:b})                                              \\
-		\mptsps & Adopt formulation from another reference \cite{journal:LSD1990}, Develop data generation procedure \\
-		\sizes  & Polish the formulation                                                    \\
-		\smkp   & -                                                                         \\
-		\sslp   & Maintain the zonal components empty, Maintain the redundant constraint (\ref{sslp:b})                                     \\
-		\suc    & Generate and provide 1,000 stochastic wind scenario data                                    \\ \bottomrule
-	\end{tabular}
+	\resizebox{\textwidth}{!}{%
+		\begin{threeparttable}
+			\caption{Implementation remarks for each problem}
+			\label{table:remarks}
+			\begin{tabular}{@{}cl@{}}
+				\toprule
+				Problem & \multicolumn{1}{c}{Remarks}                                                \\ \midrule
+				\dcap   & Maintain the error in constraint (\ref{dcap:b})                                              \\
+				\mptsps & Adopt formulation from another reference \cite{journal:LSD1990}, Develop data generation procedure \\
+				\sizes  & Modify the formulation to polish                                                    \\
+				\smkp   & -                                                                         \\
+				\sslp   & Maintain the zonal components empty, Maintain the redundant constraint (\ref{sslp:b})                                     \\
+				\suc    & Generate and provide 1,000 stochastic wind scenario data                                    \\ \bottomrule
+			\end{tabular}
+			\begin{tablenotes}
+				\small
+				\item - means no issue presents.
+			\end{tablenotes}
+		\end{threeparttable}
+	}
 \end{table}
 
 \subsection{Instance naming rule}
@@ -46,7 +54,8 @@ The capital Roman letters mean the sets defining the problems. In particular, th
 \input{tables/table_instance_naming_rule}
 
 \subsection{Type of the problems}
-In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation on the constraints, we refer \miplib\ \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, which we cannot easily capture the insight from the problem type classification. 
+In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. Many decomposition-based solution methods in SIP require specific type of variables to be presented in each stage. They oftentimes use the Therefore, the stage-wise variable type is one of the most important factor to classify SIP problems.
+We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation on the constraints, we refer to \miplib\ \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, which we cannot easily capture the insight from the problem type classification. 
 \input{tables/table_components_of_problems}
 
 \subsection{Number of components}

@@ -225,7 +225,7 @@ grestore
 \input{./sections/sec03_summary.tex}
 \pagebreak
 
-\section{\siplibjl: A \texttt{Julia} package for \siplibtwo} \label{sec:siplibjl}
+\section{A \texttt{Julia} package for \siplibtwo} \label{sec:siplibjl}
 \input{./sections/sec04_siplibjl.tex}
 \pagebreak
 
@@ -245,21 +245,30 @@ grestore
 %\end{acknowledgements}
 
 \appendix
+% references
+\input{./sections/references.tex} % This will be replaces by a bibtex format file later.
 \section*{Appendix}
+
 % problem-specific description 
+\section{Problem descriptions} \label{sec:prob_desc}
 \input{./sections/app01_probdesc.tex}
 \pagebreak
 
 % general sparsity (fully cardinality based)
+\section{Block-wise sparsity based on set cardinality} \label{sec:sparsity}
 \input{./sections/app02_sparsity.tex}
 \pagebreak
 
 % MIPLIB 2010 constraint type legend
+\section{Constraint type legend from \texttt{MIPLIB 2010}} \label{sec:miplibconstraint}
 \input{./sections/app03_miplib_constraints.tex}
 \pagebreak
 
-% references
-\input{./sections/references.tex} % This will be replaces by a bibtex format file later.
+% siplib.jl tutorial
+\section{Tutorial for the \julia\ package} \label{sec:tutorial}
+\input{./sections/app04_tutorial.tex}
+\pagebreak
+
 
 \end{document}
 
