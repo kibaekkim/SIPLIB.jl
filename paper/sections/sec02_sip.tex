@@ -67,9 +67,9 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \\
 Assuming finite and discrete distribution, much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation  \ref{eq:SIP_1}, that is, the sum of the first stage costs and the expected costs in the second stage. Most methods also assume that a single scenario evaluation of SIP is somehow tractable. In this section, we introduce representative approaches to resolve the difficulties in SIP considering many scenarios.
 \kk{A deterministic equivalent form needs to be provided.}
 
-%\subsubsection{Convex approximations of recourse function}
+\subsubsection{Deterministic equivalent form}
 
-\subsubsection{Stage-wise decomposition }
+\subsubsection{Stage-wise decomposition}
 This type of algorithms exploit the natural viewpoint of optimizing the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible first-stage decisions. The method used most frequently are based on building an outer linearization of the recourse cost function and a solution of the first-stage problem plus this linearization. This cutting plane technique is called the \textit{L-shaped method} or \textit{Benders decomposition} \cite{B1962}, from which the variants of stage-wise decomposition methods are derived.
 
 For SIP with pure binary first-stage variables and mixed integer second-stage, the integer L-shaped method \cite{LL1993} approximates the second-stage recourse function by linear cuts that are exact at the binary solution where the cut is generated and are under-estimates at other binary solutions. 

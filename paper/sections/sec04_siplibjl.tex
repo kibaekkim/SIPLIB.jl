@@ -13,7 +13,20 @@ To use \siplibjl, we need to perform the following steps.
 \kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
 \yoc{Thanks. First of all, this section is written by benchmarking the MIPLIB 2010 paper. There is a section like this (Section 4: How to run a test, add a solver, and what the scripts do) so I think the reviewers of MPC may want us to include the section like this. And I wanted this draft to be look of completeness (not being looked abstractly) to concretely describe what is in my mind. As the main developer of SIPLIB 2.0 and based on my experience of using the Julia scripts for preliminary computational experiments, I think the current syntax I propose is reasonable and compact. The better suggestion/discussion on the syntax is always welcome and can be applied. More detailed manual will be surely accompanied later with the release of this package.} 
 
-\subsection{Generating instances: \texttt{JuMP.Model}-object and \texttt{SMPS} files}
+
+\subsection{\smps\ format for stochastic programming instances} \label{subsec:smps}
+\smps\ format \cite{SMPS} is a data conventions for the automatic input of multiperiod stochastic linear programs. The input format is based on an old column-oriented format \mpsx\ standard and is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. 
+
+Three input files are required to specify an SP in \smps\ format:
+\begin{itemize}
+	\item \texttt{.cor}: Core file written in \mps\ format. This describes the fundamental problem structure and contains the first-stage data and one second-stage scenario data.
+	\item \texttt{.tim}: Time file which specifies the location where the 2nd stage begins.
+	\item \texttt{.sto}: Stoch file which contains stochastic data of all scenarios except the one included in \texttt{.cor} file.
+\end{itemize}
+\kk{This needs moved to later section.}
+
+
+\subsection{Generating instances: \texttt{JuMP.Model}-object and \smps\ files}
 \jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in \siplibjl\ requires \jumpmodel-type object as one of its input arguments. \siplibjl\ provides two functions to construct the \jumpmodel-type object of an instance.
 \begin{lstlisting}[frame=single,language=julia]
 function getJuMPModel(problem::Symbol, param_arr::Any)::JuMP.Model
