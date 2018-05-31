@@ -30,6 +30,7 @@ module Siplib
 
     # include Siplib utility sources
     include("./SmpsWriter.jl")
+    include("./SmpsWriter_varname.jl")
     include("./utility.jl")
     include("./generator.jl")
     include("./analyzer.jl")
@@ -37,11 +38,14 @@ module Siplib
 
     export getInstanceName,         # return Instance name using problem & parameters
            writeSmps,               # write SMPS files from JuMP.Model
+           writeSmps_with_name,     # write SMPS files with variable name from JuMP.Model
            writeSmps_with_splice,   # for memory-efficiency. not proper in case of reusing JuMP.Model-object.
            writeSMPS,               # alias
+           writeSMPS_with_name,     # alias
            writeSMPS_with_splice,   # alias
            getJuMPModel,            # only return JuMP.Model object
            generateSMPS,            # return JuMP.Model object as well as generate SMPS files
+           generateSMPS_with_name,  # return JuMP.Model object as well as generate SMPS files with variable name
            plotConstrMatrix,        # plot constraint matrix of the extensive form
            plotFirstStageBlock,     # plot block A (first stage only)
            plotSecondStageBlock,    # plot block W (second stage only)
@@ -53,7 +57,6 @@ module Siplib
 
 end # end module Siplib
 
-
 using Siplib
 
 #=
@@ -61,6 +64,28 @@ param_arr = [2,2,2,2]
 problem = :DCAP
 INSTANCE = getInstanceName(problem,param_arr)
 model = getJuMPModel(problem, param_arr)
+writeSmps_with_name(model, INSTANCE)
+writeSmps(model, "woname")
+JuMP.Variable
+JuMP.getName(model, 1)
+
+
+model.colNames
+typeof(model.varData)
+print(model)
+print(model.ext[:Stochastic].children[2])
+c1 = model.ext[:Stochastic].children[1]
+Siplib.getModelData(model)
+Siplib.getStructModelData(model)
+JuMP.getObjective(model)
+JuMP.getObjective(model)
+print(model.varData)
+model.colNames
+model.ext[:Stochastic].children[2].colNames
+m2 = model.ext[:Stochastic].children[1]
+m2.colNames
+JuMP.getObjective(m2)
+
 plotAll(model, INSTANCE)
 
 
