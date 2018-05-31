@@ -51,8 +51,19 @@ function generateSMPS(problem::Symbol, param_arr::Any, DIR_NAME::String="$(dirna
     return model
 end
 
+function generateSMPS_with_name(problem::Symbol, param_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance")::JuMP.Model
+    model = getJuMPModel(problem, param_arr)
+    INSTANCE = getInstanceName(problem, param_arr)
+    writeSmps_with_name(model, INSTANCE, DIR_NAME)
+    return model
+end
+
 function writeSMPS(m::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
-    writeSmps(m, INSTANCE, DIR_NAME)
+    writeSmps_with_name(m, INSTANCE, DIR_NAME)
+end
+
+function writeSMPS_with_name(m::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
+    writeSmps_with_name(m, INSTANCE, DIR_NAME)
 end
 
 function writeSMPS_with_splice(m::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
