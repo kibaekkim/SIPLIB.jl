@@ -12,109 +12,105 @@
 
 # include generator file
 THIS_FILE_PATH = dirname(@__FILE__)
-include("$THIS_FILE_PATH/../src/SiplibInstanceGenerator.jl")
 SMPS_PATH = "$THIS_FILE_PATH/../experiment/SMPS"
+include("$THIS_FILE_PATH/../src/Siplib.jl")
+using Siplib
 
 ##############################
 ## parameter setting: Start ##
 ##############################
-params_set_DCAP = [(2,3,3), (2,4,3), (3,3,2), (3,4,2)]
-nS_set_DCAP = [500, 1000, 5000, 10000]
+param_set = Dict{Symbol, Array{Array{Any}}}()
 
-params_set_MPTSPs = [("D0",50), ("D1",50), ("D2",50), ("D3",50), ("D0",100), ("D1",100), ("D2",100), ("D3",100)]
-nS_set_MPTSPs = [100, 500, 1000]
+# DCAP
+param = [[2,3,3], [2,4,3], [3,3,2], [3,4,2]]
+nS = [1000, 3000, 5000, 7000, 9000]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:DCAP] = param_array
 
-params_set_SIZES = [()]
-nS_set_SIZES = [100, 500, 1000, 2000, 4000]
+# MPTSPs
+param = [["D0",50], ["D1",50], ["D2",50], ["D3",50], ["D0",100], ["D1",100], ["D2",100], ["D3",100]]
+nS = [100, 300, 500, 700, 900]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:MPTSPs] = param_array
 
-params_set_SMKP = [(120,)]
-nS_set_SMKP = [20, 100, 200, 400, 800]
+# SIZES
+param = [[]]
+nS = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:SIZES] = param_array
 
-params_set_SSLP = [(5,25), (5,50), (10,50), (15,45)]
-nS_set_SSLP = [100, 500, 1000, 2000, 4000, 8000]
+# SMKP
+param = [[120]]
+nS = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:SMKP] = param_array
 
-params_set_SUCW = [("FallWD",), ("FallWE",), ("SpringWD",), ("SpringWE",), ("SummerWD",), ("SummerWE",), ("WinterWD",), ("WinterWE",)]
-nS_set_SUCW = [10, 50 ,100]
+# SSLP
+param = [[5,25], [5,50], [10,50], [15,45]]
+nS = [1000, 2000, 3000, 4000, 5000]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:SSLP] = param_array
+
+# SSLP
+param = ["FallWD", "FallWE", "SpringWD", "SpringWE", "SummerWD", "SummerWE", "WinterWD", "WinterWE"]
+nS = [10, 20, 30, 40, 50]
+param_array = Any[]
+for p in param
+    for n in nS
+        temp_array = Any[]
+        push!(temp_array, p)
+        push!(temp_array, n)
+        push!(param_array, temp_array)
+    end
+end
+param_set[:SUC] = param_array
+
 ############################
 ## parameter setting: End ##
 ############################
 
-# DCAP
-problem = "DCAP"
-params_set = params_set_DCAP
-nS_set = nS_set_DCAP
-FILE_PATH = "$SMPS_PATH/$problem"
-for params in params_set
-    for nS in nS_set
-        generateInstance(FILE_PATH, problem, params, nS)
+
+###################################
+##  Generating instances: Start  ##
+###################################
+
+for prob in problem
+    for param in param_set[prob]
+        generateSMPS_with_name_splice(prob, param, SMPS_PATH*"/$(String(prob))")
     end
 end
 
-# MPTSPs
-## global parameters
-const RADIUS = 7.0      # radius of the area
-const NK = 3            # number of paths between two nodes
-const VC = 40.0         # deterministic velocity profile for central node
-const VS = 80.0         # deterministic velocity profile for suburban node
-
-problem = "MPTSPs"
-params_set = params_set_MPTSPs
-nS_set = nS_set_MPTSPs
-FILE_PATH = "$SMPS_PATH/$problem"
-for params in params_set
-    for nS in nS_set
-        generateInstance(FILE_PATH, problem, params, nS)
-    end
-end
-
-# SIZES
-problem = "SIZES"
-params_set = params_set_SIZES # no user-modifiable parameter
-nS_set = nS_set_SIZES
-FILE_PATH = "$SMPS_PATH/$problem"
-for params in params_set
-    for nS in nS_set
-        generateInstance(FILE_PATH, problem, params, nS)
-    end
-end
-
-# SMKP
-## global parameters
-const NXZ = 50      # number of xz-knapsack, default: 50
-const NXY = 5       # number of xy-knapsacks, default: 5
-
-problem = "SMKP"
-params_set = params_set_SMKP
-nS_set = nS_set_SMKP
-FILE_PATH = "$SMPS_PATH/$problem"
-for params in params_set
-    for nS in nS_set
-        generateInstance(FILE_PATH, problem, params, nS)
-    end
-end
-
-# SSLP
-problem = "SSLP"
-params_set = params_set_SSLP
-nS_set = nS_set_SSLP
-FILE_PATH = "$SMPS_PATH/$problem"
-for params in params_set
-    for nS in nS_set
-        generateInstance(FILE_PATH, problem, params, nS)
-    end
-end
-
-# SUCW
-problem = "SUCW"
-params_set = params_set_SUCW
-nS_set = nS_set_SUCW
-FILE_PATH = "$SMPS_PATH/$problem"
-for params in params_set
-    for nS in nS_set
-        generateInstance(FILE_PATH, problem, params, nS)
-    end
-end
-
+#generateSMPS(:DCAP, [2,2,2,2], SMPS_PATH*"/$(String(:DCAP))")
 
 #################################
 ##  Generating instances: End  ##

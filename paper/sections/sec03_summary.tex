@@ -1,19 +1,20 @@
-In this section, we explain information about the test problems in summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. This section reflects our philosophy in developing \siplibtwo. Detailed problem-specific information is available in Section \ref{sec:prob_desc} for those who are interested in.
+\yoc{I strengthened this section towards describing why the things we consider are important. Important arguments are colored in purple.}
+In this section, we explain information about the test problems in summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We explain why they are important in each subsection. This section reflects our philosophy in developing \siplibtwo. Detailed problem-specific information is available in Section \ref{sec:prob_desc} for those who are interested in.
 
 \subsection{Origin of the problems}
-Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We guess the missing links and develop our own way to implement the problems. 
+Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We needed to guess the missing links and sometimes develop our own way to implement the problems. 
 \input{tables/table_siplib2_problems}
 
-\subsubsection{How we deal with missing links and errors in the former \siplib}
-\yoc{This subsection is added to discuss the issues on implementaion.}
-During implementation, we often have faced some missing links and errors. The missing links are largely from the two parts: data generation and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ throughout the references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
+\subsubsection{How we deal with missing links and errors}
+\yoc{This subsection is newely added to discuss the issues on implementaion.}
+During implementation, we often have faced some missing links and errors. The missing links are largely from the two parts: data generation and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
 
-We also found some errors. The errors are not critical so the accompanied instances are still solvable but the result may be different from the originally intended. For example, the big-M in the logical constraint (\ref{dcap:b}) in \dcap\ is set to be 1 rather than suitably large value in the \smps\ files. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
+We also found some errors. The errors are not critical so the accompanied instances are still solvable somehow. The result, however, might be different from the originally intended. For example, the big-M constant in the logical constraint (\ref{dcap:b}) in \dcap\ is set to be 1 rather than suitably large value in the \smps\ files. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
 
-We obey the following rule to deal with such obstacles described above.
+We set the following rule to address such issues described above.
 \begin{enumerate}
 	\item Follow the original implementation including the errors whenever we are able to reproduce it.
-	\item Develop our own way as long as it does not harm the endemic characteristic.
+	\item Develop our own way as long as it does not harm the endemic characteristic of the problem.
 \end{enumerate}
 
 The notable remark for each problem briefly presents in Table \ref{table:remarks}.
@@ -27,16 +28,16 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 			\begin{tabular}{@{}cl@{}}
 				\toprule
 				Problem & \multicolumn{1}{c}{Remarks}                                                \\ \midrule
-				\dcap   & Maintain the error in constraint (\ref{dcap:b})                                              \\
-				\mptsps & Adopt formulation from another reference \cite{journal:LSD1990}, Develop data generation procedure \\
-				\sizes  & Modify the formulation to polish                                                    \\
+				\dcap   & We go with the error in constraint (\ref{dcap:b})                                              \\
+				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation procedure \\
+				\sizes  & We modify the formulation to polish                                                    \\
 				\smkp   & -                                                                         \\
-				\sslp   & Maintain the zonal components empty, Maintain the redundant constraint (\ref{sslp:b})                                     \\
-				\suc    & Generate and provide 1,000 stochastic wind scenario data                                    \\ \bottomrule
+				\sslp   & We keep the zonal components empty and let the redundant constraint (\ref{sslp:b}) present                                     \\
+				\suc    & We generate and provide 1,000 stochastic wind scenario data                                    \\ \bottomrule
 			\end{tabular}
 			\begin{tablenotes}
 				\small
-				\item - means no issue presents.
+				\item - means no issue presents
 			\end{tablenotes}
 		\end{threeparttable}
 	}
@@ -54,32 +55,43 @@ The capital Roman letters mean the sets defining the problems. In particular, th
 \input{tables/table_instance_naming_rule}
 
 \subsection{Type of the problems}
-In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. Many decomposition-based solution methods in SIP require specific type of variables to be presented in each stage. They oftentimes use the Therefore, the stage-wise variable type is one of the most important factor to classify SIP problems.
-We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation on the constraints, we refer to \miplib\ \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, which we cannot easily capture the insight from the problem type classification. 
+\textcolor{purple}{In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. Many decomposition-based solution methods in SIP require specific type of variables to be presented in each stage, e.g., \cite{LL1993,SSV1998,CT1998,CS1999,SF2002}. They oftentimes exploit the characteristics of the variables to extend the former decomposition methods developed for NLP, LP, IP, and MIP. Therefore, the stage-wise variable type is one of the most important factor to classify SIP problems.}
+We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation on the constraints, we refer to \miplib\ \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, i.e., different problem contains different constraints, which we cannot easily capture the insight from the problem type classification. 
 \input{tables/table_components_of_problems}
 
 \subsection{Number of components}
-Table \ref{table:num_components} summarizes the number of components (variables and constraints) in each problem from \siplibtwo. The numbers can be calculated based on the cardinality of the sets that define the problems. Although there is no universally effective way to measure the difficulty of MIP yet, the number of components in instance is one of the closely related factor. For example, instances tend to be more difficult as the number of discrete variables increases. For those who want to generate instances with some desired number of components can utilize Table \ref{table:num_components}.
+Table \ref{table:num_components} summarizes the number of components (variables and constraints) in each problem from \siplibtwo. The numbers can be calculated based on the cardinality of the sets that define the problems.
+
+\textcolor{purple}{Although no universally effective way to measure the difficulty of MIP is discovered yet, the number of components in instance is one of the closely related factor. For example, instances tend to be more difficult as the number of discrete variables increases. The continuous variables, which hardly are problematic when solely present by themselves, can also let the instance burdensome when mixed with integer variables. } 
+
+\textcolor{purple}{The increase in the number of constraint, although not always, is an important factor that difficultize the instance. This affects every iteration from the LP relaxation given the requirement of inverting a matrix for every basic feasible solution visited in the process.}
+
+For that reason, we investigate the number of components present in instance. For those who want to generate instances with some desired number of components can utilize Table \ref{table:num_components}.
 \input{tables/table_number_of_components}
 
 
 \subsection{Sparsity}
-In section \ref{sec:sparsity}, we append tables providing block-wise sparsity that is derived solely based on the set cardinality. Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP where the sparsity pattern varies instance by instance. In particular, the block-diagonal structure results always in very high sparsity (i.e., low density of non-zero values) as scenario increases. Unlike general MIP, it does not seem to be meaningful to just report the sparsity information of the extensive form coefficient matrix since decomposition-based algorithms in SIP can efficiently handle the sparsity. 
-\kk{Would it be better to present the sparsity structure for one-scenario problem, like the one in .cor file?}
-\yoc{I tried to show the repeatedly duplicating patterns by looking at once. I think it would be good to add a subsection in section \ref{sec:prob_desc} to discuss problem-specific sparsity pattern for each problem and present the one-scenario instance sparsity pattern. Thank you.}
-
-\input{figures/figure_sparsity_pattern}
-
-As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three different blocks in terms of the structure. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. Block T is called \textit{technology}  matrix. \kk{$T$ has been called ``technology matrix'' in the literature. Let's not introduce new term, unless we are proposing new concept related to the name.}
-\yoc{Thanks. I change the term throughout the paper and package.}
-
-Dense coefficient matrix usually causes slowdown in decomposition algorithms. For example, the Dual Decomposition based solver \dsp\ shows much slower convergence speed than the centralized solver \cplex\ in problems like \smkp\ which always have low sparsity (nonzero ratio: 50\%-100\%, refer to Table \ref{table:sparsity_SMKP}).
+As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three differently structured blocks in the extensive form SIP. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. Block T is called \textit{technology}  matrix. In section \ref{sec:sparsity} in the appendix, we report tables providing block-wise sparsity that is derived solely based on the set cardinality.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{drawings/stagewise_sparsity}
 	\caption{Three (structurally) independent blocks in SIP}
 	\label{fig:stagewise_sparsity}
 \end{figure}
+
+\textcolor{purple}{Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Unlike general MIP, it does not seem to be meaningful to just report the sparsity of the full deterministic equivalent form coefficient matrix since decomposition-based algorithms in SIP combined with modern linear algebra package can efficiently handle the sparsity.}
+\input{figures/figure_sparsity_pattern}
+
+\textcolor{purple}{As many decomposition-based methods in SIP make use of solution methods for MIP to solve the descendant master/sub problems, the sparsity pattern in each independent block might be one of the key aspects for improving performance of the algorithms. If we know the sparsity pattern, intuitively, we would prefer to generate valid cuts that somehow preserve this sparse structure. For example, }
+
+%Low sparsity in matrices T and usually causes slowdown in decomposition algorithms. For example, the Dual Decomposition based solver \dsp\ shows much slower convergence speed than the centralized solver \cplex\ in problems like \smkp\ which always have low sparsity (nonzero ratio: 50\%-100\%, refer to Table \ref{table:sparsity_SMKP}).
+
+
+\kk{Would it be better to present the sparsity structure for one-scenario problem, like the one in .cor file?}
+\yoc{I tried to show the repeatedly duplicating patterns by looking at once. I think it would be good to add a subsection in section \ref{sec:prob_desc} to discuss problem-specific sparsity pattern for each problem and present the one-scenario instance sparsity pattern. Thank you.}
+
+\kk{$T$ has been called ``technology matrix'' in the literature. Let's not introduce new term, unless we are proposing new concept related to the name.}
+\yoc{Thanks. I change the term throughout the paper and package.}
 
 
 

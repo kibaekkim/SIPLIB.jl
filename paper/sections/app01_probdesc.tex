@@ -42,9 +42,9 @@ The objective function (\ref{dcap:obj}) is to minimize total expected cost for t
 			$d_{jt}^s$	& processing requirement for task $j$ in period $t$ under scenario $s$		\\
 			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$x_{it}$ ($1^{\textrm{st}}$ stage) & capacity acquisition amount of resource $i$ in period $t$ \\ 
-			$u_{it}$ ($1^{\textrm{st}}$ stage)& 1 if capacity of resource $i$ is expanded in period $t$, 0 otherwise \\ 
-			$y_{ijt}^s$ ($2^{\textrm{nd}}$ stage)& 1 if resource $i$ is assigned to task $j$ in period $t$ under scenario $s$, 0 otherwise\\
+			$x_{it}$ (1st-stage) & capacity acquisition amount of resource $i$ in period $t$ \\ 
+			$u_{it}$ (1st-stage)& 1 if capacity of resource $i$ is expanded in period $t$, 0 otherwise \\ 
+			$y_{ijt}^s$ (2nd-stage)& 1 if resource $i$ is assigned to task $j$ in period $t$ under scenario $s$, 0 otherwise\\
 			\bottomrule
 		\end{tabular}
 	}
@@ -114,9 +114,9 @@ The first sum in the objective function (\ref{mptsps:obj}) represents the first 
 			$e_{ijk}^{s}$ & \textrm{the error on the travel time on estimated for arc $(i,j)$ and path $k$ under scenario $s$} \\ 
 			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\  \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$\phi_{ij}$ ($1^{\textrm{st}}$ stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
-			$y_{ij}$ ($1^{\textrm{st}}$ stage)& \textrm{1 if path $k$ between nodes $i,j\in N$ is selected at the second stage, 0 otherwise} \\  
-			$x_{ijk}^{s}$ ($2^{\textrm{nd}}$ stage) & \textrm{1 if node $j$ is visited just after node $i$, 0 otherwise} \\ 
+			$\phi_{ij}$ (1st-stage) & \textrm{the nonnegative real-valued flow on arc $(i,j)$}\\
+			$y_{ij}$ (1st-stage)& \textrm{1 if path $k$ between nodes $i,j\in N$ is selected at the second-stage, 0 otherwise} \\  
+			$x_{ijk}^{s}$ (2nd-stage) & \textrm{1 if node $j$ is visited just after node $i$, 0 otherwise} \\ 
 			\bottomrule
 		\end{tabular}
 	}
@@ -224,9 +224,9 @@ The first sum of the objective function (\ref{sizes:obj}) is the costs for produ
 			$d_{it}^s$ &	demand for item $i$ at time $t$ under scenario $s$\\
 			$\PP(s)$ & the probability of occurence of scenario $s$\\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables}} \\
-			$y_{it}$ (1st stage)  & number of units of size $i$ produced at time $t$ \\
-			$z_{it}$ (1st stage)& 1 if we produce size $i$ at time $t$, 0 otherwise\\
-			$x_{ijt}^s$ (2nd stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $s$\\ 
+			$y_{it}$ (1st-stage)  & number of units of size $i$ produced at time $t$ \\
+			$z_{it}$ (1st-stage)& 1 if we produce size $i$ at time $t$, 0 otherwise\\
+			$x_{ijt}^s$ (2nd-stage) & number of units of size $i$ cut to meet demand for smaller size $j$ at time $t$ under scenario $s$\\ 
 			\bottomrule
 		\end{tabular}
 	}
@@ -335,9 +335,9 @@ The objective (\ref{smkp:obj}) is to minimize the expected value of the total we
 			$h_k$		& minimum required profit for the $k^{\mathrm{th}}$ \texttt{xy}-knapsack		\\
 			$\PP(s)$ 	& \textrm{the probability of occurence of scenario $s$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$x_{i}$ ($1^{\textrm{st}}$ stage) & 1 if the $i^{\mathrm{th}}$ $x$-type item is decided to be included, 0 otherwise \\ 
-			$z_{i}$ ($1^{\textrm{st}}$ stage) & 1 if the $i^{\mathrm{th}}$ $z$-type item is decided to be included, 0 otherwise \\ 
-			$y_{i}^s$ ($2^{\textrm{nd}}$ stage)& 1 if the $i^{\mathrm{th}}$ $y$-type item is decided to be included under scenario $s$, 0 otherwise  \\
+			$x_{i}$ (1st-stage) & 1 if the $i^{\mathrm{th}}$ $x$-type item is decided to be included, 0 otherwise \\ 
+			$z_{i}$ (1st-stage) & 1 if the $i^{\mathrm{th}}$ $z$-type item is decided to be included, 0 otherwise \\ 
+			$y_{i}^s$ (2nd-stage)& 1 if the $i^{\mathrm{th}}$ $y$-type item is decided to be included under scenario $s$, 0 otherwise  \\
 			\bottomrule
 		\end{tabular}
 	}
@@ -408,9 +408,9 @@ The objective function (\ref{sslp:obj}) is to maximize total expected revenue of
 			$h_i^s$		& 1 if client $i$ is present under scenario $s$, 0 otherwise	\\
 			$\PP(s)$ 	& probability of occurence for scenario $s$\\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$x_j$ ($1^{\textrm{st}}$ stage)  	 & 1 if a server is located at site $j$, 0 otherwise \\
-			$y_{ij}^s$ ($2^{\textrm{nd}}$ stage) & 1 if client $i$ is served by a server at location $j$ under scenario $s$, 0 otherwise\\
-			$y_{0j}^s$ ($2^{\textrm{nd}}$ stage) & non-negative amount of overflows that are not served due to limitations in server $j$'s capacity	\\
+			$x_j$ (1st-stage)  	 & 1 if a server is located at site $j$, 0 otherwise \\
+			$y_{ij}^s$ (2nd-stage) & 1 if client $i$ is served by a server at location $j$ under scenario $s$, 0 otherwise\\
+			$y_{0j}^s$ (2nd-stage) & non-negative amount of overflows that are not served due to limitations in server $j$'s capacity	\\
 			\bottomrule
 		\end{tabular}
 	}
@@ -443,11 +443,11 @@ Using the notation in Table \ref{SUC:notation}, the extensive form of \suc\ can 
 	(\suc)\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
 	\Bigg[	 \sum_{g\in G_f} \left(K_g u_{gt}+S_g v_{gt}\right) + \sum_{g\in G}C_g p_{gt} + \sum_{j\in J} C^{J}\lambda_{dt} \nonumber \\&\qquad\qquad\qquad\qquad\qquad\quad  + \sum_{i\in I} C^{I}\mu_{it} + \sum_{r\in R} C^{R}\lambda_{rt} + \sum_{k\in W} C^{W}\omega_{kt} \Bigg]
 	\label{SUC:obj}\\
-	\textrm{s.t.}\ &  \textrm{(First stage constraints)} \nonumber\\
+	\textrm{s.t.}\ &  \textrm{(First-stage constraints)} \nonumber\\
 	&\sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,	\label{SUC:b}\\
 	&\sum_{q=t+1}^{t+DT_g} z_{gq}\le 1-w_{gt},\quad\forall g\in G_s,\ \forall t\le |T|-DT_g,\label{SUC:c}\\
 	&z_{gt}\ge w_{gt}-w_{g,t-1},\quad\forall g\in G_s,\ \forall t\in T,\label{SUC:d}\\
-	&  \textrm{(Second stage constraints)} \nonumber\\
+	&  \textrm{(Second-stage constraints)} \nonumber\\
 	&  \sum_{q=t-UT_g+1}^t v_{gqs}\le u_{qts},\quad\forall g\in G_f,\ \forall t\ge UT_g,\ \forall s\in\mathcal{S},\label{SUC:e}\\
 	&\sum_{q=t+1}^{t+DT_g} v_{gqs}\le 1-u_{gts},\quad\forall g\in G_f,\ \forall t\le |T|-DT_g,\ \forall s\in\mathcal{S},\label{SUC:f}\\
 	&v_{gts}\ge u_{gts}-u_{g,t-1,s},\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:g}\\
@@ -458,10 +458,10 @@ Using the notation in Table \ref{SUC:notation}, the extensive form of \suc\ can 
 	&P_g^- w_{gt} \le p_{gts} \le P_g^+ w_{gt},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:j}\\
 	&P_g^- u_{gts} \le p_{gts} \le P_g^+ u_{gts},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:k}\\
 	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:l}\\
-	&  \textrm{(First stage variable bounds)} \nonumber\\
+	&  \textrm{(First-stage variable bounds)} \nonumber\\
 	&w_{gt}\in\{0,1\},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\label{SUC:m}\\
 	& 0\le z_{gt}\le 1,\quad\forall g\in G_s,\ \forall t\in T,\label{SUC:n}\\
-	&  \textrm{(Second stage variable bounds)} \nonumber\\
+	&  \textrm{(Second-stage variable bounds)} \nonumber\\
 	&u_{gts}\in\{0,1\},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:o}\\
 	&0\le v_{gts}\le 1,\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:p}\\
 	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:q}\\
@@ -479,67 +479,70 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 	\centering
 	\caption{Notations for the \suc}
 	\label{SUC:notation}
-	\begin{tabular}{ll}
-		\toprule
-		\multicolumn{2}{l}{\textbf{Index sets:}} \\
-		$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\ 		
-		$N$ & index set of all buses ($n\in N$)\\
-		$T$ & index set of all time periods ($t\in T$)\\
-		$L$ & index set of all transmission lines ($l\in L$) \\
-		$\mathcal{L}$ & index set of all loads for shedding ($\lambda \in \mathcal{L}$)\\
-		$\mathcal{I}$ & index set of all import points ($\iota\in \mathcal{I}$)\\
-		$\mathcal{R}$ & index set of all non-wind renewable generators ($\rho\in \mathcal{R}$)\\
-		$\mathcal{W}$ & index set of all wind generators ($\omega\in \mathcal{W}$)\\
-		$G$ & index set of all generators ($g\in G$)\\
-		$G_s$ & index set of slow generators ($g\in G_s$)\\
-		$G_f$ & index set of fast generators ($g\in G_f$)\\
-		\multicolumn{2}{l}{\textbf{(mapping sets)}} \\
-		$G_n$ & index set of generators that are located in bus $n$ ($g\in G_n$)\\
-		$IG_n^\mathcal{L}$ & index set of loads that bus $n$ can shed ($\lambda\in IG_n^\mathcal{L}$)\\
-		$IG_n^\mathcal{I}$ & index set of import points that can supply bus $n$ ($\iota\in IG_n^\mathcal{I}$) \\
-		$IG_n^\mathcal{R}$ & index set of non-wind renewable generators that can supply bus $n$ ($\rho\in IG_n^\mathcal{R}$) \\
-		$IG_n^\mathcal{W}$ & index set of wind generators that can supply bus $n$ ($\omega\in IG_n^\mathcal{W}$)\\
-		$L_n^{+}$ & index set of outgoing transmission lines from bus $n$ ($l\in L_n^+$)\\
-		$L_n^{-}$ & index set of incoming transmission lines to bus $n$ ($l\in L_n^-$)\\ \midrule
-		\multicolumn{2}{l}{\textbf{Parameters:}} \\
-		$\PP(s)$	&probability of occurence for scenario $s$\\
-		\multicolumn{2}{l}{\textbf{(cost)}} \\
-		$K_g$ & fixed commitment cost of generator $g$ \\
-		$S_g$ & fixed startup cost of generator $g$\\
-		$C_g$ & marginal generation cost of generator $g$	\\
-		$C^\mathcal{L}$ & marginal load shedding cost of loads in $\mathcal{L}$	\\
-		$C^\mathcal{I}$ & marginal spillage cost of import points in $\mathcal{I}$ \\
-		$C^\mathcal{R}$ & marginal spillage cost of non-wind  renewable generators in $\mathcal{R}$ \\ 
-		$C^\mathcal{W}$ & marginal spillage cost of wind generators in $\mathcal{W}$ \\
-		\multicolumn{2}{l}{\textbf{(capacity)}} \\
-		$B_{l}$ & susceptance of line $l$ under scenario $s$\\
-		$TC_l$ & capacity of transmission line $l$\\
-		$P_{g}^+$ & maximum generation capacity of generator $g$\\
-		$P_{g}^-$ & minimum generation capacity of generator $g$ \\
-		$R_{g}^+$ & maximum ramping capacity of generator $g$\\
-		$R_{g}^-$ & minimum ramping capacity of generator $g$\\
-		$UT_{g}$ & minimum up time of generator $g$\\
-		$DT_{g}$ & minimum down time of generator $g$\\
-		\multicolumn{2}{l}{\textbf{(supply/demand)}} \\
-		$D_{nt}$ & net demand in bus $n$ at time $t$ \\
-		$IC_{\lambda t}^\mathcal{L}$ & shedding from load $\lambda$\\
-		$IC_{\iota t}^\mathcal{I}$ & generation from import point $\iota$\\
-		$IC_{\rho t}^\mathcal{R}$ & generation from renewable generator $\rho$\\
-		$IC_{\omega ts}^\mathcal{W}$ & generation from wind generator $\omega$ under scenario $s$\\ \midrule
-		\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-		$w_{gt}$ (1$^{\textrm{st}}$ stage) 	& (binary) commitment of slow generator $g$ at time $t$\\
-		$z_{gt}$ (1$^{\textrm{st}}$ stage)	&	(continuous) start-up of slow generator $g$ at time $t$\\
-		$u_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(binary) commitment of fast generator $g$ at time $t$ under scenario $s$\\
-		$v_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) startup of fast generator $g$ at time $t$ under scenario $s$\\
-		$\theta_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) phase angle of generator $g$ at time $t$ under scenario $s$\\
-		$e_{lts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) power flow on line $l$ at time $t$ under scenario $s$\\
-		$p_{gts}$ (2$^{\textrm{nd}}$ stage)	&	(continuous) production of generator $g$ at time $t$ under scenario $s$\\
-		$x_{\lambda ts}^\mathcal{L}$	(2$^{\textrm{nd}}$ stage) & (continuous) load shedding for load $\lambda$ at time $t$ under scenario $s$	\\
-		$x_{\iota ts}^\mathcal{I}$	(2$^{\textrm{nd}}$ stage) &	(continuous) spillage for import point $\iota$ at time $t$ under scenario $s$\\
-		$x_{\rho ts}^\mathcal{R}$ (2$^{\textrm{nd}}$ stage)	& (continuous) spillage for non-wind renewable generator $\rho$ at time $t$ under scenario $s$  	\\
-		$x_{\omega ts}^\mathcal{W}$ (2$^{\textrm{nd}}$ stage)	& (continuous) spillage for wind generator $\omega$ at time $t$ under scenario $s$ 	\\
-		\hline
-	\end{tabular}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\ 		
+			$N$ & index set of all buses ($n\in N$)\\
+			$T$ & index set of all time periods ($t\in T$)\\
+			$L$ & index set of all transmission lines ($l\in L$) \\
+			$\mathcal{L}$ & index set of all loads for shedding ($\lambda \in \mathcal{L}$)\\
+			$\mathcal{I}$ & index set of all import points ($\iota\in \mathcal{I}$)\\
+			$\mathcal{R}$ & index set of all non-wind renewable generators ($\rho\in \mathcal{R}$)\\
+			$\mathcal{W}$ & index set of all wind generators ($\omega\in \mathcal{W}$)\\
+			$G$ & index set of all generators ($g\in G$)\\
+			$G_s$ & index set of slow generators ($g\in G_s$)\\
+			$G_f$ & index set of fast generators ($g\in G_f$)\\
+			\multicolumn{2}{l}{\textbf{(mapping sets)}} \\
+			$G_n$ & index set of generators that are located in bus $n$ ($g\in G_n$)\\
+			$IG_n^\mathcal{L}$ & index set of loads that bus $n$ can shed ($\lambda\in IG_n^\mathcal{L}$)\\
+			$IG_n^\mathcal{I}$ & index set of import points that can supply bus $n$ ($\iota\in IG_n^\mathcal{I}$) \\
+			$IG_n^\mathcal{R}$ & index set of non-wind renewable generators that can supply bus $n$ ($\rho\in IG_n^\mathcal{R}$) \\
+			$IG_n^\mathcal{W}$ & index set of wind generators that can supply bus $n$ ($\omega\in IG_n^\mathcal{W}$)\\
+			$L_n^{+}$ & index set of outgoing transmission lines from bus $n$ ($l\in L_n^+$)\\
+			$L_n^{-}$ & index set of incoming transmission lines to bus $n$ ($l\in L_n^-$)\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$\PP(s)$	&probability of occurence for scenario $s$\\
+			\multicolumn{2}{l}{\textbf{(cost)}} \\
+			$K_g$ & fixed commitment cost of generator $g$ \\
+			$S_g$ & fixed startup cost of generator $g$\\
+			$C_g$ & marginal generation cost of generator $g$	\\
+			$C^\mathcal{L}$ & marginal load shedding cost of loads in $\mathcal{L}$	\\
+			$C^\mathcal{I}$ & marginal spillage cost of import points in $\mathcal{I}$ \\
+			$C^\mathcal{R}$ & marginal spillage cost of non-wind  renewable generators in $\mathcal{R}$ \\ 
+			$C^\mathcal{W}$ & marginal spillage cost of wind generators in $\mathcal{W}$ \\
+			\multicolumn{2}{l}{\textbf{(capacity)}} \\
+			$B_{l}$ & susceptance of line $l$ under scenario $s$\\
+			$TC_l$ & capacity of transmission line $l$\\
+			$P_{g}^+$ & maximum generation capacity of generator $g$\\
+			$P_{g}^-$ & minimum generation capacity of generator $g$ \\
+			$R_{g}^+$ & maximum ramping capacity of generator $g$\\
+			$R_{g}^-$ & minimum ramping capacity of generator $g$\\
+			$UT_{g}$ & minimum up time of generator $g$\\
+			$DT_{g}$ & minimum down time of generator $g$\\
+			\multicolumn{2}{l}{\textbf{(supply/demand)}} \\
+			$D_{nt}$ & net demand in bus $n$ at time $t$ \\
+			$IC_{\lambda t}^\mathcal{L}$ & shedding from load $\lambda$\\
+			$IC_{\iota t}^\mathcal{I}$ & generation from import point $\iota$\\
+			$IC_{\rho t}^\mathcal{R}$ & generation from renewable generator $\rho$\\
+			$IC_{\omega ts}^\mathcal{W}$ & generation from wind generator $\omega$ under scenario $s$\\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$w_{gt}$ (1st-stage) 	& (binary) commitment of slow generator $g$ at time $t$\\
+			$z_{gt}$ (1st-stage)	&	(continuous) start-up of slow generator $g$ at time $t$\\
+			$u_{gts}$ (2nd-stage)	&	(binary) commitment of fast generator $g$ at time $t$ under scenario $s$\\
+			$v_{gts}$ (2nd-stage)	&	(continuous) startup of fast generator $g$ at time $t$ under scenario $s$\\
+			$\theta_{gts}$ (2nd-stage)	&	(continuous) phase angle of generator $g$ at time $t$ under scenario $s$\\
+			$e_{lts}$ (2nd-stage)	&	(continuous) power flow on line $l$ at time $t$ under scenario $s$\\
+			$p_{gts}$ (2nd-stage)	&	(continuous) production of generator $g$ at time $t$ under scenario $s$\\
+			$x_{\lambda ts}^\mathcal{L}$	(2nd-stage) & (continuous) load shedding for load $\lambda$ at time $t$ under scenario $s$	\\
+			$x_{\iota ts}^\mathcal{I}$	(2nd-stage) &	(continuous) spillage for import point $\iota$ at time $t$ under scenario $s$\\
+			$x_{\rho ts}^\mathcal{R}$ (2nd-stage)	& (continuous) spillage for non-wind renewable generator $\rho$ at time $t$ under scenario $s$  	\\
+			$x_{\omega ts}^\mathcal{W}$ (2nd-stage)	& (continuous) spillage for wind generator $\omega$ at time $t$ under scenario $s$ 	\\
+			\hline
+		\end{tabular}
+	}
 \end{table}
 
 \subsubsection{\suc: Data generation}
