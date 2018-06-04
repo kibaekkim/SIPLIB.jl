@@ -9,8 +9,8 @@ In this section, we provide block-wise size information as well as the sparsity.
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
 		\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero           & Sparsity                   \\ \midrule
-		A (1st stage)             & $RT$     & $2RT$    & $2RT$               & $\frac{1}{RT}$             \\
-		W (2nd stage)             & $(R+N)T$ & $(1+R)T$ & $NRT+(R+1)NT$       & $\frac{1+2R}{T(R+N)(1+R)}$ \\
+		A (1st-stage)             & $RT$     & $2RT$    & $2RT$               & $\frac{1}{RT}$             \\
+		W (2nd-stage)             & $(R+N)T$ & $(1+R)T$ & $NRT+(R+1)NT$       & $\frac{1+2R}{T(R+N)(1+R)}$ \\
 		T (technology)          & $(R+N)T$ & $2RT$    & $\frac{1}{2}T(T+1)$ & $\frac{1+T}{4T(R+N)}$      \\ \bottomrule
 	\end{tabular}
 \end{table}
@@ -29,8 +29,8 @@ In this section, we provide block-wise size information as well as the sparsity.
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
 		\multicolumn{1}{c}{Block} & \#row    & \#col     & \#nonzero      & Sparsity                \\ \midrule
-		A (1st stage)             & $N(N+1)$ & $2N(N-1)$ & $2(3N-2)(N-1)$ & $\frac{3N-2}{(N+1)N^2}$ \\
-		W (2nd stage)             & $N(N-1)$ & $KN(N-1)$ & $N(N-1)$       & $\frac{1}{KN(N-1)}$     \\
+		A (1st-stage)             & $N(N+1)$ & $2N(N-1)$ & $2(3N-2)(N-1)$ & $\frac{3N-2}{(N+1)N^2}$ \\
+		W (2nd-stage)             & $N(N-1)$ & $KN(N-1)$ & $N(N-1)$       & $\frac{1}{KN(N-1)}$     \\
 		T (technology)          & $N(N-1)$ & $2N(N-1)$ & $3N(N-1)$      & $\frac{3}{2N(N-1)}$     \\ \bottomrule
 	\end{tabular}
 \end{table}
@@ -46,8 +46,8 @@ In this section, we provide block-wise size information as well as the sparsity.
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
 		\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero                 & Sparsity             \\ \midrule
-		A (1st stage)             & $T(N+1)$ & $2NT$    & $3NT$                     & $\frac{3}{2T(N+1)}$ \\
-		W (2nd stage)             & $2NT$    & $N(N+1)$ & $\frac{1}{2}NT(T+1)(N+1)$ & $\frac{T+1}{4N}$    \\
+		A (1st-stage)             & $T(N+1)$ & $2NT$    & $3NT$                     & $\frac{3}{2T(N+1)}$ \\
+		W (2nd-stage)             & $2NT$    & $N(N+1)$ & $\frac{1}{2}NT(T+1)(N+1)$ & $\frac{T+1}{4N}$    \\
 		T (technology)          & $2NT$    & $2NT$    & $\frac{1}{2}NT(T+1)$      & $\frac{T+1}{8NT}$   \\ \bottomrule
 	\end{tabular}
 \end{table}
@@ -63,8 +63,8 @@ In this section, we provide block-wise size information as well as the sparsity.
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
 		\multicolumn{1}{c}{Block} & \#row & \#col & \#nonzero & Sparsity \\ \midrule
-		A (1st stage)             & $J$   & $2I$  & $2IJ$     & $1$     \\
-		W (2nd stage)             & $K$   & $I$   & $IK$      & $1$     \\
+		A (1st-stage)             & $J$   & $2I$  & $2IJ$     & $1$     \\
+		W (2nd-stage)             & $K$   & $I$   & $IK$      & $1$     \\
 		T (technology)          & $K$   & $2I$  & $IK$      & $0.5$   \\ \bottomrule
 	\end{tabular}
 \end{table}
@@ -79,8 +79,8 @@ In this section, we provide block-wise size information as well as the sparsity.
 	\begin{tabular}{@{}lcccc@{}}
 		\toprule
 		\multicolumn{1}{c}{Block} & \#row & \#col    & \#nonzero & Sparsity                   \\ \midrule
-		A (1st stage)             & $1$   & $J$      & $J$       & $1$                       \\
-		W (2nd stage)             & $I+J$ & $(1+I)J$ & $(1+2I)J$ & $\frac{1+2I}{(I+J)(1+I)}$ \\
+		A (1st-stage)             & $1$   & $J$      & $J$       & $1$                       \\
+		W (2nd-stage)             & $I+J$ & $(1+I)J$ & $(1+2I)J$ & $\frac{1+2I}{(I+J)(1+I)}$ \\
 		T (technology)          & $I+J$ & $J$      & $J$       & $\frac{1}{1+J}$           \\ \bottomrule
 	\end{tabular}
 \end{table}
@@ -95,8 +95,8 @@ In this section, we provide block-wise size information as well as the sparsity.
 		\begin{tabular}{@{}lccc@{}}
 			\toprule
 			\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                  \\ \midrule
-			A (1st stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                           \\
-			W (2nd stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}                  \\
+			A (1st-stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                           \\
+			W (2nd-stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}                  \\
 			& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+L+\mathcal{L}+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$          \\
 			&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                                       \\
 			T (technology)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                                     \\ \bottomrule

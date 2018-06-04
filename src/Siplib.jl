@@ -8,6 +8,8 @@ module Siplib
 #    using MPI
 
     # global variables (predetermined parameters)
+    ## Array of Symbol-type problems
+    global problem = [:DCAP, :MPTSPs, :SIZES, :SMKP, :SSLP, :SUC]
     ## number of parameters for each problem
     global nParam = Dict(:DCAP=>4, :MPTSPs=>3, :SIZES=>1, :SMKP=>2, :SSLP=>3, :SUC=>2)
     ## MPTSP
@@ -36,31 +38,36 @@ module Siplib
     include("./analyzer.jl")
 #    include("./solver.jl")
 
-    export getInstanceName,         # return Instance name using problem & parameters
-           writeSmps,               # write SMPS files from JuMP.Model
-           writeSmps_with_name,     # write SMPS files with variable name from JuMP.Model
-           writeSmps_with_splice,   # for memory-efficiency. not proper in case of reusing JuMP.Model-object.
-           writeSMPS,               # alias
-           writeSMPS_with_name,     # alias
-           writeSMPS_with_splice,   # alias
-           getJuMPModel,            # only return JuMP.Model object
-           generateSMPS,            # return JuMP.Model object as well as generate SMPS files
-           generateSMPS_with_name,  # return JuMP.Model object as well as generate SMPS files with variable name
-           plotConstrMatrix,        # plot constraint matrix of the extensive form
-           plotFirstStageBlock,     # plot block A (first stage only)
-           plotSecondStageBlock,    # plot block W (second stage only)
-           plotComplicatingBlock,   # plot block T (complicating block)
-           plotAllBlocks,           # plot block A, W, T simultaneously
+    export getInstanceName,                 # return Instance name using problem & parameters
+           writeSmps,                       # write SMPS files from JuMP.Model
+           writeSmps_with_name,             # write SMPS files with variable name from JuMP.Model
+           writeSmps_with_splice,           # for memory-efficiency. not proper in case of reusing JuMP.Model-object.
+           writeSMPS,                       # alias
+           writeSMPS_with_name,             # alias
+           writeSMPS_with_splice,           # alias
+           getJuMPModel,                    # only return JuMP.Model object
+           generateSMPS,                    # return JuMP.Model object as well as generate SMPS files
+           generateSMPS_with_name,          # return JuMP.Model object as well as generate SMPS files with variable name
+           generateSMPS_with_splice,        # return JuMP.Model object as well as generate SMPS files (memory-efficient)
+           generateSMPS_with_name_splice,
+           plotConstrMatrix,                # plot constraint matrix of the extensive form
+           plotFirstStageBlock,             # plot block A (first stage only)
+           plotSecondStageBlock,            # plot block W (second stage only)
+           plotComplicatingBlock,           # plot block T (complicating block)
+           plotAllBlocks,                   # plot block A, W, T simultaneously
            plotAll,
            getSparsity,
-           getSize
+           getSize,
+           problem
 
 end # end module Siplib
 
-using Siplib
+#using Siplib
 
 #=
-param_arr = [2,2,2,2]
+
+
+param_arr = [2,2,2,5]
 problem = :DCAP
 INSTANCE = getInstanceName(problem,param_arr)
 model = getJuMPModel(problem, param_arr)

@@ -1,3 +1,17 @@
+This appendix provides a brief tutorial for the \julia\ package. We release this package on GitHub with the name \siplibjl. More detailed tutorial is provided in the GitHub repository.
+
+\subsection{Prelimenary}
+To use \siplibjl, you need to perform the following steps.
+\begin{itemize}
+	\item install the latest \julia\ release.
+	\item install \julia\ packages: \texttt{Distributions.jl}, \texttt{JuMP.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl}
+	\item change working directory to ``\texttt{$\sim$/Siplib/src/}''
+	\item run \julia\
+	\item excute \texttt{include("Siplib.jl")}
+	\item excute \texttt{using Siplib}
+\end{itemize}
+Then, you are all set to use the functions in \siplibjl.
+
 \subsection{Generating instances: \texttt{JuMP.Model}-object and \smps\ files}
 \jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in \siplibjl\ requires \jumpmodel-type object as one of its input arguments. \siplibjl\ provides two functions to construct the \jumpmodel-type object of an instance.
 \begin{lstlisting}[frame=single,language=julia]
@@ -203,7 +217,7 @@ plotAll(model, INSTANCE)               # plot all the plots above
 By executing \texttt{plotAll}, one can obtain all the plots in Fig. \ref{fig:plotall}.
 
 \kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
-\yoc{Thanks, I move this to appendix first.}
+\yoc{I move this to appendix. Though this is not fully research-oriented but published MPC papers (e.g., MIPLIB, PySP, DSP, pyomo.dae) contain such contents. I think it is worth to be included in paper at least in appendix. This shows what we have done in terms of implementation very intuitively.}
 
 %
 %\subsection{Solving instances: interfacing with \texttt{DSP} solver}
