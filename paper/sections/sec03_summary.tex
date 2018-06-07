@@ -66,7 +66,7 @@ Table \ref{table:num_components} summarizes the number of components (variables 
 
 \textcolor{purple}{The increase in the number of constraint, although not always, is an important factor that difficultize the instance. This affects every iteration from the LP relaxation given the requirement of inverting a matrix for every basic feasible solution visited in the process.}
 
-For that reason, we investigate the number of components present in instance. For those who want to generate instances with some desired number of components can utilize Table \ref{table:num_components}.
+For those reasons, we investigate the number of components present in instance. For those who want to generate instances with some desired number of components can utilize Table \ref{table:num_components}.
 \input{tables/table_number_of_components}
 
 
@@ -79,13 +79,12 @@ As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three differently 
 	\label{fig:stagewise_sparsity}
 \end{figure}
 
-\textcolor{purple}{Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Unlike general MIP, it does not seem to be meaningful to just report the sparsity of the full deterministic equivalent form coefficient matrix since decomposition-based algorithms in SIP combined with modern linear algebra package can efficiently handle the sparsity.}
+\textcolor{purple}{Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of the full deterministic equivalent form coefficient matrix.}
 \input{figures/figure_sparsity_pattern}
 
-\textcolor{purple}{As many decomposition-based methods in SIP make use of solution methods for MIP to solve the descendant master/sub problems, the sparsity pattern in each independent block might be one of the key aspects for improving performance of the algorithms. If we know the sparsity pattern, intuitively, we would prefer to generate valid cuts that somehow preserve this sparse structure. For example, }
+\textcolor{purple}{As many decomposition-based methods in SIP make use of solution methods developed for MIP to solve the descendant master/sub problems, exploiting the sparsity pattern in each independent block might be one of the key aspects that will help improving performance of the algorithms. Given the sparsity pattern, intuitively, we would like to generate valid cuts that somehow preserve the sparse structure. For example, recent studies \cite{DMW2015,DIM2015} showed how well polytopes are approximated by using only sparse valid-inequalities. }
 
 %Low sparsity in matrices T and usually causes slowdown in decomposition algorithms. For example, the Dual Decomposition based solver \dsp\ shows much slower convergence speed than the centralized solver \cplex\ in problems like \smkp\ which always have low sparsity (nonzero ratio: 50\%-100\%, refer to Table \ref{table:sparsity_SMKP}).
-
 
 \kk{Would it be better to present the sparsity structure for one-scenario problem, like the one in .cor file?}
 \yoc{I tried to show the repeatedly duplicating patterns by looking at once. I think it would be good to add a subsection in section \ref{sec:prob_desc} to discuss problem-specific sparsity pattern for each problem and present the one-scenario instance sparsity pattern. Thank you.}
