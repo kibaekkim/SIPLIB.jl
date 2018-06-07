@@ -31,8 +31,8 @@ module Siplib
     include("./problems/SUC/suc_models.jl")
 
     # include Siplib utility sources
-    include("./SmpsWriter.jl")
-    include("./SmpsWriter_varname.jl")
+    include("./smpswriter.jl")
+    include("./smpswriter_varname.jl")
     include("./utility.jl")
     include("./generator.jl")
     include("./analyzer.jl")
@@ -62,10 +62,9 @@ module Siplib
 
 end # end module Siplib
 
-#using Siplib
 
 #=
-
+using Siplib
 
 param_arr = [2,2,2,5]
 problem = :DCAP

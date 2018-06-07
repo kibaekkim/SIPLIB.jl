@@ -1,4 +1,4 @@
-\yoc{I strengthened this section towards describing why the things we consider are important. Important arguments are colored in purple.}
+\yoc{I strengthened this section towards discussing why the things we consider are important. Important arguments are colored in purple.}
 In this section, we explain information about the test problems in summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We explain why they are important in each subsection. This section reflects our philosophy in developing \siplibtwo. Detailed problem-specific information is available in Section \ref{sec:prob_desc} for those who are interested in.
 
 \subsection{Origin of the problems}
@@ -29,8 +29,8 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 				\toprule
 				Problem & \multicolumn{1}{c}{Remarks}                                                \\ \midrule
 				\dcap   & We go with the error in constraint (\ref{dcap:b})                                              \\
-				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation procedure \\
-				\sizes  & We modify the formulation to polish                                                    \\
+				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation procedure \ref{mptsps:datagen} \\
+				\sizes  & We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h})                                                    \\
 				\smkp   & -                                                                         \\
 				\sslp   & We keep the zonal components empty and let the redundant constraint (\ref{sslp:b}) present                                     \\
 				\suc    & We generate and provide 1,000 stochastic wind scenario data                                    \\ \bottomrule

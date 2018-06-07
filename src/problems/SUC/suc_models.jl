@@ -7,79 +7,92 @@ Source:
 include("./suc_types.jl")
 include("./suc_functions.jl")
 
-function suc(Season::AbstractString, nScenarios::Integer)::JuMP.Model
-    # get model data
-    uc = weccdata(Season, nScenarios)
+function SUC(Season::AbstractString, nS::Integer)::JuMP.Model
 
-    model = StructuredModel(num_scenarios=nScenarios)
+    # generate model data
+    data = SUCData(Season, nS)
 
-    @variable(model, w[g=uc.Gs,t=uc.T0], Bin)
-    @variable(model, 0 <= z[g=uc.Gs,t=uc.T] <= 1)
+    G, Gf, Gs, L, N, T, T0, LOAD, IMPORT, WIND, RE = data.G, data.Gf, data.Gs, data.L, data.N, data.T, data.T0, data.LOAD, data.IMPORT, data.WIND, data.RE
+    C, Cl, Ci, Cr, Cw, K, S = data.C, data.Cl, data.Ci, data.Cr, data.Cw, data.K, data.S
+    B, Pmax, Pmin, Rmax, Rmin, TC, DT, UT = data.B, data.Pmax, data.Pmin, data.Rmax, data.Rmin, data.TC, data.DT, data.UT
+    D, Igen, Rgen, Wgen, load = data.D, data.Igen, data.Rgen, data.Wgen, data.load
+    gen2bus, import2bus, load2bus, re2bus = data.gen2bus, data.import2bus, data.load2bus, data.re2bus
+    wind2bus, fbus, tbus = data.wind2bus, data.fbus, data.tbus
+    Pr = data.Pr
+
+    # construct JuMP.Model
+    model = StructuredModel(num_scenarios=nS)
+
+    ## 1st stage
+    @variable(model, w[g=Gs,t=T0], Bin)
+    @variable(model, 0 <= z[g=Gs,t=T] <= 1)
 
     @objective(model, Min,
-        sum(uc.K[g]*w[g,t] + uc.S[g]*z[g,t] for g in uc.Gs for t in uc.T)
+        sum(K[g]*w[g,t] + S[g]*z[g,t] for g in Gs for t in T)
     )
-
     # Unit commitment for slow generators
-    @constraint(model, [g=uc.Gs,t=Int(uc.UT[g]):length(uc.T)], sum(z[g,q] for q=Int(t-uc.UT[g]+1):t) <= w[g,t])
-    @constraint(model, [g=uc.Gs,t=1:Int(length(uc.T)-uc.DT[g])], sum(z[g,q] for q=(t+1):Int(t+uc.DT[g])) <= w[g,t])
-    @constraint(model, [g=uc.Gs,t=uc.T], z[g,t] >= w[g,t] - w[g,t-1])
+    @constraint(model, [g=Gs,t=Int(UT[g]):length(T)], sum(z[g,q] for q=Int(t-UT[g]+1):t) <= w[g,t])
+    @constraint(model, [g=Gs,t=1:Int(length(T)-DT[g])], sum(z[g,q] for q=(t+1):Int(t+DT[g])) <= w[g,t])
+    @constraint(model, [g=Gs,t=T], z[g,t] >= w[g,t] - w[g,t-1])
 
-    for j in 1:nScenarios
-        sb = StructuredModel(parent=model, id = j, prob = uc.Pr[j])
+    ## 2nd stage
+    for j in 1:nS
+        sb = StructuredModel(parent=model, id = j, prob = Pr[j])
 
-        @variable(sb, u[g=uc.Gf,t=uc.T0], Bin)
-        @variable(sb, 0 <= v[g=uc.Gf,t=uc.T] <= 1)
-        @variable(sb, -360 <= θ[n=uc.N,t=uc.T] <= 360)
-        @variable(sb, -uc.TC[l] <= e[l=uc.L,t=uc.T] <= uc.TC[l])
-        @variable(sb, p[g=uc.G,t=uc.T0] >= 0)
-        @variable(sb, 0 <= loadshed[i=uc.LOAD,t=uc.T] <= uc.load[i,t]) # load shedding
-        @variable(sb, 0 <= ispill[i=uc.IMPORT,t=uc.T] <= uc.Igen[i,t]) # import spillage
-        @variable(sb, 0 <= rspill[i=uc.RE,t=uc.T] <= uc.Rgen[i,t])     # renewable spillage
-        @variable(sb, 0 <= wspill[i=uc.WIND,t=uc.T] <= uc.Wgen[i,t,j])   # wind spillage
+        @variable(sb, u[g=Gf,t=T0], Bin)
+        @variable(sb, 0 <= v[g=Gf,t=T] <= 1)
+        @variable(sb, -360 <= theta[n=N,t=T] <= 360)
+        @variable(sb, -TC[l] <= e[l=L,t=T] <= TC[l])
+        @variable(sb, p[g=G,t=T0] >= 0)
+        @variable(sb, 0 <= loadshed[i=LOAD,t=T] <= load[i,t]) # load shedding
+        @variable(sb, 0 <= ispill[i=IMPORT,t=T] <= Igen[i,t]) # import spillage
+        @variable(sb, 0 <= rspill[i=RE,t=T] <= Rgen[i,t])     # renewable spillage
+        @variable(sb, 0 <= wspill[i=WIND,t=T] <= Wgen[i,t,j])   # wind spillage
 
         @objective(sb, Min,
-              sum(uc.K[g]*u[g,t] + uc.S[g]*v[g,t] for g in uc.Gf for t in uc.T)
-            + sum(uc.C[g]*p[g,t] for g in uc.G for t in uc.T)
-            + sum(uc.Cl * loadshed[i,t] for i in uc.LOAD for t in uc.T)
-            + sum(uc.Ci * ispill[i,t] for i in uc.IMPORT for t in uc.T)
-            + sum(uc.Cr * rspill[i,t] for i in uc.RE for t in uc.T)
-            + sum(uc.Cw * wspill[i,t] for i in uc.WIND for t in uc.T)
+              sum(K[g]*u[g,t] + S[g]*v[g,t] for g in Gf for t in T)
+            + sum(C[g]*p[g,t] for g in G for t in T)
+            + sum(Cl * loadshed[i,t] for i in LOAD for t in T)
+            + sum(Ci * ispill[i,t] for i in IMPORT for t in T)
+            + sum(Cr * rspill[i,t] for i in RE for t in T)
+            + sum(Cw * wspill[i,t] for i in WIND for t in T)
         )
 
         # Unit commitment for fast generators
-        @constraint(sb, [g=uc.Gf,t=Int(uc.UT[g]):length(uc.T)], sum(v[g,q] for q=Int(t-uc.UT[g]+1):t) <= u[g,t])
-        @constraint(sb, [g=uc.Gf,t=1:Int(length(uc.T)-uc.DT[g])], sum(v[g,q] for q=(t+1):Int(t+uc.DT[g])) <= u[g,t])
-        @constraint(sb, [g=uc.Gf,t=uc.T], v[g,t] >= u[g,t] - u[g,t-1])
+        @constraint(sb, [g=Gf,t=Int(UT[g]):length(T)], sum(v[g,q] for q=Int(t-UT[g]+1):t) <= u[g,t])
+        @constraint(sb, [g=Gf,t=1:Int(length(T)-DT[g])], sum(v[g,q] for q=(t+1):Int(t+DT[g])) <= u[g,t])
+        @constraint(sb, [g=Gf,t=T], v[g,t] >= u[g,t] - u[g,t-1])
 
         # Flow balance
-        @constraint(sb, [n=uc.N,t=uc.T],
-            sum(e[l,t] for l in uc.L if uc.tbus[l] == n)
-            + sum(p[g,t] for g in uc.G if uc.gen2bus[g] == n)
-            + sum(loadshed[i,t] for i in uc.LOAD if uc.load2bus[i] == n)
-            + sum(uc.Wgen[i,t,j] for i in uc.WIND if uc.wind2bus[i] == n)
-            == uc.D[n,t]
-            + sum(e[l,t] for l in uc.L if uc.fbus[l] == n)
-            + sum(ispill[i,t] for i in uc.IMPORT if uc.import2bus[i] == n)
-            + sum(rspill[i,t] for i in uc.RE if uc.re2bus[i] == n)
-            + sum(wspill[i,t] for i in uc.WIND if uc.wind2bus[i] == n)
+        @constraint(sb, [n=N,t=T],
+            sum(e[l,t] for l in L if tbus[l] == n)
+            + sum(p[g,t] for g in G if gen2bus[g] == n)
+            + sum(loadshed[i,t] for i in LOAD if load2bus[i] == n)
+            + sum(Wgen[i,t,j] for i in WIND if wind2bus[i] == n)
+            == D[n,t]
+            + sum(e[l,t] for l in L if fbus[l] == n)
+            + sum(ispill[i,t] for i in IMPORT if import2bus[i] == n)
+            + sum(rspill[i,t] for i in RE if re2bus[i] == n)
+            + sum(wspill[i,t] for i in WIND if wind2bus[i] == n)
         )
 
         # Power flow equation
-        @constraint(sb, [l=uc.L,t=uc.T], e[l,t] == uc.B[l] * (θ[uc.fbus[l],t] - θ[uc.tbus[l],t]))
+        @constraint(sb, [l=L,t=T], e[l,t] == B[l] * (theta[fbus[l],t] - theta[tbus[l],t]))
 
         # Max generation capacity
-        @constraint(sb, [g=uc.Gs,t=uc.T0], p[g,t] <= uc.Pmax[g] * w[g,t])
-        @constraint(sb, [g=uc.Gf,t=uc.T0], p[g,t] <= uc.Pmax[g] * u[g,t])
+        @constraint(sb, [g=Gs,t=T0], p[g,t] <= Pmax[g] * w[g,t])
+        @constraint(sb, [g=Gf,t=T0], p[g,t] <= Pmax[g] * u[g,t])
 
         # # Min generation capacity
-        @constraint(sb, [g=uc.Gs,t=uc.T0], p[g,t] >= uc.Pmin[g] * w[g,t])
-        @constraint(sb, [g=uc.Gf,t=uc.T0], p[g,t] >= uc.Pmin[g] * u[g,t])
+        @constraint(sb, [g=Gs,t=T0], p[g,t] >= Pmin[g] * w[g,t])
+        @constraint(sb, [g=Gf,t=T0], p[g,t] >= Pmin[g] * u[g,t])
 
         # Ramping capacity
-        @constraint(sb, [g=uc.G,t=uc.T], p[g,t] - p[g,t-1] <= uc.Rmax[g])
-        @constraint(sb, [g=uc.G,t=uc.T], p[g,t] - p[g,t-1] >= -uc.Rmin[g])
+        @constraint(sb, [g=G,t=T], p[g,t] - p[g,t-1] <= Rmax[g])
+        @constraint(sb, [g=G,t=T], p[g,t] - p[g,t-1] >= -Rmin[g])
     end
 
     return model
 end
+
+m = SUC("FallWD",1)

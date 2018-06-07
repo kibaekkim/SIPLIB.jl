@@ -50,8 +50,8 @@ The objective function (\ref{dcap:obj}) is to minimize total expected cost for t
 	}
 \end{table} 
 
-\subsubsection{\dcap: Data generation} 
-There are four factors that define the instance of \dcap\: $|R|$, $|N|$, $|T|$, and $|\mathcal{S}|$. Once we decide the factors, the instance is named by DCAP\_$|R|$\_$|N|$\_$|T|$\_$|\mathcal{S}|$. Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
+\subsubsection{\dcap: Data generation} \label{subsubsec:dcap_data_gen}
+There are four factors that define the instance of \dcap: $|R|$, $|N|$, $|T|$, and $|\mathcal{S}|$. Once we decide the factors, the instance is named by DCAP\_$|R|$\_$|N|$\_$|T|$\_$|\mathcal{S}|$. Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
 \begin{align*}
 	\alpha_{it}&=5U+5,\quad\forall i\in R,\ \forall t\in T, \\
 	\beta_{it} &=40U+10,\quad\forall i\in R,\ \forall t\in T, \\
@@ -123,7 +123,7 @@ The first sum in the objective function (\ref{mptsps:obj}) represents the first 
 \end{table} 
 
 
-\subsubsection{\mptsps: Data generation}
+\subsubsection{\mptsps: Data generation} \label{mptsps:datagen}
 We follow the scenario generation methods described through the references \cite{journal:MPT2014,journal:PGM2017,journal:TPP2017}. For \mptsps\, there are three mainly distinguished characteristics for each instance: the nodes partition strategy ($D\in\{D0,D1,D2,D3\}$, explanation on each strategy is forthcoming), the number of nodes ($|N|\in\{2,3,\ldots\}$), and the number of scenarios ($|\mathcal{S}|\in\{1,2,\ldots\}$). Another important charicteristic $|K_{ij}|\in\{1,2,3,\ldots\}$ is the number of paths for each edge which is fixed by 3 as a default following \cite{journal:TPP2017}. Once we decide $D$, $|N|$, and $|S|$ by, each instance is named by MPTSPs\_$D$\_$|N|$\_$|\mathcal{S}|$.
 
 The nodes are distributed in a circle with radius equal to $r$ km. We use Cartesian coordinate system where the geometric center of the circle is $(r,r)$. The nodes are distinguished by two subsets: \textit{central} and \textit{suburban}. If the Euclidean distance between a node and the geometric center is less than or equal to the half of the radius ($r/2$), then the node is of \textit{central} type. Otherwise, if the Euclidean distance is greater than the half of the radius, the node is of \textit{suburban} type. Each arc between any two nodes $i$ and $j$ is either \textit{homogeneous} or \textit{heterogeneous}. If the two nodes are of the same type of node, i.e., both are \textit{central} or both are \textit{suburban}, the type of the arc is \textit{homogeneous}. Otherwise, the type of the arc is \textit{heterogeneous}. Later, the travel time of each path between two nodes are affected by the type of arc. 

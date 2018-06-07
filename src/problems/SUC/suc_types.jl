@@ -1,4 +1,4 @@
-type UnitCommitmentModel
+type SUCData
 
     # Sets
     G      # generators
@@ -50,5 +50,5 @@ type UnitCommitmentModel
 
     Pr # probability
 
-    UnitCommitmentModel() = new()
+    SUCData() = new()
 end
