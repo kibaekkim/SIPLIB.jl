@@ -1,11 +1,11 @@
-\yoc{The contents of this section are completely changed. I tried to describe the structure and functionalities of the package rather than step-by-step tutorials. Users may refer this to participate in future implementation.}
+\yoc{The contents of this section are completely changed. I tried to describe the structure and functionalities of the package rather than step-by-step tutorials. Users may refer to this section to participate in future improvement.}
 \siplibtwo\ is implemented in \julia\ programming language with algebraic modeling packages \jump\ and \structjump. We implement and provide \julia\ package, say \siplibjl, for users to utilize funtionalities of \siplibtwo. In this section, we introduce the implementation of the package.
 
 \kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
 \yoc{Thanks. First of all, this section is written by benchmarking the MIPLIB 2010 paper. There is a section like this (Section 4: How to run a test, add a solver, and what the scripts do) so I think the reviewers of MPC may want us to include the section like this. And I wanted this draft to be look of completeness (not being looked abstractly) to concretely describe what is in my mind. As the main developer of SIPLIB 2.0 and based on my experience of using the Julia scripts for preliminary computational experiments, I think the current syntax I propose is reasonable and compact. The better suggestion/discussion on the syntax is always welcome and can be applied. More detailed manual will be surely accompanied later with the release of this package.} 
 \kk{We may have a better idea about this section, once you start answering the questions at the end of Section 4.2. But, for now I still think it would better simply cite a github page for this kind of information.}
-
-\subsection{\smps\ format} \label{subsec:smps}
+\subsection{Preliminaries}
+\subsubsection{\smps\ format} \label{subsec:smps}
 \smps\ format \cite{SMPS} is a data conventions for the automatic input of multiperiod stochastic linear programs. The input format is based on an old column-oriented format \mpsx\ standard and is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. 
 
 Three input files are required to specify an SP in \smps\ format:
@@ -16,7 +16,7 @@ Three input files are required to specify an SP in \smps\ format:
 \end{itemize}
 \kk{This needs moved to later section.} \yoc{I move this to this section.}
 
-\subsection{\jumpmodel-type object}
+\subsubsection{\jumpmodel-type object}
 \jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in the package requires this object as one of its input arguments. Combining \structjump\ package together with \jump\ package, constructing a \jumpmodel\ object is quite simpler and more intuitive than any other algebraic modeling language dedicated for SIP. For example, the forthcoming script in Fig. \ref{fig:dcap_models} constructs an object \texttt{model} of a \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}).
 
 \subsection{Structure of the \julia\ package}
@@ -111,7 +111,7 @@ Each folder in \texttt{problems} contains three \julia\ scripts for constructing
 		DCAPData() = new()
 	end
 	\end{lstlisting}
-	\caption{\texttt{dcap\_types.jl}}\label{fig:dcap_types}
+	\caption{Example: \texttt{dcap\_types.jl}}\label{fig:dcap_types}
 \end{figure}
 
 \begin{quote}
@@ -143,7 +143,7 @@ Each folder in \texttt{problems} contains three \julia\ scripts for constructing
 		
 	end
 	\end{lstlisting}
-	\caption{\texttt{dcap\_functions.jl}}\label{fig:dcap_functions}
+	\caption{Example: \texttt{dcap\_functions.jl}}\label{fig:dcap_functions}
 \end{figure}
 
 \begin{quote}
@@ -195,13 +195,13 @@ Each folder in \texttt{problems} contains three \julia\ scripts for constructing
 		
 	end
 	\end{lstlisting}
-	\caption{\texttt{dcap\_models.jl}}\label{fig:dcap_models}
+	\caption{Example: \texttt{dcap\_models.jl}}\label{fig:dcap_models}
 \end{figure}
 
 \subsubsection{\julia\ scripts for convenient functionalities}
 To provide convenience for users, we implement various functions which are hopefully useful in terms of investigating the factors we have discussed in the previous Section \ref{sec:summary}. The following \julia\ files stand for that purpose.
 \begin{quotation}
-	\noindent\underline{\texttt{smpswriter.jl}} This script implements the basic building blocks for functions that converts \jumpmodel\ object to \smps\ files. 
+	\noindent\underline{\texttt{smpswriter.jl}} This script implements the basic building blocks for the functions that converts \jumpmodel\ object to \smps\ files. 
 \end{quotation}
 
 \begin{quotation}
