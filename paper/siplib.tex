@@ -34,18 +34,21 @@ gsave
 grestore
 stroke
 grestore
+
 \end{filecontents*}
 %
 \RequirePackage{fix-cm}
 %
 %\documentclass{svjour3}                     % onecolumn (standard format)
 %\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
-\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+\documentclass[smallextended,tikz]{svjour3}       % onecolumn (second format)
 %\documentclass[twocolumn]{svjour3}          % twocolumn
 %
 \smartqed  % flush right qed marks, e.g. at end of proof
 %
 \usepackage[usenames,dvipsnames]{xcolor}
+
+
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{mathrsfs,amsmath,amssymb,amscd,mathtools}
@@ -67,6 +70,20 @@ grestore
 \usepackage{listings}
 \usepackage{courier}
 \usepackage{soul}
+\usepackage{forest}
+
+\definecolor{folderbg}{RGB}{124,166,198}
+\definecolor{folderborder}{RGB}{110,144,169}
+
+\def\Size{4pt}
+\tikzset{
+	folder/.pic={
+		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+		(-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);  
+		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+		(-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+	}
+}
 
 
 \lstdefinelanguage{julia}
@@ -156,6 +173,21 @@ grestore
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
+
+%
+%\definecolor{folderbg}{RGB}{124,166,198}
+%\definecolor{folderborder}{RGB}{110,144,169}
+%
+%\def\Size{4pt}
+%\tikzset{
+%	folder/.pic={
+%		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+%		(-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);  
+%		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
+%		(-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+%	}
+%}
+
 \raggedbottom
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
 %
@@ -169,6 +201,7 @@ grestore
 % Insert the name of "your journal" with
 % \journalname{myjournal}
 %
+
 
 \begin{document}
 \title{SIPLIB 2.0
@@ -228,10 +261,6 @@ grestore
 \section{A \texttt{Julia} package for \siplibtwo} \label{sec:siplibjl}
 \input{./sections/sec04_siplibjl.tex}
 \pagebreak
-
-%\section{Implementation of SmpsWriter.jl}\label{sec:smps_writer}
-%\input{./sections/sec05_smpswriter.tex}
-%\pagebreak
 
 \section{The instance catalog: Computational benchmarks for accompanied \texttt{SMPS} files}\label{sec:instance_catalog}
 \input{./sections/sec06_instance_catalog.tex}

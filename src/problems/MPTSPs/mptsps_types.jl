@@ -4,10 +4,9 @@ type Node
     centrality::Bool
 end
 
-type MPTSPsModel
+type MPTSPsData
     # Sets
     N   # set of nodes of the graph : i,j ∈ N
-    U   # set of subsets of nodes in N : u ∈ U
     K   # set of paths between the pair of nodes : p ∈ K
     S   # set of time scenarios : s ∈ S
 
@@ -17,5 +16,5 @@ type MPTSPsModel
     E   # the error on the travel time cost estimated for the path k ∈ K under time scenario s ∈ S : E[s][i][j][p] ≡ Cs[s][i][j][p] - Ce[i][j]
     Pr  # probability distribution of scenario s ∈ S : Pr[s] ≡ 1/nScenario
 
-    MPTSPsModel() = new()
+    MPTSPsData() = new()
 end

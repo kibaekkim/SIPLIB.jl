@@ -20,7 +20,7 @@ using Siplib
 ## parameter setting: Start ##
 ##############################
 param_set = Dict{Symbol, Array{Array{Any}}}()
-
+#=
 # DCAP
 param = [[2,3,3], [2,4,3], [3,3,2], [3,4,2]]
 nS = [1000, 3000, 5000, 7000, 9000]
@@ -35,7 +35,7 @@ param_set[:DCAP] = param_array
 
 # MPTSPs
 param = [["D0",50], ["D1",50], ["D2",50], ["D3",50], ["D0",100], ["D1",100], ["D2",100], ["D3",100]]
-nS = [100, 300, 500, 700, 900]
+nS = [100, 200, 300, 400, 500]
 param_array = Any[]
 for p in param
     for n in nS
@@ -44,6 +44,7 @@ for p in param
     end
 end
 param_set[:MPTSPs] = param_array
+=#
 
 # SIZES
 param = [[]]
@@ -81,7 +82,7 @@ for p in param
 end
 param_set[:SSLP] = param_array
 
-# SSLP
+# SUC
 param = ["FallWD", "FallWE", "SpringWD", "SpringWE", "SummerWD", "SummerWE", "WinterWD", "WinterWE"]
 nS = [10, 20, 30, 40, 50]
 param_array = Any[]
@@ -104,7 +105,7 @@ param_set[:SUC] = param_array
 ##  Generating instances: Start  ##
 ###################################
 
-for prob in problem
+for prob in [:SMKP, :SIZES, :SSLP, :SUC]
     for param in param_set[prob]
         generateSMPS_with_name_splice(prob, param, SMPS_PATH*"/$(String(prob))")
     end

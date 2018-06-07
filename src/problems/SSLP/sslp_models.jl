@@ -34,30 +34,27 @@ Parameters (scenario):
   h[i,s]: 1 if client i is present in scenario s, 0 otherwise
 =#
 
-function sslp(nJ::Int, nI::Int, nS::Int, seed::Int=1)::JuMP.Model
+include("./sslp_types.jl")
+include("./sslp_functions.jl")
 
-    srand(seed)
-    J = 1:nJ
-    I = 1:nI
-    S = 1:nS
-    Z = []
+function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::JuMP.Model
 
-    c = rand(40:80,nJ)
-    q = rand(0:25,nI,nJ)
-    q0 = ones(nJ)*1000
-    d = q
-    u = 1.5*sum(d)/nJ
-    v = nJ
-    w = NaN
-    Jz = []
-    h = rand(0:1,nI,nS)
-    Pr = ones(nS)/nS
+    # generate model data
+    data = SSLPData(nJ, nI, nS, seed)
 
+    J, I, S, Z = data.J, data.I, data.S, data.Z
+    c, q, q0, d, u, v, w, Jz, h, Pr = data.c, data.q, data.q0, data.d, data.u, data.v, data.w, data.Jz, data.h, data.Pr
+
+    # construct JuMP.Model
     model = StructuredModel(num_scenarios=nS)
+
+    ## 1st stage
     @variable(model, x[j=J], Bin)
     @objective(model, Min, sum(c[j]*x[j] for j in J))
     @constraint(model, sum(x[j] for j in J) <= v)
     @constraint(model, [z=Z], sum(x[j] for j in Jz[z]) >= w[z])
+
+    ## 2nd stage
     for s in S
         sb = StructuredModel(parent=model, id = s, prob = Pr[s])
         @variable(sb, y[i=I,j=J], Bin)

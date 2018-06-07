@@ -1,4 +1,4 @@
-type SIZESModelData
+type SIZESData
 
     # Sets
     N   # set of items : i,j ∈ N
@@ -13,5 +13,5 @@ type SIZESModelData
     C   # production capacity at time t under scenario s : C[t,s]
     Pr  # probability distribution of scenario s : Pr[s]
 
-    SIZESModelData() = new()
+    SIZESData() = new()
 end
