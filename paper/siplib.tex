@@ -71,6 +71,7 @@ grestore
 \usepackage{courier}
 \usepackage{soul}
 \usepackage{forest}
+\usepackage[graphicx]{realboxes}
 
 \definecolor{folderbg}{RGB}{124,166,198}
 \definecolor{folderborder}{RGB}{110,144,169}
@@ -115,7 +116,7 @@ grestore
 		break,continue,macro,quote,let,if,elseif,else,try,catch,end,bitstype,ccall,do,using,module,
 		import,export,importall,baremodule,immutable,local,global,const,Bool,Int,Int8,Int16,Int32,
 		Int64,Uint,Uint8,Uint16,Uint32,Uint64,Float32,Float64,Complex64,Complex128,String,Symbol,Any,Nothing,None,
-		function,type,typealias,abstract},
+		function,type,typealias,abstract,struct},
 	comment=[l]{\#},
 	%morecomment=[s]{#=}{=#},
 	morestring=[d]\',
@@ -248,27 +249,27 @@ grestore
 
 \section{Introduction}\label{sec:intro}
 \input{./sections/sec01_intro.tex}
-\pagebreak
+%\pagebreak
 
 \section{Stochastic integer programming}\label{sec:sip}
 \input{./sections/sec02_sip.tex}
-\pagebreak
+%\pagebreak
  
 \section{The test problems: summary and discussion}\label{sec:summary}
 \input{./sections/sec03_summary.tex}
-\pagebreak
+%\pagebreak
 
 \section{A \texttt{Julia} package for \siplibtwo} \label{sec:siplibjl}
 \input{./sections/sec04_siplibjl.tex}
-\pagebreak
+%\pagebreak
 
 \section{The instance catalog}\label{sec:instance_catalog}
 \input{./sections/sec06_instance_catalog.tex}
-\pagebreak
+%\pagebreak
 
 \section{Concluding remarks}\label{sec:conclusion}
 \input{./sections/sec07_conclusion.tex}
-\pagebreak
+%\pagebreak
 
 %\begin{acknowledgements}
 %\end{acknowledgements}
@@ -283,22 +284,22 @@ grestore
 % problem-specific description 
 \section{Problem descriptions} \label{sec:prob_desc}
 \input{./sections/app01_probdesc.tex}
-\pagebreak
+%\pagebreak
 
 % general sparsity (fully cardinality based)
 \section{Block-wise sparsity based on set cardinality} \label{sec:sparsity}
 \input{./sections/app02_sparsity.tex}
-\pagebreak
+%\pagebreak
 
 % MIPLIB 2010 constraint type legend
 \section{Constraint type legend from \texttt{MIPLIB 2010}} \label{sec:miplibconstraint}
 \input{./sections/app03_miplib_constraints.tex}
-\pagebreak
+%\pagebreak
 
 % siplib.jl
 \section{A tutorial for the \julia\ package} \label{sec:tutorial}
 \input{./sections/app04_tutorial.tex}
-\pagebreak
+%\pagebreak
 
 
 \end{document}

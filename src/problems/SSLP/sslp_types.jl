@@ -1,4 +1,4 @@
-type SSLPData
+struct SSLPData
 
     # Sets
     J
