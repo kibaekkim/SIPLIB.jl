@@ -8,70 +8,112 @@
 %
 %- preliminary results using CPLEX
 
-\kk{Please describe what you present in this section. Subsectioning would also help.} \yoc{This section is newely written. Need more justification.} \siplibtwo\ provides ready-made instances for test and benchmarking  purpose. In this section, we report detailed information on each instance. This includes numerical size information, sparsity information, and computational results. The main purpose of the computational experiments is to notice 
+%\kk{Please describe what you present in this section. Subsectioning would also help.} \yoc{This section is newely written. Need more justification.} 
+\siplibtwo\ provides \smps\ instances for test and benchmarking  purpose. In this section, we report detailed information on each instance. This includes numerical size information, sparsity information, and computational results. The main purpose of the computational experiments is to notice 
 %\begin{itemize}
 %	\item Commercial MIP solver (CPLEX) result: optimality gap, integrality gap (LP relaxation gap, tightness), solution time, obj value
 %	\item DD solver (DSP) result: optimality gap, duality gap (convex relaxation gap), solution time, obj value
 %\end{itemize}
 
-\subsection{Size information: analytical results}
-Table \ref{table:instance_size_info} reports numerical size information for each instance.
+\subsection{Size and sparsity information}
+Table \ref{table:instance_size_info} reports numerical size and sparsity information for each instance.
 \input{./tables/table_instance_size_information}
 
-\subsection{Solution information: computational results}
-We report solution information resulted from the computational experiments. Unlike the size information, the solution information of the instances should be obtained highly computational methods. We provide the result in Table. Throughout the following subsections, we explain each item of the table.
+\subsection{Computational results}
+We report computational information resulted from experiments. Unlike the size information, this information should be obtained highly computational methods. We provide the result in Table \ref{table:computation_report}. Throughout the following subsections, we explain about the computational experiments.
 
-\subsubsection{Computing environment}
-All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. For consistent results, we only use single node and single core for each instance. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. We set the termination condition on time 3 hours. 
+\subsubsection{Computing environment and setting}
+All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. 
 
+We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 and an open-source DD based SIP solver \dsp. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. We fully utilize 36 threads for each single instance both in two solvers. We set the termination condition on CPU time by 3 hours.  
+
+The size of the instances on which the experiments perform is chosen basically based on the former \siplib. Additionally, we generate and include some large-scenario instances into the experiments.
+
+\subsubsection{Reports}
 
 \subsubsection {Basic results from the two solvers: \cplex\ and \dsp}
-\noindent\textit{Best objective value, Solution time}
+We report objective values from the two solvers. Since we set the time limit, the reported values can be incumbent, say, $\hat{z}_C$ and $\hat{z}_D$. When the instance is solved to the optimality in the time limit, we report the optimal objective values $z^*_C$ and $z^*_D$.
 
-\subsubsection{Four gaps}
-We report four different gaps for each instances. Each gap is useful to compare the characteristics of instances with each other. We expect this information will provide some research direction to investigate. 
+\subsubsection{Gaps}
+We report several different gaps for each instances. Each gap is useful to compare the characteristics of instances with each other. We expect this information will provide future research direction. 
 
 \begin{quote}
-\noindent\underline{\textit{Optimality gap (OG)}} This gap, defined by $\frac{|\textrm{Best Bound}-\textrm{Best Int}|}{|\textrm{Best Int}|+\epsilon}$, is reported by the commercial solver \cplex. Best Int denotes the best found objective so far and Best Bound means the best possible objective discovered. The gap is obtained by keeping track of the best relaxation currently in the pool of nodes waiting for further processing. This can be a basic measure of difficulty of an instance combined with processing time.
+\noindent\underline{\textit{Optimality gap (OG)}} This gap, defined by, $\frac{|\underline{\hat{z}}-\hat{z}|}{|\hat{z}|+\epsilon}$, is reported from the two solvers. $\underline{\hat{z}}$ means the best lower bound discovered and $\hat{z}$ is the incumbent objective. The gap is obtained by keeping track of the best relaxation currently in the pool of nodes waiting for further processing. This can be a basic measure of difficulty of an instance combined with processing time.
 \end{quote}
 
 \begin{quote}
-\noindent\underline{\textit{Integrality gap (IG)}} The integrality gap in minimization problem is defined by $\frac{\textrm{Integer solution}}{\textrm{Fractional solution}}$ hence always greater than or equal to 1. The fractional solution is obtained by relaxing integrality of the variables. This LP relaxation provides an optimistic bound on the integer program's solution. The small this gap implies tightness of the LP relaxation. This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
+\noindent\underline{\textit{Integrality gap (IG)}} We define a SIP-specific integrality gap (IG) in minimization problem by $\frac{z^*}{z^*_{LP2}}$, where $z^*$ is the optimal integral solution and $z^*_{LR2}$ is the optimal fractional solution with LP-relaxed second-stage. This LP relaxation provides an optimistic bound on the integer program's solution. The small this gap implies tightness of the LP relaxation. Since there is no guarantee that we always find the optimal solutions, we report $\frac{\hat{z}}{\hat{z}_{LP2}}$ where $\hat{z}$ and $\hat{z}_{LP2}$ are the incumbent solutions. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The tightness of this bound highly depends on the quality of the incumbent solution $\hat{z}$.%This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
 \end{quote}
 
 \begin{quote}
-\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is the difference between any dual solution and the value of a feasible but suboptimal iterate for the primal problem. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
+\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is the difference between any dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
 \end{quote}
 
-\begin{quote}
-\noindent\underline{\textit{Symmetry gap (SG)}} An MIP is \textit{symmetric} if its variables can be permuted without changing the structure of the problem. The symmetry is one of the frequently mentioned factors that affects the difficulty of optimization problem. Unfortunately, no universally applicable quantification for the impact of symmetry is available. Hence, we heuristically define the symmetry gap using \cplex\ option (Table \ref{table:cplex_symmetry}). That is,  
-\end{quote}
+%\begin{quote}
+%	\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is the difference between any dual solution and the value of a feasible but suboptimal iterate for the primal problem. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
+%\end{quote}
 
-\begin{quote}
-	\centering$\frac{|\textrm{\cplex\ solution}-\textrm{\cplex\ solution with the strongest symmetry breaking}|}{|\textrm{\cplex\ solution}|}$
-\end{quote}
-
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{graphicx}
 \begin{table}[H]
 	\centering
+	\caption{Computational report}
+	\label{table:computation_report}
 	\resizebox{\textwidth}{!}{%
-		\begin{threeparttable}
-			\caption{Symmetry breaking option of CPLEX }
-			\label{table:cplex_symmetry}
-			\begin{tabular}{@{}cl@{}}
-				\toprule
-				Parameter value & \multicolumn{1}{c}{Meaning}                              \\ \midrule
-				-1    & Automatic: let CPLEX choose; default                     \\
-				0     & Turn off symmetry breaking                               \\
-				1     & Exert a moderate level of symmetry breaking              \\
-				2     & Exert an aggressive level of symmetry breaking           \\
-				3     & Exert a very aggressive level of symmetry breaking       \\
-				4     & Exert a highly aggressive level of symmetry breaking     \\
-				5     & Exert an extremely aggressive level of symmetry breaking \\ \bottomrule
-			\end{tabular}
-			\begin{tablenotes}
-				\small
-				\item *Parameter in \texttt{C} API is 	$\texttt{CPXPARAM\_Preprocessing\_Symmetry}$ for $>$12.6.0 and $\texttt{CPX\_PARAM\_SYMMETRY}$ for $\le$12.6.0
-			\end{tablenotes}
-		\end{threeparttable}
+		\begin{tabular}{lllllllll}
+			\hline
+			&                              & \multicolumn{2}{c}{Objective value (time)}          & \multicolumn{2}{c}{Optimality Gap}                  & \multicolumn{2}{c}{Integrality Gap}                 & \multicolumn{1}{c}{Duality Gap} \\ \hline
+			\multicolumn{1}{c}{Problem} & \multicolumn{1}{c}{Instance} & \multicolumn{1}{c}{\cplex} & \multicolumn{1}{c}{\dsp} & \multicolumn{1}{c}{\cplex} & \multicolumn{1}{c}{\dsp} & \multicolumn{1}{c}{\cplex} & \multicolumn{1}{c}{\dsp} & \multicolumn{1}{c}{\dsp}         \\ \hline
+			\multirow{16}{*}{\dcap}      & DCAP\_2\_3\_3\_200               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_2\_3\_3\_300               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_2\_3\_3\_500               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_2\_3\_3\_10000             &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_2\_4\_3\_200               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_2\_4\_3\_300               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_2\_4\_3\_500               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_2\_4\_3\_10000             &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_3\_2\_200               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_3\_2\_300               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_3\_2\_500               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_3\_2\_10000             &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_4\_2\_200               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_4\_2\_300               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_4\_2\_500               &                           &                         &                           &                         &                           &                         &                                 \\
+			& DCAP\_3\_4\_2\_10000             &                           &                         &                           &                         &                           &                         &                                 \\ \hline
+		\end{tabular}%
 	}
 \end{table}
+
+%\begin{quote}
+%\noindent\underline{\textit{Symmetry gap (SG)}} An MIP is \textit{symmetric} if its variables can be permuted without changing the structure of the problem. The symmetry is one of the frequently mentioned factors that affects the difficulty of optimization problem. Unfortunately, no universally applicable quantification for the impact of symmetry is available. Hence, we heuristically define the symmetry gap using \cplex\ option (Table \ref{table:cplex_symmetry}). That is,  
+%\end{quote}
+
+%\begin{quote}
+%	\centering$\frac{|\textrm{\cplex\ solution}-\textrm{\cplex\ solution with the strongest symmetry breaking}|}{|\textrm{\cplex\ solution}|}$
+%\end{quote}
+
+%\begin{table}[H]
+%	\centering
+%	\resizebox{\textwidth}{!}{%
+%		\begin{threeparttable}
+%			\caption{Symmetry breaking option of CPLEX }
+%			\label{table:cplex_symmetry}
+%			\begin{tabular}{@{}cl@{}}
+%				\toprule
+%				Parameter value & \multicolumn{1}{c}{Meaning}                              \\ \midrule
+%				-1    & Automatic: let CPLEX choose; default                     \\
+%				0     & Turn off symmetry breaking                               \\
+%				1     & Exert a moderate level of symmetry breaking              \\
+%				2     & Exert an aggressive level of symmetry breaking           \\
+%				3     & Exert a very aggressive level of symmetry breaking       \\
+%				4     & Exert a highly aggressive level of symmetry breaking     \\
+%				5     & Exert an extremely aggressive level of symmetry breaking \\ \bottomrule
+%			\end{tabular}
+%			\begin{tablenotes}
+%				\small
+%				\item *Parameter in \texttt{C} API is 	$\texttt{CPXPARAM\_Preprocessing\_Symmetry}$ for $>$12.6.0 and $\texttt{CPX\_PARAM\_SYMMETRY}$ for $\le$12.6.0
+%			\end{tablenotes}
+%		\end{threeparttable}
+%	}
+%\end{table}

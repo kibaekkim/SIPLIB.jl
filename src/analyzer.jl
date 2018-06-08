@@ -164,7 +164,6 @@ function plotAllBlocks(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME:
     plt.close()
 end
 
-
 function plotAll(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
     mdata1 = getModelData(model)
     mdata2 = getModelData(getchildren(model)[1])

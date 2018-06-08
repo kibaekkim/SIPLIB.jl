@@ -1,4 +1,4 @@
-type SMKPData
+struct SMKPData
 
     # Sets
     I   # items

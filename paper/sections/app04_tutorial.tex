@@ -1,6 +1,6 @@
 This appendix provides a brief tutorial for the \julia\ package. We release this package on GitHub with the name \siplibjl. More detailed tutorial is provided in the GitHub repository.
 
-\subsection{Prelimenary}
+\subsection{Prerequisites}
 To use \siplibjl, you need to perform the following steps.
 \begin{itemize}
 	\item install the latest \julia\ release.
@@ -72,8 +72,8 @@ function getInstanceName(problem::Symbol, param_arr::Any)::String
 	\item Technology block (block T)
 \end{itemize}
 
-\kk{This section looks more or less a manual; but, should provide more than that. For example, the section should contain the answers to the questions: Why do we care about this? What kind of information do we want to provide? Does it provide any information for testing algorithms? The manual-like information would better go to the package website (not research paper).}
-\yoc{The answers to the questions are discussed in Section 3: the reasons why variable types, number of components (size), sparsity are important.}
+%\kk{This section looks more or less a manual; but, should provide more than that. For example, the section should contain the answers to the questions: Why do we care about this? What kind of information do we want to provide? Does it provide any information for testing algorithms? The manual-like information would better go to the package website (not research paper).}
+%\yoc{The answers to the questions are discussed in Section 3: the reasons why variable types, number of components (size), sparsity are important.}
 
 %\noindent\begin{minipage}{.45\textwidth}
 %\begin{lstlisting}[frame=single,language=julia]
@@ -216,8 +216,8 @@ plotAll(model, INSTANCE)               # plot all the plots above
 \input{figures/figure_siplibjl_plots}
 By executing \texttt{plotAll}, one can obtain all the plots in Fig. \ref{fig:plotall}.
 
-\kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
-\yoc{I move this to appendix. We can remove this.}
+%\kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
+%\yoc{I move this to appendix. We can remove this.}
 
 %
 %\subsection{Solving instances: interfacing with \texttt{DSP} solver}

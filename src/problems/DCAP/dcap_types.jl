@@ -1,4 +1,4 @@
-type DCAPData
+struct DCAPData
     # Sets
     R   # set of resources (i ∈ R)
     N   # set of tasks (j ∈ N)
