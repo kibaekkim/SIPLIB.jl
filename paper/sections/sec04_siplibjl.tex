@@ -1,9 +1,9 @@
-\yoc{The contents of this section are completely changed. I tried to describe the structure and functionalities of the package rather than step-by-step tutorials. Users may refer to this section to participate in future improvement.}
+%\yoc{The contents of this section are completely changed. I tried to describe the structure and functionalities of the package rather than step-by-step tutorials. Users may refer to this section to participate in future improvement.}
 \siplibtwo\ is implemented in \julia\ programming language with algebraic modeling packages \jump\ and \structjump. We implement and provide \julia\ package, say \siplibjl, for users to utilize funtionalities of \siplibtwo. In this section, we introduce the implementation of the package.
 
-\kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
-\yoc{Thanks. First of all, this section is written by benchmarking the MIPLIB 2010 paper. There is a section like this (Section 4: How to run a test, add a solver, and what the scripts do) so I think the reviewers of MPC may want us to include the section like this. And I wanted this draft to be look of completeness (not being looked abstractly) to concretely describe what is in my mind. As the main developer of SIPLIB 2.0 and based on my experience of using the Julia scripts for preliminary computational experiments, I think the current syntax I propose is reasonable and compact. The better suggestion/discussion on the syntax is always welcome and can be applied. More detailed manual will be surely accompanied later with the release of this package.} 
-\kk{We may have a better idea about this section, once you start answering the questions at the end of Section 4.2. But, for now I still think it would better simply cite a github page for this kind of information.}
+%\kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
+%\yoc{Thanks. First of all, this section is written by benchmarking the MIPLIB 2010 paper. There is a section like this (Section 4: How to run a test, add a solver, and what the scripts do) so I think the reviewers of MPC may want us to include the section like this. And I wanted this draft to be look of completeness (not being looked abstractly) to concretely describe what is in my mind. As the main developer of SIPLIB 2.0 and based on my experience of using the Julia scripts for preliminary computational experiments, I think the current syntax I propose is reasonable and compact. The better suggestion/discussion on the syntax is always welcome and can be applied. More detailed manual will be surely accompanied later with the release of this package.} 
+%\kk{We may have a better idea about this section, once you start answering the questions at the end of Section 4.2. But, for now I still think it would better simply cite a github page for this kind of information.}
 \subsection{Preliminaries}
 \subsubsection{\smps\ format} \label{subsec:smps}
 \smps\ format \cite{SMPS} is a data conventions for the automatic input of multiperiod stochastic linear programs. The input format is based on an old column-oriented format \mpsx\ standard and is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. 
@@ -14,7 +14,13 @@ Three input files are required to specify an SP in \smps\ format:
 	\item \texttt{.tim}: Time file which specifies the location where the 2nd stage begins.
 	\item \texttt{.sto}: Stoch file which contains stochastic data of all scenarios except the one included in \texttt{.cor} file.
 \end{itemize}
-\kk{This needs moved to later section.} \yoc{I move this to this section.}
+One of the main functions of the package is to generate \smps\ files for an instance. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$.
+\begin{itemize}
+	\item \texttt{DCAP\_R\_N\_T\_S.cor}
+	\item \texttt{DCAP\_R\_N\_T\_S.tim}
+	\item \texttt{DCAP\_R\_N\_T\_S.sto}
+\end{itemize}
+%\kk{This needs moved to later section.} \yoc{I move this to this section.}
 
 \subsubsection{\jumpmodel-type object}
 \jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in the package requires this object as one of its input arguments. Combining \structjump\ package together with \jump\ package, constructing a \jumpmodel\ object is quite simpler and more intuitive than any other algebraic modeling language dedicated for SIP. For example, the forthcoming script in Fig. \ref{fig:dcap_models} constructs an object \texttt{model} of a \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}).
@@ -84,16 +90,16 @@ The tree in Fig. \ref{fig:siplibjl_structure} shows how the \julia\ package is s
 
 \texttt{src} folder on the top contains every implementation of the package. In the directly descendant folder \texttt{problems}, another folders with names for each problem present. Some folders in \texttt{problems} (e.g., \texttt{SIZES}) have \texttt{DATA} folder in it which contains external data for generating the instances. For example, the \texttt{DATA} folder under \texttt{SIZES} contains \texttt{oneperioddata.csv} file corresponding to Table \ref{sizes:data} for \sizes\ instances. 
 
-\subsubsection{Three core \julia\ scripts: \texttt{\_types.jl}, \texttt{\_functions.jl}, \texttt{\_models.jl}}
-Each folder in \texttt{problems} contains three \julia\ scripts for constructing \jumpmodel\ object for corresponding problem.
+\subsubsection{Three core scripts: \texttt{types}, \texttt{functions}, \texttt{models}}
+Each folder in \texttt{problems} contains three scripts (types, functions, models) for constructing \jumpmodel\ object for corresponding problem. Each kind of script has independent role that defines 
 
 \begin{quote}
-\noindent\underline{\texttt{(problem name)\_types.jl}} This kind of \julia\ file defines the \textit{composite type} (also known as structure or aggregate data type in various languages) that is used to store data for constructing \jumpmodel\ object. For example, \texttt{dcap\_types.jl} in Fig. \ref{fig:dcap_types} defines the composite type \texttt{DCAPData}.
+\noindent\underline{\texttt{types}} This kind of script defines the \textit{composite type} (also known as structure or aggregate data type in various languages) that is used to store data for constructing \jumpmodel\ object. The object of this composite type will contain all set and parameter data that define an instance. For example, \texttt{dcap\_types.jl} in Fig. \ref{fig:dcap_types}, defines the composite type \texttt{DCAPData}.
 \end{quote}
 \begin{figure}[H]
 	\centering
 	\begin{lstlisting}[frame=single,language=julia]
-	type DCAPData
+	struct DCAPData
 		# Sets
 		R   # set of resources 
 		N   # set of tasks 
@@ -115,7 +121,7 @@ Each folder in \texttt{problems} contains three \julia\ scripts for constructing
 \end{figure}
 
 \begin{quote}
-\noindent\underline{\texttt{(problem name)\_functions.jl}} This kind of \julia\ file mostly defines the functions exploited for generating random data for each problem. For example, \texttt{dcap\_functions.jl} in Fig \ref{fig:dcap_functions} defines a function that returns the \texttt{DCAPData}-type object as well as generates random data. The data generation procedure is exactly the same as defined in Section \ref{subsubsec:dcap_data_gen}.
+\noindent\underline{\texttt{functions}} This kind of script mostly defines the functions exploited for generating random data for each problem. \texttt{dcap\_functions.jl} in Fig \ref{fig:dcap_functions}, for example, defines a function that returns the \texttt{DCAPData}-type object as well as generates random data. The data generation procedure and associated probability distribution are as described in Section \ref{subsubsec:dcap_data_gen}.
 \end{quote}
 \begin{figure}[H]
 	\centering
@@ -147,7 +153,7 @@ Each folder in \texttt{problems} contains three \julia\ scripts for constructing
 \end{figure}
 
 \begin{quote}
-\noindent\underline{\texttt{(problem name)\_models.jl}} This \julia\ file contains a definition of the function that finally constructs and returns \jumpmodel-type object of an instance. The two \julia\ files above are included in this file. Script in Fig \ref{fig:dcap_models} shows the example of \dcap.
+\noindent\underline{\texttt{models}} This kind of script contains a definition of the function that finally constructs and returns \jumpmodel-type object of an instance. This function calls the members in \jump\ and \structjump\ packages. The two kinds of scripts above should be included in this script. Script in Fig \ref{fig:dcap_models} shows the example of \dcap.
 \end{quote}
 \begin{figure}[H]
 	\centering

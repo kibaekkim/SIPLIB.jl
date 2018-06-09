@@ -1,4 +1,4 @@
-type SIZESData
+struct SIZESData
 
     # Sets
     N   # set of items : i,j ∈ N
