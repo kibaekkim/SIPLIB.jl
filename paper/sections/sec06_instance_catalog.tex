@@ -30,10 +30,12 @@ We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 an
 The size of the instances on which the experiments perform is chosen basically based on the former \siplib. Additionally, we generate and include some large-scenario instances into the experiments.
 
 \subsubsection{Reports}
-We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. Recall the EF in Section \ref{sec:sip}:
+We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. The summary for the notations is found in Table \ref{table:objective-notation}.
+
+First, recall the EF in Section \ref{sec:sip}:
 \begin{subequations}\label{ef}
 	\begin{align}
-	\textrm{(EF) }\min_{x,y_s}\ z(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \tag{\ref{ef:obj}}\\ 
+	\textrm{(EF) }\min_{x,y_s}\ z(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s) \tag{\ref{ef:obj}}\\ 
 	\mathrm{s.t.}\ &Ax\ge b,  \tag{\ref{ef:b}}\\
 	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\}, \tag{\ref{ef:c}} \\
 	&x\in X, \tag{\ref{ef:d}} \\
@@ -41,17 +43,17 @@ We first introduce the notations used to define each column in the report Table 
 	\end{align}
 \end{subequations}
 
-We use the vanilla $z$ to denote the value of the objective function in RHS of (\ref{ef:obj}) such that constraints (\ref{ef:b})-(\ref{ef:e}) are satisfied throughout this section and report. We use the notation $z^*$ to denote the optimal objective value, $\tilde{z}$ for the best lower bound discovered for $z^*$, and $\hat{z}$ for the incumbent objective value. Hence, the relationship $\tilde{z}\le z^*\le\hat{z}$ always holds.
+We use the vanilla $z$ to denote the value of the objective function in RHS of (\ref{ef:obj}) such that constraints (\ref{ef:b})-(\ref{ef:e}) are satisfied throughout this section and report. We use the superscription $z^*$ to denote the optimal objective value, $\tilde{z}$ for the best lower bound discovered for $z^*$, and $\hat{z}$ for the incumbent objective value. Hence, the relationship $\tilde{z}\le z^*\le\hat{z}$ always holds.
 
 $z_{LP2}$ is defined by the objective value of the following partially LP-relaxed problem:
 \begin{subequations}\label{ef-lp2}
 	\begin{align}
-	\textrm{(EF-LP2) }\min_{x,y_s}\ z_{LP2}(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \tag{\ref{ef:obj}}\\ 
-	\mathrm{s.t.}\ &(\ref{ef:b})-(\ref{ef:d}), \nonumber \\
-	&y_s \ge 0,\quad\forall s\in\{1,\ldots,r\}. \tag{\ref{ef:e}'}
+	\textrm{(EF-LP2) }\min_{x,y_s}\ z_{LP2}(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s) \tag{\ref{ef:obj}}\\ 
+	\mathrm{s.t.}\ &\textrm{(\ref{ef:b})}-\textrm{(\ref{ef:d})}, \nonumber \\
+	& y_s \in Y \subseteq \mathbb{R}\backslash\mathbb{Z} ,\quad\forall s\in\{1,\ldots,r\}. \tag{\ref{ef:e}'}
 	\end{align}
 \end{subequations}
-Note that only the integrality constraints in the second-stage are relaxed.
+Note that only the integrality constraints for the second-stage variables are relaxed.
 
 $z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual problem. The Lagrangian dual problem can be derived from EF' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}):
 \begin{subequations}\label{ef-ld}
@@ -60,7 +62,7 @@ $z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual 
 	\mathrm{s.t.}\ & (x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	\tag{\ref{eq:SIP_2-3}}
 	\end{align}
 \end{subequations}
-where $G_s$ is defined by (\ref{eq:SIP_2-4}).
+where the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
 
 \begin{table}[H]
 	\centering
