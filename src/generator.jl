@@ -42,7 +42,7 @@ function generateSMPS(problem::Symbol, param_arr::Any, DIR_NAME::String="$(dirna
     model = getModel(problem, param_arr, seed, lprelax)
     INSTANCE_NAME = getInstanceName(problem, param_arr)
     if lprelax != 0
-        INSTANCE_NAME *= "_LR$(lprelax)"
+        INSTANCE_NAME *= "_LP$(lprelax)"
     end
     writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice)
 
