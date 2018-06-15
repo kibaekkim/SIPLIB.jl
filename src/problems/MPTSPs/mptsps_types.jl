@@ -1,10 +1,10 @@
-struct Node
+mutable struct Node
     x::Float64
     y::Float64
     centrality::Bool
 end
 
-struct MPTSPsData
+mutable struct MPTSPsData
     # Sets
     N   # set of nodes of the graph : i,j ∈ N
     K   # set of paths between the pair of nodes : p ∈ K

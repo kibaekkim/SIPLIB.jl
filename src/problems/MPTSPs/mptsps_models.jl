@@ -1,11 +1,15 @@
 include("./mptsps_types.jl")
 include("./mptsps_functions.jl")
 
-#using JuMP, StructJuMP, Distributions
+## predetermined parameters
+global RADIUS = 7.0      # MPTSPs: default radius of the area
+global NK = 3            # MPTSPs: default number of paths between two nodes
+global VC = 40.0         # MPTSPs: default deterministic velocity profile for central node
+global VS = 80.0         # MPTSPs: default deterministic velocity profile for suburban node
 
 function MPTSPs(D::String, nN::Integer, nS::Integer, seed::Int=1)::JuMP.Model
 
-    # generate model data
+    # generate instance data
     data = MPTSPsData(D, nN, nS, seed)
 
     N, K, S, Cs, Ce, E, Pr = data.N, data.K, data.S, data.Cs, data.Ce, data.E, data.Pr

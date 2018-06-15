@@ -1,4 +1,4 @@
-struct SUCData
+mutable struct SUCData
 
     # Sets
     G      # generators

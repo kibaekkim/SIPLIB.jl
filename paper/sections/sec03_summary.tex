@@ -80,7 +80,7 @@ As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three differently 
 	\label{fig:stagewise_sparsity}
 \end{figure}
 
-Every SIP has a block-diagonal structure in its coefficient matrix of the extensive form (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of the full deterministic equivalent form coefficient matrix.
+Every extensive-formed SIP has a block-diagonal structure in its coefficient matrix (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of the full deterministic equivalent form coefficient matrix.
 \input{figures/figure_sparsity_pattern}
 
 As many decomposition-based methods in SIP make use of solution methods developed for MIP to solve the descendant master/sub problems, exploiting the sparsity pattern in each independent block might be one of the key aspects that will help improving performance of the algorithms. Given the sparsity pattern, intuitively, we would like to generate valid cuts that somehow preserve the sparse structure. For example, recent studies \cite{DMW2015,DIM2015} showed how well polytopes are approximated by using only sparse valid-inequalities.

@@ -1,4 +1,4 @@
-struct SSLPData
+mutable struct SSLPData
 
     # Sets
     J

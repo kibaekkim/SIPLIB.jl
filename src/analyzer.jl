@@ -1,5 +1,5 @@
-type Size
-    InstanceName::String    # instance name
+struct Size
+    INSTANCE_NAME::String    # instance name
     nCont1::Int             # number of continuous variables in 1st stage
     nBin1::Int              # number of binary variables in 1st stage
     nInt1::Int              # number of integer variables in 1st stage
@@ -15,8 +15,8 @@ type Size
     Size() = new()
 end
 
-type Sparsity
-    InstanceName::String    # instance name
+struct Sparsity
+    INSTANCE_NAME::String    # instance name
     nRow1::Int              # number of rows in 1st stage-only block (block A)
     nCol1::Int              # number of columns in 1st stage-only block (block A)
     nNz1::Int               # number of nonzero values in 1st stage-only block (block A)
@@ -36,7 +36,7 @@ type Sparsity
     Sparsity() = new()
 end
 
-function plotConstrMatrix(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
     mdata_all = getStructModelData(model)
 
@@ -68,11 +68,11 @@ function plotConstrMatrix(model::JuMP.Model, INSTANCE::String="instance", DIR_NA
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$INSTANCE.pdf")
+    plt.savefig("$DIR_NAME/$instance.pdf")
     #plt.close()
 end
 
-function plotFirstStageBlock(model::JuMP.Model, INSTANCE::String="instance_block_A", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotFirstStageBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_A", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
     mdata = getModelData(model)
     mat = mdata.mat
@@ -82,11 +82,11 @@ function plotFirstStageBlock(model::JuMP.Model, INSTANCE::String="instance_block
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$INSTANCE.pdf")
+    plt.savefig("$DIR_NAME/$instance.pdf")
     #plt.close()
 end
 
-function plotSecondStageBlock(model::JuMP.Model, INSTANCE::String="instance_block_W", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotSecondStageBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_W", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
     mdata1 = getModelData(model)
     mdata2 = getModelData(getchildren(model)[1])
@@ -102,11 +102,11 @@ function plotSecondStageBlock(model::JuMP.Model, INSTANCE::String="instance_bloc
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$INSTANCE.pdf")
+    plt.savefig("$DIR_NAME/$instance.pdf")
     #plt.close()
 end
 
-function plotComplicatingBlock(model::JuMP.Model, INSTANCE::String="instance_block_T", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotComplicatingBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_T", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
     mdata1 = getModelData(model)
     mdata2 = getModelData(getchildren(model)[1])
     nrows1, ncols1 = size(mdata1.mat)
@@ -121,11 +121,11 @@ function plotComplicatingBlock(model::JuMP.Model, INSTANCE::String="instance_blo
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$INSTANCE.pdf")
+    plt.savefig("$DIR_NAME/$instance.pdf")
     #plt.close()
 end
 
-function plotAllBlocks(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotAllBlocks(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
     mdata1 = getModelData(model)
     mdata2 = getModelData(getchildren(model)[1])
     nrows1, ncols1 = size(mdata1.mat)
@@ -139,7 +139,7 @@ function plotAllBlocks(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME:
     plt.xticks([])
     plt.yticks([])
     plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(INSTANCE)_block_A.pdf")
+    plt.savefig("$DIR_NAME/$(instance)_block_A.pdf")
     plt.close()
 
     # plot Block W
@@ -149,7 +149,7 @@ function plotAllBlocks(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME:
     plt.xticks([])
     plt.yticks([])
     plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(INSTANCE)_block_W.pdf")
+    plt.savefig("$DIR_NAME/$(instance)_block_W.pdf")
     plt.close()
 
     # plot Block T
@@ -160,11 +160,11 @@ function plotAllBlocks(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME:
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$(INSTANCE)_block_T.pdf")
+    plt.savefig("$DIR_NAME/$(instance)_block_T.pdf")
     plt.close()
 end
 
-function plotAll(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotAll(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
     mdata1 = getModelData(model)
     mdata2 = getModelData(getchildren(model)[1])
     nrows1, ncols1 = size(mdata1.mat)
@@ -178,7 +178,7 @@ function plotAll(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::Strin
     plt.xticks([])
     plt.yticks([])
     plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(INSTANCE)_block_A.pdf")
+    plt.savefig("$DIR_NAME/$(instance)_block_A.pdf")
     plt.close()
 
     # plot Block W
@@ -188,7 +188,7 @@ function plotAll(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::Strin
     plt.xticks([])
     plt.yticks([])
     plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(INSTANCE)_block_W.pdf")
+    plt.savefig("$DIR_NAME/$(instance)_block_W.pdf")
     plt.close()
 
     # plot Block T
@@ -199,15 +199,15 @@ function plotAll(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::Strin
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$(INSTANCE)_block_T.pdf")
+    plt.savefig("$DIR_NAME/$(instance)_block_T.pdf")
     plt.close()
 
     # plot extensive form block
-    plotConstrMatrix(model, INSTANCE, DIR_NAME)
+    plotConstrMatrix(model, instance, DIR_NAME)
     plt.close()
 end
 
-function getSize(model::JuMP.Model, InstanceName::String="")::Size
+function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 
     mdata1 = getModelData(model)
     mdata2 = getModelData(getchildren(model)[1])
@@ -217,7 +217,7 @@ function getSize(model::JuMP.Model, InstanceName::String="")::Size
 
     s = Size()
 
-    s.InstanceName = InstanceName
+    s.instance = instance
 
     s.nCont1 = 0
     s.nBin1 = 0
@@ -258,7 +258,7 @@ function getSize(model::JuMP.Model, InstanceName::String="")::Size
     return s
 end
 
-function getSparsity(model::JuMP.Model, InstanceName::String="")::Sparsity
+function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 
     mdata1 = getModelData(model)
     mdata2 = getModelData(getchildren(model)[1])
@@ -268,7 +268,7 @@ function getSparsity(model::JuMP.Model, InstanceName::String="")::Sparsity
 
     s = Sparsity()
 
-    s.InstanceName = InstanceName
+    s.instance = instance
 
     s.nRow1 = nrows1
     s.nCol1 = ncols1
@@ -329,7 +329,7 @@ type SMPSFileSizeInfo
     SMPSFileSizeInfo() = new("", 0.0, 0.0, 0.0)
 end
 
-function getInstanceSizeInfo(INSTANCE::String, m::JuMP.Model)::InstanceSizeInfo
+function getInstanceSizeInfo(INSTANCE_NAME::String, m::JuMP.Model)::InstanceSizeInfo
 
     ISI = InstanceSizeInfo()
     ISI.InstanceName = INSTANCE

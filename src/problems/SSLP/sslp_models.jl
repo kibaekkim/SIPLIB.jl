@@ -39,7 +39,7 @@ include("./sslp_functions.jl")
 
 function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::JuMP.Model
 
-    # generate model data
+    # generate instance data
     data = SSLPData(nJ, nI, nS, seed)
 
     J, I, S, Z = data.J, data.I, data.S, data.Z

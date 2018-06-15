@@ -7,9 +7,9 @@ Source:
 include("./suc_types.jl")
 include("./suc_functions.jl")
 
-function SUC(Season::AbstractString, nS::Integer)::JuMP.Model
+function SUC(Season::AbstractString, nS::Integer, seed::Int=1)::JuMP.Model
 
-    # generate model data
+    # read & generate instance data
     data = SUCData(Season, nS)
 
     G, Gf, Gs, L, N, T, T0, LOAD, IMPORT, WIND, RE = data.G, data.Gf, data.Gs, data.L, data.N, data.T, data.T0, data.LOAD, data.IMPORT, data.WIND, data.RE
@@ -69,8 +69,8 @@ function SUC(Season::AbstractString, nS::Integer)::JuMP.Model
             + sum(p[g,t] for g in G if gen2bus[g] == n)
             + sum(loadshed[i,t] for i in LOAD if load2bus[i] == n)
             + sum(Wgen[i,t,j] for i in WIND if wind2bus[i] == n)
-            == D[n,t]
-            + sum(e[l,t] for l in L if fbus[l] == n)
+            ==
+            D[n,t] + sum(e[l,t] for l in L if fbus[l] == n)
             + sum(ispill[i,t] for i in IMPORT if import2bus[i] == n)
             + sum(rspill[i,t] for i in RE if re2bus[i] == n)
             + sum(wspill[i,t] for i in WIND if wind2bus[i] == n)
@@ -94,5 +94,3 @@ function SUC(Season::AbstractString, nS::Integer)::JuMP.Model
 
     return model
 end
-
-m = SUC("FallWD",1)

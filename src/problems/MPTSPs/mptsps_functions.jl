@@ -166,7 +166,7 @@ function MPTSPsData(D::String, nN::Int, nS::Int, seed::Int)::MPTSPsData
     data.E = deepcopy(data.Cs)
     for s in data.S
         for i in data.N, j in data.N, k in data.K
-            data.E[s,i,j,] -= data.Ce[i][j]
+            data.E[s,i,j,k] -= data.Ce[i][j]
         end
     end
 
