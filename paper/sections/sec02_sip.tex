@@ -1,20 +1,22 @@
 In this section, we explain general description of SIP. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
 \subsection{Formulation}
-In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP of the form: 
+In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP which is the \textit{recourse problem} (RP): 
 \begin{align}
-z:=\min_{x\in X}{\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
+\textrm{(RP) }\min_{x\in X} z(x):={\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
 \end{align}
-where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $\PP(1),\cdots,\PP(r)$, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ for $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is continuous, we assume that we can reasonably approximate it by a suitably discretized distribution. The real-valued map $\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
+where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. 
+
+We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $\PP(1),\cdots,\PP(r)$, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ for $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is continuous, we assume that we can reasonably approximate it by a suitably discretized distribution. The real-valued map $\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
 \begin{align}
 \phi_{\xi_s}(t):=\min_{y_s\in Y}\left\{ q(\xi_s)^\top y_s:\ W(\xi_s)y_s \ge t \right\},\ t\in\mathbb{R}^{m_2},
 \end{align}
 where $\xi_s$ is an arbitrarily realized scenario.
 The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent integer or binary restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
 The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_s,W_s,h_s,q_s)$.
-The SIP (\ref{eq:SIP_1}) can be rewritten in the extensive form
+The RP (\ref{eq:SIP_1}) can be rewritten in the \textit{extensive form} (EF)
 \begin{subequations}\label{sip:ef}
 \begin{align}
-z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \label{ef:obj}\\ 
+\textrm{(EF) }\min_{x,y_s}\ z(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \label{ef:obj}\\ 
 \mathrm{s.t.}\ &Ax\ge b,  \label{ef:b}\\
 	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\}, \label{ef:c} \\
 	&x\in X, \label{ef:d} \\
@@ -64,9 +66,9 @@ z=\min_{x,y_s}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \label{ef:obj
 \end{table} 
 
 \subsection{Solution methods}
-Assuming finite and discrete distribution, we can always formulate SIP in the full deterministic equivalent MIP or extensive form as in Equations (\ref{ef:obj})-(\ref{ef:e}).  %much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation \ref{eq:SIP_1}, 
+Assuming finite and discrete distribution, we can always formulate SIP in EF as in Equations (\ref{ef:obj})-(\ref{ef:e}).  %much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation \ref{eq:SIP_1}, 
 %Much of the solution methods in SIP is studied to resolve the difficulty of optimizing the extensive form. %That is, the sum of the first-stage costs and the expected costs in the second-stage. 
-Most methods in SIP assume that a single scenario evaluation is somehow tractable. With a number of realizations, however, the extensive form becomes a quite large MIP. Solving this problem without exploiting the special structure of the extensive form can easily go with inefficiency. In this section, we introduce representative approaches to resolve the difficulties in SIP considering many scenarios.
+Most methods in SIP assume that a single scenario evaluation is somehow tractable. With a number of realizations, however, EF becomes a quite large MIP. Solving this problem without exploiting the special structure of EF can easily go with inefficiency. In this section, we introduce representative approaches to resolve the difficulties in SIP considering many scenarios.
 
 \subsubsection{Stage-wise decomposition}
 This type of algorithms exploit the natural viewpoint of optimizing the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible first-stage decisions. The method used most frequently are based on building an outer linearization of the recourse cost function and a solution of the first-stage problem plus this linearization. This cutting plane technique is called the \textit{L-shaped method} or \textit{Benders decomposition} \cite{B1962}, from which the variants of stage-wise decomposition methods are derived.
@@ -76,16 +78,16 @@ For SIP with pure binary first-stage variables and mixed integer second-stage, t
 For SIP where the first-stage variables are not necessarily binary, dual functions from the second-stage integer program can be used to construct cuts to build the approximation of $\mathcal{Q}(x)$ \cite{CT1998}.  %In each iterations, the algorithm finds a tractable approximation of the recourse function $\mathcal{Q}(x)$, say $\hat{\mathcal{Q}}(\hat{x})$. Given that, the objcetive function $c^\top x + \hat{\mathcal{Q}}(x)$ is optimized with respect to the first-stage variables to provide a lower bound on the true optimal.
 
 \subsubsection{Scenario-wise decomposition}
-In this type algorithms, we first introduce the copies of the first stage variables into the second stage. Then, the extensive form in (\ref{sip:ef}) is changed as below.
-\begin{subequations}
+In this type algorithms, we first introduce the copies of the first stage variables into the second stage. Then, the EF in (\ref{sip:ef}) is written as below.
+\begin{subequations} \label{sip:ef'}
 	\begin{align}
-	z=\min_{x_s,y_s}\ &\sum_{s=1}^{r}p_s\left(c^{\top}x_s+q_s^{\top}y_s\right)	\label{eq:SIP_2-1}\\ 
+	\textrm{(EF') }\min_{x_s,y_s}\ z(x_s,y_s):=\ &\sum_{s=1}^{r}p_s\left(c^{\top}x_s+q_s^{\top}y_s\right)	\label{eq:SIP_2-1}\\ 
 	\mathrm{s.t.}\ &\sum_{s=1}^{r}H_s x_s=0 \label{eq:SIP_2-2} \\
 	\ &(x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	\label{eq:SIP_2-3}
 	\end{align}
 \end{subequations}
 where the scenario feasibility set $G_s$ is defined as
-\begin{align}
+\begin{align} 
 G_s:=\left\{ (x_s,y_s): \ Ax_s\ge b,\  T_s x_s+W_s y_s\ge h_s,\ (x_s,y_s)\in X\times Y  \right\}. \label{eq:SIP_2-4}
 \end{align}
 The newly added constraints (\ref{eq:SIP_2-2}) (called \textit{nonanticipativity}) guarantee $x_1=x_r$ and $x_s=x_{s-1}$ for $s=2,\ldots,r$ with a suitable $rn_1\times n_1$ coefficient matrix $H_s$. This can be presented in another expression other than the one above that Car\o e and Schultz \cite{CS1999} proposed.
@@ -120,25 +122,25 @@ We introduce two relatively new algebraic SIP modeling languages which are compa
 
 \pysp\ is an extension of a \python-based algebraic modeling package \pyomo. To formulate a
 stochastic program in \pysp, the user specifies both the deterministic base model and
-the scenario tree with associated uncertain parameters in \pyomo. Given these two models, \pysp\ can directly solve the stochastic program using two ways: extensive form and PH algorithm. %One advantage of \pysp\ is this integrated working environment combining model and solver. Hence, provide completely generic and highly configurable solver implementations.
+the scenario tree with associated uncertain parameters in \pyomo. Given these two models, \pysp\ can directly solve the stochastic program using two different ways: solve EF directly or use PH algorithm for RP. %One advantage of \pysp\ is this integrated working environment combining model and solver. Hence, provide completely generic and highly configurable solver implementations.
 
 \subsubsection{Solver}
 We introduce two popular open source solver packages: \dsp\ and \pysp. 
  
 \dsp\ is an open-source SIP solver implemented in \cpp. \dsp\ reads \smps\ files as input and provides three ways to solve a SIP instance.
 \begin{itemize}
-	\item Invoking standard MIP solver to solve the extensive form SIP
+	\item Invoking standard MIP solver to solve EF
 	\item L-shape method (Benders decomposition)
 	\item Dual Decomposition algorithm
 \end{itemize}
 \dsp\ provides parallel implementations for the two decomposition-based algorithms, which allows users fully exploit computing clusters and multi-core processors. \dsp\ also provides \julia\ interface to improve its usability.
 
-\pysp\ is a stochastic programming extension to \pyomo, a \python-based open source software package that supports variants of mathematical optimization. \pysp\ enables the expression of stochastic programming problems as extensive form. \pysp\ provides two ways to solve the instance. 
+\pysp\ is a stochastic programming extension to \pyomo, a \python-based open source software package that supports variants of mathematical optimization. \pysp\ enables the expression of stochastic programming problems as EF. \pysp\ provides two ways to solve the instance. 
 \begin{itemize}
-	\item Invoking standard MIP solver to solve the extensive form SIP
+	\item Invoking standard MIP solver to solve EF
 	\item Progressive Hedging algorithm
 \end{itemize}
-\pysp\ can also solve the extensive form SIP invoking standard MIP solver. To solve more complex and large-scale SIP, \pysp\ implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.
+\pysp\ can also solve EF invoking standard MIP solver. To solve more complex and large-scale SIP, \pysp\ implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.
 
 
 
