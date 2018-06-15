@@ -44,7 +44,7 @@ function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
     R, N, T, S = data.R, data.N, data.T, data.S
     a, b, c, c0, d, Pr = data.a, data.b, data.c, data.c0, data.d, data.Pr
 
-    # construct the model
+    # construct JuMP.Model
     model = StructuredModel(num_scenarios = nS)
 
     ## 1st stage

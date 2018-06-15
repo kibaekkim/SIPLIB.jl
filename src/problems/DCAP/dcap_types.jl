@@ -1,4 +1,4 @@
-struct DCAPData
+mutable struct DCAPData
     # Sets
     R   # set of resources (i ∈ R)
     N   # set of tasks (j ∈ N)

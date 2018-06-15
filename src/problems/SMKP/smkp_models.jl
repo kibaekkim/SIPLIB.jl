@@ -9,9 +9,13 @@
 include("./smkp_types.jl")
 include("./smkp_functions.jl")
 
+## predetermined parameters
+global NXZ = 50          # SMKP: default number of xz-knapsack
+global NXY = 5           # SMKP: default number of xy-knapsacks
+
 function SMKP(nI::Int, nS::Int, seed::Int=1, nXZ::Int=NXZ, nXY::Int=NXY)::JuMP.Model
 
-    # generate model data
+    # generate instance data
     data = SMKPData(nI, nS, seed)
     I, J, K, Pr, A, E, T, W = data.I, data.J, data.K, data.Pr, data.A, data.E, data.T, data.W
     b, h, c, d, q = data.b, data.h, data.c, data.d, data.q

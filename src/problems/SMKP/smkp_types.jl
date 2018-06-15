@@ -1,4 +1,4 @@
-struct SMKPData
+mutable struct SMKPData
 
     # Sets
     I   # items

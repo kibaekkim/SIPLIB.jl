@@ -3,7 +3,7 @@ include("./sizes_functions.jl")
 
 function SIZES(nS::Integer, seed::Int=1)::JuMP.Model
 
-    # generate model data
+    # read & generate instance data
     data = SIZESData(nS, seed)
 
     N, T, S, f, r, P, C, D, Pr = data.N, data.T, data.S, data.f, data.r, data.P, data.C, data.D, data.Pr
