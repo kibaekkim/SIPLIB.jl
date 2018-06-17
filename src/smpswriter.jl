@@ -579,7 +579,7 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
     # Extract and store StructJuMP model data
     mdata_all = getStructModelData(m, genericnames, splice)
 
-    # Write .cor file / Store core data
+    # Write .cor file && Store core data
     mdata_core = writeCore(FILE_NAME, mdata_all, genericnames)
 
     # Write .tim and .sto files

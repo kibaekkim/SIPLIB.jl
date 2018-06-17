@@ -55,6 +55,8 @@ function lprelaxModel(m::JuMP.Model, level::Int)
         lprelaxModel(m, 1)
         lprelaxModel(m, 2)
         return m
+    else
+        warn("Please use one of the (0: no relax, 1: 1st-stage only, 2: 2nd-stage only, 3: full relax) for the LP-relaxation level argument.")
     end
 end
 

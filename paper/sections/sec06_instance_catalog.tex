@@ -20,14 +20,36 @@ Table \ref{table:instance_size_info} reports numerical size and sparsity informa
 \input{./tables/table_instance_size_information}
 
 \subsection{Computational results}
-We report computational information resulted from experiments. Unlike the size information, this information should be obtained highly computational methods. We provide the result in Table \ref{table:computation_report}. Throughout the following subsections, we explain about the computational experiments.
+We report computational information resulted from experiments. Unlike the size information, this information should be obtained highly computational methods. The result is provided in Table \ref{table:computation_report}. Throughout the following subsections, we explain about the computational experiments.
 
-\subsubsection{Computing environment and setting}
-All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. 
+\subsubsection{Experimental setting}
+Table \ref{table:experimental_setting} summarizes the experimental setting. All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. 
 
-We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 and an open-source DD based SIP solver \dsp. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. We fully utilize 36 threads for each single instance both in two solvers. We set the termination condition on CPU time by 3 hours.  
+We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 and an open-source DD based SIP solver \dsp. Since \cplex\ does not support \smps\ format as input, we use \dsp's option to solve the EF reading \smps\ files. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. We fully utilize 36 threads for each single instance as the both two solvers support multi-threads parallel computing. We set the termination condition on CPU time by 3 hours.  
 
 The size of the instances on which the experiments perform is chosen basically based on the former \siplib. Additionally, we generate and include some large-scenario instances into the experiments.
+
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+\begin{table}[H]
+	\centering
+	\caption{Experimental setting}
+	\label{table:experimental_setting}
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{|l|l|}
+		\hline
+		\multirow{4}{*}{Computing environment} & Bebop (ANL 1024-node computing cluster) with each node      \\
+		& - CPU: Intel Xeon Processor E5-2695 v4 (18 cores 36 threads) \\
+		& - Clock speed: 2.10GHz (maximum 3.30GHz)                     \\
+		& - Memory:128GB (45MB Smart cache)                            \\ \hline
+		\multirow{2}{*}{Solver}                & Commercial MIP solver: CPLEX 12.8                                \\
+		& Open-source SIP solver: DSP                                      \\ \hline
+		Threads per instance                 & 36                                                           \\ \hline
+		Time limit                             & 3 hours                                                      \\ \hline
+		Instance size                          & SIPLIB instance sizes + Huge-sized instance                  \\ \hline
+	\end{tabular}
+	}
+\end{table}
 
 \subsubsection{Reports}
 We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. The summary for the notations is found in Table \ref{table:objective-notation}.
@@ -43,22 +65,22 @@ First, recall the EF in Section \ref{sec:sip}:
 	\end{align}
 \end{subequations}
 
-We use the vanilla $z$ to denote the value of the objective function in RHS of (\ref{ef:obj}) such that constraints (\ref{ef:b})-(\ref{ef:e}) are satisfied throughout this section and report. We use the superscription $z^*$ to denote the optimal objective value, $\tilde{z}$ for the best lower bound discovered for $z^*$, and $\hat{z}$ for the incumbent objective value. Hence, the relationship $\tilde{z}\le z^*\le\hat{z}$ always holds.
+We use the vanilla $z$ to denote the value of the objective function in RHS of (\ref{ef:obj}) such that constraints (\ref{ef:b})-(\ref{ef:e}) are satisfied throughout this section and the report. We use the superscripted notation $z^*$ to denote the optimal objective value, $\tilde{z}$ for the best lower bound discovered for $z^*$, and $\hat{z}$ for the incumbent (best known integer solution) objective value. Hence, the relationship $\tilde{z}\le z^*\le\hat{z}$ always holds.
 
-$z_{LP2}$ is defined by the objective value of the following partially LP-relaxed problem:
+$z_{LP2}$ is defined by the objective value of the following partly LP-relaxed problem:
 \begin{subequations}\label{ef-lp2}
 	\begin{align}
 	\textrm{(EF-LP2) }\min_{x,y_s}\ z_{LP2}(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s) \tag{\ref{ef:obj}}\\ 
-	\mathrm{s.t.}\ &\textrm{(\ref{ef:b})}-\textrm{(\ref{ef:d})}, \nonumber \\
+	\mathrm{s.t.}\ &\textrm{(\ref{ef:b})-(\ref{ef:d})}, \nonumber \\
 	& y_s \in Y \subseteq \mathbb{R}\backslash\mathbb{Z} ,\quad\forall s\in\{1,\ldots,r\}. \tag{\ref{ef:e}'}
 	\end{align}
 \end{subequations}
-Note that only the integrality constraints for the second-stage variables are relaxed.
+Note that only the integrality of the second-stage variables is relaxed.
 
 $z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual problem. The Lagrangian dual problem can be derived from EF' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}):
 \begin{subequations}\label{ef-ld}
 	\begin{align}
-	\textrm{(EF-LD) }\max_{\lambda\in\mathbb{R}^{r\cdot n_1}}\ z_{LD}(\lambda) :=\min_{x_s,y_s} &\sum_{s=1}^{r}p_s\left(c^{\top}x_s+q_s^{\top}y_s\right)+\lambda^\top \left(H_s x_s\right)	\tag{\ref{eq:SIP_2-1}'}\\ 
+	\textrm{(EF-LD) }\max_{\lambda\in\mathbb{R}^{r\cdot n_1}}\ z_{LD}(\lambda) :=\min_{x_s,y_s} &\sum_{s=1}^{r}\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)+\lambda^\top \left(H_s x_s\right)	\tag{\ref{eq:SIP_2-1}'}\\ 
 	\mathrm{s.t.}\ & (x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	\tag{\ref{eq:SIP_2-3}}
 	\end{align}
 \end{subequations}
@@ -66,7 +88,7 @@ where the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
 
 \begin{table}[H]
 	\centering
-	\caption{Notation}
+	\caption{Solution notation}
 	\label{table:objective-notation}
 	\resizebox{\textwidth}{!}{%
 	\begin{threeparttable}
@@ -81,7 +103,7 @@ where the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
 		\begin{tablenotes}
 			\small
 			\item $z^*$: optimal objective value
-			\item $\tilde{z}$: best lower bound for $z^*$ discovered
+			\item $\tilde{z}$: best discovered lower bound for $z^*$ 
 			\item $\hat{z}$: incumbent objective value 
 		\end{tablenotes}
 	\end{threeparttable}
@@ -94,17 +116,32 @@ We report objective values from the two solvers. Since we set the time limit, th
 %\subsubsection{Gaps}
 We report several different gaps for each instance. Each gap is useful to compare the characteristics of instances with each other. There is no guarantee that we can always obtain the optimal solution for each instance, we report the best known gaps discovered within the limited processing time (3 hours). We expect this information will provide future research direction. 
 
-
 \begin{quote}
-\noindent\underline{\textit{Optimality gap (OG)}} This gap, defined by, $\frac{|\underline{\hat{z}}-\hat{z}|}{|\hat{z}|+\epsilon}$, is reported from the two solvers. $\underline{\hat{z}}$ means the best lower bound discovered and $\hat{z}$ is the incumbent objective. The gap is obtained by keeping track of the best relaxation currently in the pool of nodes waiting for further processing. This can be a basic measure of difficulty of an instance combined with processing time.
+	\noindent\underline{\textit{Objective value with processing time}} We report the objective values from the two solvers. This value is $z^*$ if the optimality is attained in the time limit, but $\hat{z}$ elsewhere.
 \end{quote}
 
 \begin{quote}
-\noindent\underline{\textit{Integrality gap (IG)}} We define a SIP-specific integrality gap (IG) in minimization problem by $\frac{z^*}{z^*_{LP2}}$, where $z^*$ is the optimal integral solution and $z^*_{LR2}$ is the optimal fractional solution with LP-relaxed second-stage. This LP relaxation provides an optimistic bound on the integer program's solution. The small this gap implies tightness of the LP relaxation. Since there is no guarantee that we always find the optimal solutions, we report $\frac{\hat{z}}{\hat{z}_{LP2}}$ where $\hat{z}$ and $\hat{z}_{LP2}$ are the incumbent solutions. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The tightness of this bound highly depends on the quality of the incumbent solution $\hat{z}$.%This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
+	\noindent\underline{\textit{Optimality gap (OG)}} This gap is defined by $\frac{|\hat{z}-\tilde{z}|}{|\hat{z}|+\epsilon}$ and  reported from the two solvers. This can be a basic measure of difficulty of an instance combined with processing time.
 \end{quote}
 
+%\begin{quote}
+%\noindent\underline{\textit{Optimality gap (OG)}} This gap, defined by, $\frac{|\underline{\hat{z}}-\hat{z}|}{|\hat{z}|+\epsilon}$, is reported from the two solvers. $\underline{\hat{z}}$ means the best lower bound discovered and $\hat{z}$ is the incumbent objective. The gap is obtained by keeping track of the best relaxation currently in the pool of nodes waiting for further processing. This can be a basic measure of difficulty of an instance combined with processing time.
+%\end{quote}
+
 \begin{quote}
-\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is the difference between any dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
+	\noindent\underline{\textit{Integrality gap (IG)}} We define a SIP-specific integrality gap (IG) in minimization problem by $\frac{z^*}{z^*_{LP2}}$. We report $\frac{\hat{z}}{\hat{z}_{LP2}}$ when the optimality is not attained. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The LP relaxation provides an optimistic bound on the integer program's solution. The small this gap implies that the LP relaxation gives tight bound for the original problem.  %This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
+\end{quote}
+
+%\begin{quote}
+%\noindent\underline{\textit{Integrality gap (IG)}} We define a SIP-specific integrality gap (IG) in minimization problem by $\frac{z^*}{z^*_{LP2}}$, where $z^*$ is the optimal integral solution and $z^*_{LR2}$ is the optimal fractional solution with LP-relaxed second-stage. This LP relaxation provides an optimistic bound on the integer program's solution. The small this gap implies tightness of the LP relaxation. Since there is no guarantee that we always find the optimal solutions, we report $\frac{\hat{z}}{\hat{z}_{LP2}}$ where $\hat{z}$ and $\hat{z}_{LP2}$ are the incumbent solutions. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The tightness of this bound highly depends on the quality of the incumbent solution $\hat{z}$.%This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
+%\end{quote}
+%
+%\begin{quote}
+%	\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is the difference between any dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
+%\end{quote}
+
+\begin{quote}
+\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is defined by $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{z}|+\epsilon}$, the gap between any dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
 \end{quote}
 
 %\begin{quote}
