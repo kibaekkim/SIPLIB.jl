@@ -45,10 +45,10 @@ module Siplib
 
 end # end module Siplib
 
-#=
-using Siplib
 
-m = generateSMPS(:MPTSPs, ["D0",5,1], seed=1, lprelax=1, genericnames=false, splice=false)
+using Siplib
+#=
+m = generateSMPS(:MPTSPs, ["D0",5,1], seed=1, lprelax=0, genericnames=false, splice=false)
 
 print(m)
 
@@ -210,7 +210,7 @@ JuMP.getvariable(m,1)
 JuMP.setcategory(:x, :Cont)
 MathProgBase.getvartype(m)
 
-#=
+
 m.ext
 m1 = m.ext[:Stochastic].children[1]
 print(fieldnames(m1))
