@@ -10,7 +10,14 @@ module Siplib
     ## Array of Symbol-type problems
     global problem = [:DCAP, :MPTSPs, :SIZES, :SMKP, :SSLP, :SUC]
     ## number of parameters for each problem
-    global nParam = Dict(:DCAP=>4, :MPTSPs=>3, :SIZES=>1, :SMKP=>2, :SSLP=>3, :SUC=>2)
+    global nParams = Dict(:DCAP=>4, :MPTSPs=>3, :SIZES=>1, :SMKP=>2, :SSLP=>3, :SUC=>2)
+    ## problem=>paramter dictation
+    global parameters = Dict(:DCAP=>"[R, N, T, S], all integers.",
+                            :MPTSPs=>"[D, N, S], D is string, one of (D0, D1, D2, D3). N and S are integers.",
+                            :SIZES=>"[S], S >= 20 is integer.",
+                            :SMKP=>"[I, S], all integers.",
+                            :SSLP=>"[I, J, S], all integers.",
+                            :SUC=>"[D, S], D is string, one of (FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE) and S is integer.")
 
     # include JuMP.Modeling sources
     include("./problems/DCAP/dcap_models.jl")
@@ -34,20 +41,45 @@ module Siplib
            plotConstrMatrix,                # plot constraint matrix of the extensive form
            plotFirstStageBlock,             # plot block A (first stage only)
            plotSecondStageBlock,            # plot block W (second stage only)
-           plotComplicatingBlock,           # plot block T (complicating block)
+           plotTechnologyBlock,           # plot block T (complicating block)
            plotAllBlocks,                   # plot block A, W, T simultaneously
            plotAll,
            getSparsity,
            getSize,
            problem,
-           nParam,
+           nParams,
+           parameters,
            lprelaxModel
 
 end # end module Siplib
-
+#=
 
 using Siplib
-#=
+
+problem = :SIZES
+params_arr = [1]
+INSTANCE_NAME = getInstanceName(problem, params_arr)
+model = getModel(problem, params_arr)
+plotFirstStageBlock(model)
+plotSecondStageBlock(model)
+plotTechnologyBlock(model)
+plotConstrMatrix(model, INSTANCE_NAME)
+plotAll(model, INSTANCE_NAME)
+
+problem = :MPTSPs
+params_arr = ["D0",4,1]
+INSTANCE_NAME = getInstanceName(problem, params_arr)
+model = getModel(problem, params_arr)
+plotConstrMatrix(model, INSTANCE_NAME)
+
+plotAll(model, INSTANCE_NAME)
+
+plotFirstStageBlock(model)
+plotSecondStageBlock(model)
+plotTechnologyBlock(model)
+plotConstrMatrix(model)
+
+
 m = generateSMPS(:MPTSPs, ["D0",5,1], seed=1, lprelax=0, genericnames=false, splice=false)
 
 print(m)
