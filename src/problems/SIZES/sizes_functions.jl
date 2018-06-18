@@ -27,7 +27,11 @@ function SIZESData(nS::Integer, seed::Integer)::SIZESData
     #---------------------------------------------------------
 
     data.C = fill(c1, nT)
-    demand_variability = linspace(0.5, 1.5, nS)
+    if nS == 1
+        demand_variability = [1.0]
+    else
+        demand_variability = linspace(0.5, 1.5, nS)
+    end
     data.D = zeros(nN, nT, nS)
     for s in data.S
         data.D[:,1,s] = D1

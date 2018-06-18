@@ -27,7 +27,7 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 			\label{table:remarks}
 			\begin{tabular}{@{}cl@{}}
 				\toprule
-				Problem & \multicolumn{1}{c}{Remarks}                                                \\ \midrule
+				Problem & \multicolumn{1}{c}{Remark}                                                \\ \midrule
 				\dcap   & We go with the error in constraint (\ref{dcap:b})                                              \\
 				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation procedure \ref{mptsps:datagen} \\
 				\sizes  & We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h})                                                    \\
@@ -71,7 +71,7 @@ For those reasons, we investigate the number of components present in instance. 
 \input{tables/table_number_of_components}
 
 
-\subsection{Sparsity}
+\subsection{Sparsity} \label{subsec:sparsity}
 As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three differently structured blocks in EF. Every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T is related with both. Block T is called \textit{technology}  matrix. In section \ref{sec:sparsity} in the appendix, we report tables providing block-wise sparsity that is derived solely based on the set cardinality.
 \begin{figure}
 	\centering

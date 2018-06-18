@@ -35,7 +35,7 @@
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
 % \usepackage{graphicx}
-\begin{table}[H]
+\begin{table}[]
 	\centering
 	\caption{Size and sparsity report}
 	\label{table:instance_size_info}
@@ -43,7 +43,7 @@
 	\Rotatebox{90}{%
 		\begin{tabular}{|c|l|lll|lll|lllll|llll|lll|}
 			\hline
-			\multicolumn{1}{|l|}{} &                               & \multicolumn{3}{c|}{1st stage variables}                                      & \multicolumn{3}{c|}{2nd stage variables (1 scenario)}                         & \multicolumn{5}{c|}{Total size}                                                                                                     & \multicolumn{4}{c|}{Sparsity}                                                                                           & \multicolumn{3}{c|}{File size}                                                  \\ \cline{3-20} 
+			\multicolumn{1}{|l|}{} &                               & \multicolumn{3}{c|}{First-stage variables}                                      & \multicolumn{3}{c|}{Second-stage variables}                         & \multicolumn{5}{c|}{Variables in total}                                                                                                     & \multicolumn{4}{c|}{Sparsity}                                                                                           & \multicolumn{3}{c|}{File size}                                                  \\ \cline{3-20} 
 			Problem                & \multicolumn{1}{c|}{Instance} & \multicolumn{1}{c}{cont} & \multicolumn{1}{c}{bin} & \multicolumn{1}{c|}{int} & \multicolumn{1}{c}{cont} & \multicolumn{1}{c}{bin} & \multicolumn{1}{c|}{int} & \multicolumn{1}{c}{cont} & \multicolumn{1}{c}{bin} & \multicolumn{1}{c}{int} & \multicolumn{1}{c}{rows} & \multicolumn{1}{c|}{cols} & \multicolumn{1}{c}{block A} & \multicolumn{1}{c}{block T} & \multicolumn{1}{c}{block W} & \multicolumn{1}{c|}{In total} & \multicolumn{1}{c}{.cor} & \multicolumn{1}{c}{.tim} & \multicolumn{1}{c|}{.sto} \\ \hline
 			\multirow{16}{*}{DCAP} & DCAP\_2\_3\_3\_200            &                          &                         &                          &                          &                         &                          &                          &                         &                         &                          &                           &                             &                             &                             &                               &                          &                          &                           \\
 			& DCAP\_2\_3\_3\_300            &                          &                         &                          &                          &                         &                          &                          &                         &                         &                          &                           &                             &                             &                             &                               &                          &                          &                           \\

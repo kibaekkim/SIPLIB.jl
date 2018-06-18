@@ -60,8 +60,13 @@ There are four factors that define the instance of \dcap: $|R|$, $|N|$, $|T|$, a
 	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
 \end{align*}
 
-\subsubsection{\dcap: Sparsity pattern}
-
+\subsubsection{\dcap: Sparsity pattern (single scenario)}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{DCAP_3_3_3_1}
+	\caption{DCAP\_3\_3\_3\_1: Extensive form constraint matrix}
+	\label{fig:dcap_sparsity}
+\end{figure}
 
 %\subsection{\texttt{DCLP}: Data center location problem} \label{DCLP}
 %
@@ -162,7 +167,13 @@ Given $D,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follo
 	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
 \end{enumerate}
 
-\subsubsection{\mptsps: Sparsity pattern}
+\subsubsection{\mptsps: Sparsity pattern (single scenario)}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{MPTSPs_D0_4_1}
+	\caption{MPTSPs\_D0\_4\_1: Extensive form constraint matrix}
+	\label{fig:mptsps_sparsity}
+\end{figure}
 
 \subsection{\sizes: Selection of an optimal subset of sizes} \label{SIZES}
 \sizes\ is a simplified version of the cutting-stock problem with multi-period stochastic demand. We only consider the two-periods model to follow \cite{journal:JSW1999}. The first period demand is deterministic and the demand for the second period is stochastic. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \jumpmodel. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \siplibtwo.
@@ -285,7 +296,13 @@ Instances of \sizes\ are generated based on the one-period data given in Table \
 	\end{tabular}
 \end{table}
 
-\subsubsection{\sizes: Sparsity pattern}
+\subsubsection{\sizes: Sparsity pattern (single scenario)}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{SIZES_1}
+	\caption{SIZES\_1: Extensive form constraint matrix}
+	\label{fig:mptsps_sparsity}
+\end{figure}
 
 \subsection{\smkp: Stochastic multiple knapsack problem} \label{SMKP}
 \smkp\ is a class of stochastic multiple binary knapsack problems. Unlike typical knapsack problems where the objective is to maximize total profits under the restriction of the weight capacity of each knapsack, \smkp\ is to minimize total weights while satisfying a certain required profit for each knapsack. 
@@ -356,6 +373,14 @@ w_{ki}	&=	U,\quad\forall k\in K,\ \forall i\in I,  \\
 b_j		&=	\frac{3}{4}\sum_{i\in I}\left(a_{ji}+e_{ji}\right),\quad\forall j\in J, \\
 h_k		&=	\frac{3}{4}\sum_{i\in I}\left(t_{ji}+w_{ji}\right),\quad\forall k\in K. 
 \end{align*}
+
+\subsubsection{\smkp: Sparsity pattern (single scenario)}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{SMKP_50_1}
+	\caption{SMKP\_50\_1: Extensive form constraint matrix}
+	\label{fig:smkp_sparsity}
+\end{figure}
 
 \subsection{\sslp: Stochastic server location problem} \label{SSLP}
 \sslp\ is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \sslp\ finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \siplib\ provides 12 instances with varying number of clients, server locations, and scenarios in \smps\ format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables.
@@ -429,7 +454,14 @@ u	&= \frac{3}{2}\times\frac{\sum_{i\in I}\sum_{j\in J}d_{ij}}{|J|}
 \end{align*}
 Note that the zonal data is omitted due to the lack of available information. Hence, constraint (\ref{sslp:c}) does not appear in \siplibtwo\ instances. Note also that constraint (\ref{sslp:b}) is redundant since we set $v=|J|$. We include this redundant constraint to follow the former \siplib\ implementation although it seems like a bug.
 
-\subsubsection{\sslp: Sparsity pattern}
+\subsubsection{\sslp: Sparsity pattern (single scenario)}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{SSLP_4_4_1}
+	\caption{SSLP\_4\_4\_1: Extensive form constraint matrix}
+	\label{fig:sslp_sparsity}
+\end{figure}
+
 
 \subsection{\suc: Stochastic unit commitment problem} \label{SUC}
 The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an extended time horizon. \suc\ is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 

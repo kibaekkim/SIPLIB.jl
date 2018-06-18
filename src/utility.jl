@@ -1,9 +1,9 @@
-function getInstanceName(problem::Symbol, param_arr::Any)::String
-    INSTANCE = String(problem)
-    for p in 1:nParam[problem]
-        INSTANCE *= "_$(param_arr[p])"
+function getInstanceName(problem::Symbol, params_arr::Any)::String
+    INSTANCE_NAME = String(problem)
+    for p in 1:nParams[problem]
+        INSTANCE_NAME *= "_$(params_arr[p])"
     end
-    return INSTANCE
+    return INSTANCE_NAME
 end
 
 function lprelaxModel(m::JuMP.Model, level::Int)
@@ -59,6 +59,26 @@ function lprelaxModel(m::JuMP.Model, level::Int)
         warn("Please use one of the (0: no relax, 1: 1st-stage only, 2: 2nd-stage only, 3: full relax) for the LP-relaxation level argument.")
     end
 end
+
+function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+    PyPlot.@pyimport matplotlib.patches as pcs
+    fig, ax = PyPlot.subplots()
+
+    R,C,V = findnz(mat)
+    for (x,y) in zip(C,R)
+        ax[:add_artist](pcs.Rectangle(xy=(x-1, y-1), width=0.9, height=0.9, color="black"))
+    end
+    ax[:set_xlim](0.0, size(mat)[2])
+    ax[:set_ylim](0.0, size(mat)[1])
+    ax[:invert_yaxis]()
+    ax[:set_xticks]([])
+    ax[:set_yticks]([])
+    ax[:set_aspect]("equal")
+#    ax[:set_aspect](Float64(size(mat)[1])/Float64(size(mat)[2]))
+    PyPlot.tight_layout()
+    PyPlot.savefig("$DIR_NAME/$INSTANCE_NAME.pdf")
+end
+
 
 #=
 mdata = getModelData(getchildren(m)[s], genericnames, splice)

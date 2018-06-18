@@ -1,75 +1,207 @@
 This appendix provides a brief tutorial for the \julia\ package. We release this package on GitHub with the name \siplibjl.
 
 \subsection{Prerequisites}
-To use \siplibjl, you need to perform the following steps.
-\begin{itemize}
+We assume that you are in the Linux environment. To use \siplibjl, you need to perform the following steps.
+\begin{enumerate}
 	\item install the latest \julia\ release.
 	\item install \julia\ packages: \texttt{Distributions.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl}
-	\item download and place the \siplibjl\ package to anywhere in your computer
-	\item open a terminal and change working directory to\\ ``\texttt{anywhere-in-your-computer/Siplib/src/}''
+	\item download and place the \siplibjl\ package to any directory in your computer
+	\item open a terminal and change working directory to\\ ``\texttt{any-directory-in-your-computer/Siplib/src/}''
 	\item run \julia\ in that directory
 	\item excute \texttt{include("Siplib.jl")}
 	\item excute \texttt{using Siplib}
-\end{itemize}
+\end{enumerate}
 Then, you are all set to use the functions in \siplibjl.
 
-\subsection{Generating instances: \texttt{JuMP.Model}-object and \smps\ files}
-\jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in \siplibjl\ requires \jumpmodel-type object as one of its input arguments. \siplibjl\ provides two functions to construct the \jumpmodel-type object of an instance.
+\subsection{Generating instances}
+\siplibjl\ provides three functions with regard to generate instances: \texttt{getModel}, \texttt{writeSMPS}, and \texttt{generateSMPS}. In short, \texttt{getModel} constructs \jumpmodel-type object, \texttt{writeSMPS} converts an object of \jumpmodel-type to the three \smps\ files, and \texttt{generateSMPS} does both of them simultaneously.
+\subsubsection{function \texttt{getModel}}
+
 \begin{lstlisting}[frame=single,language=julia]
-function getJuMPModel(problem::Symbol, param_arr::Any)::JuMP.Model
-function generateSMPS(problem::Symbol, param_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance")::JuMP.Model
+function getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0)::JuMP.Model
 \end{lstlisting}
 
-The first function \texttt{getJuMPModel} takes \texttt{Symbol}-typed argument \texttt{problem} and associated parameter array \texttt{param\_arr}. Then, it constructs \jumpmodel-type object and return it. For example, the follwing command returns the \jumpmodel\ object of instance DCAP\_3\_4\_2\_100.
-\begin{lstlisting}[frame=single,language=julia]
-getJuMPModel(:DCAP, [3,4,2,100])
-\end{lstlisting}
-Keep in mind that the number of elements in \texttt{param\_arr} should match with the problem as in Table \ref{table:numparameter}, otherwise it prints a warning message.
+\texttt{getModel} returns a \jumpmodel-type object. It has two necessary positional arguments and two optional keyword arguments:
+\begin{quote}
+	\noindent\underline{\texttt{problem}} (necessary, positional) The \texttt{Symbol}-type argument that specify the problem of which we want to generate instance. The appropriate values are given in Table \ref{table:numparameter}. 
+\end{quote}
 
-\begin{table}[h]
+\begin{quote}
+	\noindent\underline{\texttt{params\_arr}} (necessary, positional) The argument that specifies the parameters of the problem. It must be properly paired with the argument \texttt{problem}. The appropriate values are given in Table \ref{table:numparameter}. 
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{seed}} (optional, keyword) The integer argument \texttt{seed} specifies the seed of pseudo-random number generator in \julia. If specific value is not supplied, \texttt{seed=1} as a default.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{lprelax}} (optional, keyword) The keyword argument specifying the level of LP-relaxation of an instance. Table \ref{table:lprelax} summarizes the acceptable values with its meaning. If not specified, \texttt{lprelax=0} as a default which means no LP-relaxation.
+\end{quote}
+
+For example, executing the following line constructs a \jumpmodel\ object \texttt{model} of instance DCAP\_3\_4\_2\_100 with default random seed 1 and without LP-relaxation.
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100])
+\end{lstlisting}
+The keyword argument \texttt{seed} can be changed by another value, for example,
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100], seed=2)
+\end{lstlisting}
+The line below constructs a \jumpmodel\ object of the second-stage only LP-relaxed instance DCAP\_3\_4\_2\_100 using a different random seed 2.
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100], seed=2, lprelax=2)
+\end{lstlisting}
+
+
+\begin{table}[H]
 	\centering
-	\caption{\texttt{problem} arguments and corresponding parameter array}
+	\caption{Acceptable values for \texttt{problem} and \texttt{params\_arr} arguments pairs}
 	\label{table:numparameter}
 	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}ccc@{}}
+		\begin{tabular}{@{}ccl@{}}
 			\toprule
-			\texttt{problem}  & \texttt{param\_arr}     & Remark                                                                                                                                     \\ \midrule
+			\texttt{problem}  & \texttt{params\_arr}     & Remark                                                                                                                                     \\ \midrule
 			\texttt{:DCAP}               & \texttt{[R, T, N, $\mathcal{S}$]} & All parameters are integer.                                                                                                                \\
-			\texttt{:MPTSPs}             & \texttt{[D, N, $\mathcal{S}$]}    & String $\texttt{D}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$                                                              \\
+			\texttt{:MPTSPs}             & \texttt{[D, N, $\mathcal{S}$]}    & String $\texttt{D}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$. All other parameters are integer.                                                              \\
 			\texttt{:SIZES}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}\ge 20$.                                                                                   \\
 			\texttt{:SMKP}               & \texttt{[I, $\mathcal{S}$]}       & All parameters are integer.                                                                                                                \\
 			\texttt{:SSLP}               & \texttt{[I, J, $\mathcal{S}$]}    & All parameters are integer.                                                                                                                \\
 			\texttt{:SUC}                & \texttt{[D, $\mathcal{S}$]}       & \multicolumn{1}{l}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, $}                                             \\
-			\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{$\mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}$} \\ \bottomrule
+			\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{$\mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$} $\mathcal{S}$ is integer. \\ \bottomrule
 		\end{tabular}
 	}
 \end{table}
 
-The second function \texttt{generateSMPS} generates \smps\ files as well as returns \jumpmodel\ object by taking one more argument \texttt{DIR\_NAME} to indicate a directory where the files are stored. The \smps\ files are stored in the default folder ``\texttt{$\sim$/Siplib/instance/}'' unless the argument \texttt{DIR\_NAME} is specified. The file name is automatically generated using the arguments, e.g., \texttt{generateSMPS(:DCAP, [3, 4, 2, 100])} generates three files.
-\begin{itemize}
-	\item DCAP\_3\_4\_2\_100.cor
-	\item DCAP\_3\_4\_2\_100.tim
-	\item DCAP\_3\_4\_2\_100.sto
-\end{itemize}
-Sometimes one might want to generate \smps\ files using pre-declared \texttt{JuMP.Model} object. The function \texttt{writeSMPS} is defined to do such task.
-\begin{lstlisting}[frame=single,language=julia]
-function writeSMPS(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
-\end{lstlisting}
-The function above takes \jumpmodel\ object as input argument and stores \smps\ files into \texttt{DIR\_NAME} folder with file name \texttt{INSTANCE}. The \texttt{String}-type arguments \texttt{INSTANCE} and \texttt{DIR\_NAME} can be omitted since they have default values ``\texttt{instance}" and ``\texttt{$\sim$/Siplib/instance/}."
+\begin{table}[H]
+	\centering
+	\caption{Acceptable values for \texttt{lprelax} argument}
+	\label{table:lprelax}
+	%\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}ll@{}}
+			\toprule
+			\texttt{lprelax} & Remark                                            \\ \midrule
+			$0$ (default)              & No LP-relaxation                                  \\
+			$1$              & First-stage only LP-relaxation                    \\
+			$2$              & Second-stage only LP-relaxation                   \\
+			$3$              & Full LP-relaxation (both first-stage and second-stage) \\ \bottomrule
+		\end{tabular}%
+%	}
+\end{table}
 
-We also define a conventional function to return the instance name in \texttt{String}-type.
+\subsubsection{function \texttt{writeSMPS}}
 \begin{lstlisting}[frame=single,language=julia]
-function getInstanceName(problem::Symbol, param_arr::Any)::String
+function writeSMPS(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true)
 \end{lstlisting}
+\texttt{writeSMPS} converts a \jumpmodel\ object to \smps\ files. It takes up to five inputs:
+
+\begin{quote}
+	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of which we want to generate \smps\ files.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{INSTANCE\_NAME}} (optional, positional) The \texttt{String}-type argument that will be the name of \smps\ files. If not specified, \texttt{INSTANCE\_NAME="instance"} as a default. Then, the three files are generated:
+	\begin{itemize}
+		\item instance.cor
+		\item instance.tim
+		\item instance.sto
+	\end{itemize}
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{DIR\_NAME}} (optional, positional) The \texttt{String}-type argument to indicate a directory where the files are stored. The \smps\ files are stored in the default folder ``\texttt{$\sim$/Siplib/instance/}'' unless the argument \texttt{DIR\_NAME} is specified.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. If \texttt{genericnames=true}, \smps\ files are written with the variable names \texttt{VAR1}, \texttt{VAR2}, \texttt{VAR3}, and so on. If \texttt{genericnames=false}, the original variable names such as \texttt{x[1,1]}, \texttt{y[2,2]}, and \texttt{z[3,3]} are maintained. \texttt{true} as a default.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{splice}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not the stochastic data stored in the \jumpmodel-type object is spliced after writing the \smps\ files. Hence, it increases the memory efficiency during the generation of \smps\ files. However, the spliced \jumpmodel-type object cannot be re-used for further purpose. \texttt{true} as a default.
+\end{quote}
+
+For example, executing the following lines store the three \smps\ files of DCAP\_3\_4\_2\_100 in the default directory ``\texttt{$\sim$/Siplib/instance/}''  with the default file name ``instance'', generic variable names, and splicing stored data.
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100])
+julia> writeSMPS(model)
+\end{lstlisting}
+The optional inputs can be replaced like below.
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100])
+julia> writeSMPS(model, "DCAP_3_4_2_100", "/another/directory", genericnames=false, splice=false)
+\end{lstlisting}
+The above lines store \smps\ files named by DCAP\_3\_4\_2\_100.cor, DCAP\_3\_4\_2\_100.tim, DCAP\_3\_4\_2\_100.sto into the directory ``/another/directory'' with the original variable names \texttt{x}, \texttt{y}, \texttt{u} and without splicing the data in the object \texttt{model}.
+
+
+
+\subsubsection{function \texttt{generateSMPS}}
+
+\begin{lstlisting}[frame=single,language=julia]
+function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ; seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true)
+\end{lstlisting}
+
+\texttt{generateSMPS} generates \smps\ files as well as returns \jumpmodel\ object. It is simply the combination of the two functions: \texttt{getModel} and \texttt{writeSMPS}. 
+
+One benefit of using this function is its functionality to generate instance name automatically using the input arguments. For example, the following line returns \jumpmodel-type object \texttt{model} as well as generates three \smps\ files: DCAP\_3\_4\_2\_100.cor, DCAP\_3\_4\_2\_100.tim, DCAP\_3\_4\_2\_100.sto.
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
+\end{lstlisting}
+
+\texttt{generateSMPS} takes up to seven argument inputs:
+\begin{quote}
+	\noindent\underline{\texttt{problem}} (necessary, positional) The \texttt{Symbol}-type argument that specify the problem of which we want to generate instance. The appropriate values are given in Table \ref{table:numparameter}. 
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{params\_arr}} (necessary, positional) The array argument that specifies the parameters of the problem. It must be properly paired with the argument \texttt{problem}. The appropriate values are given in Table \ref{table:numparameter}. 
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{DIR\_NAME}} (optional, positional) The \texttt{String}-type argument to indicate a directory where the files are stored. The \smps\ files are stored in the default folder ``\texttt{$\sim$/Siplib/instance/}'' unless the argument \texttt{DIR\_NAME} is specified.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{seed}} (optional, keyword) The integer argument \texttt{seed} specifies the seed of pseudo-random number generator in \julia. If specific value is not supplied, \texttt{seed=1} as a default.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{lprelax}} (optional, keyword) The keyword argument specifying the level of LP-relaxation of an instance. Table \ref{table:lprelax} summarizes the acceptable values with its meaning. If not specified, \texttt{lprelax=0} as a default which means no LP-relaxation.
+	
+	Noticeably, the \smps\ files are named to denote the level of LP-relaxation unless \texttt{lprelax=0}. For example, setting \texttt{lprelax=2} for this function with a pair \texttt{problem=:DCAP} and \texttt{params\_arr=[3,4,2,100]} generates three \smps\ files: 
+	\begin{itemize}
+		\item DCAP\_3\_4\_2\_100\_LP2.cor
+		\item DCAP\_3\_4\_2\_100\_LP2.tim
+		\item DCAP\_3\_4\_2\_100\_LP2.sto
+	\end{itemize}
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. If \texttt{genericnames=true}, \smps\ files are written with the variable names \texttt{VAR1}, \texttt{VAR2}, \texttt{VAR3}, and so on. If \texttt{genericnames=false}, the original variable names such as \texttt{x[1,1]}, \texttt{y[2,2]}, and \texttt{z[3,3]} are maintained. \texttt{true} as a default.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{splice}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not the stochastic data stored in the \jumpmodel-type object is spliced after writing the \smps\ files. Hence, it increases the memory efficiency during the generation of \smps\ files. However, the spliced \jumpmodel-type object cannot be re-used for further purpose. \texttt{true} as a default.
+\end{quote}
+
+
+%
+%Sometimes one might want to generate \smps\ files using pre-declared \texttt{JuMP.Model} object. The function \texttt{writeSMPS} is defined to do such task.
+%\begin{lstlisting}[frame=single,language=julia]
+%function writeSMPS(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance")
+%\end{lstlisting}
+%The function above takes \jumpmodel\ object as input argument and stores \smps\ files into \texttt{DIR\_NAME} folder with file name \texttt{INSTANCE}. The \texttt{String}-type arguments \texttt{INSTANCE} and \texttt{DIR\_NAME} can be omitted since they have default values ``\texttt{instance}" and ``\texttt{$\sim$/Siplib/instance/}."
+%
+%We also define a conventional function to return the instance name in \texttt{String}-type.
+%\begin{lstlisting}[frame=single,language=julia]
+%function getInstanceName(problem::Symbol, param_arr::Any)::String
+%\end{lstlisting}
 
 \subsection{Pre-analyzing instances: size, sparsity, plot}
-\siplibjl\ provides pre-analysis functions for instances. By ``size'', we mean the number of components (continuous, binary, integer, constraint) in an instance. As we discussed in Section \ref{sec:sparsity}, sparsity is analyzed in block-wisely. The size and sparsity information is stored in the object of the following types: \texttt{Size} and \texttt{Sparsity}.
+\siplibjl\ provides pre-analysis functions for instances. By ``size'', we mean the number of components (continuous, binary, integer, constraint) in an instance. As we discussed in Section \ref{subsec:sparsity}, sparsity is analyzed in block-wisely. The size and sparsity information is stored in the object of the following composite types: \texttt{Size} and \texttt{Sparsity}.
 
 \siplibjl\ also provides functions to plot sparsity pattern in the coefficient matrix. The plots can be drawn in four ways. 
 \begin{itemize}
-	\item Coefficient matrix of extensive form
-	\item First stage-only block (block A)
-	\item Second stage-only block (block W)
+	\item Constraint matrix of extensive form
+	\item First-stage block (block A)
+	\item Second-stage block (block W)
 	\item Technology block (block T)
 \end{itemize}
 
@@ -124,12 +256,12 @@ function getInstanceName(problem::Symbol, param_arr::Any)::String
 \subsubsection{Get size information}
 To get the size information of an instance, excute the following function.
 \begin{lstlisting}[frame=single,language=julia]
-function getSize(model::JuMP.Model, InstanceName::String="")::Size
+function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 \end{lstlisting}
 The function \texttt{getSize} takes \jumpmodel\ as an input argument and returns \texttt{Size}-type object defined as follows.
 \begin{lstlisting}[frame=single,language=julia]
-type Size
-	InstanceName::String    # instance name
+mutable struct Size
+	INSTANCE_NAME::String    # instance name
 	nCont1::Int             # number of continuous variables in 1st stage
 	nBin1::Int              # number of binary variables in 1st stage
 	nInt1::Int              # number of integer variables in 1st stage
@@ -149,12 +281,12 @@ end
 \subsubsection{Get sparsity information}
 To get the sparsity information of an instance, excute the following function.
 \begin{lstlisting}[frame=single,language=julia]
-function getSparsity(model::JuMP.Model, InstanceName::String="")::Sparsity
+function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 \end{lstlisting}
 The function \texttt{getSparsity} takes \jumpmodel\ as an input argument and returns \texttt{Sparsity}-type object.
 \begin{lstlisting}[frame=single,language=julia]
-type Sparsity
-	InstanceName::String    # instance name
+mutable struct Sparsity
+	INSTANCE_NAME::String    # instance name
 	nRow1::Int              # number of rows in 1st stage-only block (block A)
 	nCol1::Int              # number of columns in 1st stage-only block (block A)
 	nNz1::Int               # number of nonzero values in 1st stage-only block (block A)
@@ -177,42 +309,54 @@ end
 \subsubsection{Plot sparsity patterns}
 To plot the sparsity patterns of coefficient matrices, we provide the following functions.
 \begin{lstlisting}[frame=single,language=julia]
-function plotConstrMatrix(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-function plotFirstStageBlock(model::JuMP.Model, INSTANCE::String="instance_block_A", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotFirstStageBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_A", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-function plotSecondStageBlock(model::JuMP.Model, INSTANCE::String="instance_block_W", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotSecondStageBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_W", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-function plotComplicatingBlock(model::JuMP.Model, INSTANCE::String="instance_block_T", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotTechnologyBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_T", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-function plotAllBlocks(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotAllBlocks(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-function plotAll(model::JuMP.Model, INSTANCE::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotAll(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 \end{lstlisting}
-The function \texttt{plotConstrMatrix} takes \jumpmodel-type object and plots the constraint matrix of extensive form. For example, the following command lines plot Fig. \ref{fig:plotall_b}.
+All the functions above take up to three input arguments:
+\begin{quote}
+	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of which we want to draw plots.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{INSTANCE\_NAME}} (optional, positional) The \texttt{String}-type argument that will be the name of plot files. If not specified, \texttt{INSTANCE\_NAME="instance\_"} as a default. Plots are stored in .pdf format.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{DIR\_NAME}} (optional, positional) The \texttt{String}-type argument to indicate a directory where the files are stored. The .pdf file is stored in the default folder ``\texttt{$\sim$/Siplib/plot/}'' unless the argument \texttt{DIR\_NAME} is specified.
+\end{quote}
+The function \texttt{plotConstrMatrix} plots the whole constraint matrix of extensive form. For example, the following command lines plot Fig. \ref{fig:plotall_b}.
 \begin{lstlisting}[frame=single,language=julia]
-param_arr = [2,2,2,2]	                        # declare parameters
+params_arr = [2,2,2,2]	                        # declare parameters
 problem = :DCAP	                                # declare problem
-INSTANCE = getInstanceName(problem, param_arr)	# save instance name
-model = getJuMPModel(problem, param_arr)	    # construct JuMP.Model object
-plotConstrMatrix(model, INSTANCE)               # plot extensive form constraint matrix   
+INSTANCE_NAME = getInstanceName(problem, params_arr)	# get instance name
+model = getModel(problem, params_arr)	    # construct JuMP.Model object
+plotConstrMatrix(model, INSTANCE_NAME)               # plot extensive form constraint matrix   
 \end{lstlisting}
 
-The functions \texttt{plotFirstStageBlock}, \texttt{plotSecondStageBlock}, and \texttt{plotComplicatingBlock} take \jumpmodel-type object and plots each block. For example, the following command lines plot Fig. \ref{fig:plotall_a}, \ref{fig:plotall_c}, and \ref{fig:plotall_d}.
+\texttt{plotFirstStageBlock}, \texttt{plotSecondStageBlock}, and \texttt{plotComplicatingBlock} take \jumpmodel-type object and plots each block. For example, the following command lines plot Fig. \ref{fig:plotall_a}, \ref{fig:plotall_c}, and \ref{fig:plotall_d}.
 \begin{lstlisting}[frame=single,language=julia]
-param_arr = [2,2,2,2]	                        # declare parameters
+params_arr = [2,2,2,2]	                        # declare parameters
 problem = :DCAP	                                # declare problem
-INSTANCE = getInstanceName(problem, param_arr)	# save instance name
-model = getJuMPModel(problem, param_arr)	    # construct JuMP.Model object
-plotFirstStageBlock(model, INSTANCE)               # plot 1st stage block
-plotSecondStageBlock(model, INSTANCE)               # plot 2nd stage block
-plotComplicatingBlock(model, INSTANCE)               # plot technology block
+INSTANCE_NAME = getInstanceName(problem, params_arr)	# save instance name
+model = getModel(problem, params_arr)	    # construct JuMP.Model object
+plotFirstStageBlock(model, INSTANCE_NAME)               # plot 1st stage block
+plotSecondStageBlock(model, INSTANCE_NAME)               # plot 2nd stage block
+plotTechnologyBlock(model, INSTANCE_NAME)               # plot technology block
 \end{lstlisting}
 
 One might want to draw all the plots at once. The following two functions are defined to do that.
 \begin{lstlisting}[frame=single,language=julia]
-plotAllBlocks(model, INSTANCE)               # plot all blocks A,W,T
-plotAll(model, INSTANCE)               # plot all the plots above
+plotAllBlocks(model, INSTANCE_NAME)               # plot all blocks A, W, and T, respectively
+plotAll(model, INSTANCE_NAME)               # plot all the plots above: EF constraint matrix and blocks A, W, T
 \end{lstlisting}
 \input{figures/figure_siplibjl_plots}
 By executing \texttt{plotAll}, one can obtain all the plots in Fig. \ref{fig:plotall}.

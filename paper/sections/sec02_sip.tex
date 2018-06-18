@@ -25,8 +25,7 @@ The RP (\ref{eq:SIP_1}) can be rewritten in the \textit{extensive form} (EF)
 \end{subequations}
 
 %The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations $x_1=x_r$ and $x_j=x_{j-1}$ for $j=2,\ldots,r$, and $H_j$ is a suitable $rn_1\times n_1$ matrix. We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_j$ for some $j$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
-
-\begin{table}[H]
+\begin{table}[]
 	\caption{Summary of notations in SIP formulation}
 	\label{notation:SIP}
 	\resizebox{\textwidth}{!}
@@ -122,7 +121,7 @@ We introduce two relatively new algebraic SIP modeling languages which are compa
 
 \pysp\ is an extension of a \python-based algebraic modeling package \pyomo. To formulate a
 stochastic program in \pysp, the user specifies both the deterministic base model and
-the scenario tree with associated uncertain parameters in \pyomo. Given these two models, \pysp\ can directly solve the stochastic program using two different ways: solve EF directly or use PH algorithm for RP. %One advantage of \pysp\ is this integrated working environment combining model and solver. Hence, provide completely generic and highly configurable solver implementations.
+the scenario tree with associated uncertain parameters in \pyomo. Given these two models, \pysp\ can solve the stochastic program using two different ways: solve EF directly or use PH algorithm for RP. %One advantage of \pysp\ is this integrated working environment combining model and solver. Hence, provide completely generic and highly configurable solver implementations.
 
 \subsubsection{Solver}
 We introduce two popular open source solver packages: \dsp\ and \pysp. 
@@ -135,9 +134,10 @@ We introduce two popular open source solver packages: \dsp\ and \pysp.
 \end{itemize}
 \dsp\ provides parallel implementations for the two decomposition-based algorithms, which allows users fully exploit computing clusters and multi-core processors. \dsp\ also provides \julia\ interface to improve its usability.
 
-\pysp\ is a stochastic programming extension to \pyomo, a \python-based open source software package that supports variants of mathematical optimization. \pysp\ enables the expression of stochastic programming problems as EF. \pysp\ provides two ways to solve the instance. 
+\pysp\ is a stochastic programming extension to \pyomo, a \python-based open source software package that supports variants of mathematical optimization. \pysp\ enables the expression of stochastic programming problems as EF. \pysp\ also provides three ways to solve the instance. 
 \begin{itemize}
 	\item Invoking standard MIP solver to solve EF
+	\item L-shape method (Benders decomposition)
 	\item Progressive Hedging algorithm
 \end{itemize}
 \pysp\ can also solve EF invoking standard MIP solver. To solve more complex and large-scale SIP, \pysp\ implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.

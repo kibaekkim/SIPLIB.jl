@@ -1,4 +1,4 @@
-struct Size
+mutable struct Size
     INSTANCE_NAME::String    # instance name
     nCont1::Int             # number of continuous variables in 1st stage
     nBin1::Int              # number of binary variables in 1st stage
@@ -15,7 +15,7 @@ struct Size
     Size() = new()
 end
 
-struct Sparsity
+mutable struct Sparsity
     INSTANCE_NAME::String    # instance name
     nRow1::Int              # number of rows in 1st stage-only block (block A)
     nCol1::Int              # number of columns in 1st stage-only block (block A)
@@ -25,10 +25,10 @@ struct Sparsity
     nCol2::Int              # number of columns in 2nd stage-only block (block W)
     nNz2::Int               # number of nonzero values in 2nd stage-only block (block W)
     sparsity2::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
-    nRowC::Int              # number of rows in complicating block (block T)
-    nColC::Int              # number of columns in complicating block (block T)
-    nNzC::Int               # number of nonzero values in complicating block (block T)
-    sparsityC::Float64      # sparsity ([0,1] scale) of complicating block (block T)
+    nRowC::Int              # number of rows in technology block (block T)
+    nColC::Int              # number of columns in technology block (block T)
+    nNzC::Int               # number of nonzero values in technology block (block T)
+    sparsityC::Float64      # sparsity ([0,1] scale) of technology block (block T)
     nRow::Int               # number of rows in total
     nCol::Int               # number of columns in total
     nNz::Int                # number of nonzero values in total
@@ -36,9 +36,11 @@ struct Sparsity
     Sparsity() = new()
 end
 
+
+
 function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-    mdata_all = getStructModelData(model)
+    mdata_all = getStructModelData(model, false, false)
 
     nrows1, ncols1 = size(mdata_all[1].mat)
     nrows2, ncols = size(mdata_all[2].mat)
@@ -62,162 +64,187 @@ function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", D
         end
     end
 
+    plotMatrix(mat_de, INSTANCE_NAME, DIR_NAME)
+    #=
     plt = PyPlot
-    plt.spy(mat_de)
+    plt.spy(mat_de,markersize=5)
     plt.xticks([])
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$instance.pdf")
+    plt.savefig("$DIR_NAME/$INSTANCE_NAME.pdf")
     #plt.close()
+    =#
 end
+
 
 function plotFirstStageBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_A", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-    mdata = getModelData(model)
+    mdata = getModelData(model, false, false)
+    plotMatrix(mdata.mat, INSTANCE_NAME, DIR_NAME)
+    #=
     mat = mdata.mat
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
-    plt.tight_layout()
+    #plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$instance.pdf")
+    plt.savefig("$DIR_NAME/$INSTANCE_NAME.pdf")
     #plt.close()
+    =#
 end
 
 function plotSecondStageBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_W", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
 
-    mdata1 = getModelData(model)
-    mdata2 = getModelData(getchildren(model)[1])
+    mdata1 = getModelData(model, false, false)
+    mdata2 = getModelData(getchildren(model)[1], false, false)
     nrows1, ncols1 = size(mdata1.mat)
     nrows2, ncols = size(mdata2.mat)
     ncols2 = ncols - ncols1
 
     mat = mdata2.mat[: , ncols1+1:end]
-
+    plotMatrix(mat, INSTANCE_NAME, DIR_NAME)
+#=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
-    plt.tight_layout()
+#    plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$instance.pdf")
+    plt.savefig("$DIR_NAME/$INSTANCE_NAME.pdf")
     #plt.close()
+    =#
 end
 
-function plotComplicatingBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_T", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
-    mdata1 = getModelData(model)
-    mdata2 = getModelData(getchildren(model)[1])
+function plotTechnologyBlock(model::JuMP.Model, INSTANCE_NAME::String="instance_block_T", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+    mdata1 = getModelData(model, false, false)
+    mdata2 = getModelData(getchildren(model)[1], false, false)
     nrows1, ncols1 = size(mdata1.mat)
     nrows2, ncols = size(mdata2.mat)
     ncols2 = ncols - ncols1
 
     mat = mdata2.mat[: , 1:ncols1]
-
+    plotMatrix(mat, INSTANCE_NAME, DIR_NAME)
+#=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
     plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$instance.pdf")
+    plt.savefig("$DIR_NAME/$INSTANCE_NAME.pdf")
     #plt.close()
+    =#
 end
 
 function plotAllBlocks(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
-    mdata1 = getModelData(model)
-    mdata2 = getModelData(getchildren(model)[1])
+    mdata1 = getModelData(model, false, false)
+    mdata2 = getModelData(getchildren(model)[1], false, false)
     nrows1, ncols1 = size(mdata1.mat)
     nrows2, ncols = size(mdata2.mat)
     ncols2 = ncols - ncols1
 
     # plot Block A
     mat = mdata1.mat
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_A", DIR_NAME)
+#=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
     plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(instance)_block_A.pdf")
+    plt.savefig("$DIR_NAME/$(INSTANCE_NAME)_block_A.pdf")
     plt.close()
-
+=#
     # plot Block W
     mat = mdata2.mat[: , ncols1+1:end]
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_B", DIR_NAME)#=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
-    plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(instance)_block_W.pdf")
+#    plt.tight_layout()
+    plt.savefig("$DIR_NAME/$(INSTANCE_NAME)_block_W.pdf")
     plt.close()
-
+=#
     # plot Block T
     mat = mdata2.mat[: , 1:ncols1]
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_T", DIR_NAME)
+    #=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
-    plt.tight_layout()
+#    plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$(instance)_block_T.pdf")
+    plt.savefig("$DIR_NAME/$(INSTANCE_NAME)_block_T.pdf")
     plt.close()
+    =#
 end
 
 function plotAll(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
-    mdata1 = getModelData(model)
-    mdata2 = getModelData(getchildren(model)[1])
+    mdata1 = getModelData(model, false, false)
+    mdata2 = getModelData(getchildren(model)[1], false, false)
     nrows1, ncols1 = size(mdata1.mat)
     nrows2, ncols = size(mdata2.mat)
     ncols2 = ncols - ncols1
 
     # plot Block A
     mat = mdata1.mat
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_A", DIR_NAME)
+#=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
-    plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(instance)_block_A.pdf")
+#    plt.tight_layout()
+    plt.savefig("$DIR_NAME/$(INSTANCE_NAME)_block_A.pdf")
     plt.close()
+=#
 
     # plot Block W
     mat = mdata2.mat[: , ncols1+1:end]
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_W", DIR_NAME)
+#=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
-    plt.tight_layout()
-    plt.savefig("$DIR_NAME/$(instance)_block_W.pdf")
+#    plt.tight_layout()
+    plt.savefig("$DIR_NAME/$(INSTANCE_NAME)_block_W.pdf")
     plt.close()
+=#
 
     # plot Block T
     mat = mdata2.mat[: , 1:ncols1]
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_T", DIR_NAME)
+#=
     plt = PyPlot
-    plt.spy(mat)
+    plt.spy(mat,markersize=5)
     plt.xticks([])
     plt.yticks([])
-    plt.tight_layout()
+#    plt.tight_layout()
 
-    plt.savefig("$DIR_NAME/$(instance)_block_T.pdf")
+    plt.savefig("$DIR_NAME/$(INSTANCE_NAME)_block_T.pdf")
     plt.close()
-
+=#
     # plot extensive form block
-    plotConstrMatrix(model, instance, DIR_NAME)
-    plt.close()
+    plotConstrMatrix(model, INSTANCE_NAME, DIR_NAME)
+#    plt.close()
 end
 
 function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 
-    mdata1 = getModelData(model)
-    mdata2 = getModelData(getchildren(model)[1])
+    mdata1 = getModelData(model, false, false)
+    mdata2 = getModelData(getchildren(model)[1], false, false)
     nrows1, ncols1 = size(mdata1.mat)
     nrows2, ncols = size(mdata2.mat)
     ncols2 = ncols - ncols1
 
     s = Size()
 
-    s.instance = instance
+    s.INSTANCE_NAME = INSTANCE_NAME
 
     s.nCont1 = 0
     s.nBin1 = 0
@@ -247,9 +274,9 @@ function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
         end
     end
 
-    s.nCont = s.nCont1 + nCont2 * num_scenarios(model)
-    s.nBin = s.nBin1 + nBin2 * num_scenarios(model)
-    s.nInt = s.nInt1 + nInt2 * num_scenarios(model)
+    s.nCont = s.nCont1 + s.nCont2 * num_scenarios(model)
+    s.nBin = s.nBin1 + s.nBin2 * num_scenarios(model)
+    s.nInt = s.nInt1 + s.nInt2 * num_scenarios(model)
 
     s.nRow = nrows1 + nrows2 * num_scenarios(model)
     s.nCol = ncols1 + ncols2 * num_scenarios(model)
@@ -260,15 +287,15 @@ end
 
 function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 
-    mdata1 = getModelData(model)
-    mdata2 = getModelData(getchildren(model)[1])
+    mdata1 = getModelData(model, false, false)
+    mdata2 = getModelData(getchildren(model)[1], false, false)
     nrows1, ncols1 = size(mdata1.mat)
     nrows2, ncols = size(mdata2.mat)
     ncols2 = ncols - ncols1
 
     s = Sparsity()
 
-    s.instance = instance
+    s.INSTANCE_NAME = INSTANCE_NAME
 
     s.nRow1 = nrows1
     s.nCol1 = ncols1

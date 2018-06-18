@@ -16,7 +16,7 @@
 %\end{itemize}
 
 \subsection{Size and sparsity information}
-Table \ref{table:instance_size_info} reports numerical size and sparsity information for each instance.
+Table \ref{table:instance_size_info} reports numerical size and sparsity information for each instance. The information is reported both blockwisely and totally. For example, the second-stage size information reports the number of variables in each type in a single-scenario block (block W in Fig. \ref{fig:stagewise_sparsity}).
 \input{./tables/table_instance_size_information}
 
 \subsection{Computational results}
@@ -51,7 +51,7 @@ The size of the instances on which the experiments perform is chosen basically b
 	}
 \end{table}
 
-\subsubsection{Reports}
+\subsubsection{Solution reports}
 We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. The summary for the notations is found in Table \ref{table:objective-notation}.
 
 First, recall the EF in Section \ref{sec:sip}:
@@ -109,12 +109,8 @@ where the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
 	\end{threeparttable}
 	}
 \end{table}
-
 %\subsubsection {Basic results from the two solvers: \cplex\ and \dsp}
-We report objective values from the two solvers. Since we set the time limit, the reported values can be incumbent, say, $\hat{z}_C$ and $\hat{z}_D$. When the instance is solved to the optimality in the time limit, we report the optimal objective values $z^*_C$ and $z^*_D$.
-
-%\subsubsection{Gaps}
-We report several different gaps for each instance. Each gap is useful to compare the characteristics of instances with each other. There is no guarantee that we can always obtain the optimal solution for each instance, we report the best known gaps discovered within the limited processing time (3 hours). We expect this information will provide future research direction. 
+We report objective values and several gaps obtained from the two solvers. Each gap is useful to compare the characteristics of instances with each other. There is no guarantee that we can always obtain the optimal solution for each instance, we report the best results discovered within the limited processing time (3 hours). We expect this information will provide future research direction. 
 
 \begin{quote}
 	\noindent\underline{\textit{Objective value with processing time}} We report the objective values from the two solvers. This value is $z^*$ if the optimality is attained in the time limit, but $\hat{z}$ elsewhere.
@@ -129,7 +125,7 @@ We report several different gaps for each instance. Each gap is useful to compar
 %\end{quote}
 
 \begin{quote}
-	\noindent\underline{\textit{Integrality gap (IG)}} We define a SIP-specific integrality gap (IG) in minimization problem by $\frac{z^*}{z^*_{LP2}}$. We report $\frac{\hat{z}}{\hat{z}_{LP2}}$ when the optimality is not attained. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The LP relaxation provides an optimistic bound on the integer program's solution. The small this gap implies that the LP relaxation gives tight bound for the original problem.  %This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
+	\noindent\underline{\textit{Integrality gap (IG)}} We define a SIP-specific integrality gap in minimization problem by $\frac{z^*}{z^*_{LP2}}$. We report $\frac{\hat{z}}{\hat{z}_{LP2}}$ when the optimality is not attained. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The LP-relaxation provides an optimistic bound on the integer program's solution. The small this gap implies that the LP-relaxation gives tight bound for the original problem.  %This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
 \end{quote}
 
 %\begin{quote}
