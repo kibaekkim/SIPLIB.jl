@@ -606,5 +606,10 @@ D_{nt}=\sum_{n\in N} \sum_{t\in T}\left(  \sum_{\lambda\in IG_n^\mathcal{L}}IC_{
 \end{align*}
 
 Unlike other problems where stochastic data is generated while \julia\ script is running, we pre-generate and provide up to 1,000 wind power production profiles for each day type. This data is included in ``\texttt{$\sim$/Siplib/src/problems/SUC/data/WIND}'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$. Hence, the number of scenarios that can be considered in an instance is limited to 1,000, which we think is large enough regarding the intrinsic large-scale size of the problem \suc.
-
-\subsubsection{\suc: Sparsity pattern}
+\subsubsection{\suc: Sparsity pattern (single scenario)}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{SUC_FallWD_1}
+	\caption{SUC\_FallWD\_1: Extensive form constraint matrix}
+	\label{fig:suc_sparsity}
+\end{figure}
