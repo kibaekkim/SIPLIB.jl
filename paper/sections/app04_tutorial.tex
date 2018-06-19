@@ -1,27 +1,43 @@
 This appendix provides a brief tutorial for the \julia\ package. We release this package on GitHub with the name \siplibjl.
 
 \subsection{Prerequisites}
-We assume that you are in the Linux environment. To use \siplibjl, you need to perform the following steps.
+We assume that you are in Linux environment. To use \siplibjl, you need to perform the following steps:
 \begin{enumerate}
 	\item install the latest \julia\ release.
-	\item install \julia\ packages: \texttt{Distributions.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl}
+	\item install \julia\ packages \texttt{Distributions.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl} by executing
+	\begin{itemize}
+		\item \texttt{Pkg.add("Distributions")}
+		\item \texttt{Pkg.add("StructJuMP")}
+		\item \texttt{Pkg.add("PyPlot")}
+	\end{itemize}
 	\item download and place the \siplibjl\ package to any directory in your computer
 	\item open a terminal and change working directory to\\ ``\texttt{any-directory-in-your-computer/Siplib/src/}''
 	\item run \julia\ in that directory
 	\item excute \texttt{include("Siplib.jl")}
 	\item excute \texttt{using Siplib}
 \end{enumerate}
-Then, you are all set to use the functions in \siplibjl.
-
-\subsection{Generating instances}
-\siplibjl\ provides three functions with regard to generate instances: \texttt{getModel}, \texttt{writeSMPS}, and \texttt{generateSMPS}. In short, \texttt{getModel} constructs \jumpmodel-type object, \texttt{writeSMPS} converts an object of \jumpmodel-type to the three \smps\ files, and \texttt{generateSMPS} does both of them simultaneously.
-\subsubsection{function \texttt{getModel}}
-
+Then, you are all set to use the functions in \siplibjl. To make it sure, execute the following line to generate DCAP\_2\_2\_2\_10 instance:
 \begin{lstlisting}[frame=single,language=julia]
-function getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0)::JuMP.Model
+julia> model = generateSMPS(:DCAP, [2,2,2,10])
 \end{lstlisting}
-
-\texttt{getModel} returns a \jumpmodel-type object. It has two necessary positional arguments and two optional keyword arguments:
+If it works well, you will see the three files, DCAP\_2\_2\_2\_10.cor, DCAP\_2\_2\_2\_10.tim, and DCAP\_2\_2\_2\_10.sto, in the directory:
+\begin{quote}
+\centering\texttt{any-directory-in-your-computer/Siplib/instance/}
+\end{quote}
+\subsection{Generating instances}
+\siplibjl\ provides four functions with regard to instance generation:
+\begin{itemize}
+	\item \texttt{getInstanceName()}
+	\item \texttt{getModel()}
+	\item \texttt{writeSMPS()}
+	\item \texttt{generateSMPS()}
+\end{itemize}
+In short, \texttt{getInstanceName()} returns a \texttt{String}-type instance name, \texttt{getModel()} constructs \jumpmodel-type object, \texttt{writeSMPS()} converts a \jumpmodel-type object to the three \smps\ files, and \texttt{generateSMPS()} does both \texttt{getModel()} and \texttt{writeSMPS()} simultaneously.
+\subsubsection{function \texttt{getInstanceName()}}
+\begin{lstlisting}[frame=single,language=julia]
+function getInstanceName(problem::Symbol, params_arr::Any)::String
+\end{lstlisting}		
+The function \texttt{getInstanceName()} is an utility function that returns a \texttt{String}-type instance name defined in Table \ref{table:naming_rule}. It takes two necessary input arguments \texttt{problem} and \texttt{params\_arr}:
 \begin{quote}
 	\noindent\underline{\texttt{problem}} (necessary, positional) The \texttt{Symbol}-type argument that specify the problem of which we want to generate instance. The appropriate values are given in Table \ref{table:numparameter}. 
 \end{quote}
@@ -29,28 +45,6 @@ function getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0
 \begin{quote}
 	\noindent\underline{\texttt{params\_arr}} (necessary, positional) The argument that specifies the parameters of the problem. It must be properly paired with the argument \texttt{problem}. The appropriate values are given in Table \ref{table:numparameter}. 
 \end{quote}
-
-\begin{quote}
-	\noindent\underline{\texttt{seed}} (optional, keyword) The integer argument \texttt{seed} specifies the seed of pseudo-random number generator in \julia. If specific value is not supplied, \texttt{seed=1} as a default.
-\end{quote}
-
-\begin{quote}
-	\noindent\underline{\texttt{lprelax}} (optional, keyword) The keyword argument specifying the level of LP-relaxation of an instance. Table \ref{table:lprelax} summarizes the acceptable values with its meaning. If not specified, \texttt{lprelax=0} as a default which means no LP-relaxation.
-\end{quote}
-
-For example, executing the following line constructs a \jumpmodel\ object \texttt{model} of instance DCAP\_3\_4\_2\_100 with default random seed 1 and without LP-relaxation.
-\begin{lstlisting}[frame=single,language=julia]
-julia> model = getModel(:DCAP, [3,4,2,100])
-\end{lstlisting}
-The keyword argument \texttt{seed} can be changed by another value, for example,
-\begin{lstlisting}[frame=single,language=julia]
-julia> model = getModel(:DCAP, [3,4,2,100], seed=2)
-\end{lstlisting}
-The line below constructs a \jumpmodel\ object of the second-stage only LP-relaxed instance DCAP\_3\_4\_2\_100 using a different random seed 2.
-\begin{lstlisting}[frame=single,language=julia]
-julia> model = getModel(:DCAP, [3,4,2,100], seed=2, lprelax=2)
-\end{lstlisting}
-
 
 \begin{table}[H]
 	\centering
@@ -71,27 +65,65 @@ julia> model = getModel(:DCAP, [3,4,2,100], seed=2, lprelax=2)
 	}
 \end{table}
 
+\subsubsection{function \texttt{getModel()}}
+\begin{lstlisting}[frame=single,language=julia]
+function getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0)::JuMP.Model
+\end{lstlisting}
+
+The function \texttt{getModel()} returns a \jumpmodel-type object. It has two necessary positional arguments and two optional keyword arguments:
+\begin{quote}
+	\noindent\underline{\texttt{problem}} (necessary, positional) The \texttt{Symbol}-type argument that specify the problem of which we want to generate instance. The appropriate values are given in Table \ref{table:numparameter}. 
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{params\_arr}} (necessary, positional) The argument that specifies the parameters of the problem. It must be properly paired with the argument \texttt{problem}. The appropriate values are given in Table \ref{table:numparameter}. 
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{seed}} (optional, keyword) The integer argument \texttt{seed} specifies the seed of pseudo-random number generator in \julia. If specific value is not supplied, \texttt{seed=1} as a default.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{lprelax}} (optional, keyword) The keyword argument specifying the level of LP-relaxation of an instance. Table \ref{table:lprelax} summarizes the acceptable values with its meaning. If not specified, \texttt{lprelax=0} as a default which means no LP-relaxation.
+\end{quote}
+
 \begin{table}[H]
 	\centering
 	\caption{Acceptable values for \texttt{lprelax} argument}
 	\label{table:lprelax}
 	%\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}ll@{}}
-			\toprule
-			\texttt{lprelax} & Remark                                            \\ \midrule
-			$0$ (default)              & No LP-relaxation                                  \\
-			$1$              & First-stage only LP-relaxation                    \\
-			$2$              & Second-stage only LP-relaxation                   \\
-			$3$              & Full LP-relaxation (both first-stage and second-stage) \\ \bottomrule
-		\end{tabular}%
-%	}
+	\begin{tabular}{@{}ll@{}}
+		\toprule
+		\texttt{lprelax} & Remark                                            \\ \midrule
+		$0$ (default)              & No LP-relaxation                                  \\
+		$1$              & First-stage only LP-relaxation                    \\
+		$2$              & Second-stage only LP-relaxation                   \\
+		$3$              & Full LP-relaxation (both first-stage and second-stage) \\ \bottomrule
+	\end{tabular}%
+	%	}
 \end{table}
 
-\subsubsection{function \texttt{writeSMPS}}
+For example, executing the following line constructs a \jumpmodel\ object \texttt{model} of instance DCAP\_3\_4\_2\_100 with default random seed 1 and without LP-relaxation.
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100])
+\end{lstlisting}
+The keyword argument \texttt{seed} can be changed by another value, for example,
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100], seed=2)
+\end{lstlisting}
+The line below constructs a \jumpmodel\ object of the second-stage only LP-relaxed instance DCAP\_3\_4\_2\_100 using a different random seed 2.
+\begin{lstlisting}[frame=single,language=julia]
+julia> model = getModel(:DCAP, [3,4,2,100], seed=2, lprelax=2)
+\end{lstlisting}
+
+
+
+
+\subsubsection{function \texttt{writeSMPS()}}
 \begin{lstlisting}[frame=single,language=julia]
 function writeSMPS(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true)
 \end{lstlisting}
-\texttt{writeSMPS} converts a \jumpmodel\ object to \smps\ files. It takes up to five inputs:
+The function \texttt{writeSMPS()} converts a \jumpmodel\ object to \smps\ files. It takes up to five inputs:
 
 \begin{quote}
 	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of which we want to generate \smps\ files.
@@ -111,14 +143,16 @@ function writeSMPS(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME
 \end{quote}
 
 \begin{quote}
-	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. If \texttt{genericnames=true}, \smps\ files are written with the variable names \texttt{VAR1}, \texttt{VAR2}, \texttt{VAR3}, and so on. If \texttt{genericnames=false}, the original variable names such as \texttt{x[1,1]}, \texttt{y[2,2]}, and \texttt{z[3,3]} are maintained. \texttt{true} as a default.
+	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. 
+	
+	If \texttt{genericnames=true}, \smps\ files are written with the variable names \texttt{VAR1}, \texttt{VAR2}, \texttt{VAR3}, and so on. If \texttt{genericnames=false}, the original variable names such as \texttt{x[1,1]}, \texttt{y[2,2]}, and \texttt{z[3,3]} are maintained. \texttt{true} as a default.
 \end{quote}
 
 \begin{quote}
 	\noindent\underline{\texttt{splice}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not the stochastic data stored in the \jumpmodel-type object is spliced after writing the \smps\ files. Hence, it increases the memory efficiency during the generation of \smps\ files. However, the spliced \jumpmodel-type object cannot be re-used for further purpose. \texttt{true} as a default.
 \end{quote}
 
-For example, executing the following lines store the three \smps\ files of DCAP\_3\_4\_2\_100 in the default directory ``\texttt{$\sim$/Siplib/instance/}''  with the default file name ``instance'', generic variable names, and splicing stored data.
+Executing the following lines store the three \smps\ files of DCAP\_3\_4\_2\_100 in the default directory ``\texttt{$\sim$/Siplib/instance/}''  with the default file name ``instance'', generic variable names, and splicing stored data.
 \begin{lstlisting}[frame=single,language=julia]
 julia> model = getModel(:DCAP, [3,4,2,100])
 julia> writeSMPS(model)
@@ -132,20 +166,20 @@ The above lines store \smps\ files named by DCAP\_3\_4\_2\_100.cor, DCAP\_3\_4\_
 
 
 
-\subsubsection{function \texttt{generateSMPS}}
+\subsubsection{function \texttt{generateSMPS()}}
 
 \begin{lstlisting}[frame=single,language=julia]
 function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ; seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true)
 \end{lstlisting}
 
-\texttt{generateSMPS} generates \smps\ files as well as returns \jumpmodel\ object. It is simply the combination of the two functions: \texttt{getModel} and \texttt{writeSMPS}. 
+\texttt{generateSMPS()} generates \smps\ files as well as returns \jumpmodel\ object. It is simply the combination of the two functions: \texttt{getModel()} and \texttt{writeSMPS()}. 
 
-One benefit of using this function is its functionality to generate instance name automatically using the input arguments. For example, the following line returns \jumpmodel-type object \texttt{model} as well as generates three \smps\ files: DCAP\_3\_4\_2\_100.cor, DCAP\_3\_4\_2\_100.tim, DCAP\_3\_4\_2\_100.sto.
+One benefit of using this function is its functionality to generate instance name automatically using the input arguments. For example, the following line returns \jumpmodel-type object \texttt{model} as well as generates three \smps\ files.
 \begin{lstlisting}[frame=single,language=julia]
 julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 \end{lstlisting}
 
-\texttt{generateSMPS} takes up to seven argument inputs:
+\texttt{generateSMPS()} takes up to seven argument inputs:
 \begin{quote}
 	\noindent\underline{\texttt{problem}} (necessary, positional) The \texttt{Symbol}-type argument that specify the problem of which we want to generate instance. The appropriate values are given in Table \ref{table:numparameter}. 
 \end{quote}
@@ -174,7 +208,9 @@ julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 \end{quote}
 
 \begin{quote}
-	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. If \texttt{genericnames=true}, \smps\ files are written with the variable names \texttt{VAR1}, \texttt{VAR2}, \texttt{VAR3}, and so on. If \texttt{genericnames=false}, the original variable names such as \texttt{x[1,1]}, \texttt{y[2,2]}, and \texttt{z[3,3]} are maintained. \texttt{true} as a default.
+	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. 
+	
+	If \texttt{genericnames=true}, \smps\ files are written with the variable names \texttt{VAR1}, \texttt{VAR2}, \texttt{VAR3}, and so on. If \texttt{genericnames=false}, the original variable names such as \texttt{x[1,1]}, \texttt{y[2,2]}, and \texttt{z[3,3]} are maintained. \texttt{true} as a default.
 \end{quote}
 
 \begin{quote}
@@ -195,9 +231,9 @@ julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 %\end{lstlisting}
 
 \subsection{Pre-analyzing instances: size, sparsity, plot}
-\siplibjl\ provides pre-analysis functions for instances. By ``size'', we mean the number of components (continuous, binary, integer, constraint) in an instance. As we discussed in Section \ref{subsec:sparsity}, sparsity is analyzed in block-wisely. The size and sparsity information is stored in the object of the following composite types: \texttt{Size} and \texttt{Sparsity}.
+\siplibjl\ provides pre-analysis functions for instances. By ``size'', we mean the number of components (continuous, binary, integer, constraint) in an instance. The sparsity is analyzed block-wisely. The size and sparsity information is stored in the object of the following composite types: \texttt{Size} and \texttt{Sparsity}.
 
-\siplibjl\ also provides functions to plot sparsity pattern in the coefficient matrix. The plots can be drawn in four ways. 
+\siplibjl\ also provides functions to plot sparsity pattern in the constraint matrix. The types of plot that can be drawn are:
 \begin{itemize}
 	\item Constraint matrix of extensive form
 	\item First-stage block (block A)
@@ -253,60 +289,61 @@ julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 %\end{lstlisting}
 %\end{minipage}
 
-\subsubsection{Get size information}
+\subsubsection{function \texttt{getSize()}}
 To get the size information of an instance, excute the following function.
 \begin{lstlisting}[frame=single,language=julia]
 function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 \end{lstlisting}
-The function \texttt{getSize} takes \jumpmodel\ as an input argument and returns \texttt{Size}-type object defined as follows.
+The function \texttt{getSize()} takes \jumpmodel-type object as a necessary input argument and returns \texttt{Size}-type object defined as follows.
 \begin{lstlisting}[frame=single,language=julia]
 mutable struct Size
-	INSTANCE_NAME::String    # instance name
-	nCont1::Int             # number of continuous variables in 1st stage
-	nBin1::Int              # number of binary variables in 1st stage
-	nInt1::Int              # number of integer variables in 1st stage
-	nCont2::Int             # number of continuous variables in 2nd stage    
-	nBin2::Int              # number of binary variables in 2nd stage
-	nInt2::Int              # number of integer variables in 2nd stage    
-	nCont::Int              # number of continuous variables in total      
-	nBin::Int               # number of binary variables in total      
-	nInt::Int               # number of integer variables in total      
-	nRow::Int               # number of rows in coefficient matrix in extensive form
-	nCol::Int               # number of columns in coefficient matrix in extensive form
-	nNz::Int                # number of nonzero values in coefficient matrix in extensive form
-	Size() = new()
+INSTANCE_NAME::String    # instance name
+nCont1::Int             # number of continuous variables in 1st stage
+nBin1::Int              # number of binary variables in 1st stage
+nInt1::Int              # number of integer variables in 1st stage
+nCont2::Int             # number of continuous variables in 2nd stage    
+nBin2::Int              # number of binary variables in 2nd stage
+nInt2::Int              # number of integer variables in 2nd stage    
+nCont::Int              # number of continuous variables in total      
+nBin::Int               # number of binary variables in total      
+nInt::Int               # number of integer variables in total      
+nRow::Int               # number of rows in coefficient matrix in extensive form
+nCol::Int               # number of columns in coefficient matrix in extensive form
+nNz::Int                # number of nonzero values in coefficient matrix in extensive form
+Size() = new()
 end
 \end{lstlisting}
 
-\subsubsection{Get sparsity information}
+\subsubsection{function \texttt{getSparsity()}}
 To get the sparsity information of an instance, excute the following function.
 \begin{lstlisting}[frame=single,language=julia]
 function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 \end{lstlisting}
-The function \texttt{getSparsity} takes \jumpmodel\ as an input argument and returns \texttt{Sparsity}-type object.
+The function \texttt{getSparsity()} takes \jumpmodel-type object as a necessary input argument and returns \texttt{Sparsity}-type object.
 \begin{lstlisting}[frame=single,language=julia]
 mutable struct Sparsity
-	INSTANCE_NAME::String    # instance name
-	nRow1::Int              # number of rows in 1st stage-only block (block A)
-	nCol1::Int              # number of columns in 1st stage-only block (block A)
-	nNz1::Int               # number of nonzero values in 1st stage-only block (block A)
-	sparsity1::Float64      # sparsity ([0,1] scale) of 1st stage-only block (block A)
-	nRow2::Int              # number of rows in 2nd stage-only block (block W)
-	nCol2::Int              # number of columns in 2nd stage-only block (block W)
-	nNz2::Int               # number of nonzero values in 2nd stage-only block (block W)
-	sparsity2::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
-	nRowC::Int              # number of rows in technology block (block T)
-	nColC::Int              # number of columns in technology block (block T)
-	nNzC::Int               # number of nonzero values in technology block (block T)  
-	sparsityC::Float64      # sparsity ([0,1] scale) of technology block (block T)
-	nRow::Int               # number of rows in total
-	nCol::Int               # number of columns in total
-	nNz::Int                # number of nonzero values in total
-	sparsity::Float64       # sparsity ([0,1] scale) in total
-	Sparsity() = new()
+INSTANCE_NAME::String    # instance name
+nRow1::Int              # number of rows in 1st stage-only block (block A)
+nCol1::Int              # number of columns in 1st stage-only block (block A)
+nNz1::Int               # number of nonzero values in 1st stage-only block (block A)
+sparsity1::Float64      # sparsity ([0,1] scale) of 1st stage-only block (block A)
+nRow2::Int              # number of rows in 2nd stage-only block (block W)
+nCol2::Int              # number of columns in 2nd stage-only block (block W)
+nNz2::Int               # number of nonzero values in 2nd stage-only block (block W)
+sparsity2::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
+nRowC::Int              # number of rows in technology block (block T)
+nColC::Int              # number of columns in technology block (block T)
+nNzC::Int               # number of nonzero values in technology block (block T)  
+sparsityC::Float64      # sparsity ([0,1] scale) of technology block (block T)
+nRow::Int               # number of rows in total
+nCol::Int               # number of columns in total
+nNz::Int                # number of nonzero values in total
+sparsity::Float64       # sparsity ([0,1] scale) in total
+Sparsity() = new()
 end
 \end{lstlisting}
-\subsubsection{Plot sparsity patterns}
+
+\subsubsection{Five functions for plotting sparsity pattern}
 To plot the sparsity patterns of coefficient matrices, we provide the following functions.
 \begin{lstlisting}[frame=single,language=julia]
 function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
@@ -342,7 +379,9 @@ model = getModel(problem, params_arr)	    # construct JuMP.Model object
 plotConstrMatrix(model, INSTANCE_NAME)               # plot extensive form constraint matrix   
 \end{lstlisting}
 
-\texttt{plotFirstStageBlock}, \texttt{plotSecondStageBlock}, and \texttt{plotComplicatingBlock} take \jumpmodel-type object and plots each block. For example, the following command lines plot Fig. \ref{fig:plotall_a}, \ref{fig:plotall_c}, and \ref{fig:plotall_d}.
+The functions \texttt{plotFirstStageBlock()}, \texttt{plotSecondStageBlock()}, and
+
+\noindent\texttt{plotTechnologyBlock()} all take \jumpmodel-type object and plots each block. For example, the following command lines plot Fig. \ref{fig:plotall_a}, \ref{fig:plotall_c}, and \ref{fig:plotall_d}.
 \begin{lstlisting}[frame=single,language=julia]
 params_arr = [2,2,2,2]	                        # declare parameters
 problem = :DCAP	                                # declare problem
@@ -359,7 +398,7 @@ plotAllBlocks(model, INSTANCE_NAME)               # plot all blocks A, W, and T,
 plotAll(model, INSTANCE_NAME)               # plot all the plots above: EF constraint matrix and blocks A, W, T
 \end{lstlisting}
 \input{figures/figure_siplibjl_plots}
-By executing \texttt{plotAll}, one can obtain all the plots in Fig. \ref{fig:plotall}.
+By executing \texttt{plotAll()}, one can obtain all the plots in Fig. \ref{fig:plotall}.
 
 %\kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
 %\yoc{I move this to appendix. We can remove this.}
@@ -371,3 +410,4 @@ By executing \texttt{plotAll}, one can obtain all the plots in Fig. \ref{fig:plo
 %\subsubsection{Dual decomposition}
 %
 %\subsubsection{Benders decomposition}
+
