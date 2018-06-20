@@ -298,20 +298,20 @@ function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 The function \texttt{getSize()} takes \jumpmodel-type object as a necessary input argument and returns \texttt{Size}-type object defined as follows.
 \begin{lstlisting}[frame=single,language=julia]
 mutable struct Size
-INSTANCE_NAME::String    # instance name
-nCont1::Int             # number of continuous variables in 1st stage
-nBin1::Int              # number of binary variables in 1st stage
-nInt1::Int              # number of integer variables in 1st stage
-nCont2::Int             # number of continuous variables in 2nd stage    
-nBin2::Int              # number of binary variables in 2nd stage
-nInt2::Int              # number of integer variables in 2nd stage    
-nCont::Int              # number of continuous variables in total      
-nBin::Int               # number of binary variables in total      
-nInt::Int               # number of integer variables in total      
-nRow::Int               # number of rows in coefficient matrix in extensive form
-nCol::Int               # number of columns in coefficient matrix in extensive form
-nNz::Int                # number of nonzero values in coefficient matrix in extensive form
-Size() = new()
+	INSTANCE_NAME::String    # instance name
+	nCont1::Int             # number of continuous variables in 1st stage
+	nBin1::Int              # number of binary variables in 1st stage
+	nInt1::Int              # number of integer variables in 1st stage
+	nCont2::Int             # number of continuous variables in 2nd stage    
+	nBin2::Int              # number of binary variables in 2nd stage
+	nInt2::Int              # number of integer variables in 2nd stage    
+	nCont::Int              # number of continuous variables in total      
+	nBin::Int               # number of binary variables in total      
+	nInt::Int               # number of integer variables in total      
+	nRow::Int               # number of rows in coefficient matrix in extensive form
+	nCol::Int               # number of columns in coefficient matrix in extensive form
+	nNz::Int                # number of nonzero values in coefficient matrix in extensive form
+	Size() = new()
 end
 \end{lstlisting}
 
@@ -323,24 +323,24 @@ function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 The function \texttt{getSparsity()} takes \jumpmodel-type object as a necessary input argument and returns \texttt{Sparsity}-type object.
 \begin{lstlisting}[frame=single,language=julia]
 mutable struct Sparsity
-INSTANCE_NAME::String    # instance name
-nRow1::Int              # number of rows in 1st stage-only block (block A)
-nCol1::Int              # number of columns in 1st stage-only block (block A)
-nNz1::Int               # number of nonzero values in 1st stage-only block (block A)
-sparsity1::Float64      # sparsity ([0,1] scale) of 1st stage-only block (block A)
-nRow2::Int              # number of rows in 2nd stage-only block (block W)
-nCol2::Int              # number of columns in 2nd stage-only block (block W)
-nNz2::Int               # number of nonzero values in 2nd stage-only block (block W)
-sparsity2::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
-nRowC::Int              # number of rows in technology block (block T)
-nColC::Int              # number of columns in technology block (block T)
-nNzC::Int               # number of nonzero values in technology block (block T)  
-sparsityC::Float64      # sparsity ([0,1] scale) of technology block (block T)
-nRow::Int               # number of rows in total
-nCol::Int               # number of columns in total
-nNz::Int                # number of nonzero values in total
-sparsity::Float64       # sparsity ([0,1] scale) in total
-Sparsity() = new()
+    INSTANCE_NAME::String    # instance name
+	nRow_A::Int              # number of rows in 1st stage-only block (block A)
+	nCol_A::Int              # number of columns in 1st stage-only block (block A)
+	nNz_A::Int               # number of nonzero values in 1st stage-only block (block A)
+	sparsity_A::Float64      # sparsity ([0,1] scale) of 1st stage-only block (block A)
+	nRow_W::Int              # number of rows in 2nd stage-only block (block W)
+	nCol_W::Int              # number of columns in 2nd stage-only block (block W)
+	nNz_W::Int               # number of nonzero values in 2nd stage-only block (block W)
+	sparsity_W::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
+	nRow_T::Int              # number of rows in technology block (block T)
+	nCol_T::Int              # number of columns in technology block (block T)
+	nNz_T::Int               # number of nonzero values in technology block (block T)
+	sparsity_T::Float64      # sparsity ([0,1] scale) of technology block (block T)
+	nRow::Int               # number of rows in total
+	nCol::Int               # number of columns in total
+	nNz::Int                # number of nonzero values in total
+	sparsity::Float64       # sparsity ([0,1] scale) in total
+	Sparsity() = new()
 end
 \end{lstlisting}
 
