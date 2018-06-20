@@ -2,7 +2,7 @@ In this section, we explain general description of SIP. This includes formal mat
 \subsection{Formulation}
 In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP which is the \textit{recourse problem} (RP): 
 \begin{align}
-\textrm{(RP) }\min_{x\in X} z(x):={\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
+\min_{x\in X} z(x):={\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
 \end{align}
 where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. 
 
@@ -12,17 +12,17 @@ We assume that $\pmb{\xi}$ follows a known discrete probability distribution wit
 \end{align}
 where $\xi_s$ is an arbitrarily realized scenario.
 The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent integer or binary restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
-The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_s,W_s,h_s,q_s)$.
-The RP (\ref{eq:SIP_1}) can be rewritten in the \textit{extensive form} (EF)
+The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_s,W_s,h_s,q_s)$. The RP (\ref{eq:SIP_1}) can be rewritten in the \textit{extensive form} (EF)
 \begin{subequations}\label{sip:ef}
 \begin{align}
-\textrm{(EF) }\min_{x,y_s}\ z(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s), \label{ef:obj}\\ 
+\textrm{(RP) }\min_{x,\mathrm{y}}\ z(x,\mathrm{y}):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s), \label{ef:obj}\\ 
 \mathrm{s.t.}\ &Ax\ge b,  \label{ef:b}\\
 	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\}, \label{ef:c} \\
 	&x\in X, \label{ef:d} \\
-	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}. \label{ef:e}
+	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}, \label{ef:e}
 \end{align}
 \end{subequations}
+where $\mathrm{y}:=\{y_1,\ldots,y_r\}$.
 
 %The nonanticipativity constraints in (\ref{eq:SIP_2-2}) stand for the equations $x_1=x_r$ and $x_j=x_{j-1}$ for $j=2,\ldots,r$, and $H_j$ is a suitable $rn_1\times n_1$ matrix. We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_j$ for some $j$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
 \begin{table}[]
@@ -80,12 +80,12 @@ For SIP where the first-stage variables are not necessarily binary, dual functio
 In this type algorithms, we first introduce the copies of the first-stage variables into the second-stage. Then, the EF in (\ref{sip:ef}) is written as below.
 \begin{subequations} \label{sip:ef'}
 	\begin{align}
-	\textrm{(EF') }\min_{x_s,y_s}\ z(x_s,y_s):=\ &\sum_{s=1}^{r}\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)	\label{eq:SIP_2-1}\\ 
+	\textrm{(RP') }\min_{\mathrm{x},\mathrm{y}}\ z(x,y):=\ &\sum_{s=1}^{r}\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)	\label{eq:SIP_2-1}\\ 
 	\mathrm{s.t.}\ &\sum_{s=1}^{r}H_s x_s=0, \label{eq:SIP_2-2} \\
 	\ &(x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	\label{eq:SIP_2-3}
 	\end{align}
 \end{subequations}
-where the scenario feasibility set $G_s$ is defined as
+where $\mathrm{x}:=\{x_1,\ldots,x_r\}$ and the scenario feasibility set $G_s$ is defined as
 \begin{align} 
 G_s:=\left\{ (x_s,y_s): \ Ax_s\ge b,\  T_s x_s+W_s y_s\ge h_s,\ (x_s,y_s)\in X\times Y  \right\}. \label{eq:SIP_2-4}
 \end{align}

@@ -54,10 +54,10 @@ The size of the instances on which the experiments perform is chosen basically b
 \subsubsection{Solution reports}
 We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. The summary for the notations is found in Table \ref{table:objective-notation}.
 
-First, recall the EF in Section \ref{sec:sip}:
+First, recall the extensive form RP in Section \ref{sec:sip}:
 \begin{subequations}\label{ef}
 	\begin{align}
-	\textrm{(EF) }\min_{x,y_s}\ z(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s) \tag{\ref{ef:obj}}\\ 
+	\textrm{(RP) }\min_{x,\mathrm{y}}\ z(x,\mathrm{y}):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \tag{\ref{ef:obj}}\\ 
 	\mathrm{s.t.}\ &Ax\ge b,  \tag{\ref{ef:b}}\\
 	&T_s x+W_s y_s\ge h_s,\quad\forall s\in\{1,\ldots,r\}, \tag{\ref{ef:c}} \\
 	&x\in X, \tag{\ref{ef:d}} \\
@@ -70,21 +70,59 @@ We use the vanilla $z$ to denote the value of the objective function in RHS of (
 $z_{LP2}$ is defined by the objective value of the following partly LP-relaxed problem:
 \begin{subequations}\label{ef-lp2}
 	\begin{align}
-	\textrm{(EF-LP2) }\min_{x,y_s}\ z_{LP2}(x,y_s):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_j^{\top}y_s) \tag{\ref{ef:obj}}\\ 
+	\textrm{(LP2) }\min_{x,\mathrm{y}}\ z_{LP2}(x,\mathrm{y}):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \tag{\ref{ef:obj}}\\ 
 	\mathrm{s.t.}\ &\textrm{(\ref{ef:b})-(\ref{ef:d})}, \nonumber \\
 	& y_s \in Y \subseteq \mathbb{R}\backslash\mathbb{Z} ,\quad\forall s\in\{1,\ldots,r\}. \tag{\ref{ef:e}'}
 	\end{align}
 \end{subequations}
 Note that only the integrality of the second-stage variables is relaxed.
 
-$z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual problem. The Lagrangian dual problem can be derived from EF' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}):
-\begin{subequations}\label{ef-ld}
+$z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual problem. The Lagrangian dual problem can be derived from RP' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}):
+\begin{subequations}\label{ld}
 	\begin{align}
-	\textrm{(EF-LD) }\max_{\lambda\in\mathbb{R}^{r\cdot n_1}}\ z_{LD}(\lambda) :=\min_{x_s,y_s} &\sum_{s=1}^{r}\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)+\lambda^\top \left(H_s x_s\right)	\tag{\ref{eq:SIP_2-1}'}\\ 
-	\mathrm{s.t.}\ & (x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	\tag{\ref{eq:SIP_2-3}}
+	\textrm{(LD) }\max_{\Lambda}\ z_{LD}(\Lambda) :=\min_{\mathrm{x},\mathrm{y}}  &\sum_{s=1}^{r}\left[\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)+\lambda_s^\top \left(H_s x_s\right)\right] \label{ld:obj}\\ 
+	\mathrm{s.t.}\ & (x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	 \label{ld:b}\\
+	&\lambda_s\in\mathbb{R}^{r\cdot n_1},\quad \forall s\in\{1,\ldots,r\}, \label{ld:c}
 	\end{align}
 \end{subequations}
-where the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
+where $\Lambda:=\{\lambda_1,\ldots,\lambda_r\}$ and the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
+
+%$z_{EV}$ is the objective value of the \textit{expected value problem}, which simply considers only the expected scenario data, $\bar{q}$, $\bar{h}$, $\bar{T}$, $\bar{W}$:
+%\begin{subequations}\label{ev}
+%	\begin{align}
+%	\min_{x,y}\ z_{EV}(x,y):=&\ c^{\top}x + \bar{q}^{\top}y \label{ev:obj}\\ 
+%	\mathrm{s.t.}\ &Ax\ge b,  \label{ev:b}\\
+%	&\bar{T} x+\bar{W} y\ge \bar{h},  \label{ev:c}\\
+%	&x\in X,  \label{ev:d}\\
+%	&y \in Y. \label{ev:e}
+%	\end{align}
+%\end{subequations}
+%
+%$z_{EEV}$ is defined by the \textit{expected result of using the first-stage solution of EV}, say $\bar{x}$: 
+%\begin{subequations}\label{eev}
+%	\begin{align}
+%	\min_{\mathrm{y}}\ z_{EEV}(\mathrm{y}):=&\ c^{\top}\bar{x} + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \label{eev:obj}\\ 
+%	\mathrm{s.t.}\ &W_s y_s\ge h_s-T_s \bar{x},\quad\forall s\in\{1,\ldots,r\}, \label{eev:b}\\
+%	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}. \label{eev:c}
+%	\end{align}
+%\end{subequations}
+
+$z_{WS}$ is called the \textit{wait-and-see solution value} defined by
+\begin{align} \label{ws}
+	z_{WS}:=\sum_{s=1}^r \PP(s)z^*(x,y_s),
+\end{align}
+
+where $z^*(x,y_s)$ is the optimal objective value of a single scenario problem: 
+\begin{subequations}
+	\begin{align}
+	\min_{x,y_s}\ z(x,y_s):=&\ c^\top x+q_s^\top y_s \label{ssp:obj}\\
+	\mathrm{s.t.}\ &Ax \ge b \label{ssp:b}\\
+	&T_s x + W_s y_s\ge h_s,  \label{ssp:c}\\
+	&x\in X,  \label{ssp:d}\\
+	&y_s \in Y. \label{ssp:e}
+	\end{align}
+\end{subequations}
+
 
 \begin{table}[H]
 	\centering
@@ -95,9 +133,13 @@ where the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
 		\begin{tabular}{@{}ll@{}}
 			\toprule
 			Notation  & Meaning                                                                                                                    \\ \midrule
-			$z$       & Objective value of EF (\ref{ef})                                                                                           \\
-			$z_{LP2}$ & Objective value of EF with the second-stage only LP-relaxation (\ref{ef-lp2})                                              \\
-			$z_{LD}$  & Objective value of the Lagrangian dual problem of EF (\ref{ef-ld}) \\ \bottomrule
+			$z$       & Objective value of RP (\ref{ef:obj})-(\ref{ef:e})                                                                                         \\
+			$z_{LP2}$ & Objective value of RP with the second-stage only LP-relaxation (\ref{ef:obj})-(\ref{ef:d}),(\ref{ef:e}')                                              \\
+			$z_{LD}$  & Objective value of the Lagrangian dual problem of RP (\ref{ld:obj})-(\ref{ld:c}) \\ 
+%			$z_{EV}$ & Objective value of the expected problem (\ref{ev:obj})-(\ref{ev:d})\\
+%			$z_{EEV}$ & Objective value of using the first-stage solution of EV (\ref{eev:obj})-(\ref{eev:c})\\
+			$z_{WS}$ & Expectation of the objective values from single scenario problems (\ref{ws}),(\ref{ssp:obj})-(\ref{ssp:e})\\
+			\bottomrule
 		\end{tabular}%
 				
 		\begin{tablenotes}
@@ -137,8 +179,13 @@ We report objective values and several gaps obtained from the two solvers. Each 
 %\end{quote}
 
 \begin{quote}
-\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is defined by $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{z}|+\epsilon}$, the gap between any dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
+\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is defined by $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{z}|+\epsilon}$, the gap between any dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp. 
 \end{quote}
+
+\begin{quote}
+\noindent\underline{\textit{EVPI}} The \textit{expected value of perfect information} defined by $z^*-z^*_{WS}$. This measures the maximum amount a decision maker would be ready to pay in return for complete (and accurate) information about the future. EVPI is reported using \cplex.
+\end{quote}
+
 
 %\begin{quote}
 %	\noindent\underline{\textit{Duality gap (DG)}} The duality gap in computational optimization is the difference between any dual solution and the value of a feasible but suboptimal iterate for the primal problem. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp.
@@ -152,27 +199,27 @@ We report objective values and several gaps obtained from the two solvers. Each 
 	\caption{Computational report}
 	\label{table:computation_report}
 	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{lllllllll}
-			\hline
-			&                              & \multicolumn{2}{c}{Objective value (time)}          & \multicolumn{2}{c}{Optimality Gap}                  & \multicolumn{2}{c}{Integrality Gap}                 & \multicolumn{1}{c}{Duality Gap} \\ \hline
-			\multicolumn{1}{c}{Problem} & \multicolumn{1}{c}{Instance} & \multicolumn{1}{c}{\cplex} & \multicolumn{1}{c}{\dsp} & \multicolumn{1}{c}{\cplex} & \multicolumn{1}{c}{\dsp} & \multicolumn{1}{c}{\cplex} & \multicolumn{1}{c}{\dsp} & \multicolumn{1}{c}{\dsp}         \\ \hline
-			\multirow{16}{*}{\dcap}      & DCAP\_2\_3\_3\_200               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_2\_3\_3\_300               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_2\_3\_3\_500               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_2\_3\_3\_10000             &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_2\_4\_3\_200               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_2\_4\_3\_300               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_2\_4\_3\_500               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_2\_4\_3\_10000             &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_3\_2\_200               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_3\_2\_300               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_3\_2\_500               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_3\_2\_10000             &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_4\_2\_200               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_4\_2\_300               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_4\_2\_500               &                           &                         &                           &                         &                           &                         &                                 \\
-			& DCAP\_3\_4\_2\_10000             &                           &                         &                           &                         &                           &                         &                                 \\ \hline
-		\end{tabular}%
+	\begin{tabular}{llllllllll}
+		\hline
+		&                              & \multicolumn{2}{c}{Objective value (time)}          & \multicolumn{2}{c}{Optimality Gap}                  & \multicolumn{2}{c}{Integrality Gap}                 & \multicolumn{1}{c}{Duality Gap} & \multicolumn{1}{c}{EVPI}  \\ \hline
+		\multicolumn{1}{c}{Problem} & \multicolumn{1}{c}{Instance} & \multicolumn{1}{c}{CPLEX} & \multicolumn{1}{c}{DSP} & \multicolumn{1}{c}{CPLEX} & \multicolumn{1}{c}{DSP} & \multicolumn{1}{c}{CPLEX} & \multicolumn{1}{c}{DSP} & \multicolumn{1}{c}{DSP}         & \multicolumn{1}{c}{CPLEX} \\ \hline
+		\multirow{16}{*}{DCAP}      & DCAP\_2\_3\_3\_200           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_2\_3\_3\_300           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_2\_3\_3\_500           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_2\_3\_3\_10000         &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_2\_4\_3\_200           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_2\_4\_3\_300           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_2\_4\_3\_500           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_2\_4\_3\_10000         &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_3\_2\_200           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_3\_2\_300           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_3\_2\_500           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_3\_2\_10000         &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_4\_2\_200           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_4\_2\_300           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_4\_2\_500           &                           &                         &                           &                         &                           &                         &                                 &                           \\
+		& DCAP\_3\_4\_2\_10000         &                           &                         &                           &                         &                           &                         &                                 &                           \\ \hline
+	\end{tabular}
 	}
 \end{table}
 
