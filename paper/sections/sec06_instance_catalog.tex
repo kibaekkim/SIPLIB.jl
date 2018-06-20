@@ -9,7 +9,7 @@
 %- preliminary results using CPLEX
 
 %\kk{Please describe what you present in this section. Subsectioning would also help.} \yoc{This section is newely written. Need more justification.} 
-\siplibtwo\ provides \smps\ instances for test and benchmarking  purpose. In this section, we report detailed information on each instance. This includes numerical size information, sparsity information, and computational results. The main purpose of the computational experiments is to notice 
+\siplibtwo\ provides \smps\ instances for test and benchmarking  purpose. In this section, we report detailed information on each instance. This includes numerical size information, sparsity information, and computational results.
 %\begin{itemize}
 %	\item Commercial MIP solver (CPLEX) result: optimality gap, integrality gap (LP relaxation gap, tightness), solution time, obj value
 %	\item DD solver (DSP) result: optimality gap, duality gap (convex relaxation gap), solution time, obj value
@@ -46,13 +46,13 @@ The size of the instances on which the experiments perform is chosen basically b
 		& Open-source SIP solver: DSP                                      \\ \hline
 		Threads per instance                 & 36                                                           \\ \hline
 		Time limit                             & 3 hours                                                      \\ \hline
-		Instance size                          & SIPLIB instance sizes + Huge-sized instance                  \\ \hline
+		Instance size                          & SIPLIB instance sizes + Large scenario instance                  \\ \hline
 	\end{tabular}
 	}
 \end{table}
 
 \subsubsection{Solution reports}
-We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. The summary for the notations is found in Table \ref{table:objective-notation}.
+We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. The summary for the notations can be found in Table \ref{table:objective-notation}.
 
 First, recall the extensive form RP in Section \ref{sec:sip}:
 \begin{subequations}\label{ef}
@@ -109,9 +109,8 @@ where $\Lambda:=\{\lambda_1,\ldots,\lambda_r\}$ and the scenario feasibility set
 
 $z_{WS}$ is called the \textit{wait-and-see solution value} defined by
 \begin{align} \label{ws}
-	z_{WS}:=\sum_{s=1}^r \PP(s)z^*(x,y_s),
+	\textrm{(WS) }z_{WS}:=\sum_{s=1}^r \PP(s)z^*(x,y_s),
 \end{align}
-
 where $z^*(x,y_s)$ is the optimal objective value of a single scenario problem: 
 \begin{subequations}
 	\begin{align}
@@ -155,7 +154,7 @@ where $z^*(x,y_s)$ is the optimal objective value of a single scenario problem:
 We report objective values and several gaps obtained from the two solvers. Each gap is useful to compare the characteristics of instances with each other. There is no guarantee that we can always obtain the optimal solution for each instance, we report the best results discovered within the limited processing time (3 hours). We expect this information will provide future research direction. 
 
 \begin{quote}
-	\noindent\underline{\textit{Objective value with processing time}} We report the objective values from the two solvers. This value is $z^*$ if the optimality is attained in the time limit, but $\hat{z}$ elsewhere.
+	\noindent\underline{\textit{Objective value with processing time}} We report the objective values from the two solvers. This value is $z^*$ if the optimality is attained in the time limit, but $\hat{z}$ otherwise.
 \end{quote}
 
 \begin{quote}

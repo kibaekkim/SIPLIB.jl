@@ -39,13 +39,14 @@ Generates SMPS files and Returns JuMP.Model-type object.
 """
 function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ; seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true)
 
-    model = getModel(problem, params_arr, seed, lprelax)
-    INSTANCE_NAME = getInstanceName(problem, params_arr)
-    if lprelax != 0
-        INSTANCE_NAME *= "_LP$(lprelax)"
+    @time begin
+        model = getModel(problem, params_arr, seed, lprelax)
+        INSTANCE_NAME = getInstanceName(problem, params_arr)
+        if lprelax != 0
+            INSTANCE_NAME *= "_LP$(lprelax)"
+        end
+        writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice)
     end
-    writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice)
-
     return model
 
 end

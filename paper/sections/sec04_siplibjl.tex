@@ -204,22 +204,22 @@ Each folder in \texttt{problems} contains three scripts (types, functions, model
 	\caption{Example: \texttt{dcap\_models.jl}}\label{fig:dcap_models}
 \end{figure}
 
-\subsubsection{\julia\ scripts for convenient functionalities}
+\subsubsection{Scripts for convenient functionalities}
 To provide convenience for users, we implement various functions which are hopefully useful in terms of investigating the factors we have discussed in the previous Section \ref{sec:summary}. The following \julia\ files stand for that purpose.
 \begin{quotation}
-	\noindent\underline{\texttt{smpswriter.jl}} This script implements the basic building blocks for the functions that converts \jumpmodel\ object to \smps\ files. 
+	\noindent\underline{\texttt{smpswriter}} This script implements the basic building blocks for the functions that converts \jumpmodel\ object to \smps\ files. 
 \end{quotation}
 
 \begin{quotation}
-	\noindent\underline{\texttt{generator.jl}} This script defines interfacing functions for generating \smps\ files as well as constructing \jumpmodel\ object.
+	\noindent\underline{\texttt{generator}} This script defines interfacing functions for generating \smps\ files as well as constructing \jumpmodel\ object.
 \end{quotation}
 
 \begin{quotation}
-	\noindent\underline{\texttt{analyzer.jl}} This script implements the functions for analysis of instances. This includes getting size information, sparsity information, and plots of sparsity patterns.
+	\noindent\underline{\texttt{analyzer}} This script implements the functions for analysis of instances. This includes getting size information, sparsity information, and plots of sparsity patterns.
 \end{quotation}
 
 \begin{quotation}
-	\noindent\underline{\texttt{utility.jl}} This script contains some utility functions that help implementing the package.
+	\noindent\underline{\texttt{utility}} This script contains some utility functions that help implementing the package.
 \end{quotation}
 
 

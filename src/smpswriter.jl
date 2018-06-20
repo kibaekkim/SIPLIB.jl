@@ -107,9 +107,9 @@ function getStructModelData(m::JuMP.Model, genericnames::Bool=true, splice::Bool
     #mdata_all = Array{ModelData,1}()
     mdata_all = ModelData[]
     # get model data for the first stage
-    @time begin
-        mdata = getModelData(m, genericnames, splice)
-    end
+#    @time begin
+    mdata = getModelData(m, genericnames, splice)
+#    end
     push!(mdata_all, mdata)
 
     # @show Threads.nthreads()

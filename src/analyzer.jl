@@ -17,18 +17,18 @@ end
 
 mutable struct Sparsity
     INSTANCE_NAME::String    # instance name
-    nRow1::Int              # number of rows in 1st stage-only block (block A)
-    nCol1::Int              # number of columns in 1st stage-only block (block A)
-    nNz1::Int               # number of nonzero values in 1st stage-only block (block A)
-    sparsity1::Float64      # sparsity ([0,1] scale) of 1st stage-only block (block A)
-    nRow2::Int              # number of rows in 2nd stage-only block (block W)
-    nCol2::Int              # number of columns in 2nd stage-only block (block W)
-    nNz2::Int               # number of nonzero values in 2nd stage-only block (block W)
-    sparsity2::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
-    nRowC::Int              # number of rows in technology block (block T)
-    nColC::Int              # number of columns in technology block (block T)
-    nNzC::Int               # number of nonzero values in technology block (block T)
-    sparsityC::Float64      # sparsity ([0,1] scale) of technology block (block T)
+    nRow_A::Int              # number of rows in 1st stage-only block (block A)
+    nCol_A::Int              # number of columns in 1st stage-only block (block A)
+    nNz_A::Int               # number of nonzero values in 1st stage-only block (block A)
+    sparsity_A::Float64      # sparsity ([0,1] scale) of 1st stage-only block (block A)
+    nRow_W::Int              # number of rows in 2nd stage-only block (block W)
+    nCol_W::Int              # number of columns in 2nd stage-only block (block W)
+    nNz_W::Int               # number of nonzero values in 2nd stage-only block (block W)
+    sparsity_W::Float64      # sparsity ([0,1] scale) of 2nd stage-only block (block W)
+    nRow_T::Int              # number of rows in technology block (block T)
+    nCol_T::Int              # number of columns in technology block (block T)
+    nNz_T::Int               # number of nonzero values in technology block (block T)
+    sparsity_T::Float64      # sparsity ([0,1] scale) of technology block (block T)
     nRow::Int               # number of rows in total
     nCol::Int               # number of columns in total
     nNz::Int                # number of nonzero values in total
@@ -297,24 +297,24 @@ function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 
     s.INSTANCE_NAME = INSTANCE_NAME
 
-    s.nRow1 = nrows1
-    s.nCol1 = ncols1
-    s.nNz1 = length(nonzeros(mdata1.mat))
-    s.sparsity1 = s.nNz1 / (s.nRow1 * s.nCol1)
+    s.nRow_A = nrows1
+    s.nCol_A = ncols1
+    s.nNz_A = length(nonzeros(mdata1.mat))
+    s.sparsity_A = s.nNz_A / (s.nRow_A * s.nCol_A)
 
-    s.nRow2 = nrows2
-    s.nCol2 = ncols2
-    s.nNz2 = length(nonzeros(mdata2.mat[: , ncols1+1:end]))
-    s.sparsity2 = s.nNz2 / (s.nRow2 * s.nCol2)
+    s.nRow_W = nrows2
+    s.nCol_W = ncols2
+    s.nNz_W = length(nonzeros(mdata2.mat[: , ncols1+1:end]))
+    s.sparsity_W = s.nNz_W / (s.nRow_W * s.nCol_W)
 
-    s.nRowC = s.nRow2
-    s.nColC = s.nCol1
-    s.nNzC = length(nonzeros(mdata2.mat[: , 1:ncols1+1]))
-    s.sparsityC = s.nNzC / (s.nRowC * s.nColC)
+    s.nRow_T = s.nRow_W
+    s.nCol_T = s.nCol_A
+    s.nNz_T = length(nonzeros(mdata2.mat[: , 1:ncols1+1]))
+    s.sparsity_T = s.nNz_T / (s.nRow_T * s.nCol_T)
 
-    s.nRow = s.nRow1 + s.nRow2 * num_scenarios(model)
-    s.nCol = s.nCol1 + s.nCol2 * num_scenarios(model)
-    s.nNz = s.nNz1 + (s.nNz2 + s.nNzC) * num_scenarios(model)
+    s.nRow = s.nRow_A + s.nRow_W * num_scenarios(model)
+    s.nCol = s.nCol_A + s.nCol_W * num_scenarios(model)
+    s.nNz = s.nNz_A + (s.nNz_W + s.nNz_T) * num_scenarios(model)
     s.sparsity = s.nNz / (s.nRow * s.nCol)
 
     return s
