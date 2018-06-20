@@ -22,8 +22,8 @@ One of the main functions of the package is to generate \smps\ files for an inst
 \end{itemize}
 %\kk{This needs moved to later section.} \yoc{I move this to this section.}
 
-\subsubsection{\jumpmodel-type object}
-\jumpmodel-type object is an object that contains every information of an instance. Hence, almost every function in the package requires this object as one of its input arguments. Combining \structjump\ package together with \jump\ package, constructing a \jumpmodel\ object is quite simpler and more intuitive than any other algebraic modeling language dedicated for SIP. For example, the forthcoming script in Fig. \ref{fig:dcap_models} constructs an object \texttt{model} of a \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}).
+\subsubsection{\jumpmodel}
+\jumpmodel\ is a type defined in \jump. An object of this type contains every information of an instance. Hence, almost every function in the package requires this object as one of its input arguments. Combining \structjump\ package together with \jump\ package, constructing a \jumpmodel\ object of a SIP instance is quite simpler and more intuitive than any other algebraic modeling language dedicated for SIP. For example, the script in Fig. \ref{fig:dcap_models} constructs an object \texttt{model} of a \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}).
 
 \subsection{Structure of the \julia\ package}
 The tree in Fig. \ref{fig:siplibjl_structure} shows how the \julia\ package is structured. 
