@@ -46,9 +46,9 @@ grestore
 %
 \smartqed  % flush right qed marks, e.g. at end of proof
 %
+
+
 \usepackage[usenames,dvipsnames]{xcolor}
-
-
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{mathrsfs,amsmath,amssymb,amscd,mathtools}
@@ -72,10 +72,19 @@ grestore
 \usepackage{soul}
 \usepackage{forest}
 \usepackage[graphicx]{realboxes}
+% for bibtex
+\usepackage[sort&compress]{natbib}
+\bibpunct{[}{]}{,}{n}{}{;}
 
+% set figure path
+\graphicspath{{./figures/}}
+
+% set table of contents depths
+\setcounter{tocdepth}{2}
+
+% for Siplib.jl tree
 \definecolor{folderbg}{RGB}{124,166,198}
 \definecolor{folderborder}{RGB}{110,144,169}
-
 \def\Size{4pt}
 \tikzset{
 	folder/.pic={
@@ -86,7 +95,7 @@ grestore
 	}
 }
 
-
+% for Julia script
 \lstdefinelanguage{julia}
 {
 	sensitive=true,	
@@ -124,12 +133,13 @@ grestore
 }
 
 
-\graphicspath{{./figures/}}
-
-% set table of contents depths
-\setcounter{tocdepth}{2}
-
 % set shortcuts
+%% Math notations
+\DeclareMathOperator*{\PP}{\mathbb{P}}
+\DeclareMathOperator*{\EE}{\mathbb{E}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
 %% Package, Library, abbreviate terms
 \newcommand{\siplibtwo}{\textsf{SIPLIB 2.0}}
 \newcommand{\siplib}{\textsf{SIPLIB}}
@@ -169,25 +179,6 @@ grestore
 \newcommand{\kk}[1]{{\color{blue}From Kibaek: #1}}
 \newcommand{\yoc}[1]{{\color{NavyBlue}From Yongkyu: #1}}
 \newcommand{\stkout}[1]{\ifmmode\text{\sout{\ensuremath{#1}}}\else\sout{#1}\fi}
-\DeclareMathOperator*{\PP}{\mathbb{P}}
-\DeclareMathOperator*{\EE}{\mathbb{E}}
-\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
-\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
-
-
-%
-%\definecolor{folderbg}{RGB}{124,166,198}
-%\definecolor{folderborder}{RGB}{110,144,169}
-%
-%\def\Size{4pt}
-%\tikzset{
-%	folder/.pic={
-%		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
-%		(-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);  
-%		\filldraw[draw=folderborder,top color=folderbg!50,bottom color=folderbg]
-%		(-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
-%	}
-%}
 
 \raggedbottom
 % \usepackage{mathptmx}      % use Times fonts if available on your TeX system
@@ -203,7 +194,6 @@ grestore
 % \journalname{myjournal}
 %
 
-
 \begin{document}
 \title{SIPLIB 2.0
 %\thanks{Grants or other notes
@@ -214,11 +204,7 @@ grestore
 
 \titlerunning{SIPLIB 2.0}        
 
-\author{Yongkyu Cho \and 
-		Kibaek Kim \and
-        James Luedtke \and
-        Jeffrey Linderoth
-}
+\author{Yongkyu Cho \and Kibaek Kim \and \\ James Luedtke \and Jeffrey Linderoth}
 
 %\authorrunning{Short form of author list} % if too long for running head
 
@@ -240,11 +226,14 @@ grestore
 \maketitle
 
 % abstract
-\input{./sections/sec00_abstract.tex}
-\pagebreak
+\begin{abstract}
+	\siplib\ was first constructed in 2002 by Shabbir Ahmed and his colleagues. It has been providing a collection of test instances to facilitate computational and algorithmic research in stochastic integer programming (SIP). State-of-the-art in SIP combined with the speedup in computing machinery, however, requires more test instances than currently available. By \siplibtwo, we provide richer collection of test instances accompanied with both analytical and computational investigation. Notably, we provide a software package for generating new instances in \smps\ format. The package is implemented in \julia\ programming language with structured algebraic modeling package \structjump\ (block-structured optimization framework for \julia\ mathematical programming).
+	\keywords{Stochastic Integer Programming \and Problem Instances \and SIP \and SIPLIB \and Julia \and StructJuMP} 
+	\subclass{90C15 \and 90C60 \and 90C90}
+\end{abstract}
 
 % lists (tableofcontents, figures, tables)
-\input{./sections/sec00_lists.tex}
+%\input{./sections/sec00_lists.tex}
 
 \section{Introduction}\label{sec:intro}
 \input{./sections/sec01_intro.tex}
@@ -258,49 +247,52 @@ grestore
 \input{./sections/sec03_summary.tex}
 %\pagebreak
 
-\section{A \texttt{Julia} package for \siplibtwo} \label{sec:siplibjl}
-\input{./sections/sec04_siplibjl.tex}
+\section{A \texttt{Julia} package for \siplibtwo} \label{sec:package}
+\input{./sections/sec04_package.tex}
 %\pagebreak
 
 \section{The instance catalog}\label{sec:instance_catalog}
-\input{./sections/sec06_instance_catalog.tex}
+\input{./sections/sec05_instance_catalog.tex}
 %\pagebreak
 
 \section{Concluding remarks}\label{sec:conclusion}
-\input{./sections/sec07_conclusion.tex}
-%\pagebreak
+\input{./sections/sec06_conclusion.tex}
 
 %\begin{acknowledgements}
 %\end{acknowledgements}
 
 \appendix
-% references
-\input{./sections/references.tex} % This will be replaces by a bibtex format file later.
-\pagebreak
 
 \section*{Appendix}
 
-% problem-specific description 
+% Appendix: Problem-specific description 
 \section{Problem descriptions} \label{sec:prob_desc}
 \input{./sections/app01_probdesc.tex}
 %\pagebreak
 
-% general sparsity (fully cardinality based)
+% Appendix: General sparsity (fully cardinality based)
 \section{Block-wise sparsity based on set cardinality} \label{sec:sparsity}
 \input{./sections/app02_sparsity.tex}
 %\pagebreak
 
-% MIPLIB 2010 constraint type legend
+% Appendix: MIPLIB 2010 constraint type legend
 \section{Constraint type legend from \texttt{MIPLIB 2010}} \label{sec:miplibconstraint}
 \input{./sections/app03_miplib_constraints.tex}
 %\pagebreak
 
-% siplib.jl
-\section{A tutorial for the \julia\ package} \label{sec:tutorial}
-\input{./sections/app04_tutorial.tex}
+% Appendix: Tutorial
+\section{Size and sparsity catalog} \label{sec:instance_size_sparsity}
+\input{./sections/app04_instance_size_sparsity.tex}
 %\pagebreak
 
+% Appendix: Tutorial
+\section{A tutorial for the \julia\ package} \label{sec:tutorial}
+\input{./sections/app05_tutorial.tex}
+%\pagebreak
 
+% Appendix: References
+\bibliographystyle{spmpsci}
+\bibliography{siplib}
 \end{document}
 
 
