@@ -10,15 +10,15 @@
 
 Three input files are required to specify an SP in \smps\ format:
 \begin{itemize}
-	\item \texttt{.cor}: Core file written in \mps\ format. This describes the fundamental problem structure and contains the first-stage data and one second-stage scenario data.
-	\item \texttt{.tim}: Time file which specifies the location where the 2nd stage begins.
-	\item \texttt{.sto}: Stoch file which contains stochastic data of all scenarios except the one included in \texttt{.cor} file.
+	\item .cor: Core file written in \mps\ format. This describes the fundamental problem structure and contains the first-stage data and one second-stage scenario data.
+	\item .tim: Time file which specifies the location where the second-stage begins.
+	\item .sto: Stoch file which contains stochastic data of all scenarios except the one included in \texttt{.cor} file.
 \end{itemize}
 One of the main functions of the package is to generate \smps\ files for an instance. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$.
 \begin{itemize}
-	\item \texttt{DCAP\_R\_N\_T\_S.cor}
-	\item \texttt{DCAP\_R\_N\_T\_S.tim}
-	\item \texttt{DCAP\_R\_N\_T\_S.sto}
+	\item DCAP\_R\_N\_T\_S.cor
+	\item DCAP\_R\_N\_T\_S.tim
+	\item DCAP\_R\_N\_T\_S.sto
 \end{itemize}
 %\kk{This needs moved to later section.} \yoc{I move this to this section.}
 
@@ -94,7 +94,7 @@ The tree in Fig. \ref{fig:siplibjl_structure} shows how the \julia\ package is s
 Each folder in \texttt{problems} contains three scripts (types, functions, models) for constructing \jumpmodel\ object for corresponding problem. Each kind of script has independent role that defines 
 
 \begin{quote}
-\noindent\underline{\texttt{types}} This kind of script defines the \textit{composite type} (also known as structure or aggregate data type in various languages) that is used to store data for constructing \jumpmodel\ object. The object of this composite type will contain all set and parameter data that define an instance. For example, \texttt{dcap\_types.jl} in Fig. \ref{fig:dcap_types}, defines the composite type \texttt{DCAPData}.
+\noindent\textit{types} This kind of script defines the \textit{composite type} (also known as structure or aggregate data type in various languages) that is used to store data for constructing \jumpmodel\ object. The object of this composite type will contain all set and parameter data that define an instance. For example, \texttt{dcap\_types.jl} in Fig. \ref{fig:dcap_types}, defines the composite type \texttt{DCAPData}.
 \end{quote}
 \begin{figure}[H]
 	\centering
@@ -121,7 +121,7 @@ Each folder in \texttt{problems} contains three scripts (types, functions, model
 \end{figure}
 
 \begin{quote}
-\noindent\underline{\texttt{functions}} This kind of script mostly defines the functions exploited for generating random data for each problem. \texttt{dcap\_functions.jl} in Fig \ref{fig:dcap_functions}, for example, defines a function that returns the \texttt{DCAPData}-type object as well as generates random data. The data generation procedure and associated probability distribution are as described in Section \ref{subsubsec:dcap_data_gen}.
+\noindent\textit{functions} This kind of script mostly defines the functions exploited for generating random data for each problem. \texttt{dcap\_functions.jl} in Fig \ref{fig:dcap_functions}, for example, defines a function that returns the \texttt{DCAPData}-type object as well as generates random data. The data generation procedure and associated probability distribution are as described in Section \ref{subsubsec:dcap_data_gen}.
 \end{quote}
 \begin{figure}[H]
 	\centering
@@ -153,7 +153,7 @@ Each folder in \texttt{problems} contains three scripts (types, functions, model
 \end{figure}
 
 \begin{quote}
-\noindent\underline{\texttt{models}} This kind of script contains a definition of the function that finally constructs and returns \jumpmodel-type object of an instance. This function calls the members in \jump\ and \structjump\ packages. The two kinds of scripts above should be included in this script. Script in Fig \ref{fig:dcap_models} shows the example of \dcap.
+\noindent\textit{models} This kind of script contains a definition of the function that finally constructs and returns \jumpmodel-type object of an instance. This function calls the members in \jump\ and \structjump\ packages. The two kinds of scripts above should be included in this script. Script in Fig \ref{fig:dcap_models} shows the example of \dcap.
 \end{quote}
 \begin{figure}[]
 	\centering
@@ -207,19 +207,19 @@ Each folder in \texttt{problems} contains three scripts (types, functions, model
 \subsubsection{Scripts for convenient functionalities}
 To provide convenience for users, we implement various functions which are hopefully useful in terms of investigating the factors we have discussed in the previous Section \ref{sec:summary}. The following \julia\ files stand for that purpose.
 \begin{quotation}
-	\noindent\underline{\texttt{smpswriter}} This script implements the basic building blocks for the functions that converts \jumpmodel\ object to \smps\ files. 
+	\noindent\textit{smpswriter} This script implements the basic building blocks for the functions that converts \jumpmodel\ object to \smps\ files. 
 \end{quotation}
 
 \begin{quotation}
-	\noindent\underline{\texttt{generator}} This script defines interfacing functions for generating \smps\ files as well as constructing \jumpmodel\ object.
+	\noindent\textit{generator} This script defines user-interfacing functions that generate \smps\ files as well as constructing \jumpmodel\ object.
 \end{quotation}
 
 \begin{quotation}
-	\noindent\underline{\texttt{analyzer}} This script implements the functions for analysis of instances. This includes getting size information, sparsity information, and plots of sparsity patterns.
+	\noindent\textit{analyzer} This script implements the functions for analysis of instances. This includes getting size information, sparsity information, and plots of sparsity patterns.
 \end{quotation}
 
 \begin{quotation}
-	\noindent\underline{\texttt{utility}} This script contains some utility functions that help implementing the package.
+	\noindent\textit{utility} This script contains some utility functions that help implementing the package.
 \end{quotation}
 
 

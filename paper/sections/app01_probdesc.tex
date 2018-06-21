@@ -1,8 +1,17 @@
 In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We also explain data generation procedures. Due to limited access to the original data in reference papers, we selectively choose the methods from several available references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
 
 \subsection{\dcap: Dynamic capacity planning with stochastic demand} \label{DCAP}
-\dcap\ is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. %In \texttt{SIPLIB}, 12 instances are available in \texttt{SMPS} format with the largest instance comprises of 500 scenarios correspond to the size of 9,012 rows and 18,018 columns. 
-We refer to the main reference \cite{journal:AG2004}.
+\dcap\ is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. We refer to the main reference \cite{journal:AG2004}.
+
+Fig. \ref{fig:dcap_sparsity} shows the sparsity pattern presents in extensive form \dcap\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{DCAP_3_3_3_1}
+	\caption{DCAP\_3\_3\_3\_1: Extensive form constraint matrix plot}
+	\label{fig:dcap_sparsity}
+\end{figure}
+%In \texttt{SIPLIB}, 12 instances are available in \texttt{SMPS} format with the largest instance comprises of 500 scenarios correspond to the size of 9,012 rows and 18,018 columns. 
+
 %\dcap\ is a problem of deciding the capacity expansion schedule for $m$ resources over $T$ time periods in order to satisfy the processing requirements of $n$ tasks.
 \subsubsection{\dcap: Mathematical formulation}
 We consider the problem of deciding the capacity expansion schedule for $|R|$ resources over $|T|$ time periods to satisfy the processing requirements of $|N|$ tasks where $R$, $T$, and $N$ denote set of resources, set of time periods, and set of tasks, respectively. We define decision variables: the first-stage continuous variable $x_{it}$ for the capacity acquisition of resource $i$ in period $t$ and the second-stage binary variable $y_{ijt}^s$ to indicate whether resource $i$ is assigned to task $j$ in period $t$ under scenario $s$. Additional first-stage binary variable $u_{it}$ is for logical constraint whether or not we decided to acquire more capacity of resource $i$ in period $t$. Hence, for all resource $i\in R$ and time $t\in T$, $u_{it}=1$ if $x_{it}>0$, $u_{it}=0$ otherwise. 
@@ -21,7 +30,6 @@ Under the definition of the decision variables, the extensive form of \dcap\ is 
 	\end{align}
 \end{subequations}
 The objective function (\ref{dcap:obj}) is to minimize total expected cost for the capacity expansion schedule. The first double summation denotes the expansion cost for resource $i$ in period $t$ where $\alpha_{it}$ and $\beta_{it}$ are the variable and fixed cost, respectively. The second term in the objective function represents the expected assignment cost in period $t$ over all scenario $s\in\mathcal{S}$. Note that a dummy resource $i=0$ is included with infinite capacity. The cost $c_{0jt}^s$ denotes the penalty of failing to assign a resource to task $j$. The dummy resource enforces the \textit{complete recourse property}, which ensures that there is a feasible second-stage assignment in all periods and all scenarios for any capacity acquisition schedule \cite{journal:AG2004}. Constraint (\ref{dcap:b}) is the logical constraint containing a suitably large value M (we set M=1 in \siplibtwo\ to follow the original implementation in \siplib\, although it does not seem to be large enough) to define the cost for capacity expansion. Constraint (\ref{dcap:c}) reflects that the processing requirement of all tasks assigned to a resource in any period cannot exceed the installed capacity in that period under all scenarios. Constraint (\ref{dcap:d}) guarantees that each task needs to be assigned to exactly one resource in each period under all scenarios. Finally, constraints (\ref{dcap:e})-(\ref{dcap:g}) restrict the space from which the variables take values.
-
 
 \begin{table}[H]
 	\caption{Notations for \dcap}
@@ -60,14 +68,6 @@ There are four factors that define the instance of \dcap: $|R|$, $|N|$, $|T|$, a
 	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
 \end{align*}
 
-\subsubsection{\dcap: Sparsity pattern (single scenario)}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{DCAP_3_3_3_1}
-	\caption{DCAP\_3\_3\_3\_1: Extensive form constraint matrix}
-	\label{fig:dcap_sparsity}
-\end{figure}
-
 %\subsection{\texttt{DCLP}: Data center location problem} \label{DCLP}
 %
 %\subsubsection{\texttt{DCLP}: Mathematical formulation}
@@ -78,7 +78,17 @@ There are four factors that define the instance of \dcap: $|R|$, $|N|$, $|T|$, a
 \subsection{\mptsps: Mutli-path traveling salesman problem with stochastic travel times} \label{MPTSPs}
 \mptsps\ is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is characterized by a random travel time. 
 
-In \siplib, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \smps\ file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to contain working subtour-breaking constraint. %Combining the two references, we construct the forthcoming single commodity flow-based formulation \mptsps\ that is used for \siplibtwo. 
+In \siplib, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \smps\ file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to contain working subtour-breaking constraint.
+
+Fig. \ref{fig:mptsps_sparsity} shows the sparsity pattern presents in extensive form \mptsps\ (single scenario).
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\linewidth]{MPTSPs_D0_4_1}
+	\caption{MPTSPs\_D0\_4\_1: Extensive form constraint matrix plot}
+	\label{fig:mptsps_sparsity}
+\end{figure}
+
+ %Combining the two references, we construct the forthcoming single commodity flow-based formulation \mptsps\ that is used for \siplibtwo. 
 \subsubsection{\mptsps: Mathematical formulation}
 We consider a two-stage SIP with recourse. The travel time oscillation $e_{ij}^k$ by using path $k$ between nodes $i$ and $j$. We present each realization (scenario) of random travel time oscillation by $e_{ijk}^{s}$ where $s$ indicates the scenario. In \mptsps\, at the first stage, the decision-maker does not have any information about the travel time oscillation. The tour paths among the nodes, however, should be determined before the complete information is available. The first stage decision variable $y_{ij}$ is represented by the selection of nodes $i$ and $j$ to be visited in a tour. In the second stage where the random travel time $c_{ijk}^{s}$ are available, the paths $k$ between each couple of nodes $i$ and $j$ under scenario $s$, $x_{ijk}^{s}$ can be calculated. 
 
@@ -167,17 +177,18 @@ Given $D,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follo
 	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
 \end{enumerate}
 
-\subsubsection{\mptsps: Sparsity pattern (single scenario)}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{MPTSPs_D0_4_1}
-	\caption{MPTSPs\_D0\_4\_1: Extensive form constraint matrix}
-	\label{fig:mptsps_sparsity}
-\end{figure}
 
 \subsection{\sizes: Selection of an optimal subset of sizes} \label{SIZES}
 \sizes\ is a simplified version of the cutting-stock problem with multi-period stochastic demand. We only consider the two-periods model to follow \cite{journal:JSW1999}. The first period demand is deterministic and the demand for the second period is stochastic. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \jumpmodel. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \siplibtwo.
 
+
+Fig. \ref{fig:sizes_sparsity} shows the sparsity pattern presents in extensive form \sizes\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{SIZES_1}
+	\caption{SIZES\_1: Extensive form constraint matrix plot}
+	\label{fig:sizes_sparsity}
+\end{figure}
 %In \siplib, only three instances are available in \smps\ files. 
 
 \subsubsection{\sizes: Mathematical formulation}
@@ -296,19 +307,20 @@ Instances of \sizes\ are generated based on the one-period data given in Table \
 	\end{tabular}
 \end{table}
 
-\subsubsection{\sizes: Sparsity pattern (single scenario)}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{SIZES_1}
-	\caption{SIZES\_1: Extensive form constraint matrix}
-	\label{fig:mptsps_sparsity}
-\end{figure}
-
 \subsection{\smkp: Stochastic multiple knapsack problem} \label{SMKP}
 \smkp\ is a class of stochastic multiple binary knapsack problems. Unlike typical knapsack problems where the objective is to maximize total profits under the restriction of the weight capacity of each knapsack, \smkp\ is to minimize total weights while satisfying a certain required profit for each knapsack. 
 
 \siplib\ provides 30 instances of \smkp\ in total. The first-stage problems contain 240 binary variables and 50 knapsack constraints. The second-stage problems have 120 binary variables and 5 knapsack constraints. Each instance has 20 scenarios. 
 We mainly refer to \cite{journal:AAD2014}.% for writing \texttt{Julia} script for \siplibtwo\ and explain the model throughout the following subsections.
+
+Fig. \ref{fig:smkp_sparsity} shows the sparsity pattern presents in extensive form \smkp\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{SMKP_50_1}
+	\caption{SMKP\_50\_1: Extensive form constraint matrix plot}
+	\label{fig:smkp_sparsity}
+\end{figure}
+
 \subsubsection{\smkp: Mathematical formulation}
 We have three types of items $x$, $z$, and $y$ where the first two types are of the first-stage and the last one is of the second-stage with stochastic scenarios. For each type, we have $|I|$ number of items where $I$ is the index set of the items. Hence, we define the binary variables $x_i$, $z_i$, and $y_i^s$ which are equal to 1 if the $i^{\mathrm{th}}$ item is decided to be included ($s$ denotes scenario so only appears in $y$-type variables). We consider two types of knapsacks: one associated with $x$-type and $z$-type items (say \texttt{xz}-knapsack) and the other one with $x$-type and $y$-type items (say \texttt{xy}-knapsack). \texttt{xz}-knapsacks are indexed by $j\in J$ and \texttt{xy}-knapsacks are indexed by $k\in K$.  Each knapsack has its own minimum level of profit that should be satisfied by the items of the associated types, e.g., the profit of the $j^{\mathrm{th}}$ \texttt{xz}-type knapsack is calculated based on the inclusion or exclusion of $x$-type and $z$-type items and should satisfy a certain requirement $b_j$. Bear in mind that the inclusion or exclusion of a certain item $i$ affects all the associated knapsacks.
  
@@ -374,19 +386,16 @@ b_j		&=	\frac{3}{4}\sum_{i\in I}\left(a_{ji}+e_{ji}\right),\quad\forall j\in J, 
 h_k		&=	\frac{3}{4}\sum_{i\in I}\left(t_{ji}+w_{ji}\right),\quad\forall k\in K. 
 \end{align*}
 
-\subsubsection{\smkp: Sparsity pattern (single scenario)}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{SMKP_50_1}
-	\caption{SMKP\_50\_1: Extensive form constraint matrix}
-	\label{fig:smkp_sparsity}
-\end{figure}
-
 \subsection{\sslp: Stochastic server location problem} \label{SSLP}
-\sslp\ is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \sslp\ finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \siplib\ provides 12 instances with varying number of clients, server locations, and scenarios in \smps\ format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables.
+\sslp\ is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \sslp\ finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \siplib\ provides 12 instances with varying number of clients, server locations, and scenarios in \smps\ format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables. We refer to \cite{journal:NS2005} for mathematical formulation and data generation forthcoming through the following subsections.
 
-We refer to \cite{journal:NS2005} for mathematical formulation and data generation forthcoming through the following subsections.
-
+Fig. \ref{fig:sslp_sparsity} shows the sparsity pattern presents in extensive form \sslp\ (single scenario).
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\linewidth]{SSLP_4_4_1}
+	\caption{SSLP\_4\_4\_1: Extensive form constraint matrix plot}
+	\label{fig:sslp_sparsity}
+\end{figure}
 
 \subsubsection{\sslp: Mathematical formulation}
 Let $I$, $J$, $Z$, and $\mathcal{S}$ be index sets for the clients, servers, zones, and scenarios. For $i\in I$, $j\in J$, $z\in Z$, and $s\in\mathcal{S}$, we define the notations in Table \ref{sslp:notation}.
@@ -454,22 +463,21 @@ u	&= \frac{3}{2}\times\frac{\sum_{i\in I}\sum_{j\in J}d_{ij}}{|J|}
 \end{align*}
 Note that the zonal data is omitted due to the lack of available information. Hence, constraint (\ref{sslp:c}) does not appear in \siplibtwo\ instances. Note also that constraint (\ref{sslp:b}) is redundant since we set $v=|J|$. We include this redundant constraint to follow the former \siplib\ implementation although it seems like a bug.
 
-\subsubsection{\sslp: Sparsity pattern (single scenario)}
+\subsection{\suc: Stochastic unit commitment problem} \label{SUC}
+The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an extended time horizon. \suc\ is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{web:wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
+
+Fig. \ref{fig:suc_sparsity} shows the sparsity pattern presents in extensive form \suc\ (single scenario).
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{SSLP_4_4_1}
-	\caption{SSLP\_4\_4\_1: Extensive form constraint matrix}
-	\label{fig:sslp_sparsity}
+	\includegraphics[width=\linewidth]{SUC_FallWD_1}
+	\caption{SUC\_FallWD\_1: Extensive form constraint matrix plot}
+	\label{fig:suc_sparsity}
 \end{figure}
 
-
-\subsection{\suc: Stochastic unit commitment problem} \label{SUC}
-The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an extended time horizon. \suc\ is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
 \subsubsection{\texttt{SUC}: Mathematical formulation}
 In \suc, we make commitment decision on slow generators in the first stage. In the second stage, the commitment decisions of fast generators, wind generators, and non-wind renewable generators, shedding decisions of loads, and import decisions from other points are determined. In addition, phase angle for each transmission line is decided in the second stage. In \suc, we also consider ramping constraints, transmission line capacity constraints, phase angle constraints, and minimum up/down time constraints. We assume the piecewise linear convex cost function for the power generation.
 
 Using the notation in Table \ref{SUC:notation}, the extensive form of \suc\ can be stated as in the following model \ref{SUC:formulation}.
-
 \begin{subequations} \label{SUC:formulation}
 	\begin{align}
 	(\suc)\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
@@ -509,7 +517,7 @@ Using the notation in Table \ref{SUC:notation}, the extensive form of \suc\ can 
 The objective function (\ref{SUC:obj}) is to minimize expected operating costs. Constraints (\ref{SUC:b})-(\ref{SUC:d}) are for the first-stage so constraints for the slow generators. Constraint (\ref{SUC:b}) and (\ref{SUC:c}) represent the minimum up/down time of the slow generators. The transition rule for slow generator start-up variables is imposed by constraint (\ref{SUC:d}).  Constraints (\ref{SUC:e})-(\ref{SUC:g}) are stochastic version of the constraints (\ref{SUC:b})-(\ref{SUC:d}) so represent the minimum up/down time and the transition rule of the fast generators. Constraint (\ref{SUC:h}) requires balancing the amount of power that flows in and out of each bus. Constraint (\ref{SUC:i}) represents a linearized, lossless model of the power flow equations (Kirchhoff's law) according to which the power flow on a line $l$ is proportional to the phase angle difference between the two end buses of the line. Constraints (\ref{SUC:j}) and (\ref{SUC:k}) restrict minimum/maximum capacity limits for both slow and fast generators. Constraint (\ref{SUC:l}) represents ramping restriction on the rate of change of generator output. Constraints (\ref{SUC:m})-(\ref{SUC:w}) define the types and bounds for decision variables.
 \begin{table}[H]
 	\centering
-	\caption{Notations for the \suc}
+	\caption{Notations for \suc}
 	\label{SUC:notation}
 	\resizebox{\textwidth}{!}
 	{
@@ -606,10 +614,3 @@ D_{nt}=\sum_{n\in N} \sum_{t\in T}\left(  \sum_{\lambda\in IG_n^\mathcal{L}}IC_{
 \end{align*}
 
 Unlike other problems where stochastic data is generated while \julia\ script is running, we pre-generate and provide up to 1,000 wind power production profiles for each day type. This data is included in ``\texttt{$\sim$/Siplib/src/problems/SUC/data/WIND}'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$. Hence, the number of scenarios that can be considered in an instance is limited to 1,000, which we think is large enough regarding the intrinsic large-scale size of the problem \suc.
-\subsubsection{\suc: Sparsity pattern (single scenario)}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{SUC_FallWD_1}
-	\caption{SUC\_FallWD\_1: Extensive form constraint matrix}
-	\label{fig:suc_sparsity}
-\end{figure}
