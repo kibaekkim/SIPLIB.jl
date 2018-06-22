@@ -398,7 +398,37 @@ One might want to draw all the plots at once. The following two functions are de
 plotAllBlocks(model, INSTANCE_NAME)               # plot all blocks A, W, and T, respectively
 plotAll(model, INSTANCE_NAME)               # plot all the plots above: EF constraint matrix and blocks A, W, T
 \end{lstlisting}
-\input{figures/figure_siplibjl_plots}
+\begin{figure}[H]
+	\centering
+	\subfloat[][DCAP\_2\_2\_2\_2\_block\_A.pdf]
+	{
+		\centering\includegraphics[width=0.45\linewidth]{DCAP_2_2_2_2_block_A}
+		\label{fig:plotall_a}
+	}
+	~
+	\subfloat[][DCAP\_2\_2\_2\_2.pdf]
+	{
+		\centering\includegraphics[width=0.45\linewidth]{DCAP_2_2_2_2}
+		\label{fig:plotall_b}
+	}
+	
+	\subfloat[][DCAP\_2\_2\_2\_2\_block\_T.pdf]
+	{
+		\centering\includegraphics[width=0.45\linewidth]{DCAP_2_2_2_2_block_T}
+		\label{fig:plotall_c}
+	}
+	~
+	\subfloat[][DCAP\_2\_2\_2\_2\_block\_W.pdf]
+	{
+		\centering\includegraphics[width=0.45\linewidth]{DCAP_2_2_2_2_block_W}
+		\label{fig:plotall_d}
+	}
+	
+	\caption{Plots drawn by executing function \texttt{plotAll}}
+	%	\begin{minipage}
+	%	\end{minipage}
+	\label{fig:plotall}
+\end{figure}
 By executing \texttt{plotAll()}, one can obtain all the plots in Fig. \ref{fig:plotall}.
 
 %\kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
