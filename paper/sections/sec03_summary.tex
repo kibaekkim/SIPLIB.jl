@@ -81,7 +81,7 @@ The capital Roman letters mean the sets defining the problems. In particular, th
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{@{}lll@{}}
 			\toprule
-			Problem & Instance name                 & Remark                                                                    					      \\ \midrule
+			Problem & Instance name                 & \multicolumn{1}{c}{Remark}                                                                    					      \\ \midrule
 			\dcap\    & DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
 			\mptsps\  & MPTSPs\_$D$\_$N$\_$\mathcal{S}$ &$D$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
 			\sizes\   & SIZES\_$\mathcal{S}$                            & $\mathcal{S}$: number of scenarios   															\\
@@ -103,7 +103,7 @@ We consider three types of variable: continuous, binary, and integer. Considerin
 	\begin{threeparttable}
 		\begin{tabular}{@{}lllll@{}}
 			\toprule
-			& \multicolumn{2}{l}{1st stage}                              				  	& \multicolumn{2}{l}{2nd stage}                             			        \\ \midrule
+			& \multicolumn{2}{c}{1st stage}                              				  	& \multicolumn{2}{c}{2nd stage}                             			        \\ \midrule
 			Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
 			\dcap\ (\ref{dcap:formulation})    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
 			\mptsps\ (\ref{mptsps:formulation})  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\

@@ -4,7 +4,7 @@
 	\label{table:constraint_type}
 	\begin{tabular}{@{}lll@{}}
 		\toprule
-		Type           & Description        & Constraint form                                                                                           \\ \midrule
+		Type           & Description        & \multicolumn{1}{c}{Constraint form}                                                                                           \\ \midrule
 		\texttt{AGG} & Aggregation        & $a_i x_i+a_k x_k=b,\ x_i , x_k$ int. or cont., $a_i , a_k , b \in \mathbb{R}$                  \\
 		\texttt{VBD} & Variable bound     & $x_i \le a_k x_k + b$ or $x_i\ge a_k x_k + b$, $x_i, x_k$ int. or cont., $a_k, b\in\mathbb{R}$ \\
 		\texttt{PAR} & Set partition      & $\sum x_i = 1,$ $x_i$ binary                                                                   \\
