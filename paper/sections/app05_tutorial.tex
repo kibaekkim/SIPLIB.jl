@@ -3,29 +3,89 @@ This appendix provides a brief tutorial for the \julia\ package. We release this
 \subsection{Prerequisites}
 We assume that you are in Linux environment. To use \siplibjl, you need to perform the following steps:
 \begin{enumerate}
-	\item install the latest \julia\ release.
-	\item install \julia\ packages \texttt{Distributions.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl} by executing
+	\item Download $\julia\ge 0.6.2$ and set up.
+	\item Install \julia\ packages: \texttt{Distributions.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl} by executing
 	\begin{itemize}
 		\item \texttt{Pkg.add("Distributions")}
 		\item \texttt{Pkg.add("StructJuMP")}
 		\item \texttt{Pkg.add("PyPlot")}
 	\end{itemize}
 	Then, execute \texttt{Pkg.update()} to make them up-to-date.
-	\item download and place the \siplibjl\ package to any directory in your computer
-	\item open a terminal and change working directory to\\ ``\texttt{any-directory-in-your-computer/Siplib/src/}''
-	\item run \julia\ in that directory
+	\item Download and place the \siplibjl\ package to any directory (say \texttt{dir}) in your computer
+	\item Open a terminal and change working directory to \texttt{dir/Siplib/src/}:
+	\begin{itemize}
+		\item \texttt{cd dir/Siplib/src}	
+	\end{itemize}
+	\item Run \julia\ in that directory
 	\item excute \texttt{include("Siplib.jl")}
 	\item excute \texttt{using Siplib}
 \end{enumerate}
-Then, you are all set to use the functions in \siplibjl. To make it sure, execute the following line to generate DCAP\_2\_2\_2\_10 instance:
+Then, you are all set to use \siplibjl. To make it sure, execute the following line to generate DCAP\_2\_2\_2\_10 instance:
 \begin{lstlisting}[frame=single,language=julia]
-julia> model = generateSMPS(:DCAP, [2,2,2,10])
+julia> generateSMPS(:DCAP, [2,2,2,10])
 \end{lstlisting}
-If it works well, you will see the three files, DCAP\_2\_2\_2\_10.cor, DCAP\_2\_2\_2\_10.tim, and DCAP\_2\_2\_2\_10.sto, in the directory:
-\begin{quote}
-\centering\texttt{any-directory-in-your-computer/Siplib/instance/}
-\end{quote}
-\subsection{Generating instances}
+If it works well, you will see the three files in \texttt{dir/Siplib/instance}:
+\begin{itemize}
+	\item DCAP\_2\_2\_2\_10.cor
+	\item DCAP\_2\_2\_2\_10.tim
+	\item DCAP\_2\_2\_2\_10.sto
+\end{itemize}
+
+
+\subsection{Basic usages}
+\subsubsection{Generating \smps\ instance}
+Use \texttt{generateSMPS(problem, params\_arr)} with proper values in Table \ref{table:numparameter} to generate \smps\ instances, for example:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSMPS(:DCAP, [2,2,2,10])
+\end{lstlisting}
+The default directory in which the files are stored is \texttt{dir/Siplib/instance}. You can change the directory by specifying explicit path:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
+\end{lstlisting}
+\texttt{generateSMPS(problem, params\_arr)} has four more optional keyword arguments: \texttt{seed},  \texttt{splice}, \texttt{genericnames}, \texttt{lprelax}. For details, please see the later subsection (\ref{tutorial:gen_instance}).
+
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{threeparttable}
+			\caption{Acceptable values for \texttt{problem} and \texttt{params\_arr} arguments pairs}
+			\label{table:numparameter}
+			\begin{tabular}{@{}ccl@{}}
+				\toprule
+				\texttt{problem}  & \texttt{params\_arr}     & Remark                                                                                                                                     \\ \midrule
+				\texttt{:DCAP}               & \texttt{[R, T, N, $\mathcal{S}$]} & All parameters are integer.                                                                                                                \\
+				\texttt{:MPTSPs}             & \texttt{[D, N, $\mathcal{S}$]}    & String $\texttt{D}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$. All other parameters are integer.                                                              \\
+				\texttt{:SIZES}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
+				\texttt{:SMKP}               & \texttt{[I, $\mathcal{S}$]}       & All parameters are integer.                                                                                                                \\
+				\texttt{:SSLP}               & \texttt{[I, J, $\mathcal{S}$]}    & All parameters are integer.                                                                                                                \\
+				\texttt{:SUC}                & \texttt{[D, $\mathcal{S}$]}       & \multicolumn{1}{l}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, $}                                             \\
+				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{$\mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$} Integer $\mathcal{S}\le 1000$. \\ \bottomrule
+			\end{tabular}
+			\begin{tablenotes}
+				\item Note: $\mathcal{S}$ is always the number of scenarios.
+			\end{tablenotes}
+		\end{threeparttable}
+	}
+\end{table}
+\subsubsection{Plotting sparsity}
+Use \texttt{generateSparsityPlots(problem, params\_arr)} to generate the sparsity plots in constraint matrix. Excute the following lines:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSparsityPlots(:DCAP, [2,2,2,10])
+\end{lstlisting}
+The default directory in which the plots are stored is \texttt{dir/Siplib/plot}. You can change the directory by specifying explicit path:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSparsityPlots(:DCAP, [2,2,2,10], "another/directory")
+\end{lstlisting}
+For details, please see the later subsection (\ref{tutorial:analyze_instance}).
+\subsubsection{Reporting size and sparsity}
+Use \texttt{getSize(problem, params\_arr)} and \texttt{getSparsity(problem, params\_arr)} to get the size and sparsity information. Excute the following lines to construct objects that contain the information:
+\begin{lstlisting}[frame=single,language=julia]
+julia> size = getSize(:DCAP, [2,2,2,10])
+julia> sparsity = getSparsity(:DCAP, [2,2,2,10])
+\end{lstlisting}
+For details, please see the later subsection (\ref{tutorial:analyze_instance}).
+
+\subsection{Generating instances} \label{tutorial:gen_instance}
 \siplibjl\ provides four functions with regard to instance generation:
 \begin{itemize}
 	\item \texttt{getInstanceName()}
@@ -47,26 +107,7 @@ The function \texttt{getInstanceName()} is an utility function that returns a \t
 	\noindent\underline{\texttt{params\_arr}} (necessary, positional) The argument that specifies the parameters of the problem. It must be properly paired with the argument \texttt{problem}. The appropriate values are given in Table \ref{table:numparameter}. 
 \end{quote}
 
-\begin{table}[H]
-	\centering
-	\caption{Acceptable values for \texttt{problem} and \texttt{params\_arr} arguments pairs}
-	\label{table:numparameter}
-	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}ccl@{}}
-			\toprule
-			\texttt{problem}  & \texttt{params\_arr}     & Remark                                                                                                                                     \\ \midrule
-			\texttt{:DCAP}               & \texttt{[R, T, N, $\mathcal{S}$]} & All parameters are integer.                                                                                                                \\
-			\texttt{:MPTSPs}             & \texttt{[D, N, $\mathcal{S}$]}    & String $\texttt{D}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$. All other parameters are integer.                                                              \\
-			\texttt{:SIZES}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}\ge 20$.                                                                                   \\
-			\texttt{:SMKP}               & \texttt{[I, $\mathcal{S}$]}       & All parameters are integer.                                                                                                                \\
-			\texttt{:SSLP}               & \texttt{[I, J, $\mathcal{S}$]}    & All parameters are integer.                                                                                                                \\
-			\texttt{:SUC}                & \texttt{[D, $\mathcal{S}$]}       & \multicolumn{1}{l}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, $}                                             \\
-			\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{$\mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$} Integer $\mathcal{S}\le 1000$. \\ \bottomrule
-		\end{tabular}
-	}
-\end{table}
-
-\subsubsection{function \texttt{getModel()}}
+\subsubsection{function \texttt{getModel()}} 
 \begin{lstlisting}[frame=single,language=julia]
 function getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0)::JuMP.Model
 \end{lstlisting}
@@ -120,7 +161,7 @@ julia> model = getModel(:DCAP, [3,4,2,100], seed=2, lprelax=2)
 
 
 
-\subsubsection{function \texttt{writeSMPS()}}
+\subsubsection{function \texttt{writeSMPS()}} 
 \begin{lstlisting}[frame=single,language=julia]
 function writeSMPS(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true)
 \end{lstlisting}
@@ -231,7 +272,7 @@ julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 %function getInstanceName(problem::Symbol, param_arr::Any)::String
 %\end{lstlisting}
 
-\subsection{Pre-analyzing instances: size, sparsity, plot}
+\subsection{Pre-analyzing instances: size, sparsity, plot} \label{tutorial:analyze_instance}
 \siplibjl\ provides pre-analysis functions for instances. By ``size'', we mean the number of components (continuous, binary, integer, constraint) in an instance. The sparsity is analyzed block-wisely. The size and sparsity information is stored in the object of the following composite types: \texttt{Size} and \texttt{Sparsity}.
 
 \siplibjl\ also provides functions to plot sparsity pattern in the constraint matrix. The types of plot that can be drawn are:

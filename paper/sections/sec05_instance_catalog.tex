@@ -130,7 +130,7 @@ where $z^*(x,y_s)$ is the optimal objective value of a single scenario problem:
 	\begin{threeparttable}
 		\begin{tabular}{@{}ll@{}}
 			\toprule
-			Notation  & Meaning                                                                                                                    \\ \midrule
+			Notation  & \multicolumn{1}{c}{Meaning}                                                                                                                    \\ \midrule
 			$z$       & Objective value of RP (\ref{ef:obj})-(\ref{ef:e})                                                                                         \\
 			$z_{LP2}$ & Objective value of RP with the second-stage only LP-relaxation (\ref{ef:obj})-(\ref{ef:d}),(\ref{ef:e}')                                              \\
 			$z_{LD}$  & Objective value of the Lagrangian dual problem of RP (\ref{ld:obj})-(\ref{ld:c}) \\ 
@@ -144,20 +144,33 @@ where $z^*(x,y_s)$ is the optimal objective value of a single scenario problem:
 			\small
 			\item $z^*$: optimal objective value
 			\item $\tilde{z}$: best discovered lower bound for $z^*$ 
-			\item $\hat{z}$: incumbent objective value 
+			\item $\hat{z}$: incumbent objective value (best upper bound)
 		\end{tablenotes}
 	\end{threeparttable}
 	}
 \end{table}
 %\subsubsection {Basic results from the two solvers: \cplex\ and \dsp}
-We report objective values and several gaps obtained from the two solvers. Each gap is useful to compare the characteristics of instances with each other. There is no guarantee that we can always obtain the optimal solution for each instance, we report the best results discovered within the limited processing time (3 hours). We expect this information will provide future research direction. 
+We report objective values and several gaps obtained from the two solvers. Each gap is useful to compare the characteristics of instances with each other. There is no guarantee that we can always obtain the optimal solution for each instance, we report the best results discovered within the limited processing time (3 hours). We expect this information will provide future research direction. Table \ref{table:gap} summarizes the definition of each gap using the notation defined in Table \ref{table:objective-notation}.
+\begin{table}[H]
+	\centering
+	\caption{Gap definition}
+	\label{table:gap}
+	\begin{tabular}{@{}lcc@{}}
+		\toprule
+		Gap                  & Theoritic  & Computational  \\ \midrule
+		Optimality gap (OG)  & N/A & $\frac{|\hat{z}-\tilde{z}|}{|\hat{z}|+\epsilon}\times 100\%$   \\
+		Integrality gap (IG) &  $\frac{z^*}{z^*_{LP2}}$          &        $\frac{\hat{z}}{\hat{z}_{LP2}}$       \\
+		Duality gap (DG)     &      $z^*-z^*_{LD}$     &        $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{z}|+\epsilon}\times 100\%$        \\
+		EVPI                 &      $z^*-z^*_{WS}$      &       $\frac{|\hat{z}-\hat{z}_{WS}|}{|\hat{z}|+\epsilon}\times 100\%$         \\ \bottomrule
+	\end{tabular}
+\end{table}
 
 \begin{quote}
 	\noindent\textit{Objective value with processing time} We report the objective values from the two solvers. This value is $z^*$ if the optimality is attained in the time limit, but $\hat{z}$ otherwise.
 \end{quote}
 
 \begin{quote}
-	\noindent\textit{Optimality gap (OG)} This gap is defined by $\frac{|\hat{z}-\tilde{z}|}{|\hat{z}|+\epsilon}\times 100\%$ and  reported from the two solvers. This can be a basic measure of difficulty of an instance combined with processing time.
+	\noindent\textit{Optimality gap (OG)} This gap is only computational concept defined by the difference between best upper bound and best lower bound: $\hat{z}-\tilde{z}$. We report the percentage value $\frac{|\hat{z}-\tilde{z}|}{|\hat{z}|+\epsilon}\times 100\%$ obtained from the two solvers. This can be a basic measure of difficulty of an instance combined with processing time.
 \end{quote}
 
 %\begin{quote}
@@ -165,7 +178,7 @@ We report objective values and several gaps obtained from the two solvers. Each 
 %\end{quote}
 
 \begin{quote}
-	\noindent\textit{Integrality gap (IG)} We define a SIP-specific integrality gap in minimization problem by $\frac{z^*}{z^*_{LP2}}$. We report $\frac{\hat{z}}{\hat{z}_{LP2}}$ when the optimality is not attained. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The LP-relaxation provides an optimistic bound on the integer program's solution. The small this gap implies that the LP-relaxation gives tight bound for the original problem.  %This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
+	\noindent\textit{Integrality gap (IG)} We define a SIP-specific theoritic integrality gap in minimization problem by $\frac{z^*}{z^*_{LP2}}$. Computationally, we report $\frac{\hat{z}}{\hat{z}_{LP2}}$ when the optimality is not attained. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The LP-relaxation provides an optimistic bound on the integer program's solution. The small this gap implies that the LP-relaxation gives tight bound for the original problem.  %This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
 \end{quote}
 
 %\begin{quote}
@@ -177,12 +190,14 @@ We report objective values and several gaps obtained from the two solvers. Each 
 %\end{quote}
 
 \begin{quote}
-\noindent\textit{Duality gap (DG)} The duality gap in computational optimization is defined by $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{z}|+\epsilon}\times 100\%$, the gap between best dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp. 
+\noindent\textit{Duality gap (DG)} The theoritic concept of this gap is the difference between primal objective and dual objective: $z^*-z^*_{LD}$. In computational optimization, duality gap is defined by $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{z}|+\epsilon}\times 100\%$, the gap between best dual objective and the incumbent primal objective. This gap also equals to the value of the convex relaxation of the primal problem. It is reported by the open-source DD solver \dsp. 
 \end{quote}
 
 \begin{quote}
 \noindent\textit{EVPI} The \textit{expected value of perfect information} is defined by $z-z_{WS}$ theoritically. This measures the maximum amount a decision maker would be ready to pay in return for complete (and accurate) information about the future.  We report EVPI in percantage: $\frac{|\hat{z}-\hat{z}_{WS}|}{|\hat{z}|+\epsilon}\times 100\%$. EVPI is reported using \cplex.
 \end{quote}
+
+
 
 \input{./tables/table_instance_solution_report}
 

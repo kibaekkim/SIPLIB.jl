@@ -1,17 +1,19 @@
 In this section, we explain general description of SIP. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
 \subsection{Formulation}
-In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. We are interested in finding solution for two-stage SIP which is the \textit{recourse problem} (RP): 
+In this subsection, we introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. 
+
+We are interested in finding solution for two-stage SIP which is the \textit{recourse problem} (RP): 
 \begin{align}
 \min_{x\in X} z(x):={\left\{c^\top x + \mathcal{Q}(x):\ Ax\ge b\right\}}, \label{eq:SIP_1}
 \end{align}
-where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the recourse function associated with the random variable (r.v.) $\pmb{\xi}$. 
+where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the expected recourse function associated with the random variable (r.v.) $\pmb{\xi}$. 
 
 We assume that $\pmb{\xi}$ follows a known discrete probability distribution with the finite realizations, called \textit{scenarios}, $\xi_1,\cdots,\xi_r$ and respective nonnegative probabilities $\PP(1),\cdots,\PP(r)$, i.e., $\PP(s)\equiv\PP[\pmb{\xi}=\xi_s]$ for $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is continuous, we assume that we can reasonably approximate it by a suitably discretized distribution. The real-valued map $\phi_{\xi_s}:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage problem defined by
 \begin{align}
 \phi_{\xi_s}(t):=\min_{y_s\in Y}\left\{ q(\xi_s)^\top y_s:\ W(\xi_s)y_s \ge t \right\},\ t\in\mathbb{R}^{m_2},
 \end{align}
 where $\xi_s$ is an arbitrarily realized scenario.
-The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent integer or binary restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
+The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
 The first-stage problem data comprise $A$, $b$, and $c$. The second-stage data are given by $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notations $(T_s,W_s,h_s,q_s)$. The RP (\ref{eq:SIP_1}) can be rewritten in the \textit{extensive form} (EF)
 \begin{subequations}\label{sip:ef}
 \begin{align}
@@ -65,7 +67,7 @@ where $\mathrm{y}:=\{y_1,\ldots,y_r\}$.
 \subsection{Solution methods}
 Assuming finite and discrete distribution, we can always formulate SIP in EF as in Equations (\ref{ef:obj})-(\ref{ef:e}).  %much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation \ref{eq:SIP_1}, 
 %Much of the solution methods in SIP is studied to resolve the difficulty of optimizing the extensive form. %That is, the sum of the first-stage costs and the expected costs in the second-stage. 
-Most methods in SIP assume that a single scenario evaluation is somehow tractable. With a number of realizations, however, EF becomes a quite large MIP. Solving this problem without exploiting the special structure of EF can easily go with inefficiency. In this section, we introduce representative approaches to resolve the difficulties in SIP considering many scenarios.
+Most methods in SIP assume that a single scenario evaluation is somehow tractable. With a number of realizations, however, EF becomes a quite large MIP. Solving this problem without exploiting the special structure can easily go with inefficiency. In this section, we introduce representative approaches to resolve the difficulties in SIP considering many scenarios.
 
 \subsubsection{Stage-wise decomposition}
 This type of algorithms exploit the natural viewpoint of optimizing the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible first-stage decisions. The method used most frequently are based on building an outer linearization of the recourse cost function and a solution of the first-stage problem plus this linearization. This cutting plane technique is called the \textit{L-shaped method} or \textit{Benders decomposition} \cite{journal:B1962}, from which the variants of stage-wise decomposition methods are derived.
@@ -87,15 +89,17 @@ where $\mathrm{x}:=\{x_1,\ldots,x_r\}$ and the scenario feasibility set $G_s$ is
 \begin{align} 
 G_s:=\left\{ (x_s,y_s): \ Ax_s\ge b,\  T_s x_s+W_s y_s\ge h_s,\ (x_s,y_s)\in X\times Y  \right\}. \label{eq:SIP_2-4}
 \end{align}
-The newly added constraints (\ref{eq:SIP_2-2}) (called \textit{nonanticipativity}) guarantee $x_1=x_r$ and $x_s=x_{s-1}$ for $s=2,\ldots,r$ with a suitable $rn_1\times n_1$ coefficient matrix $H_s$. This can be presented in another expression other than the one above that Car\o e and Schultz \cite{journal:CS1999} proposed.
+The newly added constraints (\ref{eq:SIP_2-2}) (called \textit{nonanticipativity}) guarantee $x_1=x_r$ and $x_s=x_{s-1}$ for $s=2,\ldots,r$ with a suitable $rn_1\times n_1$ coefficient matrix $H_s$. This can be presented in another expression other than the one above that Car\o e and Schultz \cite{journal:CS1999} proposed. Based on the RP-EF', there are two representative scenario-wise decomposition algorithms: Dual Decomposition (DD) and Progressive Hedging (PH). One advantage of scenario-wise decomposition over the stage-wise methods is their ability to relieve the computational burden associated with large number of scenarios by decomposing the problem by scenario and solving the descendant subproblems in parallel manners.
+
 %We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_s$ for some $s$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
 
-Two representative scenario-wise decomposition algorithms are Dual Decomposition (DD, \cite{journal:CS1999}) and Progressive Hedging (PH, \cite{journal:RW1991}). The main idea of DD algorithm is to relax the nonanticipativity constraints using Lagrange multipliers and then to restore the nonanticipativity. Given set of multipliers, the problem is separable by scenarios hence the associated dual function can be optimized scenario-wise independently. Due to the nonconvexities, there can exist a duality gap between relaxed problem and the original problem so the optimality needs to be attained branch-and-bound scheme.
 
-PH algorithm is developed by Rockafellar and Wets motivated by augmented Lagrangian theory. To briefly introduce the idea of PH, we define the following terms for solution systems.
+The main idea of DD algorithm is to relax the nonanticipativity constraints using Lagrange multipliers and then to restore the nonanticipativity. Given set of multipliers, the problem is separable by scenarios hence the associated dual function can be optimized scenario-wise independently \cite{journal:CS1999}. Due to the nonconvexities, there can exist a duality gap between relaxed problem and the original problem so the optimality needs to be attained branch-and-bound scheme. 
+
+PH algorithm is developed by Rockafellar and Wets \cite{journal:RW1991} motivated by augmented Lagrangian theory. To briefly introduce the idea of PH, we define the following terms for solution systems.
 \begin{itemize}
 	\item admissible: a solution that satisfies the constraints for all scenarios
-	\item implementable (or nonanticipative): a solution in which the first stage decisions are indifferent over all scenarios
+	\item implementable (or nonanticipative): a solution in which the first-stage decisions are indifferent over all scenarios
 	\item feasible: a solution that is both admissible and implementable
 \end{itemize}
 The basic idea of PH can be summarized by the following procedure \cite{book:pyomo}.
@@ -103,11 +107,9 @@ The basic idea of PH can be summarized by the following procedure \cite{book:pyo
 	\item For each scenario $s$, solutions are obtained for the single-scenario problem of minimizing, subject to the problem constraints, the formulation (\ref{eq:SIP_2-1})-(\ref{eq:SIP_2-3}), and (\ref{eq:SIP_2-4}).
 	\item The variable values for an implementable---but likely not admissible---solution are obtained by averaging over all scenarios at a scenario tree node.
 	\item For each scenario $s$, solutions are obtained for the problem of minimizing, subject to the problem constraints, the deterministic solution as in Step 1. plus terms that penalize the lack of implementability using a subgradient estimator for the nonanticipativity constraints and a squared penalty term.
-	\item If the solutions have not converged sufficiently and the allocated compute time is not exceeded, goto Step 2.
+	\item If the solutions have not converged sufficiently and the allocated computing time is not exceeded, goto Step 2.
 	\item Post-process, if needed, to produce a fully admissible and implementable solution.
 \end{enumerate}
-
-One advantage of scenario-wise decomposition over the stage-wise methods is their ability to relieve the computational burden associated with large number of scenarios by decomposing the problem by scenario and solving the descendant subproblems in parallel manners.
 
 \subsection{Software libraries}
 Assuming discrete distribution, all SIP can be represented by any algebraic modeling languages and then solved by any available MIP solvers. However, such manual implementation without exploiting structural characteristics in SIP can often result in inefficient computation and unnecessary memory allocation. In this subsection, we introduce some open-source software libraries dedicated to SIP.
@@ -115,14 +117,15 @@ Assuming discrete distribution, all SIP can be represented by any algebraic mode
 \subsubsection{Modeling language}
 We introduce two relatively new algebraic SIP modeling languages which are compatible with general purpose high-level programming languages \julia\ and \python. Both modeling libraries allows non-specialists to easily write mathematical model on the computing environment.
 
-\structjump\ is a \julia\ package provides a parallel algebraic modeling framework for block-structured optimization models. \structjump\ is an extension of the \jump\ modeling package (\julia\ for Mathematical Optimization), which is faster than any other modeling tools. \structjump\ enables \jump\ to express the structure of problems and efficiently interface with structure-exploiting solvers. It also works in parallel (distributed memory), and thus allows the specification of much larger (structured) problems than \jump\ can handle. 
+\structjump\ \cite{web:StructJuMP} is a \julia\ package provides a parallel algebraic modeling framework for block-structured optimization models. \structjump\ is an extension of the \jump\ \cite{journal:JuMP} modeling package (\julia\ for Mathematical Optimization), which is faster than any other modeling tools. \structjump\ enables \jump\ to express the structure of problems and efficiently interface with structure-exploiting solvers. It also works in parallel (distributed memory), and thus allows the specification of much larger (structured) problems than \jump\ can handle. 
+pen source software package 
 
-\pysp\ \cite{journal:WWH2012} is an extension of a \python-based algebraic modeling package \pyomo. To formulate a
+\pysp\ \cite{journal:WWH2012} is a stochastic programming extension of a \python-based algebraic modeling package \pyomo\ \cite{book:pyomo} that supports variants of mathematical optimization. . \pysp\ enables the expression of stochastic programming problems as EF. To formulate a
 stochastic program in \pysp, the user specifies both the deterministic base model and
-the scenario tree with associated uncertain parameters in \pyomo. Given these two models, \pysp\ can solve the stochastic program using two different ways: solve EF directly or use PH algorithm for RP. %One advantage of \pysp\ is this integrated working environment combining model and solver. Hence, provide completely generic and highly configurable solver implementations.
+the scenario tree with associated uncertain parameters in \pyomo. %Given these two models, \pysp\ can solve the stochastic program using two different ways: solve EF directly or use PH algorithm for RP. %One advantage of \pysp\ is this integrated working environment combining model and solver. Hence, provide completely generic and highly configurable solver implementations.
 
 \subsubsection{Solver}
-We introduce two popular open source solver packages: \dsp\ and \pysp. 
+We introduce two popular open-source solver packages: \dsp\ and \pysp. 
  
 \dsp\ is an open-source SIP solver implemented in \cpp. \dsp\ reads \smps\ files as input and provides three ways to solve a SIP instance.
 \begin{itemize}
@@ -132,13 +135,13 @@ We introduce two popular open source solver packages: \dsp\ and \pysp.
 \end{itemize}
 \dsp\ provides parallel implementations for the two decomposition-based algorithms, which allows users fully exploit computing clusters and multi-core processors. \dsp\ also provides \julia\ interface to improve its usability.
 
-\pysp\ is a stochastic programming extension to \pyomo, a \python-based open source software package that supports variants of mathematical optimization. \pysp\ enables the expression of stochastic programming problems as EF. \pysp\ also provides three ways to solve the instance. 
+\pysp\ package includes solver capability and also provides three ways to solve the instance. 
 \begin{itemize}
 	\item Invoking standard MIP solver to solve EF
 	\item L-shape method (Benders decomposition)
 	\item Progressive Hedging algorithm
 \end{itemize}
-\pysp\ can also solve EF invoking standard MIP solver. To solve more complex and large-scale SIP, \pysp\ implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.
+\pysp\ can also solve EF invoking standard MIP solver. To solve more complex and large-scale SIP, \pysp\ implements PH algorithm, which provides an effective heuristic for approximating general multi-stage SIP.  \pysp\ also supports the distributed execution of the optimization which leverages the distributed solver capabilities that are provided in \pyomo\ library.
 
 
 
