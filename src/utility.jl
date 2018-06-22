@@ -60,7 +60,7 @@ function lprelaxModel(m::JuMP.Model, level::Int)
     end
 end
 
-function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dirname(@__FILE__))/../plot", close::Bool=false)
     PyPlot.@pyimport matplotlib.patches as pcs
     fig, ax = PyPlot.subplots()
 
@@ -77,6 +77,9 @@ function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dir
 #    ax[:set_aspect](Float64(size(mat)[1])/Float64(size(mat)[2]))
     PyPlot.tight_layout()
     PyPlot.savefig("$DIR_NAME/$INSTANCE_NAME.pdf")
+    if close
+        PyPlot.close()
+    end
 end
 
 

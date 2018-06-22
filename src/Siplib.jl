@@ -44,6 +44,7 @@ module Siplib
            plotTechnologyBlock,           # plot block T (complicating block)
            plotAllBlocks,                   # plot block A, W, T simultaneously
            plotAll,
+           generateSparsityPlots,
            getSparsity,
            getSize,
            problem,
@@ -52,9 +53,12 @@ module Siplib
            lprelaxModel
 
 end # end module Siplib
-#=
 
+#=
 using Siplib
+
+getSparsity(:SSLP, [3,3,10])
+generateSparsityPlots(:SSLP, [3,3,10])
 
 problem = :SIZES
 params_arr = [1]
