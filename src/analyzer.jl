@@ -38,7 +38,7 @@ end
 
 
 
-function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot"; close::Bool=false)
 
     mdata_all = getStructModelData(model, false, false)
 
@@ -64,7 +64,7 @@ function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", D
         end
     end
 
-    plotMatrix(mat_de, INSTANCE_NAME, DIR_NAME)
+    plotMatrix(mat_de, INSTANCE_NAME, DIR_NAME, close)
     #=
     plt = PyPlot
     plt.spy(mat_de,markersize=5)
@@ -234,6 +234,33 @@ function plotAll(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::
 #    plt.close()
 end
 
+function generateSparsityPlots(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../plot")
+
+    model = getModel(problem, params_arr)
+    INSTANCE_NAME = getInstanceName(problem, params_arr)
+
+    mdata1 = getModelData(model, false, false)
+    mdata2 = getModelData(getchildren(model)[1], false, false)
+    nrows1, ncols1 = size(mdata1.mat)
+    nrows2, ncols = size(mdata2.mat)
+    ncols2 = ncols - ncols1
+
+    # plot Block A
+    mat = mdata1.mat
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_A", DIR_NAME, true)
+
+    # plot Block W
+    mat = mdata2.mat[: , ncols1+1:end]
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_W", DIR_NAME, true)
+
+    # plot Block T
+    mat = mdata2.mat[: , 1:ncols1]
+    plotMatrix(mat, "$(INSTANCE_NAME)_block_T", DIR_NAME, true)
+
+    plotConstrMatrix(model, INSTANCE_NAME, DIR_NAME, close=true)
+
+end
+
 function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 
     mdata1 = getModelData(model, false, false)
@@ -285,6 +312,8 @@ function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
     return s
 end
 
+getSize(problem::Symbol, params_arr::Any) = getSize(getModel(problem, params_arr), getInstanceName(problem, params_arr))
+
 function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 
     mdata1 = getModelData(model, false, false)
@@ -319,6 +348,8 @@ function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 
     return s
 end
+
+getSparsity(problem::Symbol, params_arr::Any) = getSparsity(getModel(problem, params_arr), getInstanceName(problem, params_arr))
 
 #=
 type InstanceSizeInfo

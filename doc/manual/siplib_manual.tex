@@ -722,11 +722,12 @@
 	%\end{minipage}
 	\pagebreak
 	\subsubsection{function \texttt{getSize()}}
-	To get the size information of an instance, excute the following function.
+	To get the size information of an instance, use \texttt{getSize()} with one of the following input arguments set:
 	\begin{lstlisting}[frame=single,language=julia]
+	function getSize(problem::Symbol, params_arr::Any)::Size
 	function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 	\end{lstlisting}
-	The function \texttt{getSize()} takes \jumpmodel-type object as a necessary input argument and returns \texttt{Size}-type object defined as follows.
+	Then, it returns \texttt{Size}-type object defined as follows.
 	\begin{lstlisting}[frame=single,language=julia]
 	mutable struct Size
 		INSTANCE_NAME::String    # instance name
@@ -749,9 +750,10 @@
 	\subsubsection{function \texttt{getSparsity()}}
 	To get the sparsity information of an instance, excute the following function.
 	\begin{lstlisting}[frame=single,language=julia]
+	function getSparsity(problem::Symbol, params_arr::Any)::Sparsity
 	function getSparsity(model::JuMP.Model, INSTANCE_NAME::String="")::Sparsity
 	\end{lstlisting}
-	The function \texttt{getSparsity()} takes \jumpmodel-type object as a necessary input argument and returns \texttt{Sparsity}-type object.
+	Then, it returns \texttt{Sparsity}-type object defined as follows.
 	\begin{lstlisting}[frame=single,language=julia]
 	mutable struct Sparsity
 		INSTANCE_NAME::String    # instance name
