@@ -12,7 +12,7 @@ function getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0
 
     modeling_function = Base.getfield(Siplib, problem)
 
-    if length(params_arr) == nParams[problem]
+    if length(params_arr) == numParams[problem]
         model = modeling_function(params_arr... , seed)
         return lprelaxModel(model, lprelax)
     else

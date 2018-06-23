@@ -1,0 +1,202 @@
+\documentclass[11pt]{article}
+\usepackage[left=2.5cm,right=2.5cm,top=3cm,bottom=3cm,a4paper]{geometry}
+\usepackage{graphicx}
+\usepackage{dhucs}
+\usepackage{mathrsfs,amsmath,amssymb,amscd,mathtools,amsthm}
+\usepackage{array}
+\usepackage{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\usepackage{indentfirst}
+\usepackage{subfig}
+\usepackage{adjustbox}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{setspace}
+\usepackage{rotating}
+\usepackage{filecontents}
+\usepackage{authblk}
+\usepackage{soul}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{xspace}
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[flushleft]{threeparttable}
+\onehalfspacing
+
+%\graphicspath{{./figures/}}
+
+% set shortcuts
+%% Math notations
+\DeclareMathOperator*{\PP}{\mathbb{P}}
+\DeclareMathOperator*{\EE}{\mathbb{E}}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+%% Package, Library, abbreviate terms
+\newcommand{\siplibtwo}{\textsf{SIPLIB 2.0}}
+\newcommand{\siplib}{\textsf{SIPLIB}}
+\newcommand{\miplib}{\textsf{MIPLIB 2010}}
+\newcommand{\smps}{\textsf{SMPS}}
+\newcommand{\mps}{\textsf{MPS}}
+\newcommand{\mpsx}{\textsf{MPSX}}
+\newcommand{\jump}{\textsf{JuMP}}
+\newcommand{\structjump}{\textsf{StructJuMP}}
+
+% Problems
+\newcommand{\dcap}{\textsf{DCAP}}
+\newcommand{\dclp}{\textsf{DCLP}}
+\newcommand{\mptsps}{\textsf{MPTSPs}}
+\newcommand{\sizes}{\textsf{SIZES}}
+\newcommand{\smkp}{\textsf{SMKP}}
+\newcommand{\sslp}{\textsf{SSLP}}
+\newcommand{\suc}{\textsf{SUC}}
+
+% Solvers
+\newcommand{\dsp}{\textsf{DSP}}
+\newcommand{\pysp}{\textsf{PySP}}
+\newcommand{\pyomo}{\textsf{Pyomo}}
+\newcommand{\cplex}{\textsf{CPLEX}}
+
+%% Programming languages
+\newcommand{\julia}{\texttt{Julia}}
+\newcommand{\python}{\texttt{Python}}
+\newcommand{\clang}{\texttt{C}}
+\newcommand{\cpp}{\texttt{C++}}
+\newcommand{\matlab}{\texttt{MATLAB}}
+
+%% Siplib.jl related terms
+\newcommand{\jumpmodel}{\texttt{JuMP.Model}}
+\newcommand{\siplibjl}{\texttt{Siplib.jl}}
+
+% for Julia script
+\lstdefinelanguage{julia}
+{
+	sensitive=true,	
+	basicstyle=\ttfamily\scriptsize,
+	columns=fullflexible, % make sure to use fixed-width font, CM typewriter is NOT fixed width
+	numbers=left, 
+	numberstyle=\small\ttfamily\color{Gray},
+	stepnumber=0,              
+	numbersep=10pt, 
+	numberfirstline=true, 
+	numberblanklines=true, 
+	tabsize=4,
+	lineskip=-1.5pt,
+	extendedchars=true,
+	breaklines=true,        
+	keywordstyle=\color{Blue}\bfseries,
+	identifierstyle=, % using emph or index keywords
+	commentstyle=\sffamily\color{OliveGreen},
+	stringstyle=\color{Maroon},
+	showstringspaces=false,
+	showtabs=false,
+	upquote=false,
+	keywordsprefix=\@,
+	keywords={exit,whos,edit,load,is,isa,isequal,typeof,tuple,ntuple,uid,hash,finalizer,convert,promote,
+		subtype,typemin,typemax,realmin,realmax,sizeof,eps,promote_type,method_exists,applicable,
+		invoke,dlopen,dlsym,system,error,throw,assert,new,Inf,Nan,pi,im,begin,while,for,in,return,
+		break,continue,macro,quote,let,if,elseif,else,try,catch,end,bitstype,ccall,do,using,module,
+		import,export,importall,baremodule,immutable,local,global,const,Bool,Int,Int8,Int16,Int32,
+		Int64,Uint,Uint8,Uint16,Uint32,Uint64,Float32,Float64,Complex64,Complex128,String,Symbol,Any,Nothing,None,
+		function,type,typealias,abstract,struct, mutable},
+	comment=[l]{\#},
+	%morecomment=[s]{#=}{=#},
+	morestring=[d]\',
+	morestring=[b]\",
+}
+
+\begin{document}
+\nocite{*}
+\title{Using \siplibjl}
+\author{Yongkyu Cho}
+\affil{POSTECH\\ E-mail: jyg1124@postech.ac.kr}
+\maketitle
+
+\section{Prerequisites}
+We assume that you are in Linux environment. To use \siplibjl, you need to perform the following steps:
+\begin{enumerate}
+	\item Download $\julia\ge 0.6.2$ and set up.
+	\item Install \julia\ packages: \texttt{Distributions.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl} by executing
+	\begin{itemize}
+		\item \texttt{Pkg.add("Distributions")}
+		\item \texttt{Pkg.add("StructJuMP")}
+		\item \texttt{Pkg.add("PyPlot")}
+	\end{itemize}
+	Then, execute \texttt{Pkg.update()} to make them up-to-date.
+	\item Download and place the \siplibjl\ package to any directory (say \texttt{dir}) in your computer
+	\item Open a terminal and change working directory to \texttt{dir/Siplib/src/}:
+	\begin{itemize}
+		\item \texttt{cd dir/Siplib/src}	
+	\end{itemize}
+	\item Run \julia\ in that directory
+	\item excute \texttt{include("Siplib.jl")}
+	\item excute \texttt{using Siplib}
+\end{enumerate}
+Then, you are all set to use \siplibjl. To make it sure, execute the following line to generate DCAP\_2\_2\_2\_10 instance:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSMPS(:DCAP, [2,2,2,10])
+\end{lstlisting}
+If it works well, you will see the three files in \texttt{dir/Siplib/instance}:
+\begin{itemize}
+	\item DCAP\_2\_2\_2\_10.cor
+	\item DCAP\_2\_2\_2\_10.tim
+	\item DCAP\_2\_2\_2\_10.sto
+\end{itemize}
+
+\section{Basic usage}
+\subsection{Generating \smps\ instance}
+Use \texttt{generateSMPS(problem, params\_arr)} with proper values in Table \ref{table:numparameter} to generate \smps\ instances, for example:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSMPS(:DCAP, [2,2,2,10])
+\end{lstlisting}
+The default directory in which the files are stored is \texttt{dir/Siplib/instance}. You can change the directory by specifying explicit path:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
+\end{lstlisting}
+\texttt{generateSMPS(problem, params\_arr)} has four more optional keyword arguments: \texttt{seed},  \texttt{splice}, \texttt{genericnames}, \texttt{lprelax}. For details, please see the manual.
+
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{%
+	\begin{threeparttable}
+		\caption{Acceptable values for \texttt{problem} and \texttt{params\_arr} arguments pairs}
+		\label{table:numparameter}
+		\begin{tabular}{@{}ccl@{}}
+			\toprule
+			\texttt{problem}  & \texttt{params\_arr}     & Remark                                                                                                                                     \\ \midrule
+			\texttt{:DCAP}               & \texttt{[R, T, N, $\mathcal{S}$]} & All parameters are integer.                                                                                                                \\
+			\texttt{:MPTSPs}             & \texttt{[D, N, $\mathcal{S}$]}    & String $\texttt{D}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$. All other parameters are integer.                                                              \\
+			\texttt{:SIZES}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
+			\texttt{:SMKP}               & \texttt{[I, $\mathcal{S}$]}       & All parameters are integer.                                                                                                                \\
+			\texttt{:SSLP}               & \texttt{[I, J, $\mathcal{S}$]}    & All parameters are integer.                                                                                                                \\
+			\texttt{:SUC}                & \texttt{[D, $\mathcal{S}$]}       & \multicolumn{1}{l}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, $}                                             \\
+			\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{$\mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$} Integer $\mathcal{S}\le 1000$. \\ \bottomrule
+		\end{tabular}
+		\begin{tablenotes}
+			\item Note: $\mathcal{S}$ is always the number of scenarios.
+		\end{tablenotes}
+	\end{threeparttable}
+	}
+\end{table}
+
+
+\subsection{Plotting sparsity}
+Use \texttt{generateSparsityPlots(problem, params\_arr)} to generate the sparsity plots in constraint matrix. Excute the following lines:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSparsityPlots(:DCAP, [2,2,2,10])
+\end{lstlisting}
+The default directory in which the plots are stored is \texttt{dir/Siplib/plot}. You can change the directory by specifying explicit path:
+\begin{lstlisting}[frame=single,language=julia]
+julia> generateSparsityPlots(:DCAP, [2,2,2,10], "another/directory")
+\end{lstlisting}
+
+\subsection{Reporting size and sparsity}
+Use \texttt{getSize(problem, params\_arr)} and \texttt{getSparsity(problem, params\_arr)} to get the size and sparsity information. Excute the following lines to construct objects that contain the information:
+\begin{lstlisting}[frame=single,language=julia]
+julia> size = getSize(:DCAP, [2,2,2,10])
+julia> sparsity = getSparsity(:DCAP, [2,2,2,10])
+\end{lstlisting}
+\end{document}

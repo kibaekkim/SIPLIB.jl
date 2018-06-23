@@ -1,6 +1,23 @@
+function includeModelingScripts()
+    for prob in problem
+        include("$(dirname(@__FILE__))/problems/$(String(prob))/$(String(prob))_model.jl")
+    end
+end
+
+#function setGlobalVariables(PROBLEM_INFO_PATH::String, problem, numParams, noteParams)
+function setGlobalVariables()
+#    file_array = readdlm(PROBLEM_INFO_PATH, ',')
+    file_array = readdlm("$(dirname(@__FILE__))/problem_info.csv", ',')
+    for i in 2:size(file_array)[1]
+        push!(problem, Symbol(file_array[i,1]))
+        numParams[problem[end]] = file_array[i,2]
+        noteParams[problem[end]] = file_array[i,3]
+    end
+end
+
 function getInstanceName(problem::Symbol, params_arr::Any)::String
     INSTANCE_NAME = String(problem)
-    for p in 1:nParams[problem]
+    for p in 1:numParams[problem]
         INSTANCE_NAME *= "_$(params_arr[p])"
     end
     return INSTANCE_NAME

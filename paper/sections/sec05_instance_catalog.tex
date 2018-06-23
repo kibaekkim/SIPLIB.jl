@@ -22,7 +22,8 @@ Table \ref{table:instance_size_info_dcap}-\ref{table:instance_size_info_suc} in 
 We report computational information resulted from experiments. Unlike the size information, this information should be obtained highly computational methods. The result is provided in Table \ref{table:computation_report}. Throughout the following subsections, we explain about the computational experiments.
 
 \subsubsection{Experimental setting}
-Table \ref{table:experimental_setting} summarizes the experimental setting. All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. 
+%Table \ref{table:experimental_setting} summarizes the experimental setting. 
+All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. 
 
 We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 and an open-source DD based SIP solver \dsp. Since \cplex\ does not support \smps\ format as input, we use \dsp's option to solve the EF reading \smps\ files. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. We fully utilize 36 threads for each single instance as the both two solvers support multi-threads parallel computing. We set the termination condition on CPU time by 3 hours.  
 
@@ -30,25 +31,25 @@ The size of the instances on which the experiments perform is chosen basically b
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
-\begin{table}[H]
-	\centering
-	\caption{Experimental setting}
-	\label{table:experimental_setting}
-	\resizebox{\textwidth}{!}{%
-	\begin{tabular}{|l|l|}
-		\hline
-		\multirow{4}{*}{Computing environment} & Bebop (ANL 1024-node computing cluster) with each node      \\
-		& - CPU: Intel Xeon Processor E5-2695 v4 (18 cores 36 threads) \\
-		& - Clock speed: 2.10GHz (maximum 3.30GHz)                     \\
-		& - Memory:128GB (45MB Smart cache)                            \\ \hline
-		\multirow{2}{*}{Solver}                & Commercial MIP solver: CPLEX 12.8                                \\
-		& Open-source SIP solver: DSP                                      \\ \hline
-		Threads per instance                 & 36                                                           \\ \hline
-		Time limit                             & 3 hours                                                      \\ \hline
-		Instance size                          & SIPLIB instance sizes + Large scenario instance                  \\ \hline
-	\end{tabular}
-	}
-\end{table}
+%\begin{table}[H]
+%	\centering
+%	\caption{Experimental setting}
+%	\label{table:experimental_setting}
+%	\resizebox{\textwidth}{!}{%
+%	\begin{tabular}{|l|l|}
+%		\hline
+%		\multirow{4}{*}{Computing environment} & Bebop (ANL 1024-node computing cluster) with each node      \\
+%		& - CPU: Intel Xeon Processor E5-2695 v4 (18 cores 36 threads) \\
+%		& - Clock speed: 2.10GHz (maximum 3.30GHz)                     \\
+%		& - Memory:128GB (45MB Smart cache)                            \\ \hline
+%		\multirow{2}{*}{Solver}                & Commercial MIP solver: CPLEX 12.8                                \\
+%		& Open-source SIP solver: DSP                                      \\ \hline
+%		Threads per instance                 & 36                                                           \\ \hline
+%		Time limit                             & 3 hours                                                      \\ \hline
+%		Instance size                          & SIPLIB instance sizes + Large scenario instance                  \\ \hline
+%	\end{tabular}
+%	}
+%\end{table}
 
 \subsubsection{Solution report}
 We first introduce the notations used to define each column in the report Table \ref{table:computation_report}. The summary for the notations can be found in Table \ref{table:objective-notation}.

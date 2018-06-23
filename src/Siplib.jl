@@ -3,29 +3,6 @@ module Siplib
     using StructJuMP
     using Distributions
     using PyPlot
-#    using Dsp  # for DSP solver, bug exist (compatibility issue with JuMP & StructJuMP)
-#    using MPI
-
-    # global variables
-    ## Array of Symbol-type problems
-    global problem = [:DCAP, :MPTSPs, :SIZES, :SMKP, :SSLP, :SUC]
-    ## number of parameters for each problem
-    global nParams = Dict(:DCAP=>4, :MPTSPs=>3, :SIZES=>1, :SMKP=>2, :SSLP=>3, :SUC=>2)
-    ## problem=>paramter dictation
-    global parameters = Dict(:DCAP=>"[R, N, T, S], all integers.",
-                            :MPTSPs=>"[D, N, S], D is string, one of (D0, D1, D2, D3). N and S are integers.",
-                            :SIZES=>"[S], S >= 20 is integer.",
-                            :SMKP=>"[I, S], all integers.",
-                            :SSLP=>"[I, J, S], all integers.",
-                            :SUC=>"[D, S], D is string, one of (FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE) and S is integer.")
-
-    # include JuMP.Modeling sources
-    include("./problems/DCAP/dcap_models.jl")
-    include("./problems/MPTSPs/mptsps_models.jl")
-    include("./problems/SIZES/sizes_models.jl")
-    include("./problems/SMKP/smkp_models.jl")
-    include("./problems/SSLP/sslp_models.jl")
-    include("./problems/SUC/suc_models.jl")
 
     # include Siplib utility sources
     include("./smpswriter.jl")
@@ -34,28 +11,98 @@ module Siplib
     include("./analyzer.jl")
 #    include("./solver.jl")
 
+    global problem = Symbol[]
+    global numParams = Dict{Symbol,Int}()
+    global noteParams = Dict{Symbol,String}()
+
+    setGlobalVariables()
+    includeModelingScripts()
+
     export getInstanceName,                 # return Instance name using problem & parameters
            getModel,                        # only returns JuMP.Model object
            generateSMPS,                    # return JuMP.Model object & generate SMPS files (to use returned object, set splice=false)
-           writeSMPS,
+           writeSMPS,                       # convert JuMP.Model object to SMPS files
            plotConstrMatrix,                # plot constraint matrix of the extensive form
            plotFirstStageBlock,             # plot block A (first stage only)
            plotSecondStageBlock,            # plot block W (second stage only)
-           plotTechnologyBlock,           # plot block T (complicating block)
+           plotTechnologyBlock,             # plot block T (complicating block)
            plotAllBlocks,                   # plot block A, W, T simultaneously
            plotAll,
-           generateSparsityPlots,
+           generateSparsityPlots,           # save all sparsity plots into "plot" folder (default)
            getSparsity,
            getSize,
+           lprelaxModel,
            problem,
-           nParams,
-           parameters,
-           lprelaxModel
+           numParams,
+           noteParams
 
 end # end module Siplib
 
 #=
+
 using Siplib
+
+m = getModel(:DCAP, [3,3,3,10])
+m = getModel(:MPTSPs, ["D0",5,10])
+m = getModel(:SIZES, 10)
+m = getModel(:SMKP, [10,10])
+m = getModel(:SSLP, [3,3,3])
+m = getModel(:SUC, ["WinterWD", 1])
+
+
+DATA_PATH = "$(dirname(@__FILE__))/problem_info.csv"
+file_array = readdlm(DATA_PATH, ',')
+arr= file_array[2:end,1]
+
+x = Symbol(arr[1])
+size(file_array)
+
+function setGlobalVariables(PROBLEM_INFO_PATH::String)
+
+    file_array = readdlm(PROBLEM_INFO_PATH, ',')
+
+    problem = Symbol[]
+    numParams = Dict{Symbol,Int}()
+    noteParams = Dict{Symbol,String}()
+
+    for i in 2:size(file_array)[1]
+        push!(problem, Symbol(file_array[i,1]))
+        numParams[problem[end]] = file_array[i,2]
+        noteParams[problem[end]] = file_array[i,3]
+    end
+
+    return (problem, numParams, noteParams)
+end
+
+DATA_PATH = "$(dirname(@__FILE__))/problem_info.csv"
+global a,b,c = setGlobalVariables(DATA_PATH)
+
+function setGlobalVariables(PROBLEM_INFO_PATH::String)
+
+    file_array = readdlm(PROBLEM_INFO_PATH, ',')
+
+    problem = Symbol[]
+    nParams = Int[]
+    noteParams = String[]
+
+
+    for i in 2:size(file_array)[1]
+        push!(problem, Symbol(file_array[i,1]))
+        push!(nParams, file_array[i,2])
+        push!(noteParams, file_array[i,3])
+    end
+
+    return problem, nParams, noteParams
+
+end
+
+global a,b,c = setGlobalVariables(DATA_PATH)
+
+
+
+
+m = getModel(:MPTSPs, ["D0",10,10])
+
 
 getSparsity(:SSLP, [3,3,10])
 generateSparsityPlots(:SSLP, [3,3,10])
