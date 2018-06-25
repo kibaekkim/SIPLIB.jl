@@ -34,7 +34,7 @@ If it works well, you will see the three files in \texttt{dir/Siplib/instance}:
 
 \subsection{Basic usages}
 \subsubsection{Generating \smps\ instance}
-Use \texttt{generateSMPS(problem, params\_arr)} with proper values in Table \ref{table:numparameter} to generate \smps\ instances, for example:
+Use \texttt{generateSMPS(problem, params\_arr)} with proper values in Table \ref{table:numparameter} to generate \smps\ files for instances, for example:
 \begin{lstlisting}[frame=single,language=julia]
 julia> generateSMPS(:DCAP, [2,2,2,10])
 \end{lstlisting}
@@ -68,7 +68,7 @@ julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
 	}
 \end{table}
 \subsubsection{Plotting sparsity}
-Use \texttt{generateSparsityPlots(problem, params\_arr)} to generate the sparsity plots in constraint matrix. Excute the following lines:
+Use \texttt{generateSparsityPlots(problem, params\_arr)} to generate and save the sparsity plots. Excute the following lines:
 \begin{lstlisting}[frame=single,language=julia]
 julia> generateSparsityPlots(:DCAP, [2,2,2,10])
 \end{lstlisting}

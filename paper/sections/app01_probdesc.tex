@@ -110,7 +110,7 @@ The extensive form of \mptsps\ is as follows and the notations used are summariz
 	&x_{ijk}^{s}\in\{0,1\},\quad\forall i\in N,\ \forall j\in N\backslash\{i\},\ \forall k\in K_{ij},\ \forall s\in \mathcal{S}, \label{mptsps:con8} 
 	\end{align}
 \end{subequations}
-The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{journal:GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the space from which the variables take values.
+The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the space from which the variables take values.
 
 \begin{table}[H]
 	\caption{Notations for \mptsps}
@@ -586,7 +586,7 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 \end{table}
 
 \subsubsection{\suc: Data generation}
-For model parameters, we use a reduced model of the CAISO to follow the reference \cite{AF2004}. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
+For model parameters, we use a reduced model of the CAISO to follow the reference \cite{journal:AF2004}. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
 Based on the WECC, set cardinalities in \suc\ are as follows.
 \begin{align*}
 |N|&=225 \\
