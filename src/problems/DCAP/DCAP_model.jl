@@ -31,15 +31,27 @@ Parameters (scenario):
   d[j,t,s]: capacity required for to perform task j in period t in scenario s
 =#
 
-include("./DCAP_data.jl")
+#include("./DCAP_data.jl")
 
 function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
 
-    # generate instance data
-    data = DCAPData(nR, nN, nT, nS, seed)
+    # set random seed (default=1)
+    srand(seed)
 
-    R, N, T, S = data.R, data.N, data.T, data.S
-    a, b, c, c0, d, Pr = data.a, data.b, data.c, data.c0, data.d, data.Pr
+    # generate & store instance data
+    ## sets
+    R = 1:nR
+    N = 1:nN
+    T = 1:nT
+    S = 1:nS
+
+    ## parameters
+    a = rand(nR, nT) * 5 + 5
+    b = rand(nR, nT) * 40 + 10
+    c = rand(nR, nN, nT, nS) * 5 + 5
+    c0 = rand(nN, nT, nS) * 500 + 500
+    d = rand(nN, nT, nS) + 0.5
+    Pr = ones(nS)/nS
 
     # construct JuMP.Model
     model = StructuredModel(num_scenarios = nS)
