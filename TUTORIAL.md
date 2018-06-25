@@ -39,7 +39,7 @@ The folder name must be the same as the problem name.
 The name of the file must be `(problem_name)_model.jl`
 
 ## Step 4. Implement a modeling function on `DCAP_model.jl`: ``function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model``
-
+- This function returns a `JuMP.Model`-type object.
 - The name of the function must be same as the problem name.
 - Be consistent with the order of the input arguments we have used. 
 - Note that the last argument `seed::Int=1` for the random seed must be added and set to be 1 as a default. It can be changed by user when generating SMPS files, e.g., 
@@ -47,7 +47,6 @@ The name of the file must be `(problem_name)_model.jl`
 ```julia
 	julia> generateSMPS(:DCAP, [3,3,3,10], seed=2)
 ```
-- This function returns a `JuMP.Model`-type object.
 
 The full definition of the function ``DCAP()`` is:
 ```julia
