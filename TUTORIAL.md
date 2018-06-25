@@ -16,8 +16,9 @@ You must be consistent with the predefined manner.
 ## Step 1. Modify the file: `/DIR/Siplib/src/problem_info.csv`
 
 `problem_info.csv` file contains parameter information for each problem. Open the file and add a new comma-delimited line at the bottom, e.g.,
-> DCAP, 4, "[R,N,T,S], All integers."
-
+```Spreadsheet
+DCAP, 4, "[R,N,T,S], All integers."
+```
 - DCAP: Name of the problem.
 - 4: Number of parameters that define the problem (e.g., `DCAP` has 4 parameters: |R|, |N|, |T|, |S|).
 - "[R,N,T,S], All integers.": Simple note on the parameters (if not needed, just let it "")
@@ -96,12 +97,27 @@ end
 
 ## Step 5. Check if everything is well done
 - Open a terminal and change working directory to `DIR/Siplib/src/`
+```Shell
+user@LINUX:~$ cd DIR/Siplib/src/
+```
 - Run `Julia` in that directory
-- Execute `include("Siplib.jl")`
+```Shell
+user@LINUX:~/DIR/Siplib/src/$ julia
+```
+- Include ``Siplib.jl``
+```julia
+julia> include("Siplib.jl")
+```
 - Execute `using Siplib`
+```julia
+julia> using Siplib
+```
 - Execute `generateSMPS(:DCAP, [3,3,3,10])` to generate DCAP_3_3_3_10 instance.
+```julia
+julia> generateSMPS(:DCAP, [3,3,3,10])
+```
 - Check out the directory `DIR/Siplib/instance` if SMPS files are stored.
-> Note: the function `generateSMPS()` has two necessary arguments (`problem::Symbol`, `params_arr::Any`) and five optional positional/keyword arguments: 
+### Note: the function `generateSMPS()` has two necessary arguments (`problem::Symbol`, `params_arr::Any`) and five optional positional/keyword arguments: 
 
 Optional argument | Argument type | Meaning |Acceptable value | Example
 --- | --- | --- | --- | ---
@@ -111,4 +127,4 @@ Optional argument | Argument type | Meaning |Acceptable value | Example
 `genericnames::Bool`|`keyword`|Set if we maintain original variable names (for human readability)|`true, false` (default:`true`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path",genericnames=false)`
 `splice::Bool`|`keyword`|Set if we splice the data in the model object after writing SMPS (for memory efficiency)|`true, false` (default:`true`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path",splice=false)`
 
-> The positional argument must be placed at the proper position. The keyword argument can be placed anywhere after the positional arguments.
+### The positional argument must be placed at the proper position. The keyword argument can be placed anywhere after the positional arguments.
