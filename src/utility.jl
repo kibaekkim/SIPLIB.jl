@@ -4,9 +4,7 @@ function includeModelingScripts()
     end
 end
 
-#function setGlobalVariables(PROBLEM_INFO_PATH::String, problem, numParams, noteParams)
 function setGlobalVariables()
-#    file_array = readdlm(PROBLEM_INFO_PATH, ',')
     file_array = readdlm("$(dirname(@__FILE__))/problem_info.csv", ',')
     for i in 2:size(file_array)[1]
         push!(problem, Symbol(file_array[i,1]))

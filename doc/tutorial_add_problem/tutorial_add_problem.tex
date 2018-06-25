@@ -153,7 +153,7 @@ Later, \smps\ files will be generated using the function with at least two input
 \begin{lstlisting}[frame=single,language=julia]
 julia> generateSMPS(:DCAP,[3,3,3,10])
 \end{lstlisting}
-
+Note that the function \texttt{generateSMPS()} takes \texttt{Symbol}-type argument \texttt{:DCAP} and \texttt{Array}-type argument \texttt{[3,3,3,10]}.
 \subsection{Create a new folder \texttt{DCAP} under: \texttt{/dir/Siplib/src/problem/}}
 So, you must have a directory: \texttt{/dir/Siplib/src/problem/DCAP/}
 \subsection{Create, Write, and Place \texttt{DCAP\_data.jl} file into: \texttt{/dir/Siplib/src/problem/DCAP/}}
@@ -162,7 +162,7 @@ Make a new julia script file using the problem name. For \dcap, it must be \text
 	\item Definition of a composite-type \texttt{DCAPData} that will contain instance data.
 	\item Definition of a function
 	\begin{quote}\centering\noindent\texttt{DCAPData(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int)::DCAPData}\end{quote}
-	that will generate data and return it with a \texttt{DCAPData}-type object. The argument \texttt{seed} must be placed at the end.
+	that will generate data and return it with a \texttt{DCAPData}-type object. The argument \texttt{seed} must be placed at the end. Later, the function \texttt{generateSMPS()} will call this function taking two arguments \texttt{:DCAP} and \texttt{[R,N,T,S]} to get an instance. Therefore, the order of the parameters must always be consistent.
 \end{itemize}
 For example, \texttt{DCAP\_data.jl} must be written by (please see the comment for each line):
 \begin{lstlisting}[frame=single,language=julia]
@@ -219,7 +219,7 @@ Make a new julia script file using the problem name again. For \dcap, it must be
 	\item Definition of a function
 	\begin{quote}\centering\noindent\texttt{DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
 	}\end{quote}
-	that will return a \jumpmodel-type object. The set of arguments and its order are the same as \texttt{DCAPData()} except for the \texttt{seed} that must have a default value 1, i.e., \texttt{seed::Int=1}.
+	that will return a \jumpmodel-type object. The set of arguments and its order must be the same as \texttt{DCAPData()} except for the \texttt{seed} that must have a default value 1. Don't forget to set \texttt{seed::Int=1}. In this function, \texttt{seed} is an optional argument.
 \end{itemize}
 For example, \texttt{DCAP\_data.jl} must be written as the following script. Please see the comment for each line to learn how to model a stochastic program with StructJuMP syntax.
 \begin{lstlisting}[frame=single,language=julia]

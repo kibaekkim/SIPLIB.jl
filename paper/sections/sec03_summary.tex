@@ -5,16 +5,15 @@ In this section, we explain information about the test problems in summarized ma
 Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We needed to guess the missing links and sometimes develop our own way to implement the problems. 
 \begin{table}[H]
 	\centering
-	\resizebox{\textwidth}{!}{%
-		\begin{threeparttable}
+%	\resizebox{\textwidth}{!}{%
 			\caption{Problems in \siplibtwo}
 			\label{table:problems}
 			\begin{tabular}{@{}llll@{}}
 				\toprule
 				Problem		  		  & Description                                                        & Main reference              \\ \midrule
-				\dcap\         & Dynamic capacity planning with stochastic demand (\ref{DCAP})                   & Ahmed and Garcia \cite{journal:AG2004}                          \\
-				\mptsps\       & Multi-path traveling salesman problem with stochastic travel costs (\ref{MPTSPs})& Tadei et al. \cite{journal:TPP2017}                            \\
-				\sizes\        & Optimal product substitution with stochastic demand (\ref{SIZES})         & Jorjani et al. \cite{journal:JSW1999}          \\
+				\dcap\         & \makecell[tl]{Dynamic capacity planning with stochastic\\ demand (\ref{DCAP}) }                  & Ahmed and Garcia \cite{journal:AG2004}                          \\
+				\mptsps\       & \makecell[tl]{Multi-path traveling salesman problem with\\ stochastic travel costs (\ref{MPTSPs})}& Tadei et al. \cite{journal:TPP2017}                            \\
+				\sizes\        & \makecell[tl]{Optimal product substitution with stochastic\\ demand (\ref{SIZES})}         & Jorjani et al. \cite{journal:JSW1999}          \\
 				\smkp\		  & Stochastic multiple knapsack problem (\ref{SMKP})                              & Angulo et al. \cite{journal:AAD2014}                            \\
 				\sslp\         & Stochastic server location problem (\ref{SSLP})                                & Ntaimo and Sen \cite{journal:NS2005}                           \\
 				\suc\         & Stochastic unit commitment problem	(\ref{SUC})			               & Papavasiliou and Oren \cite{journal:PO2013}                       \\ \bottomrule
@@ -24,8 +23,7 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 			%				\small
 			%				\item For convenience, we skip the cardinality sign $|\cdot|$ for sets, i.e., for any set $S$, $S$ denotes the number of elements $|S|$ in this table.
 			%			\end{tablenotes}
-		\end{threeparttable}
-	}
+%	}
 \end{table}
 
 \subsubsection{How we deal with missing links and errors}
@@ -43,18 +41,18 @@ We set the following rule to address such issues described above.
 The notable remark for each problem briefly presents in Table \ref{table:remarks}.
 \begin{table}[H]
 	\centering
-	\resizebox{\textwidth}{!}{%
+%	\resizebox{\textwidth}{!}{%
 		\begin{threeparttable}
 			\caption{Implementation remarks for each problem}
 			\label{table:remarks}
-			\begin{tabular}{@{}cl@{}}
+			\begin{tabular}{@{}llp{3in}}
 				\toprule
 				Problem & \multicolumn{1}{c}{Remark}                                                \\ \midrule
 				\dcap   & We go with the error in constraint (\ref{dcap:b})                                              \\
-				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation procedure \ref{mptsps:datagen} \\
+				\mptsps & \makecell[tl]{We adopt formulation from another reference \cite{journal:LSD1990}, We develop data \\generation procedure \ref{mptsps:datagen}} \\
 				\sizes  & We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h})                                                    \\
 				\smkp   & -                                                                         \\
-				\sslp   & We keep the zonal components empty and let the redundant constraint (\ref{sslp:b}) present                                     \\
+				\sslp   & \makecell[tl]{We keep the zonal components empty and let the redundant constraint (\ref{sslp:b})\\ present }                                    \\
 				\suc    & We generate and provide up to 1,000 stochastic wind scenario data                                    \\ \bottomrule
 			\end{tabular}
 			\begin{tablenotes}
@@ -62,7 +60,7 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 				\item - means no issue presents
 			\end{tablenotes}
 		\end{threeparttable}
-	}
+%	}
 \end{table}
 
 \subsection{Instance naming rule}
@@ -78,9 +76,9 @@ The capital Roman letters mean the sets defining the problems. In particular, th
 	\centering
 	\caption{Instance naming rules}
 	\label{table:naming_rule}
-%	\resizebox{\textwidth}{!}
+	\resizebox{\textwidth}{!}
 	{%
-		\begin{tabular}{@{}llp{2.7in}}
+		\begin{tabular}{@{}llp{3in}}
 			\toprule
 			Problem & Instance name                 & \multicolumn{1}{c}{Remark}                                                                    					      \\ \midrule
 			\dcap\    & DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
@@ -136,7 +134,7 @@ For those reasons, we investigate the number of components present in instance. 
 		\begin{threeparttable}
 			\caption{Number of components in each problem}
 			\label{table:num_components}
-			\begin{tabular}{@{}cccccc@{}}
+			\begin{tabular}{@{}lccccc@{}}
 				\toprule
 				&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
 				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
@@ -179,7 +177,7 @@ As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three differently 
 \end{figure}
 
 Every SIP in EF has a block-diagonal structure in its coefficient matrix (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of the full deterministic equivalent form coefficient matrix.
-\begin{figure}[H]
+\begin{figure}[]
 	\centering
 	\subfloat[][DCAP\_3\_3\_3\_3]
 	{
