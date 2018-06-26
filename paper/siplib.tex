@@ -16,25 +16,25 @@
 % proceed on the \documentclass line
 % your LaTeX will extract the file if required
 \begin{filecontents*}{example.eps}
-%!PS-Adobe-3.0 EPSF-3.0
-%%BoundingBox: 19 19 221 221
-%%CreationDate: Mon Sep 29 1997
-%%Creator: programmed by hand (JK)
-%%EndComments
-gsave
-newpath
-  20 20 moveto
-  20 220 lineto
-  220 220 lineto
-  220 20 lineto
-closepath
-2 setlinewidth
-gsave
-  .4 setgray fill
-grestore
-stroke
-grestore
-
+	%!PS-Adobe-3.0 EPSF-3.0
+	%%BoundingBox: 19 19 221 221
+	%%CreationDate: Mon Sep 29 1997
+	%%Creator: programmed by hand (JK)
+	%%EndComments
+	gsave
+	newpath
+	20 20 moveto
+	20 220 lineto
+	220 220 lineto
+	220 20 lineto
+	closepath
+	2 setlinewidth
+	gsave
+	.4 setgray fill
+	grestore
+	stroke
+	grestore
+	
 \end{filecontents*}
 %
 \RequirePackage{fix-cm}
@@ -107,7 +107,7 @@ grestore
 \lstdefinelanguage{julia}
 {
 	sensitive=true,	
-           basicstyle=\ttfamily\scriptsize,
+	basicstyle=\ttfamily\scriptsize,
 	columns=fullflexible, % make sure to use fixed-width font, CM typewriter is NOT fixed width
 	numbers=left, 
 	numberstyle=\small\ttfamily\color{Gray},
@@ -203,120 +203,120 @@ grestore
 %
 
 \begin{document}
-\title{SIPLIB 2.0
-%\thanks{Grants or other notes
-%about the article that should go on the front page should be
-%placed here. General acknowledgments should be placed at the end of the article.}
-}
-\subtitle{Stochastic Integer Programming Library version 2}
-
-\titlerunning{SIPLIB 2.0}        
-
-\author{Yongkyu Cho \and Kibaek Kim \and \\ James Luedtke \and Jeffrey Linderoth}
-
-%\authorrunning{Short form of author list} % if too long for running head
-
-\institute{Yongkyu Cho \at
-			Department of Industrial and Management Engineering, Pohang University of Science and Technology, Gyeongbuk, Korea \\
-			\email{jyg1124@postech.ac.kr}
-			\and
-			Kibaek Kim \at
-           Mathematics and Computer Science Division, Argonne National Laboratory, Lemont, IL 60439, USA \\
-           \email{kimk@anl.gov}
-           \and
-           James Luedtke \and Jeffrey Linderoth \at
-           Department of Industrial and Systems Engineering, University of Wisconsin-Madison Madison, WI 53706, USA \\
-           \email{jim.luedtke@wisc.edu; linderoth@wisc.edu}
-}
-
-\date{Received: date / Accepted: date}
-
-\maketitle
-
-% abstract
-\begin{abstract}
-Advances in numerical methods for stochastic (mixed-) integer 
-programming (SIP) has been made for the last decades. Many numerical 
-algorithms have been developed and implemented as software packages. However, testing new 
-algorithms has always been challenging for stochastic programming, mainly due to the lack of 
-test instances.  We present a set of test problem instances for SIP. In addition to the existing \siplib\ instances available in 
-\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, we provide {\color{red} XX} additional 
-test instances arising in applications to energy, {\color{red} and so on}. \siplibtwo\ provides 
-the \julia\ script for modeling SIP problems and writing them in \smps\ format, where 
-the stochastic programming problems can be modeled by using the algebraic modeling package 
-\structjump.  This will allow users to create new problem instances and modify the problem 
-instances (e.g., increasing the number of scenarios). We also report the computational 
-results from solving the problem instances in various metrics (e.g., solution time, 
-integrality gap, duality gap, value of stochastic solutions). For the computational results, 
-we use an open-source parallel decomposition solver DSP and generic optimization solver 
-CPLEX. \kk{Do we want to try PySP?} \yoc{I think CPLEX and DSP are enough unless our purpose is on comparing the performance of each different solver. One more thing is, PySP does not read SMPS files.}
-
-\keywords{Stochastic Mixed-Integer Programming \and Problem Instances \and SIPLIB \and Julia \and StructJuMP} 
-
-\subclass{90C15 \and 90C60 \and 90C90}
-\end{abstract}
-
-% lists (tableofcontents, figures, tables)
-%\input{./sections/sec00_lists.tex}
-
-\section{Introduction}\label{sec:intro}
-\input{./sections/sec01_intro.tex}
-%\pagebreak
-
-\section{Stochastic integer programming}\label{sec:sip}
-\input{./sections/sec02_sip.tex}
-%\pagebreak
- 
-\section{The test problems: summary and discussion}\label{sec:summary}
-\input{./sections/sec03_summary.tex}
-%\pagebreak
-
-\section{A \texttt{Julia} package for \siplibtwo} \label{sec:package}
-\input{./sections/sec04_package.tex}
-%\pagebreak
-
-\section{The instance catalog}\label{sec:instance_catalog}
-\input{./sections/sec05_instance_catalog.tex}
-%\pagebreak
-
-\section{Concluding remarks}\label{sec:conclusion}
-\input{./sections/sec06_conclusion.tex}
-
-%\begin{acknowledgements}
-%\end{acknowledgements}
-
-\appendix
-
-\section*{Appendix}
-
-% Appendix: Problem-specific description 
-\section{Problem descriptions} \label{sec:prob_desc}
-\input{./sections/app01_probdesc.tex}
-%\pagebreak
-
-% Appendix: General sparsity (fully cardinality based)
-\section{Block-wise sparsity based on set cardinality} \label{sec:sparsity}
-\input{./sections/app02_sparsity.tex}
-%\pagebreak
-
-% Appendix: MIPLIB 2010 constraint type legend
-\section{Constraint type legend from \texttt{MIPLIB 2010}} \label{sec:miplibconstraint}
-\input{./sections/app03_miplib_constraints.tex}
-%\pagebreak
-
-% Appendix: Tutorial
-\section{Size and sparsity catalog} \label{sec:instance_size_sparsity}
-\input{./sections/app04_instance_size_sparsity.tex}
-%\pagebreak
-
-% Appendix: Tutorial
-\section{A tutorial for the \julia\ package} \label{sec:tutorial}
-\input{./sections/app05_tutorial.tex}
-%\pagebreak
-
-% Appendix: References
-\bibliographystyle{spmpsci}
-\bibliography{siplib}
+	\title{SIPLIB 2.0
+		%\thanks{Grants or other notes
+		%about the article that should go on the front page should be
+		%placed here. General acknowledgments should be placed at the end of the article.}
+	}
+	\subtitle{Stochastic Integer Programming Library version 2}
+	
+	\titlerunning{SIPLIB 2.0}        
+	
+	\author{Yongkyu Cho \and Kibaek Kim \and \\ James Luedtke \and Jeffrey Linderoth}
+	
+	%\authorrunning{Short form of author list} % if too long for running head
+	
+	\institute{Yongkyu Cho \at
+		Department of Industrial and Management Engineering, Pohang University of Science and Technology, Gyeongbuk, Korea \\
+		\email{jyg1124@postech.ac.kr}
+		\and
+		Kibaek Kim \at
+		Mathematics and Computer Science Division, Argonne National Laboratory, Lemont, IL 60439, USA \\
+		\email{kimk@anl.gov}
+		\and
+		James Luedtke \and Jeffrey Linderoth \at
+		Department of Industrial and Systems Engineering, University of Wisconsin-Madison Madison, WI 53706, USA \\
+		\email{jim.luedtke@wisc.edu; linderoth@wisc.edu}
+	}
+	
+	\date{Received: date / Accepted: date}
+	
+	\maketitle
+	
+	% abstract
+	\begin{abstract}
+		Advances in numerical methods for SIP has been made for the last decades. Many numerical 
+		algorithms have been developed and implemented as software packages. However, testing new 
+		algorithms has always been challenging for stochastic programming, mainly due to the lack of 
+		test instances.  We present a set of test problem instances for stochastic (mixed-) integer 
+		programming (SIP). In addition to the existing \siplib\ instances available in 
+		\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, we provide {\color{red} XX} additional 
+		test instances arising in applications to energy, {\color{red} and so on}. \siplib\ provides 
+		the \julia\ script for modeling SIP problems and writing them in \smps\ format, where 
+		the stochastic programming problems can be modeled by using the algebraic modeling package 
+		\structjump.  This will allow users to create new problem instances and modify the problem 
+		instances (e.g., increasing the number of scenarios). We also report the computational 
+		results from solving the problem instances in various metrics (e.g., solution time, 
+		integrality gap, duality gap, value of stochastic solutions). For the computational results, 
+		we use an open-source parallel decomposition solver DSP and generic optimization solver 
+		CPLEX. \kk{Do we want to try PySP?}
+		
+		\keywords{Stochastic Mixed-Integer Programming \and Problem Instances \and SIPLIB \and Julia \and StructJuMP} 
+		
+		\subclass{90C15 \and 90C60 \and 90C90}
+	\end{abstract}
+	
+	% lists (tableofcontents, figures, tables)
+	%\input{./sections/sec00_lists.tex}
+	
+	\section{Introduction}\label{sec:intro}
+	\input{./sections/sec01_intro.tex}
+	%\pagebreak
+	
+	\section{Stochastic integer programming}\label{sec:sip}
+	\input{./sections/sec02_sip.tex}
+	%\pagebreak
+	
+	\section{The test problems: summary and discussion}\label{sec:summary}
+	\input{./sections/sec03_summary.tex}
+	%\pagebreak
+	
+	\section{A \texttt{Julia} package for \siplibtwo} \label{sec:package}
+	\input{./sections/sec04_package.tex}
+	%\pagebreak
+	
+	\section{The instance catalog}\label{sec:instance_catalog}
+	\input{./sections/sec05_instance_catalog.tex}
+	%\pagebreak
+	
+	\section{Concluding remarks}\label{sec:conclusion}
+	\input{./sections/sec06_conclusion.tex}
+	
+	%\begin{acknowledgements}
+	%\end{acknowledgements}
+	
+	\appendix
+	
+	\section*{Appendix}
+	
+	% Appendix: Problem-specific description 
+	\section{Problem descriptions} \label{sec:prob_desc}
+	\input{./sections/app01_probdesc.tex}
+	%\pagebreak
+	
+	% Appendix: General sparsity (fully cardinality based)
+	\section{Block-wise sparsity based on set cardinality} \label{sec:sparsity}
+	\input{./sections/app02_sparsity.tex}
+	%\pagebreak
+	
+	% Appendix: MIPLIB 2010 constraint type legend
+	\section{Constraint type legend from \texttt{MIPLIB 2010}} \label{sec:miplibconstraint}
+	\input{./sections/app03_miplib_constraints.tex}
+	%\pagebreak
+	
+	% Appendix: Tutorial
+	\section{Size and sparsity catalog} \label{sec:instance_size_sparsity}
+	\input{./sections/app04_instance_size_sparsity.tex}
+	%\pagebreak
+	
+	% Appendix: Tutorial
+	\section{A tutorial for the \julia\ package} \label{sec:tutorial}
+	\input{./sections/app05_tutorial.tex}
+	%\pagebreak
+	
+	% Appendix: References
+	\bibliographystyle{spmpsci}
+	\bibliography{siplib}
 \end{document}
 
 
