@@ -121,7 +121,7 @@ where $z^*(x,y_s)$ is the optimal objective value of a single scenario problem:
 	&y_s \in Y. \label{ssp:e}
 	\end{align}
 \end{subequations}
-Noticeably, the inequality $z^*_{WS}\le z^*\le z^*_{EEV}$ is known to always hold.
+Noticeably, the inequality $z^*_{WS}\le z^*\le z^*_{EEV}$ is known to always hold \cite{journal:SKS2013}.
 
 \begin{table}[H]
 	\centering
@@ -189,7 +189,7 @@ In Table \ref{table:computation_report}, we report objective values and several 
 \end{quote}
 
 \begin{quote}
-	\noindent\textit{Optimality Gap (OG)} This gap is only computational concept defined by the relative difference between best upper bound and best lower bound. We report the relative value $\frac{|\hat{z}-\tilde{z}|}{|\hat{z}|+\epsilon}\times 100\%$ obtained from the two solvers. This can be a basic measure of difficulty of an instance combined with processing time.
+	\noindent\textit{Optimality gap (OG)} This gap is only computational concept defined by the relative difference between best upper bound and best lower bound. We report the relative value $\frac{|\hat{z}-\tilde{z}|}{|\hat{z}|+\epsilon}\times 100\%$ obtained from the two solvers. This can be a basic measure of difficulty of an instance combined with processing time.
 \end{quote}
 
 %\begin{quote}
@@ -197,7 +197,7 @@ In Table \ref{table:computation_report}, we report objective values and several 
 %\end{quote}
 
 \begin{quote}
-	\noindent\textit{Integrality Gap (IG)} We define this gap by the difference in optimal objective values between RP and RP-LP2: $z^*-z^*_{LP2}$. We report the relative incumbent value: $\frac{|\hat{z}-\hat{z}_{LP2}|}{|\hat{\hat{z}}|+\epsilon}\times 100\%$ It is reported by the open-source DD solver \dsp. 
+	\noindent\textit{Integrality gap (IG)} We define this gap by the difference in optimal objective values between RP and RP-LP2: $z^*-z^*_{LP2}$. We report the relative incumbent value: $\frac{|\hat{z}-\hat{z}_{LP2}|}{|\hat{\hat{z}}|+\epsilon}\times 100\%$ It is reported by the open-source DD solver \dsp. 
 	
 %	We define a SIP-specific theoritic integrality gap in minimization problem by $\frac{z^*}{z^*_{LP2}}$. Computationally, we report $\frac{\hat{z}}{\hat{z}_{LP2}}$ when the optimality is not attained. Assuming $\hat{z}_{LP2}\approxeq z^*_{LP2}$ in most cases, the reported IG will provide upper bound for the true IG. The LP-relaxation provides an optimistic bound on the integer program's solution. The small this gap implies that the LP-relaxation gives tight bound for the original problem.  %This gap cannot be obtained analytically so we report it based on the computational experiments.% The formulation with tighter LP relaxation is always favorable.
 \end{quote}
@@ -211,7 +211,7 @@ In Table \ref{table:computation_report}, we report objective values and several 
 %\end{quote}
 
 \begin{quote}
-\noindent\textit{Duality Gap (DG)} This gap is the difference between primal objective and dual objective: $z^*-z^*_{LD}$. This gap also equals to the value of the convex relaxation of the primal problem. We report the relative incumbent value: $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{\hat{z}}|+\epsilon}\times 100\%$. It is reported by the open-source DD solver \dsp. 
+\noindent\textit{Duality gap (DG)} This gap is the difference between primal objective and dual objective: $z^*-z^*_{LD}$. This gap also equals to the value of the convex relaxation of the primal problem. We report the relative incumbent value: $\frac{|\hat{z}-\hat{z}_{LD}|}{|\hat{\hat{z}}|+\epsilon}\times 100\%$. It is reported by the open-source DD solver \dsp. 
 \end{quote}
 
 \begin{quote}
