@@ -1,38 +1,22 @@
 %(What SIP is and our restriction) 
-Stochastic programming (SP) is a framework for modeling optimization problems that involve 
-uncertainty. Whereas optimization problems are typically formulated with known parameters, 
-the problems in real world contain some unknown parameters in many cases. For details on SP, 
-see, e.g., \cite{web:SPS,book:BL2011}. 
+Stochastic (mixed) integer programming (SIP) is the mathematical programming that accounts for 
+both continuous and discrete decision variables with uncertain parameters~\cite{book:BL2011}. 
+Modeling and algorithms for SIP have been advanced for the last few decades. Applications of SIP include power systems~\cite{?}, healthcare~\cite{?}, manufacturing systems~\cite{?}, and transportation~\cite{?}. With the advances, a number of solution methods have been developed and shown to be computationally effective for stochastic problems (e.g.,~\cite{?}). Moreover, many of the algorithms have been implemented as software packages either specific for certain problems~\cite{?} or for generic problems~\cite{?}.
 
-Stochastic (mixed) integer programming (SIP) is a branch of SP that indicates any type of SP 
-including at least one integer decision variable. We restrict our focus on two-stage SIP with 
-linear objective throughout this paper. The main reason is that the class of SIP is most 
-widely used to model real world problems. Moreover, two-stage SIP itself has enough 
-difficulties that have not been conquered yet even without any other details like chance-
-constraints and multi-stages. The main difficulty in solving two-stage SIP is that the 
+Numerical tests and benchmarks are necessary for developing and improving algorithms. However,
+these have been challenging for the stochastic programming community, because of the limited number of test problem instances. SIPLIB is a set of test problem instances for SIP available in~\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where nine problem instances are available in SMPS format~\cite{?} with additional information such as random parameters, 
+instance size, best known objective value or bounds, optimality gap, and solution time.  
+
+In this paper, we focus on two-stage SIP with 
+linear objective function and constraints, where the first stage finds a solution before the 
+random parameters are realized, and the second stage takes a recourse action to the 
+uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters (i.e., scenarios) are discrete and finite with known probabilities.
+A key challenge in SIP is that the size of
+the problem increases with the number of scenarios. The main difficulty in solving two-stage SIP is that the 
 second-stage value function is not necessarily convex. Thus, the standard decomposition 
 approaches that work nicely for stochastic \textit{linear} programs, break down when the 
 second stage integer variables are present \cite{journal:AG2004}. Hereinafter, we use the 
 term SIP to indicate the two-stage SIP. 
-%\kk{This is good. We should elaborate this paragraph more with references and move it to the 
-very beginning of this section.} 
-%\yoc{I moved this paragraph here.}
-
-
-%(What is SIPLIB?) 
-%\siplib\ \cite{web:SIPLIB1} is an abbreviated term of the Stochastic Integer Programming 
-(SIP) Library firstly contructed in 2002 by Shabbir Ahmed and his colleagues. The library has 
-been providing a collection of test instances to facilitate computational and algorithmic 
-research in SIP. Some new test problems with instances have been added to \siplib\ gradually 
-and now it contains nine different problems in total. %The instances are basically given in 
-the standard \smps\ format accompanied with additional information including parameter data, 
-size of the instance in terms of the number of rows, columns, and integers, benchmarking 
-information such as best known objective value or bounds, optimality gap, and solution time. 
-
-%\kk{We may want to start with the description of stochastic (integer) programming, followed 
-by the brief literature review in modeling and algorithms and the computational challenges.}
-
-%\yoc{I reflect this comment by moving and modifying the paragraph.}
 
 
 %\subsection{Literature review} \label{subsec:literaturereview}
@@ -54,7 +38,7 @@ them needs to be updated. Moreover, accompanied information on the instances doe
 be enough. 
 
 %(website and paper: Andy Felt, Jason Sarich, and K. A. Ariyawansa, Test-Problem Collection 
-for Stochastic Linear Programming, 2001-2004)
+%for Stochastic Linear Programming, 2001-2004)
 Ariyawansa and Felt \cite{journal:AF2004} have constructed a test problem collection for SP 
 since 2001. Unlike Holmes and Birge's work, the authors provide an accompanied document 
 explaining short description, mathematical problem statement, and notational reconciliation 
@@ -80,11 +64,6 @@ instances and post-analysis on the benchmark results. Currently, there is no pre
 contribution rule for \siplib\ so different problem provides different information. 
 Therefore, interpretation on the new results can be inconsistent.
 
-%\kk{This may not deserve a subsection. It can be in a part of Section 1. We need the 
-literature review for stochastic programming.} \yoc{I move this here. I think the literature 
-review on SP itself is not well blended in Introduction. Instead, Section 2: Stochastic 
-Integer Programming is written to briefly review the SIP.}
-
 %(Motivation) 
 %At the time \siplib\ appeared, it provided enoughly large-sized instances that is reasonable 
 to argue that the performance of algorithm is remarkable if it handles the instances well. 
@@ -108,13 +87,6 @@ three things. First, instances of the different type of problems other than exis
 Second, the larger-sized instances of the existing \siplib\ problems. Third, higher degree of 
 freedom for the researchers, e.g., users can easily generate instances of the size/shape as 
 they want.
-%\kk{The justification would be to provide more test instances (not because the existing 
-library has easy instances but because it provides limited testing resources (i.e., smps 
-files only). The functionality we provide to generate large instances is important; but large 
-instances themselves are not necessarily interesting. We should not focus on large vs. small, 
-hard vs. easy, etc.}
-%\yoc{Thanks. I modify this paragraph to describe our philosophy. And the term ``richer" is 
-firstly introduced and explained here.} 
 
 %(SMPS, Julia)
 We provide \siplibtwo\ in two ways: \smps\ files (*.cor, *.tim, *.sto) and open-source 
@@ -155,9 +127,6 @@ generating and analyzing the instances.
 	\item We provide both analytical and computational information on the accompanied 
 instances.
 \end{itemize}
-%\kk{This is a good summary. Before the summary, these should be properly discussed in this 
-section. ``richer'' is vague.}
-%\yoc{Thanks. For the term ``richer", I add the meaning in the 6th paragraph. }
 
 %By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational 
 and algorithmic research in SIP with benchmarking computational results, 2) not only 
