@@ -235,17 +235,23 @@ grestore
 
 % abstract
 \begin{abstract}
-\siplib\ was first constructed in 2002 by Shabbir Ahmed and his colleagues. It has been 
-providing a collection of test instances to facilitate computational and algorithmic 
-research in stochastic integer programming (SIP). State-of-the-art in SIP combined with the 
-speedup in computing machinery, however, requires more test instances than currently 
-available. By \siplibtwo, we provide richer collection of test instances accompanied with 
-both analytical and computational investigation. Notably, we provide a software package for 
-generating new instances in \smps\ format. The package is implemented in \julia\ programming 
-language with structured algebraic modeling package \structjump\ (block-structured 
-optimization framework for \julia\ mathematical programming).
+Advances in numerical methods for SIP has been made for the last decades. Many numerical 
+algorithms have been developed and implemented as software packages. However, testing new 
+algorithms has always been challenging for stochastic programming, mainly due to the lack of 
+test instances.  We present a set of test problem instances for stochastic (mixed-) integer 
+programming (SIP). In addition to the existing \siplib\ instances available in 
+\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, we provide {\color{red} XX} additional 
+test instances arising in applications to energy, {\color{red} and so on}. \siplib\ provides 
+the \julia\ script for modeling SIP problems and writing them in \smps\ format, where 
+the stochastic programming problems can be modeled by using the algebraic modeling package 
+\structjump.  This will allow users to create new problem instances and modify the problem 
+instances (e.g., increasing the number of scenarios). We also report the computational 
+results from solving the problem instances in various metrics (e.g., solution time, 
+integrality gap, duality gap, value of stochastic solutions). For the computational results, 
+we use an open-source parallel decomposition solver DSP and generic optimization solver 
+CPLEX. \kk{Do we want to try PySP?}
 
-\keywords{Stochastic Integer Programming \and Problem Instances \and SIP \and SIPLIB \and Julia \and StructJuMP} 
+\keywords{Stochastic Mixed-Integer Programming \and Problem Instances \and SIPLIB \and Julia \and StructJuMP} 
 
 \subclass{90C15 \and 90C60 \and 90C90}
 \end{abstract}
