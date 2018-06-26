@@ -235,13 +235,13 @@ grestore
 
 % abstract
 \begin{abstract}
-Advances in numerical methods for SIP has been made for the last decades. Many numerical 
+Advances in numerical methods for stochastic (mixed-) integer 
+programming (SIP) has been made for the last decades. Many numerical 
 algorithms have been developed and implemented as software packages. However, testing new 
 algorithms has always been challenging for stochastic programming, mainly due to the lack of 
-test instances.  We present a set of test problem instances for stochastic (mixed-) integer 
-programming (SIP). In addition to the existing \siplib\ instances available in 
+test instances.  We present a set of test problem instances for SIP. In addition to the existing \siplib\ instances available in 
 \url{https://www2.isye.gatech.edu/~sahmed/siplib/}, we provide {\color{red} XX} additional 
-test instances arising in applications to energy, {\color{red} and so on}. \siplib\ provides 
+test instances arising in applications to energy, {\color{red} and so on}. \siplibtwo\ provides 
 the \julia\ script for modeling SIP problems and writing them in \smps\ format, where 
 the stochastic programming problems can be modeled by using the algebraic modeling package 
 \structjump.  This will allow users to create new problem instances and modify the problem 
@@ -249,7 +249,7 @@ instances (e.g., increasing the number of scenarios). We also report the computa
 results from solving the problem instances in various metrics (e.g., solution time, 
 integrality gap, duality gap, value of stochastic solutions). For the computational results, 
 we use an open-source parallel decomposition solver DSP and generic optimization solver 
-CPLEX. \kk{Do we want to try PySP?}
+CPLEX. \kk{Do we want to try PySP?} \yoc{I think CPLEX and DSP are enough unless our purpose is on comparing the performance of each different solver. One more thing is, PySP does not read SMPS files.}
 
 \keywords{Stochastic Mixed-Integer Programming \and Problem Instances \and SIPLIB \and Julia \and StructJuMP} 
 
