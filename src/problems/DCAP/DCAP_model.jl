@@ -66,7 +66,8 @@ function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
     for s in S
         sb = StructuredModel(parent=model, id = s, prob = Pr[s])
         @variable(sb, y[i=R, j=N, t=T], Bin)
-        @variable(sb, z[j=N,t=T] >= 0)
+        #@variable(sb, z[j=N,t=T] >= 0) # originally implemented variable (continuous)
+        @variable(sb, z[j=N,t=T], Bin)  # modify as SIPLIB 1.0
         @objective(sb, Min, sum(c[i,j,t,s]*y[i,j,t] for i in R for j in N for t in T) + sum(c0[j,t,s]*z[j,t] for j in N for t in T))
         @constraint(sb, [i=R, t=T], -sum(x[i,tau] for tau in 1:t) + sum(d[j,t,s]*y[i,j,t] for j in N) <= 0)
         @constraint(sb, [j=N, t=T], sum(y[i,j,t] for i in R) + z[j,t] == 1)

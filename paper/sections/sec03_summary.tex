@@ -1,5 +1,5 @@
 %\yoc{I strengthened this section towards discussing why the things we consider are important. }
-In this section, we explain information about the test problems in summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We explain why they are important in each subsection. This section reflects our philosophy in developing \siplibtwo. Detailed problem-specific information is available in Section \ref{sec:prob_desc} for those who are interested in.
+In this section, we explain information about the test problems in summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We explain why they are important for advances in SIP research study. This section reflects our philosophy in developing \siplibtwo. Detailed problem-specific information is available in Section \ref{sec:prob_desc} for those who are interested in.
 
 \subsection{Origin of the problems}
 Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ instances as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We needed to guess the missing links and sometimes develop our own way to implement the problems. 
@@ -139,8 +139,8 @@ For those reasons, we investigate the number of components present in instance. 
 				&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
 				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
 				\multirow{3}{*}{\dcap\ (\ref{dcap:notation})}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
-				& 2nd stage & -              & $\left(1+R\right)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
-				& Total          & $RT$           & $RT+\left(1+R\right)NT\mathcal{S}$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
+				& 2nd stage & -             & $(1+R)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
+				& Total          & $RT$           & $RT+(1+R)NTS$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
 				\multirow{3}{*}{\mptsps (\ref{mptsps:notation})} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
 				& 2nd stage & -              & $3(N-1)N$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
 				& Total          & $(N-1)N$          & $(N-1)(1+3\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
@@ -176,7 +176,7 @@ As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three differently 
 	\label{fig:stagewise_sparsity}
 \end{figure}
 
-Every SIP in EF has a block-diagonal structure in its coefficient matrix (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of the full deterministic equivalent form coefficient matrix.
+Every SIP in EF has a block-diagonal structure in its coefficient matrix (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of the extensive form coefficient matrix.
 \begin{figure}[]
 	\centering
 	\subfloat[][DCAP\_3\_3\_3\_3]

@@ -9,25 +9,27 @@
 %- preliminary results using CPLEX
 
 %\kk{Please describe what you present in this section. Subsectioning would also help.} \yoc{This section is newely written. Need more justification.} 
-\siplibtwo\ provides \smps\ instances for test and benchmarking  purpose. In this section, we report detailed information on each instance. This includes numerical size information, sparsity information, and computational results.
+\siplibtwo\ provides \smps\ instances for testing and benchmarking purpose. In this section, we report detailed analytic and computational information on each instance. This includes size, sparsity, and solution results.
 %\begin{itemize}
 %	\item Commercial MIP solver (CPLEX) result: optimality gap, integrality gap (LP relaxation gap, tightness), solution time, obj value
 %	\item DD solver (DSP) result: optimality gap, duality gap (convex relaxation gap), solution time, obj value
 %\end{itemize}
 
 \subsection{Size and sparsity information}
-Table \ref{table:instance_size_info_dcap}-\ref{table:instance_size_info_suc} in Section \ref{sec:instance_size_sparsity} report numerical size and sparsity information for each instance. The information is reported both blockwisely and totally. For example, the second-stage size information reports the number of variables in a single-scenario block (block W in Fig. \ref{fig:stagewise_sparsity}). Sparsity is reported in percentage (\%) and the file size is reported in kilobytes (KB).
+Table \ref{table:instance_size_info_dcap}-\ref{table:instance_size_info_suc} in Section \ref{sec:instance_size_sparsity} report size and sparsity information for each instance. The information is reported both block-wisely and totally (i.e., based on EF). For example, the second-stage size information reports the number of variables in a single-scenario block (block W in Fig. \ref{fig:stagewise_sparsity}). Sparsity is reported in percentage (\%) and the file size is reported in kilobytes (KB).
 
 \subsection{Computational results}
-We report computational information resulted from experiments. Unlike the size information, this information should be obtained highly computational methods. The result is provided in Table \ref{table:computation_report}. Throughout the following subsections, we explain about the computational experiments.
+In Table \ref{table:computation_report}, we report computational information resulted from experiments. Unlike the size and sparsity information, this should be obtained in highly computational way, which implies that the result is strongly affected depending on the computing environment in which experiments are performed. Throughout the following subsections, we explain about our computational experiments.
 
 \subsubsection{Experimental setting}
 %Table \ref{table:experimental_setting} summarizes the experimental setting. 
 All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. 
 
-We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 and an open-source DD based SIP solver \dsp. Since \cplex\ does not support \smps\ format as input, we use \dsp's option to solve the EF reading \smps\ files. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. We fully utilize 36 threads for each single instance as the both two solvers support multi-threads parallel computing. We set the termination condition on CPU time by 3 hours.  
+We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 and an open-source DD based SIP solver \dsp. We fully utilize 36 threads for each single instance as the both two solvers support multi-threads parallel computing. We set the termination condition on CPU time by 3 hours. 
 
-The size of the instances on which the experiments perform is chosen basically based on the former \siplib. Additionally, we generate and include some large-scenario instances into the experiments.
+Since \cplex\ does not support \smps\ format as its input format, we use \dsp's capability to solve the EF problem by reading \smps\ files. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. 
+
+The size of the instances on which the experiments perform is chosen basically based on the former \siplib. Additionally, we include some large-scenario instances when we could not find meaningful result from the small-scenario instances.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}

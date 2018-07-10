@@ -38,9 +38,10 @@ module Siplib
 
 end # end module Siplib
 
-#=
-
 using Siplib
+
+getSize(:DCAP,[2,3,3,200])
+generateSMPS(:DCAP,[2,3,3,200])
 
 m = getModel(:DCAP, [3,3,3,10])
 m = getModel(:MPTSPs, ["D0",5,10])
