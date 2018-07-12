@@ -79,17 +79,17 @@ $z_{LP2}$ is defined by the objective value of the following partly LP-relaxed p
 \end{subequations}
 Note that only the integrality of the second-stage variables is relaxed.
 
-$z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual problem. The Lagrangian dual problem can be derived from RP-EF' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}):
+$z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual problem. The Lagrangian dual problem can be derived from RP-EF' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}) using Lagrange multiplier $\lambda$:
 \begin{subequations}\label{ld}
 	\begin{align}
-	\textrm{(RP-LD) }\max_{\Lambda}\ z_{LD}(\Lambda) :=\min_{\mathrm{x},\mathrm{y}}  &\sum_{s=1}^{r}\left[\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)+\lambda_s^\top \left(H_s x_s\right)\right] \label{ld:obj}\\ 
-	\mathrm{s.t.}\ & (x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	 \label{ld:b}\\
-	&\lambda_s\in\mathbb{R}^{r\cdot n_1},\quad \forall s\in\{1,\ldots,r\}, \label{ld:c}
+	\textrm{(RP-LD) }\max_{\lambda\in\mathbb{R}^{rn_1}}\ z_{LD}(\lambda) :=\min_{\mathrm{x},\mathrm{y}}  &\sum_{s=1}^{r}\left[\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)+\lambda^\top \left(H_s x_s\right)\right] \label{ld:obj}\\ 
+	\mathrm{s.t.}\ & (x_s,y_s)\in G_s,\quad \forall s\in\{1,\ldots,r\},	 \label{ld:b}
+%	&\lambda\in\mathbb{R}^{rn_1}, \label{ld:c}
 	\end{align}
 \end{subequations}
-where $\Lambda:=\{\lambda_1,\ldots,\lambda_r\}$ and the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
+where the scenario feasibility set $G_s$ is still defined by (\ref{eq:SIP_2-4}).
 
-$z_{EV}$ is the objective value of the \textit{expected value problem}, which simply considers only the expected scenario data, $\bar{q}$, $\bar{h}$, $\bar{T}$, $\bar{W}$:
+$z_{EV}$ is the objective value of the \textit{expected value problem}, which simply considers only the averaged scenario data, $\bar{q}$, $\bar{h}$, $\bar{T}$, $\bar{W}$:
 \begin{subequations}\label{ev}
 	\begin{align}
 	\min_{x,y}\ z_{EV}(x,y):=&\ c^{\top}x + \bar{q}^{\top}y \label{ev:obj}\\ 
@@ -99,8 +99,7 @@ $z_{EV}$ is the objective value of the \textit{expected value problem}, which si
 	&y \in Y. \label{ev:e}
 	\end{align}
 \end{subequations}
-
-$z_{EEV}$ is defined by the \textit{expected result of using the first-stage solution of EV}, say $\bar{x}$: 
+$z_{EEV}$ is then defined by the \textit{expected result of using the first-stage solution of EV}, say $\bar{x}$: 
 \begin{subequations}\label{eev}
 	\begin{align}
 	\min_{\mathrm{y}}\ z_{EEV}(\mathrm{y}):=&\ c^{\top}\bar{x} + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \label{eev:obj}\\ 

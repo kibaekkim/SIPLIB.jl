@@ -6,7 +6,7 @@
 %\kk{We may have a better idea about this section, once you start answering the questions at the end of Section 4.2. But, for now I still think it would better simply cite a github page for this kind of information.}
 \subsection{Preliminaries}
 \subsubsection{\smps\ format} \label{subsec:smps}
-\smps\ format \cite{SMPS} is a data conventions for the automatic input of multiperiod stochastic linear programs. The input format is based on an old column-oriented format \mpsx\ standard and is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. 
+\smps\ format is a data conventions for the automatic input of multiperiod stochastic linear programs \cite{SMPS}. The input format is based on an old column-oriented format \mpsx\ standard and is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. 
 
 Three input files are required to specify an SP in \smps\ format:
 \begin{itemize}
@@ -14,7 +14,7 @@ Three input files are required to specify an SP in \smps\ format:
 	\item .tim: Time file which specifies the location where the second-stage begins.
 	\item .sto: Stoch file which contains stochastic data of all scenarios except the one included in \texttt{.cor} file.
 \end{itemize}
-One of the main functions of the package is to generate \smps\ files for an instance. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$.
+One of the main functions of the \julia\ package is to generate \smps\ files given an instance. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$:
 \begin{itemize}
 	\item DCAP\_R\_N\_T\_S.cor
 	\item DCAP\_R\_N\_T\_S.tim
@@ -23,7 +23,7 @@ One of the main functions of the package is to generate \smps\ files for an inst
 %\kk{This needs moved to later section.} \yoc{I move this to this section.}
 
 \subsubsection{\jumpmodel}
-\jumpmodel\ is a type defined in \jump\ package. An object of this type contains every information of an instance. Hence, almost every function in the package requires this object as one of its input arguments. Including \structjump\ package which is the two-stage stochastic extension of \jump, constructing a \jumpmodel\ object of a SIP instance is quite simpler and more straightforward than any other algebraic modeling language dedicated to SIP. For example, the script in Fig. \ref{fig:DCAP_model.jl} constructs an object \texttt{model} of a \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}).
+\jumpmodel\ is a kind of type (or struct, class) defined in \jump\ package. An object of this type contains every information of an instance. Hence, most functions defined in the \siplibtwo\ package require this object as one of its input arguments. Together with \structjump\ package, construction of a \jumpmodel\ object is much straightforward and simpler than any other algebraic modeling languages. For example, the script in Fig. \ref{fig:DCAP_model.jl} constructs an object \texttt{model} of a \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}).
 %
 %\subsection{Structure of the \julia\ package}
 %The tree in Fig. \ref{fig:siplibjl_structure} shows how the \julia\ package is structured. 
@@ -89,10 +89,12 @@ One of the main functions of the package is to generate \smps\ files for an inst
 %\end{figure}
 %
 %\texttt{src} folder on the top contains every implementation of the package. In the directly descendant folder \texttt{problems}, another folders with names for each problem present. Some folders in \texttt{problems} (e.g., \texttt{SIZES}) have \texttt{DATA} folder in it which contains external data for generating the instances. For example, the \texttt{DATA} folder under \texttt{SIZES} contains \texttt{oneperioddata.csv} file corresponding to Table \ref{sizes:data} for \sizes\ instances. 
-\subsection{Adding SIP problem into the package}
-Adding new problem to the package is as simple as adding a line to the existing file and implementing one or two scripts for the problem. The modification and implementation should follow the predefined way, e.g., folder name, script name, composite-type name, function name, and arguments of the function.
-\subsubsection{Modification of \texttt{problem\_info.csv}}
-The file \texttt{problem\_info.csv} contains basic information of each problem: problem name, number of parameters, note on parameters. Table \ref{table:problem_info.csv} shows the spread sheet representation of the .csv file. In order to add a new problem into the package, a new line for that problem should be appended at the end.
+\subsection{How to add a SIP problem into the package}
+Adding a new problem to the package is as simple as adding a line to the existing file and implementing one or two \julia\ scripts for the problem. One thing to keep in mind is that this procedure should follow the predefined way, e.g., folder name, script file name, composite-type name, function name, and arguments of the function.\\
+
+\noindent\textit{Step 1: Modification of \texttt{problem\_info.csv}}
+
+The file \texttt{problem\_info.csv} contains basic information of each problem: problem name, number of parameters, note on parameters. Table \ref{table:problem_info.csv} shows the spread sheet representation of the .csv file. In order to add a new problem into the package, a new line for that problem should be appended at the bottom.
 \begin{table}[H]
 	\centering
 	\caption{\texttt{problem\_info.csv} (spreadsheet representation)}
@@ -105,10 +107,13 @@ The file \texttt{problem\_info.csv} contains basic information of each problem: 
 		SSLP          & 3                      & {[}I, J, S{]}, All integers.    \\ \hline
 	\end{tabular}
 \end{table}
-\subsubsection{Implementation of modeling script \texttt{\_model.jl}}
-The modeling function for each problem is defined in the script \textit{model}. When an user wants to add a new problem, this script is the minimum required implementation. Sometimes the data generating function is separated from \textit{model} by \textit{data} when the data generating procedure is so complicated that makes the modeling function too long (e.g., \suc).
+
+%\subsubsection{Implementation of modeling script \texttt{\_model.jl}}
+\noindent\textit{Step 2. Implementation of a modeling script}
+
+The modeling function for each problem should be defined in the script \textit{model}. When an user wants to add a new problem, this script is the minimum required implementation. Sometimes the data generating function is separated from the \textit{model} script by \textit{data} script when the data generating procedure is complicated so that makes the modeling function too long (e.g., \suc).
 \begin{quote}
-	\noindent\textit{model} This kind of script contains a definition of the function that constructs and returns \jumpmodel-type object of an instance. This function calls \jump\ and \structjump\ packages. When there is a separated \textit{data} script, it must be included in this script. Fig \ref{fig:DCAP_model.jl} shows the example of \dcap: \texttt{DCAP\_model.jl}
+	\noindent\textit{model} This kind of script contains a definition of the function that constructs and returns \jumpmodel-type object. This function calls \structjump\ package. When there is a separated \textit{data} script, it must be included in this script. Fig \ref{fig:DCAP_model.jl} shows an example of \dcap: \texttt{DCAP\_model.jl}
 \end{quote}
 \begin{quote}
 	\noindent\textit{data} This kind of script defines the way how the package reads, generates, and stores instance data. This includes a definition of composite-type (\texttt{mutable struct} in \julia\ language) in which the data is stored. A data generating function (\texttt{function} in \julia\ language) is also defined in this script. Fig. \ref{fig:DCAP_data.jl} shows the data separation example for \dcap: \texttt{DCAP\_data.jl}.
@@ -216,6 +221,7 @@ The modeling function for each problem is defined in the script \textit{model}. 
 	
 	# data generating function
 	function DCAPData(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int)::DCAPData
+
 		srand(seed)
 		data = DCAPData()
 		

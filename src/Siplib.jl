@@ -37,7 +37,7 @@ module Siplib
            noteParams
 
 end # end module Siplib
-
+#=
 using Siplib
 
 getSize(:DCAP,[2,3,3,200])

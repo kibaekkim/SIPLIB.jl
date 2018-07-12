@@ -12,7 +12,6 @@
 
 # include generator file
 THIS_FILE_PATH = dirname(@__FILE__)
-SMPS_PATH = "$THIS_FILE_PATH/../experiment/SMPS"
 include("$THIS_FILE_PATH/../src/Siplib.jl")
 using Siplib
 
@@ -20,10 +19,10 @@ using Siplib
 ## parameter setting: Start ##
 ##############################
 param_set = Dict{Symbol, Array{Array{Any}}}()
-#=
+
 # DCAP
 param = [[2,3,3], [2,4,3], [3,3,2], [3,4,2]]
-nS = [1000, 3000, 5000, 7000, 9000]
+nS = [200,300,500]
 param_array = Any[]
 for p in param
     for n in nS
@@ -34,8 +33,8 @@ end
 param_set[:DCAP] = param_array
 
 # MPTSPs
-param = [["D0",50], ["D1",50], ["D2",50], ["D3",50], ["D0",100], ["D1",100], ["D2",100], ["D3",100]]
-nS = [100, 200, 300, 400, 500]
+param = [["D0",50], ["D1",50], ["D2",50], ["D3",50]]
+nS = [100]
 param_array = Any[]
 for p in param
     for n in nS
@@ -44,23 +43,10 @@ for p in param
     end
 end
 param_set[:MPTSPs] = param_array
-=#
-
-# SIZES
-param = [[]]
-nS = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000]
-param_array = Any[]
-for p in param
-    for n in nS
-        push!(param_array, copy(p))
-        push!(param_array[end], n)
-    end
-end
-param_set[:SIZES] = param_array
 
 # SMKP
 param = [[120]]
-nS = [500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+nS = [20, 40, 60, 80, 100]
 param_array = Any[]
 for p in param
     for n in nS
@@ -70,9 +56,22 @@ for p in param
 end
 param_set[:SMKP] = param_array
 
+# SIZES
+param = [[]]
+nS = [3, 5, 10, 100]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:SIZES] = param_array
+
+
 # SSLP
 param = [[5,25], [5,50], [10,50], [15,45]]
-nS = [1000, 2000, 3000, 4000, 5000]
+nS = [50, 100]
 param_array = Any[]
 for p in param
     for n in nS
@@ -84,7 +83,7 @@ param_set[:SSLP] = param_array
 
 # SUC
 param = ["FallWD", "FallWE", "SpringWD", "SpringWE", "SummerWD", "SummerWE", "WinterWD", "WinterWE"]
-nS = [10, 20, 30, 40, 50]
+nS = [10]
 param_array = Any[]
 for p in param
     for n in nS
@@ -105,9 +104,10 @@ param_set[:SUC] = param_array
 ##  Generating instances: Start  ##
 ###################################
 
-for prob in [:SMKP, :SIZES, :SSLP, :SUC]
+SMPS_PATH = "$THIS_FILE_PATH/../experiment/SMPS"
+for prob in [:DCAP, :MPTSPs, :SMKP, :SIZES, :SSLP, :SUC]
     for param in param_set[prob]
-        generateSMPS_with_name_splice(prob, param, SMPS_PATH*"/$(String(prob))")
+        generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false)
     end
 end
 
