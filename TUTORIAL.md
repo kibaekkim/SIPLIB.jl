@@ -23,32 +23,33 @@ DCAP, 4, "[R,N,T,S], All integers."
 - 4: Number of parameters that define the problem (e.g., `DCAP` has 4 parameters: |R|, |N|, |T|, |S|).
 - "[R,N,T,S], All integers.": Simple note on the parameters (if not needed, just let it "")
 
-Later, SMPS files will be generated using the following syntax:
+Later, SMPS files will be generated using the syntax like the following (minimal input arguments example):
 
 ```julia
 	julia> generateSMPS(:DCAP, [3,3,3,10])
 ```
 
 
-## Step 2. Create a new folder `DCAP` under: `/dir/Siplib/src/problem/`
+## Step 2. Create a new folder `DCAP` under: `/DIR/Siplib/src/problem/`
 
 The folder name must be the same as the problem name.
 
-## Step 3. Create `DCAP_model.jl` file into: `/dir/Siplib/src/problem/DCAP`
+## Step 3. Create `DCAP_model.jl` file into: `/DIR/Siplib/src/problem/DCAP`
 
-The name of the file must be `(problem_name)_model.jl`
+The file name must be `(problem_name)_model.jl`
 
 ## Step 4. Implement a modeling function on `DCAP_model.jl`: ``function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model``
 - This function returns a `JuMP.Model`-type object.
-- The name of the function must be same as the problem name.
+- The function name must be same as the problem name.
 - Be consistent with the order of the input arguments we have used. 
-- Note that the last argument `seed::Int=1` for the random seed must be added and set to be 1 as a default. It can be changed by user when generating SMPS files, e.g., 
+- Note that the argument `seed::Int=1` for the random seed must be added at the end and set to be 1 as a default. It can be changed by user when generating SMPS files, e.g., 
 
 ```julia
 	julia> generateSMPS(:DCAP, [3,3,3,10], seed=2)
 ```
 
 The full definition of the function ``DCAP()`` is:
+
 ```julia
 
 function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
@@ -116,14 +117,14 @@ julia> using Siplib
 julia> generateSMPS(:DCAP, [3,3,3,10])
 ```
 - Check out the directory `DIR/Siplib/instance` if SMPS files are stored.
-### Note: the function `generateSMPS()` has two necessary arguments (`problem::Symbol`, `params_arr::Any`) and five optional positional/keyword arguments: 
-
+### Note 1. The function `generateSMPS()` has two necessary arguments (`problem::Symbol`, `params_arr::Any`) and five optional positional/keyword arguments (see the table below).
+### Note 2. All the optional argurments have default values. Users can specify them with another values (see the table below).
+### Note 3. The positional argument must be placed at the proper position. The keyword arguments can be placed anywhere after the positional arguments. 
 Optional argument | Argument type | Meaning |Acceptable value | Example
 --- | --- | --- | --- | ---
-`DIR_NAME::String` | `positional` |Explicitly set the path in which SMPS files are stored |`String` (default:`"DIR/Siplib/instance"`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path")`
+`DIR_NAME::String` | `positional` |Set the path in which SMPS files are stored |`String` (default:`"DIR/Siplib/instance"`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path")`
 `seed::Int` | ` keyword` |Set random seed for pseudo random generator|`Int` (default:`1`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path",seed=2)`
 `lprelax::Bool`|` keyword`|Set the level of LP-relaxation (0: no relax, 1: 1st stage only, 2: 2nd stage only, 3: fully relax)|`0, 1, 2, 3` (defalut:`0`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path",lprelax=2)`
 `genericnames::Bool`|`keyword`|Set if we maintain original variable names (for human readability)|`true, false` (default:`true`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path",genericnames=false)`
 `splice::Bool`|`keyword`|Set if we splice the data in the model object after writing SMPS (for memory efficiency)|`true, false` (default:`true`)|`generateSMPS(:DCAP,[3,3,3,10],"another/path",splice=false)`
 
-### The positional argument must be placed at the proper position. The keyword argument can be placed anywhere after the positional arguments.
