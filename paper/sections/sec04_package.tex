@@ -6,13 +6,11 @@
 %\kk{We may have a better idea about this section, once you start answering the questions at the end of Section 4.2. But, for now I still think it would better simply cite a github page for this kind of information.}
 \subsection{Preliminaries}
 \subsubsection{\smps\ format} \label{subsec:smps}
-\smps\ format is a data conventions for the automatic input of multiperiod stochastic linear programs \cite{SMPS}. The input format is based on an old column-oriented format \mpsx\ standard and is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. 
-
-Three input files are required to specify an SP in \smps\ format:
+\smps\ format is a data convention for the automatic input of multi-period stochastic linear programs \cite{SMPS}. The input format is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. The following three input files are required to specify an SP in \smps\ format:
 \begin{itemize}
-	\item .cor: Core file written in \mps\ format. This describes the fundamental problem structure and contains the first-stage data and one second-stage scenario data.
+	\item .cor: Core file written in \mps\ format which is a widely accepted column-oriented standard for LP problems. This describes the fundamental problem structure and contains the first-stage data and a single second-stage scenario data.
 	\item .tim: Time file which specifies the location where the second-stage begins.
-	\item .sto: Stoch file which contains stochastic data of all scenarios except the one included in \texttt{.cor} file.
+	\item .sto: Stoch file which contains stochastic data of all scenarios except the one included in .cor file.
 \end{itemize}
 One of the main functions of the \julia\ package is to generate \smps\ files given an instance. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$:
 \begin{itemize}
