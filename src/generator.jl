@@ -1,4 +1,3 @@
-# please add more problems in this function
 """
     getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0)
 
@@ -22,7 +21,7 @@ function getModel(problem::Symbol, params_arr::Any ; seed::Int=1, lprelax::Int=0
 
 end
 
-# getModel: no optional arguments version
+# getModel(): no optional arguments version
 getModel(problem::Symbol, params_arr::Any, _seed::Int, _lprelax::Int) = getModel(problem, params_arr, seed = _seed, lprelax = _lprelax)
 
 """
@@ -46,6 +45,20 @@ function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirn
             INSTANCE_NAME *= "_LP$(lprelax)"
         end
         writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice)
+    end
+    return model
+
+end
+
+function generateMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ; seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true, decfile::Bool=false)
+
+    @time begin
+        model = getModel(problem, params_arr, seed, lprelax)
+        INSTANCE_NAME = getInstanceName(problem, params_arr)
+        if lprelax != 0
+            INSTANCE_NAME *= "_LP$(lprelax)"
+        end
+        writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, decfile)
     end
     return model
 

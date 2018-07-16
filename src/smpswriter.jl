@@ -403,6 +403,7 @@ end
 
 writeMPS(FILE_NAME, INSTANCE_NAME, mdata::ModelData, genericnames::Bool=true) = writeMPS(FILE_NAME, INSTANCE_NAME, mdata.mat, mdata.rhs, mdata.sense, mdata.obj, mdata.objsense, mdata.clbd, mdata.cubd, mdata.ctype, mdata.cname, genericnames)
 
+
 function writeCore(FILE_NAME, mdata_all::Array{ModelData,1}, genericnames::Bool=true)::ModelData
 
     print("Writing core file ... ")
@@ -595,3 +596,98 @@ end
 
 # writeSMPS: no optional arguments version
 writeSMPS(m, INSTANCE_NAME="instance", DIR_NAME="$(dirname(@__FILE__))/../instance", _genericnames::Bool=true, _splice::Bool=true) = writeSMPS(m, INSTANCE_NAME, DIR_NAME, genericnames=_genericnames, splice=_splice)
+
+function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname, genericnames::Bool=true)
+
+function writeMPS(FILE_NAME, mdata_all, genericnames, decfile)
+
+    # get # of first-stage rows and columns
+    nrows1, ncols1 = size(mdata_all[1].mat)
+
+    # get # of rows and columns for the scenario block
+    nrows2, ncols = size(mdata_all[2].mat)
+    ncols2 = ncols - ncols1
+
+    # core data (includes 1st stage & 2nd stage's 1st scenario data)
+    rhs      = [mdata_all[1].rhs  ; mdata_all[2].rhs]
+    sense    = [mdata_all[1].sense; mdata_all[2].sense]
+    obj      = [mdata_all[1].obj  ; mdata_all[2].obj]
+    objsense = mdata_all[1].objsense
+    clbd     = [mdata_all[1].clbd ; mdata_all[2].clbd]
+    cubd     = [mdata_all[1].cubd ; mdata_all[2].cubd]
+    ctype    = mdata_all[1].ctype * mdata_all[2].ctype
+    cname    = append!(mdata_all[1].cname, mdata_all[2].cname) # for column name
+    mat      = [[mdata_all[1].mat zeros(nrows1, ncols-ncols1)] ; mdata_all[2].mat]
+    @assert length(clbd) == ncols
+    @assert length(obj) == ncols
+
+    # reserve the nonzero spaces
+    for s = 3:length(mdata_all)
+        mat_rows = rowvals(mdata_all[s].mat)
+        for j in 1:ncols2
+            if obj[ncols1+j] == 0 && mdata_all[s].obj[j] != 0
+                obj[ncols1+j] = 1
+            end
+            for i in nzrange(mdata_all[s].mat,j)
+                if mat[nrows1+mat_rows[i],j] == 0.0
+                    mat[nrows1+mat_rows[i],j] = 1
+                end
+            end
+        end
+
+        for i in 1:nrows2
+            if rhs[nrows1+i] == 0 && mdata_all[s].rhs[i] != 0
+                rhs[nrows1+i] = 1
+            end
+        end
+    end
+
+    mdata_core = ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname)
+
+    writeMPS("$FILE_NAME.cor", basename(FILE_NAME), mdata_core, genericnames)
+
+    println("done")
+
+    return mdata_core
+end
+
+# MPS writer + optional dec file for a stochastic model instance
+function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true, decfile::Bool=false)
+
+    FILE_NAME = "$DIR_NAME/$INSTANCE_NAME"
+
+    if !decfile
+        println("Writing MPS file for $INSTANCE_NAME.")
+    else
+        println("Writing MPS and .dec files for $INSTANCE_NAME.")
+    end
+
+    # Check if m is a StructJuMP model
+    if !haskey(m.ext, :Stochastic)
+        JuMP.writeMPS(m, "$FILE_NAME.mps")
+        warn("This is not a stochastic model. $FILE_NAME.mps is generated.")
+        return
+    end
+
+    # Extract and store StructJuMP model data
+    mdata_all = getStructModelData(m, genericnames, splice)
+
+    # Write .mps file
+
+
+#=
+    # Write .cor file && Store core data
+    mdata_core = writeCore(FILE_NAME, mdata_all, genericnames)
+
+    # Write .tim and .sto files
+    writeTime(FILE_NAME, mdata_all[1], genericnames)
+    writeStoc(FILE_NAME, num_scenarios(m), getprobability(m), mdata_all, mdata_core, genericnames)
+=#
+    if splice == true
+        warn("Scenario data in JuMP.Model object was spliced. Set the optional argument 'splice=false' if you want to re-use the object.")
+    end
+
+    return
+end
+
+writeMPS() = writeMPS()
