@@ -5,17 +5,6 @@ Modeling and algorithms for SIP have been advanced for the last few decades. App
 
 Numerical tests and benchmarks are necessary for developing and improving algorithms. However,
 these have been challenging for the stochastic programming community, because of the limited number of test problem instances. 
-A portable stochastic programming test set (POSTS)~\cite{POSTS} is a small test set for 
-stochastic linear programming that provides 15 problems in SMPS format. 
-%Birge~\cite{POSTSresults} provides some computational results of the POSTS instances, but most of them needs to be updated. Moreover, accompanied information on the instances does not seem to be enough. 
-Ariyawansa and Felt~\cite{journal:AF2004} have constructed a test problem collection for SP 
-since 2001. Unlike Holmes and Birge's work, the authors provide an accompanied document 
-explaining short description, mathematical problem statement, and notational reconciliation 
-to a standard problem format for each of the 9 problems. Ariyawansa and Felt's collection 
-includes 3 problems that contain mixed integer variables. However, still the library is not 
-dedicated to SIP and size of the instances are not large enough to perform intensive 
-computational experiments. 
-
 SIPLIB is a set of test problem instances for SIP available in~\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where nine problem instances are available in SMPS format~\cite{?} with additional information such as random parameters, 
 instance size, best known objective value or bounds, optimality gap, and solution time.  
 However, the existing SIPLIB collection has a few limitations. 
@@ -31,6 +20,12 @@ Third, \siplib\ needs to be polished systematically in terms of both pre-analysi
 instances and post-analysis on the benchmark results. Currently, there is no predefined 
 contribution rule for \siplib\ so different problem provides different information. 
 Therefore, interpretation on the new results can be inconsistent.
+
+There are a few test libraries available for stochastic linear programming. 
+A portable stochastic programming test set (POSTS)~\cite{POSTS} is a small test set for 
+stochastic linear programming that provides 15 problems in SMPS format. The test set is available in~\url{http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html}.
+%Birge~\cite{POSTSresults} provides some computational results of the POSTS instances, but most of them needs to be updated. Moreover, accompanied information on the instances does not seem to be enough. 
+Ariyawansa and Felt~\cite{journal:AF2004} also present a test problem collection for stochastic programming, which comprises of three two-stage stochastic linear programs, two multi-stage stochastic linear programs, and four two-stage SMIPs. However, the the size of the instances are not large enough to perform intensive computational experiments \kk{This needs to be specific. We should see if we can include these}. 
 
 In this paper, we focus on two-stage SIP with 
 linear objective function and constraints, where the first-stage decision finds a solution before the 
