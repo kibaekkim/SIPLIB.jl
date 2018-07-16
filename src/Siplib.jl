@@ -5,7 +5,7 @@ module Siplib
     using PyPlot
 
     # include Siplib utility sources
-    include("./smpswriter.jl")
+    include("./writer.jl")
     include("./utility.jl")
     include("./generator.jl")
     include("./analyzer.jl")
@@ -20,8 +20,10 @@ module Siplib
 
     export getInstanceName,                 # return Instance name using problem & parameters
            getModel,                        # only returns JuMP.Model object
-           generateSMPS,                    # return JuMP.Model object & generate SMPS files (to use returned object, set splice=false)
+           generateSMPS,                    # generate SMPS files & return JuMP.Model object (to use returned object, set splice=false)
+           generateMPS,                     # generate MPS file with optional .dec file (set decfile=true) & return JuMP.Model object (to use returned object, set splice=false)
            writeSMPS,                       # convert JuMP.Model object to SMPS files
+           writeMPS,                        # convert JuMP.Model object to MPS files (if decfile=true, generate .dec file together)
            plotConstrMatrix,                # plot constraint matrix of the extensive form
            plotFirstStageBlock,             # plot block A (first stage only)
            plotSecondStageBlock,            # plot block W (second stage only)
@@ -37,6 +39,10 @@ module Siplib
            noteParams
 
 end # end module Siplib
+
+
+
+
 #=
 using Siplib
 

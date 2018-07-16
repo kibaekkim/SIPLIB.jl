@@ -46,10 +46,15 @@ function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirn
         end
         writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice)
     end
-    return model
 
+    return model
 end
 
+"""
+    generateMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ; seed::Int=1, varname::Bool=false, splice::Bool=true, decfile::Bool=false)
+
+Generates MPS file (with optional .dec file) and Returns JuMP.Model-type object.
+"""
 function generateMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ; seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true, decfile::Bool=false)
 
     @time begin
@@ -60,6 +65,6 @@ function generateMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirna
         end
         writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, decfile)
     end
-    return model
 
+    return model
 end
