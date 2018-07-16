@@ -4,12 +4,37 @@ both continuous and discrete decision variables with uncertain parameters~\cite{
 Modeling and algorithms for SIP have been advanced for the last few decades. Applications of SIP include power systems~\cite{?}, healthcare~\cite{?}, manufacturing systems~\cite{?}, and transportation~\cite{?}. With the advances, a number of solution methods have been developed and shown to be computationally effective for stochastic problems (e.g.,~\cite{?}). Moreover, many of the algorithms have been implemented as software packages either specific for certain problems~\cite{?} or for generic problems~\cite{?}.
 
 Numerical tests and benchmarks are necessary for developing and improving algorithms. However,
-these have been challenging for the stochastic programming community, because of the limited number of test problem instances. SIPLIB is a set of test problem instances for SIP available in~\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where nine problem instances are available in SMPS format~\cite{?} with additional information such as random parameters, 
+these have been challenging for the stochastic programming community, because of the limited number of test problem instances. 
+A portable stochastic programming test set (POSTS)~\cite{POSTS} is a small test set for 
+stochastic linear programming that provides 15 problems in SMPS format. 
+%Birge~\cite{POSTSresults} provides some computational results of the POSTS instances, but most of them needs to be updated. Moreover, accompanied information on the instances does not seem to be enough. 
+Ariyawansa and Felt~\cite{journal:AF2004} have constructed a test problem collection for SP 
+since 2001. Unlike Holmes and Birge's work, the authors provide an accompanied document 
+explaining short description, mathematical problem statement, and notational reconciliation 
+to a standard problem format for each of the 9 problems. Ariyawansa and Felt's collection 
+includes 3 problems that contain mixed integer variables. However, still the library is not 
+dedicated to SIP and size of the instances are not large enough to perform intensive 
+computational experiments. 
+
+SIPLIB is a set of test problem instances for SIP available in~\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where nine problem instances are available in SMPS format~\cite{?} with additional information such as random parameters, 
 instance size, best known objective value or bounds, optimality gap, and solution time.  
+However, the existing SIPLIB collection has a few limitations. 
+First, it provides instances with only a few variations of the number of first- and second-stage variables and the number of scenarios, which could have been easily parameterized in 
+modeling languages. Moreover, the precise information of the problem instances is 
+not easily accessible. Second, only a limited number of problem types are available in 
+the existing collection. Note that, with three variable types (i.e., continuous, 
+binary, integer) in two stages, the possible number of combinations is $\left[\sum_{k=1}
+^3\binom{3}{k}\right]^2=49$ in total. 
+The existing collection provides only 5 such combinations 
+regarding the problems that can be fully implementable based on the open information \kk{What does this mean?}.
+Third, \siplib\ needs to be polished systematically in terms of both pre-analysis on the 
+instances and post-analysis on the benchmark results. Currently, there is no predefined 
+contribution rule for \siplib\ so different problem provides different information. 
+Therefore, interpretation on the new results can be inconsistent.
 
 In this paper, we focus on two-stage SIP with 
-linear objective function and constraints, where the first stage finds a solution before the 
-random parameters are realized, and the second stage takes a recourse action to the 
+linear objective function and constraints, where the first-stage decision finds a solution before the 
+random parameters are realized, and the second-stage decision takes a recourse action to the 
 uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters (i.e., scenarios) are discrete and finite with known probabilities.
 A key challenge in SIP is that the size of
 the problem increases with the number of scenarios. The main difficulty in solving two-stage SIP is that the 
@@ -28,44 +53,9 @@ several groups after the computational experiments. \miplib\ provides instances 
 \textsf{MPS} format with a test engine developed to run different solvers in a defined way to 
 check the answers for consistency. 
 
-%(website: Derek Holmes, POSTS, 1993)
-For SP, to the best of our knowledge, the first such approach is Holmes and Birge's 
-\textit{portable stochastic programming test set} (POSTS) \cite{POSTS} since 1994. POSTS is 
-still available and provides a small test set of stochastic programming recourse problems in 
-\smps\ format. POSTS consists of 15 problems but not dedicated to SIP. Birge 
-\cite{POSTSresults} provides some computational results of the POSTS instances, but most of 
-them needs to be updated. Moreover, accompanied information on the instances does not seem to 
-be enough. 
-
-%(website and paper: Andy Felt, Jason Sarich, and K. A. Ariyawansa, Test-Problem Collection 
-%for Stochastic Linear Programming, 2001-2004)
-Ariyawansa and Felt \cite{journal:AF2004} have constructed a test problem collection for SP 
-since 2001. Unlike Holmes and Birge's work, the authors provide an accompanied document 
-explaining short description, mathematical problem statement, and notational reconciliation 
-to a standard problem format for each of the 9 problems. Ariyawansa and Felt's collection 
-includes 3 problems that contain mixed integer variables. However, still the library is not 
-dedicated to SIP and size of the instances are not large enough to perform intensive 
-computational experiments. 
-
-%(website: SIPLIB 1)
-The first SIP-oriented instance collection is the \siplib\ \cite{web:SIPLIB1} constructed in 
-2002 by Shabbir Ahmed and his colleagues. The instances are basically given in \smps\ format 
-accompanied with simple information on the problem and computational experiment. Although 
-\siplib\ provides basic ingredient to be exploited for SIP research, it has rooms for 
-improvement. First, \siplib\ only provides static instances and sometimes does not even 
-provide ready-to-use instance files, which limits usability of the library. Moreover, the 
-precise information for implementing the original problem is sometimes not allowed. Second, 
-we need more problems of various types. Considering three types of variables (continuous, 
-binary, integer) and two stages, the possible number of combination is $\left[\sum_{k=1}
-^3\binom{3}{k}\right]^2=49$ in total while \siplib\ provides only 5 such combinations 
-regarding the problems that can be fully implementable based on the open information.
-Third, \siplib\ needs to be polished systematically in terms of both pre-analysis on the 
-instances and post-analysis on the benchmark results. Currently, there is no predefined 
-contribution rule for \siplib\ so different problem provides different information. 
-Therefore, interpretation on the new results can be inconsistent.
 
 %(Motivation) 
-%At the time \siplib\ appeared, it provided enoughly large-sized instances that is reasonable 
+At the time \siplib\ appeared, it provided enoughly large-sized instances that is reasonable 
 to argue that the performance of algorithm is remarkable if it handles the instances well. 
 State-of-the-art in SIP combined with the speedup in computing machinery, however, makes many 
 instances in \siplib\ trivial so that we have not enough basis to use them for showing the 
@@ -74,7 +64,7 @@ the second version of \siplib\, say \siplibtwo\ that provides larger-sized test 
 with higher degree of tailorability, e.g., users can easily generate instances of test 
 problems as largely as they want.% in terms of the number of scenarios included.
 
-%At the time \siplib\ appeared, it provided enough instances to be used for computational 
+At the time \siplib\ appeared, it provided enough instances to be used for computational 
 experiments of SIP methods. State-of-the-art in SIP combined with the speedup in computing 
 machinery, however, requires more test sets as the existing instances have been conquered 
 gradually. As \siplib\ only provides limited testing resources (e.g., static instance files), 
@@ -128,7 +118,7 @@ The contributions of this work can be summarized as follows.
 	instances.
 \end{itemize}
 
-%By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational 
+By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational 
 and algorithmic research in SIP with benchmarking computational results, 2) not only 
 \texttt{SMPS} files but also utilities for generating/analyzing instances. Hence, the users 
 can obtain as large-sized instances as they need by generating new scenarios and including 
