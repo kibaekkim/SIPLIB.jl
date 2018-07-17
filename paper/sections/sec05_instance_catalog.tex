@@ -9,7 +9,7 @@
 %- preliminary results using CPLEX
 
 %\kk{Please describe what you present in this section. Subsectioning would also help.} \yoc{This section is newely written. Need more justification.} 
-\siplibtwo\ provides \smps\ instances for testing and benchmarking purpose. In this section, we report detailed analytic and computational information on each instance. This includes size, sparsity, and solution results.
+\siplibtwo\ provides \smps\ instances for testing and benchmarking purpose. In this section, we report detailed analytic and computational information for each instance. This includes size, sparsity, and solution results. In particular, we provide several computational and theoritical gap information for the objective values.
 %\begin{itemize}
 %	\item Commercial MIP solver (CPLEX) result: optimality gap, integrality gap (LP relaxation gap, tightness), solution time, obj value
 %	\item DD solver (DSP) result: optimality gap, duality gap (convex relaxation gap), solution time, obj value
@@ -25,11 +25,9 @@ In Table \ref{table:computation_report}, we report computational information res
 %Table \ref{table:experimental_setting} summarizes the experimental setting. 
 All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory, 45MB smart cache, and Intel Xeon Processor E5-2695 v4 that consists of 18 physical cores and 36 logical threads with base processor frequency 2.10GHz and maximum turbo frequency 3.30GHz. 
 
-We use two solvers, a commercial branch-and-cut based MIP solver \cplex\ 12.8 and an open-source DD based SIP solver \dsp. We fully utilize 36 threads for each single instance as the both two solvers support multi-threads parallel computing. We set the termination condition on CPU time by 3 hours. 
+We use two solvers, a general purpose commercial MIP solver \cplex\ 12.8 and an open-source DD-based SIP solver \dsp. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. Since \cplex\ does not support \smps\ as its input format, we use \dsp's capability to solve the EF problem by reading \smps\ files. We fully utilize 36 threads for each single instance as the both two solvers support multi-threads parallel computing. We set the termination condition on CPU time by 3 hours. 
 
-Since \cplex\ does not support \smps\ format as its input format, we use \dsp's capability to solve the EF problem by reading \smps\ files. For solving master/sub problems during DD procedure in \dsp, we also use \cplex\ 12.8. 
-
-The size of the instances on which the experiments perform is chosen basically based on the former \siplib. Additionally, we include some large-scenario instances when we could not find meaningful result from the small-scenario instances.
+The instances are generated in \smps\ format using the \julia\ package we introduced in Section \ref{sec:package} with default random seed 1. The sizes of the instances are chosen basically based on the original references. Additionally, we include some large-scenario instances when we could not find meaningful result from the small-scenario instances.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{multirow}
@@ -67,19 +65,19 @@ First, recall the extensive form RP in Section \ref{sec:sip}:
 	\end{align}
 \end{subequations}
 
-We use the vanilla $z$ to denote the value of the objective function in RHS of (\ref{ef:obj}) such that constraints (\ref{ef:b})-(\ref{ef:e}) are satisfied throughout this section and the report. We use the superscripted notation $z^*$ to denote the optimal objective value, $\tilde{z}$ for the best lower bound discovered for $z^*$, and $\hat{z}$ for the incumbent (best known integer solution) objective value. Hence, the relationship $\tilde{z}\le z^*\le\hat{z}$ always holds.
+We use the vanilla $z$ to denote the value of the objective function in RHS of (\ref{ef:obj}) such that constraints (\ref{ef:b})-(\ref{ef:e}) are satisfied throughout this section and the report. We use the superscripted notation $z^*$ to denote the true optimal objective value, $\tilde{z}$ for the best lower bound discovered for $z^*$, and $\hat{z}$ for the incumbent (best known integer solution) objective value. Hence, the relationship $\tilde{z}\le z^*\le\hat{z}$ always holds.
 
 $z_{LP2}$ is defined by the objective value of the following partly LP-relaxed problem:
 \begin{subequations}\label{ef-lp2}
 	\begin{align}
 	\textrm{(RP-LP2) }\min_{x,\mathrm{y}}\ z_{LP2}(x,\mathrm{y}):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \tag{\ref{ef:obj}}\\ 
 	\mathrm{s.t.}\ &\textrm{(\ref{ef:b})-(\ref{ef:d})}, \nonumber \\
-	& y_s \in Y \subseteq \mathbb{R}\backslash\mathbb{Z} ,\quad\forall s\in\{1,\ldots,r\}. \tag{\ref{ef:e}'}
+	& y_s \textrm{ is continuous} ,\quad\forall s\in\{1,\ldots,r\}. \tag{\ref{ef:e}'}
 	\end{align}
 \end{subequations}
-Note that only the integrality of the second-stage variables is relaxed.
+Note that only the integrality in the second-stage variables is relaxed.
 
-$z_{LD}$ is defined by the objective value of the corresponding Lagrangian dual problem. The Lagrangian dual problem can be derived from RP-EF' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}) using Lagrange multiplier $\lambda$:
+$z_{LD}$ is defined by the objective value of the associated Lagrangian dual problem. The Lagrangian dual problem can be derived from RP-EF' (\ref{sip:ef'}) by introducing the nonanticipativity constraints (\ref{eq:SIP_2-2}) into the objective function (\ref{eq:SIP_2-1}) using Lagrange multiplier $\lambda$:
 \begin{subequations}\label{ld}
 	\begin{align}
 	\textrm{(RP-LD) }\max_{\lambda\in\mathbb{R}^{rn_1}}\ z_{LD}(\lambda) :=\min_{\mathrm{x},\mathrm{y}}  &\sum_{s=1}^{r}\left[\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)+\lambda^\top \left(H_s x_s\right)\right] \label{ld:obj}\\ 
@@ -135,11 +133,11 @@ Noticeably, the inequality $z^*_{WS}\le z^*\le z^*_{EEV}$ is known to always hol
 			\toprule
 			Notation  & \multicolumn{1}{c}{Meaning}                                                                                                                    \\ \midrule
 			$z$       & Objective value of RP (\ref{ef:obj})-(\ref{ef:e})                                                                                         \\
-			$z_{LP2}$ & Objective value of RP with the second-stage only LP-relaxation (\ref{ef:obj})-(\ref{ef:d}),(\ref{ef:e}')                                              \\
-			$z_{LD}$  & Objective value of the Lagrangian dual problem of RP (\ref{ld:obj})-(\ref{ld:b}) \\ 
+			$z_{LP2}$ & Objective value of RP with the second-stage only LP-relaxation (\ref{ef:obj})-(\ref{ef:d}) and (\ref{ef:e}')                                              \\
+			$z_{LD}$  & Objective value of the Lagrangian dual problem of RP (\ref{ld:obj}) and (\ref{ld:b}) \\ 
 			$z_{EV}$ & Objective value of the expected value problem (\ref{ev:obj})-(\ref{ev:d})\\
-			$z_{EEV}$ & Objective value of RP using the first-stage solution obtained from EV (\ref{eev:obj})-(\ref{eev:c})\\
-			$z_{WS}$ & Expectation of the objective value of single scenario problem (\ref{ws}),(\ref{ssp:obj})-(\ref{ssp:e})\\
+			$z_{EEV}$ & Objective value of RP using the first-stage solution obtained from (\ref{eev:obj})-(\ref{eev:c})\\
+			$z_{WS}$ & Expected objective value of single scenario problem (\ref{ssp:obj})-(\ref{ssp:e})\\
 			\bottomrule
 		\end{tabular}%
 				
@@ -186,7 +184,7 @@ In Table \ref{table:computation_report}, we report objective values and several 
 \end{table}
 
 \begin{quote}
-	\noindent\textit{Objective value with processing time} We report the objective values from the two solvers. This value is $z^*$ if the optimality is attained in the time limit, but $\hat{z}$ otherwise.
+	\noindent\textit{Objective value with processing time} We report the objective values from the two solvers. This value is $z^*$ if the optimality is attained within the time limit, $\hat{z}$ otherwise.
 \end{quote}
 
 \begin{quote}

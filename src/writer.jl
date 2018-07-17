@@ -597,8 +597,7 @@ end
 
 # writeSMPS: no keyword arguments version
 writeSMPS(m, INSTANCE_NAME="instance", DIR_NAME="$(dirname(@__FILE__))/../instance",
-            _genericnames::Bool=true, _splice::Bool=true) = writeSMPS(m, INSTANCE_NAME, DIR_NAME,
-                                                                        genericnames=_genericnames, splice=_splice)
+            _genericnames::Bool=true, _splice::Bool=true) = writeSMPS(m, INSTANCE_NAME, DIR_NAME, genericnames=_genericnames, splice=_splice)
 
 # MPS writer (+ dec file) for a stochastic model instance
 function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true, decfile::Bool=false)

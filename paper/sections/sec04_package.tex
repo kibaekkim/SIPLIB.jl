@@ -1,27 +1,29 @@
 %\yoc{The contents of this section are completely changed. I tried to describe the structure and functionalities of the package rather than step-by-step tutorials. Users may refer to this section to participate in future improvement.}
-\siplibtwo\ is implemented in \julia\ programming language with algebraic modeling packages \jump\ and \structjump. We implement and provide \julia\ package for users to utilize funtionalities of \siplibtwo. In this section, we introduce the implementation of the package. We also explain how convenient \structjump\ is when it comes to model a SIP.
+We implement and release an open-source software package that provides diverse functionalities dedicated to SIP research with main emphasis on generating \smps\ format instances. The package is implemented in \julia\ programming language with algebraic modeling package \jump\ and its structural extension \structjump. Detailed tutorial to use the package is available in Section \ref{sec:tutorial}. 
 
+We believe that the \siplibtwo\ package is easy to use so the users can utilize the basic functionalities without much familiarity with \julia\ syntax. Moreover, the package is designed for being improved consistently in the future. For example, we expect more SIP problems and useful functionalities to be added by researchers in this field on top of the current initial release.
 %\kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
 %\yoc{Thanks. First of all, this section is written by benchmarking the MIPLIB 2010 paper. There is a section like this (Section 4: How to run a test, add a solver, and what the scripts do) so I think the reviewers of MPC may want us to include the section like this. And I wanted this draft to be look of completeness (not being looked abstractly) to concretely describe what is in my mind. As the main developer of SIPLIB 2.0 and based on my experience of using the Julia scripts for preliminary computational experiments, I think the current syntax I propose is reasonable and compact. The better suggestion/discussion on the syntax is always welcome and can be applied. More detailed manual will be surely accompanied later with the release of this package.} 
 %\kk{We may have a better idea about this section, once you start answering the questions at the end of Section 4.2. But, for now I still think it would better simply cite a github page for this kind of information.}
 \subsection{Preliminaries}
 \subsubsection{\smps\ format} \label{subsec:smps}
-\smps\ format is a data convention for the automatic input of multi-period stochastic linear programs \cite{SMPS}. The input format is designed to promote the efficient conversion of originally deterministic problems by introducing stochastic variants in separate files. The following three input files are required to specify an SP in \smps\ format:
+\smps\ format is a data convention for the automatic input of multi-stage SP \cite{SMPS}. The format is designed to extend \mps\ format, the column-oriented standard for deterministic program, to SP by introducing periodicity and scenario variants in separate files. The following three input files are required to specify an SP in \smps\ format:
 \begin{itemize}
-	\item .cor: Core file written in \mps\ format which is a widely accepted column-oriented standard for LP problems. This describes the fundamental problem structure and contains the first-stage data and a single second-stage scenario data.
-	\item .tim: Time file which specifies the location where the second-stage begins.
-	\item .sto: Stoch file which contains stochastic data of all scenarios except the one included in .cor file.
+	\item .cor: Core file written in \mps\ format. This describes the fundamental problem structure and contains the first-stage data and a single second-stage scenario data.
+	\item .tim: Time file which specifies the location where each stage begins.
+	\item .sto: Stoch file which contains all scenario data except for the one included in .cor file.
 \end{itemize}
-One of the main functions of the \julia\ package is to generate \smps\ files given an instance. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$:
+The most important functionality of the \siplibtwo\ package is to generate \smps\ files given an instance that is also generated inside the package. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$ using the command \texttt{generateSMPS(:DCAP, [R,N,T,S])}.
 \begin{itemize}
 	\item DCAP\_R\_N\_T\_S.cor
 	\item DCAP\_R\_N\_T\_S.tim
 	\item DCAP\_R\_N\_T\_S.sto
 \end{itemize}
-%\kk{This needs moved to later section.} \yoc{I move this to this section.}
 
 \subsubsection{\jumpmodel}
-\jumpmodel\ is a kind of type (or struct, class) defined in \jump\ package. An object of this type contains every information of an instance. Hence, most functions defined in the \siplibtwo\ package require this object as one of its input arguments. Together with \structjump\ package, construction of a \jumpmodel\ object is much straightforward and simpler than any other algebraic modeling languages. For example, the script in Fig. \ref{fig:DCAP_model.jl} constructs an object \texttt{model} of a \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}).
+\jumpmodel\ is a composite type (or struct, class, etc) defined in \jump\ package. Combining \structjump\ package together, constructing a \jumpmodel\ object of an SIP instance is straightforward and much simpler than any other algebraic modeling languages. For example, the script in Fig. \ref{fig:DCAP_model.jl} constructs an object \texttt{model} for \dcap\_$R$\_$N$\_$T$\_$S$ instance defined in formulation (\ref{dcap:obj})-(\ref{dcap:g}). 
+
+An object of this type contains every information of an instance. Hence, most functions defined in the \siplibtwo\ package require this object as one of the input arguments. The package provide a function to construct \jumpmodel\ object, e.g., \texttt{model = getModel(:DCAP, [R,N,T,S])} constructs an object \texttt{model} for an instance \dcap\_$R$\_$N$\_$T$\_$S$.
 %
 %\subsection{Structure of the \julia\ package}
 %The tree in Fig. \ref{fig:siplibjl_structure} shows how the \julia\ package is structured. 
@@ -88,11 +90,9 @@ One of the main functions of the \julia\ package is to generate \smps\ files giv
 %
 %\texttt{src} folder on the top contains every implementation of the package. In the directly descendant folder \texttt{problems}, another folders with names for each problem present. Some folders in \texttt{problems} (e.g., \texttt{SIZES}) have \texttt{DATA} folder in it which contains external data for generating the instances. For example, the \texttt{DATA} folder under \texttt{SIZES} contains \texttt{oneperioddata.csv} file corresponding to Table \ref{sizes:data} for \sizes\ instances. 
 \subsection{How to add a SIP problem into the package}
-Adding a new problem to the package is as simple as adding a line to the existing file and implementing one or two \julia\ scripts for the problem. One thing to keep in mind is that this procedure should follow the predefined way, e.g., folder name, script file name, composite-type name, function name, and arguments of the function.\\
+Adding a new problem to the \siplibtwo\ package is as simple as adding a line to the existing file and implementing one or two \julia\ scripts for the problem. One thing to keep in mind is that this procedure should follow the predefined way, e.g., folder name, script file name, composite-type name, function name, and arguments of the function.\\
 
-\noindent\textit{Step 1: Modification of \texttt{problem\_info.csv}}
-
-The file \texttt{problem\_info.csv} contains basic information of each problem: problem name, number of parameters, note on parameters. Table \ref{table:problem_info.csv} shows the spread sheet representation of the .csv file. In order to add a new problem into the package, a new line for that problem should be appended at the bottom.
+\noindent\textit{Step 1. Modification of \texttt{problem\_info.csv}} The .csv file contains basic information of each problem: problem name, number of parameters, note on parameters. Table \ref{table:problem_info.csv} shows the spread sheet representation of the .csv file. In order to add a new problem into the package, a new line for that problem should be appended at the bottom.
 \begin{table}[H]
 	\centering
 	\caption{\texttt{problem\_info.csv} (spreadsheet representation)}
@@ -107,14 +107,12 @@ The file \texttt{problem\_info.csv} contains basic information of each problem: 
 \end{table}
 
 %\subsubsection{Implementation of modeling script \texttt{\_model.jl}}
-\noindent\textit{Step 2. Implementation of a modeling script}
-
-The modeling function for each problem should be defined in the script \textit{model}. When an user wants to add a new problem, this script is the minimum required implementation. Sometimes the data generating function is separated from the \textit{model} script by \textit{data} script when the data generating procedure is complicated so that makes the modeling function too long (e.g., \suc).
+\noindent\textit{Step 2. Implementation of a modeling script} The modeling function for a problem should be defined in the script \textit{model}. When an user wants to add a new problem, this script is the minimum required implementation. Sometimes the data generating function is separated from the \textit{model} script by \textit{data} script when the data generating procedure is complicated so that makes the modeling function too long (e.g., \suc).
 \begin{quote}
-	\noindent\textit{model} This kind of script contains a definition of the function that constructs and returns \jumpmodel-type object. This function calls \structjump\ package. When there is a separated \textit{data} script, it must be included in this script. Fig \ref{fig:DCAP_model.jl} shows an example of \dcap: \texttt{DCAP\_model.jl}
+	\noindent\textit{model} (necessary) This kind of script contains a definition of the function that constructs and returns \jumpmodel-type object. This function calls \structjump\ package. When there is a separated \textit{data} script, it must be included in this script. Fig \ref{fig:DCAP_model.jl} shows an example of \dcap: \texttt{DCAP\_model.jl}
 \end{quote}
 \begin{quote}
-	\noindent\textit{data} This kind of script defines the way how the package reads, generates, and stores instance data. This includes a definition of composite-type (\texttt{mutable struct} in \julia\ language) in which the data is stored. A data generating function (\texttt{function} in \julia\ language) is also defined in this script. Fig. \ref{fig:DCAP_data.jl} shows the data separation example for \dcap: \texttt{DCAP\_data.jl}.
+	\noindent\textit{data} (optional) This kind of script defines the way how the package reads, generates, and stores instance data. This includes a definition of composite-type (\texttt{mutable struct} in \julia\ language) in which the data is stored. A data generating function (\texttt{function} in \julia\ language) is also defined in this script. Fig. \ref{fig:DCAP_data.jl} shows the data separation example for \dcap: \texttt{DCAP\_data.jl}.
 \end{quote}
 
 %
@@ -169,20 +167,21 @@ The modeling function for each problem should be defined in the script \textit{m
 		d = rand(nN, nT, nS) + 0.5
 		Pr = ones(nS)/nS
 		
-		# construct JuMP.Model
+		# construct a structured JuMP.Model
+		## declare an object
 		model = StructuredModel(num_scenarios = nS)
 		
-		## 1st stage
+		## declare 1st stage components
 		@variable(model, x[i=R,t=T] >= 0)
 		@variable(model, u[i=R,t=T], Bin)
 		@objective(model, Min, sum(a[i,t]*x[i,t] + b[i,t]*u[i,t] for i in R for t in T))
 		@constraint(model, [i=R,t=T], x[i,t] - u[i,t] <= 0)
 		
-		## 2nd stage
+		## declare 2nd stage components
 		for s in S
 			sb = StructuredModel(parent=model, id = s, prob = Pr[s])
 			@variable(sb, y[i=R, j=N, t=T], Bin)
-			@variable(sb, z[j=N,t=T] >= 0)
+        	@variable(sb, z[j=N,t=T], Bin)
 			@objective(sb, Min, sum(c[i,j,t,s]*y[i,j,t] for i in R for j in N for t in T) + sum(c0[j,t,s]*z[j,t] for j in N for t in T))
 			@constraint(sb, [i=R, t=T], -sum(x[i,tau] for tau in 1:t) + sum(d[j,t,s]*y[i,j,t] for j in N) <= 0)
 			@constraint(sb, [j=N, t=T], sum(y[i,j,t] for i in R) + z[j,t] == 1)
@@ -243,24 +242,25 @@ The modeling function for each problem should be defined in the script \textit{m
 	\caption{Example: \texttt{DCAP\_data.jl}}
 	\label{fig:DCAP_data.jl}
 \end{figure}
-%
-%\subsubsection{Scripts for convenient functionalities}
-%To provide convenience for users, we implement various functions which are useful in terms of investigating the factors we have discussed in the previous Section \ref{sec:summary}. The following scripts stand for that purpose.
-%\begin{quotation}
-%	\noindent\textit{smpswriter} This script implements the basic building blocks for the functions that convert \jumpmodel\ object to \smps\ files. 
-%\end{quotation}
-%
-%\begin{quotation}
-%	\noindent\textit{generator} This script defines user-interfacing functions that generate \smps\ files as well as constructing \jumpmodel\ object.
-%\end{quotation}
-%
-%\begin{quotation}
-%	\noindent\textit{analyzer} This script implements the functions for analysis of instances. This includes getting size information, sparsity information, and plots of sparsity patterns.
-%\end{quotation}
-%
-%\begin{quotation}
-%	\noindent\textit{utility} This script contains some utility functions that help implementing the package.
-%\end{quotation}
-%
+
+\subsection{Scripts for convenient functionalities}
+To provide convenience for users, we implement various functions for investigating the factors we have discussed in the previous Section \ref{sec:summary}. The following scripts stand for that purpose.
+\begin{quotation}
+	\noindent\textit{generator} This script defines user-interfacing functions that directly generate \smps\ or \mps\ files of an instance and simultaneously returns corresponding \jumpmodel\ object.
+\end{quotation}
+
+\begin{quotation}
+	\noindent\textit{writer} This script implements the basic building blocks for the functions that convert \jumpmodel\ object to \smps\ or \mps\ files. 
+\end{quotation}
+
+
+\begin{quotation}
+	\noindent\textit{analyzer} This script implements the functions for analysis of instances. This includes size information, sparsity information, and visual plots of sparsity pattern.
+\end{quotation}
+
+\begin{quotation}
+	\noindent\textit{utility} This script contains some utility functions that help implementing the package. For example, instance naming, LP-relaxation, and matrix plotting.
+\end{quotation}
+
 
 
