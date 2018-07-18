@@ -17,8 +17,8 @@ We assume that you are in Linux environment. To use \siplibjl, you need to perfo
 		\item \texttt{cd dir/Siplib/src}	
 	\end{itemize}
 	\item Run \julia\ in that directory
-	\item excute \texttt{include("Siplib.jl")}
-	\item excute \texttt{using Siplib}
+	\item Excute \texttt{include("Siplib.jl")}
+	\item Excute \texttt{using Siplib}
 \end{enumerate}
 Then, you are all set to use \siplibjl. To make it sure, execute the following line to generate DCAP\_2\_2\_2\_10 instance:
 \begin{lstlisting}[frame=single,language=julia]
@@ -33,8 +33,8 @@ If it works well, you will see the three files in \texttt{dir/Siplib/instance}:
 
 
 \subsection{Basic usages}
-\subsubsection{Generating \smps\ instance}
-Use \texttt{generateSMPS(problem, params\_arr)} with proper values in Table \ref{table:numparameter} to generate \smps\ files for instances, for example:
+\subsubsection{Generating \smps\ or \mps\ instance}
+Use \texttt{generateSMPS(problem, params\_arr)} or \texttt{generateMPS(problem, params\_arr)} with proper values in Table \ref{table:numparameter} to generate \smps\ or \mps\ files for instances, for example:
 \begin{lstlisting}[frame=single,language=julia]
 julia> generateSMPS(:DCAP, [2,2,2,10])
 \end{lstlisting}
@@ -42,7 +42,7 @@ The default directory in which the files are stored is \texttt{dir/Siplib/instan
 \begin{lstlisting}[frame=single,language=julia]
 julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
 \end{lstlisting}
-\texttt{generateSMPS(problem, params\_arr)} has four more optional keyword arguments: \texttt{seed},  \texttt{splice}, \texttt{genericnames}, \texttt{lprelax}. For details, please see the later subsection (\ref{tutorial:gen_instance}).
+\texttt{generateSMPS()} has four keyword arguments: \texttt{genericnames}, \texttt{seed}, \texttt{splice}, and \texttt{lprelax}. \texttt{generateMPS()} has the same four keyword arguments with one more keyword argument \texttt{decfile}. If we set \texttt{decfile=true}, a .dec file that specifies scenario-specific blocks is generated together. For more details, please see the later subsection (\ref{tutorial:gen_instance}).
 
 \begin{table}[H]
 	\centering

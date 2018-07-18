@@ -113,7 +113,7 @@ Based on the RP-EF', there are two representative scenario-wise decomposition al
 
 %We assume that SIP does not necessarily have relatively complete recourse. We recall that without this property there can exist an $\hat{x}\in X$ satisfying $A\hat{x}\ge b$ for which there does not exist a recourse $y\in\mathbb{R}^{m_2}$ satisfying $(\hat{x},y)\in G_s$ for some $s$. In other words, not every choice of the first-stage variables is guaranteed to have feasible recourse for all scenarios.
 
-The main idea of DD algorithm is to relax the nonanticipativity constraints using Lagrange multipliers and then to restore them. Given set of multipliers, the problem is separable by scenarios hence the associated dual function can be optimized scenario-wise independently \cite{journal:CS1999}. The conceptual steps of the DD procedure can be explained as follows:
+The main idea of DD algorithm is to relax the nonanticipativity constraints using Lagrange multipliers and then to restore them. Given set of multipliers, the problem is separable by scenarios hence the associated dual function can be optimized scenario-wise independently \cite{journal:CS1999}. The Lagrange multipliers can be updated by various methods, e.g., column generation \cite{journal:LMPS2013,journal:LS2004}, subgradient \cite{journal:CS1999,journal:PO2013,journal:A2013}, and cutting plane \cite{journal:LMPS2013}. The conceptual steps of the DD procedure can be explained as follows:
 \begin{enumerate}
 	\item Using Lagrangian multiplier (or dual variable) $\lambda$, relax the nonanticipativity constraints (\ref{eq:SIP_2-2}) by introducing them into the objective function (\ref{eq:SIP_2-1}).
 	\item Let $k=0$ be the iteration step and set initial value on the $k$-step dual variable $\lambda^{(k)}$.

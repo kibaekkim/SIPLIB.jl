@@ -93,7 +93,7 @@ function getModelData(m::JuMP.Model, genericnames::Bool=true, splice::Bool=true)
             push!(cname, JuMP.getname(m,i))
         end
     else genericnames == true
-        cname = String[]
+        cname = String[]    # empty string array
     end
 
     return ModelData(mat, rhs, sense, obj, m.objSense, m.colLower, m.colUpper, ctype, cname)
@@ -125,10 +125,10 @@ function getStructModelData(m::JuMP.Model, genericnames::Bool=true, splice::Bool
     nrows1, ncols1 = size(mdata_all[1].mat)
     nrows2, ncols  = size(mdata_all[2].mat)
     ncols2 = ncols - ncols1
+    @printf("  Number of scenarios: %d\n", num_scenarios(m))
     @printf("   First stage: vars (%d), cons (%d)\n", ncols1, nrows1)
     @printf("  Second stage: vars (%d), cons (%d)\n", ncols2, nrows2)
-    @printf("  Number of scenarios: %d\n", num_scenarios(m))
-
+    @printf("      In total: vars (%d), cons (%d)\n", ncols1 + ncols2*num_scenarios(m), nrows1 + nrows2*num_scenarios(m))
     return mdata_all
 end
 
@@ -458,15 +458,14 @@ function writeCore(FILE_NAME, mdata_all::Array{ModelData,1}, genericnames::Bool=
     return mdata_core
 end
 
-function writeTime(FILE_NAME, mdata1::ModelData, genericnames::Bool=true)
+#function writeTime(FILE_NAME, mdata1::ModelData, genericnames::Bool=true)
+function writeTime(FILE_NAME, mdata_all::Array{ModelData,1}, genericnames::Bool=true)
 
     print("Writing time file ... ")
 
     fp = open("$FILE_NAME.tim", "w")
 
-    mat1 = mdata1.mat
-
-    start_cons2, start_vars2 = size(mat1)
+    start_cons2, start_vars2 = size(mdata_all[1].mat)
     start_vars2 += 1
     start_cons2 += 1
 
@@ -474,8 +473,9 @@ function writeTime(FILE_NAME, mdata1::ModelData, genericnames::Bool=true)
     println(fp, "TIME          ", basename(FILE_NAME))
     println(fp, "PERIODS       IMPLICIT")
     if genericnames == false
-        @printf(fp, "    %-8s  %-8s  PERIOD1\n", mdata1.cname[1], "CON1")
-        @printf(fp, "    %-8s  %-8s  PERIOD2\n", mdata1.cname[start_vars2], "CON"*string(start_cons2))
+        @printf(fp, "    %-8s  %-8s  PERIOD1\n", mdata_all[1].cname[1], "CON1")
+        #@printf(fp, "    %-8s  %-8s  PERIOD2\n", mdata1.cname[start_vars2], "CON"*string(start_cons2))
+        @printf(fp, "    %-8s  %-8s  PERIOD2\n", mdata_all[2].cname[1], "CON"*string(start_cons2))
     elseif genericnames == true
         @printf(fp, "    %-8s  %-8s  PERIOD1\n", "VAR1", "CON1")
         @printf(fp, "    %-8s  %-8s  PERIOD2\n", "VAR"*string(start_vars2), "CON"*string(start_cons2))
@@ -560,13 +560,14 @@ end
 """
     writeSMPS(model::JuMP.Model, INSTANCE_NAME::String, DIR_NAME::String; genericnames::Bool, splice::Bool)
 
-model (necessary): JuMP.Model-type object input.
-INSTANCE_NAME (optional): Name of the instance (DEFAULT: "instance")
-DIR_NAME (optional): The path in which SMPS files are stored. (DEFAULT: "../instance/")
-genericnames (optional): 'true' if you want to let Siplib automatically generate: VAR1, VAR2, ... . 'false' if you want to maintain the original (readable) variable names. (DEFAULT: true)
-splice (optional): 'true' then data in the model is spliced after writing SMPS files so you cannot re-use the object. 'false' if you want to re-use the JuMP.Model object.  (DEFAULT: true)
+model (necessary, positional): JuMP.Model-type object input.
+INSTANCE_NAME (optional, positional): Name of the instance (DEFAULT: "instance")
+DIR_NAME (optional, positional): The path in which SMPS files are stored. (DEFAULT: "../instance/")
+genericnames (optional, keyword): 'true' if you want to let Siplib automatically generate: VAR1, VAR2, ... . 'false' if you want to maintain the original (readable) variable names. (DEFAULT: true)
+splice (optional, keyword): 'true' then data in the model is spliced after writing SMPS files so you cannot re-use the object. 'false' if you want to re-use the JuMP.Model object.  (DEFAULT: true)
+smpsfile (optional, keyword): 'true' if you want to generate .smps file together (for SCIP 6.0).
 """
-function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true)
+function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true, smpsfile::Bool=false)
 
     FILE_NAME = "$DIR_NAME/$INSTANCE_NAME"
     println("Writing SMPS files for $INSTANCE_NAME.")
@@ -585,8 +586,18 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
     mdata_core = writeCore(FILE_NAME, mdata_all, genericnames)
 
     # Write .tim and .sto files
-    writeTime(FILE_NAME, mdata_all[1], genericnames)
+    #writeTime(FILE_NAME, mdata_all[1], genericnames)
+    writeTime(FILE_NAME, mdata_all, genericnames)
     writeStoc(FILE_NAME, num_scenarios(m), getprobability(m), mdata_all, mdata_core, genericnames)
+
+    # Generate .smps file if smpsfile == true
+    if smpsfile == true
+        fp_smps = open("$FILE_NAME.smps", "w")
+        println(fp_smps, "$INSTANCE_NAME.cor")
+        println(fp_smps, "$INSTANCE_NAME.tim")
+        println(fp_smps, "$INSTANCE_NAME.sto")
+        close(fp_smps)
+    end
 
     if splice == true
         warn("Scenario data in JuMP.Model object was spliced. Set the optional argument 'splice=false' if you want to re-use the object.")
@@ -597,7 +608,7 @@ end
 
 # writeSMPS: no keyword arguments version
 writeSMPS(m, INSTANCE_NAME="instance", DIR_NAME="$(dirname(@__FILE__))/../instance",
-            _genericnames::Bool=true, _splice::Bool=true) = writeSMPS(m, INSTANCE_NAME, DIR_NAME, genericnames=_genericnames, splice=_splice)
+            _genericnames::Bool=true, _splice::Bool=true, _smpsfile::Bool=false) = writeSMPS(m, INSTANCE_NAME, DIR_NAME, genericnames=_genericnames, splice=_splice, smpsfile=_smpsfile)
 
 # MPS writer (+ dec file) for a stochastic model instance
 function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true, decfile::Bool=false)

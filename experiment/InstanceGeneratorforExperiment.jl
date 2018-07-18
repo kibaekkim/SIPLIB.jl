@@ -105,7 +105,8 @@ param_set[:SUC] = param_array
 ###################################
 
 SMPS_PATH = "$THIS_FILE_PATH/../experiment/SMPS"
-for prob in [:DCAP, :MPTSPs, :SMKP, :SIZES, :SSLP, :SUC]
+#for prob in [:DCAP, :MPTSPs, :SMKP, :SIZES, :SSLP, :SUC]
+for prob in [:DCAP]
     for param in param_set[prob]
         generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false)
         generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, lprelax=2)

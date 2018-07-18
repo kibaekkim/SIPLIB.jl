@@ -39,15 +39,12 @@ module Siplib
            noteParams
 
 end # end module Siplib
-
-
-
-
 #=
 using Siplib
 
+generateSMPS(:SSLP,[5,25,50],genericnames=false,smpsfile=true)
 getSize(:DCAP,[2,3,3,200])
-generateSMPS(:DCAP,[2,3,3,200])
+generateSMPS(:DCAP,[2,4,3,200], genericnames=false)
 
 m = getModel(:DCAP, [3,3,3,10])
 m = getModel(:MPTSPs, ["D0",5,10])

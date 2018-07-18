@@ -36,8 +36,6 @@ mutable struct Sparsity
     Sparsity() = new()
 end
 
-
-
 function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot"; close::Bool=false)
 
     mdata_all = getStructModelData(model, false, false)
