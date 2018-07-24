@@ -1,5 +1,5 @@
 %\yoc{The contents of this section are completely changed. I tried to describe the structure and functionalities of the package rather than step-by-step tutorials. Users may refer to this section to participate in future improvement.}
-We implement and release an open-source software package that provides diverse functionalities dedicated to SIP research with main emphasis on generating \smps\ format instances. The package is implemented in \julia\ programming language with algebraic modeling package \jump\ and its structural extension \structjump. Detailed tutorial to use the package is available in Section \ref{sec:tutorial}. 
+We implement and release an open-source software package that provides diverse functionalities dedicated to SIP research with main emphasis on generating \smps\ format instances. The package is implemented in \julia\ programming language with algebraic modeling package \jump\ and its structural extension \structjump. Detailed tutorial about how to use the package is available in Section \ref{sec:tutorial}. 
 
 We believe that the \siplibtwo\ package is easy to use so the users can utilize the basic functionalities without much familiarity with \julia\ syntax. Moreover, the package is designed for being improved consistently in the future. For example, we expect more SIP problems and useful functionalities to be added by researchers in this field on top of the current initial release.
 %\kk{An overall comment is that the minimal use of code syntax is usually good. Once the paper is published, the syntax is likely to change overtime. Then, the whole section will become wrong. For example, instead of using Siplib.jl, we can call the package or function.}
@@ -7,11 +7,11 @@ We believe that the \siplibtwo\ package is easy to use so the users can utilize 
 %\kk{We may have a better idea about this section, once you start answering the questions at the end of Section 4.2. But, for now I still think it would better simply cite a github page for this kind of information.}
 \subsection{Preliminaries}
 \subsubsection{\smps\ format} \label{subsec:smps}
-\smps\ format is a data convention for the automatic input of multi-stage SP \cite{SMPS}. The format is designed to extend \mps\ format, the column-oriented standard for deterministic program, to SP by introducing periodicity and scenario variants in separate files. The following three input files are required to specify an SP in \smps\ format:
+\smps\ format is a data convention for the automatic input of multi-stage SP \cite{SMPS}. The format is designed to extend \mps\ format, a column-oriented standard for deterministic program, to SP by introducing periodicity and scenario variants in separate files. The following three input files are required to specify an SP in \smps\ format:
 \begin{itemize}
 	\item .cor: Core file written in \mps\ format. This describes the fundamental problem structure and contains the first-stage data and a single second-stage scenario data.
 	\item .tim: Time file which specifies the location where each stage begins.
-	\item .sto: Stoch file which contains all scenario data except for the one included in .cor file.
+	\item .sto: Stoch file which contains scenario data.
 \end{itemize}
 The most important functionality of the \siplibtwo\ package is to generate \smps\ files given an instance that is also generated inside the package. For example, the package generates the following three files for a \dcap\ instance \dcap\_$R$\_$N$\_$T$\_$S$ using the command \texttt{generateSMPS(:DCAP, [R,N,T,S])}.
 \begin{itemize}
@@ -90,9 +90,9 @@ An object of this type contains every information of an instance. Hence, most fu
 %
 %\texttt{src} folder on the top contains every implementation of the package. In the directly descendant folder \texttt{problems}, another folders with names for each problem present. Some folders in \texttt{problems} (e.g., \texttt{SIZES}) have \texttt{DATA} folder in it which contains external data for generating the instances. For example, the \texttt{DATA} folder under \texttt{SIZES} contains \texttt{oneperioddata.csv} file corresponding to Table \ref{sizes:data} for \sizes\ instances. 
 \subsection{How to add a SIP problem into the package}
-Adding a new problem to the \siplibtwo\ package is as simple as adding a line to the existing file and implementing one or two \julia\ scripts for the problem. One thing to keep in mind is that this procedure should follow the predefined way, e.g., folder name, script file name, composite-type name, function name, and arguments of the function.\\
+Adding a new problem to the \siplibtwo\ package is as  simple as (1) adding a line to the existing file and (2) implementing one or two \julia\ scripts for the problem. One thing to keep in mind is that this procedure should follow the predefined way, e.g., folder name, script file name, composite-type name, function name, and arguments of the functions.\\
 
-\noindent\textit{Step 1. Modification of \texttt{problem\_info.csv}} The .csv file contains basic information of each problem: problem name, number of parameters, note on parameters. Table \ref{table:problem_info.csv} shows the spread sheet representation of the .csv file. In order to add a new problem into the package, a new line for that problem should be appended at the bottom.
+\noindent\textit{Step 1. Modification of \texttt{problem\_info.csv}} The .csv file contains basic information of each problem: problem name, number of parameters, simple description for the parameters. Table \ref{table:problem_info.csv} shows the spread sheet representation of the .csv file. In order to add a new problem into the package, a new line for that problem should be appended at the bottom.
 \begin{table}[H]
 	\centering
 	\caption{\texttt{problem\_info.csv} (spreadsheet representation)}
@@ -107,12 +107,12 @@ Adding a new problem to the \siplibtwo\ package is as simple as adding a line to
 \end{table}
 
 %\subsubsection{Implementation of modeling script \texttt{\_model.jl}}
-\noindent\textit{Step 2. Implementation of a modeling script} The modeling function for a problem should be defined in the script \textit{model}. When an user wants to add a new problem, this script is the minimum required implementation. Sometimes the data generating function is separated from the \textit{model} script by \textit{data} script when the data generating procedure is complicated so that makes the modeling function too long (e.g., \suc).
+\noindent\textit{Step 2. Implementation of a modeling script} The modeling function for a problem should be defined in the script \textit{model}. When an user wants to add a new problem, this script is the minimum required implementation. Sometimes the data generating part is separated from the \textit{model} script by \textit{data} script when the data generation is complicated so that makes the modeling function too messy (e.g., \suc).
 \begin{quote}
-	\noindent\textit{model} (necessary) This kind of script contains a definition of the function that constructs and returns \jumpmodel-type object. This function calls \structjump\ package. When there is a separated \textit{data} script, it must be included in this script. Fig \ref{fig:DCAP_model.jl} shows an example of \dcap: \texttt{DCAP\_model.jl}
+	\noindent\textit{model} (necessary) This kind of script contains a definition of the function that constructs a \jumpmodel-type object. This function calls \structjump\ package. Fig \ref{fig:DCAP_model.jl} shows an example of \dcap: \texttt{DCAP\_model.jl}
 \end{quote}
 \begin{quote}
-	\noindent\textit{data} (optional) This kind of script defines the way how the package reads, generates, and stores instance data. This includes a definition of composite-type (\texttt{mutable struct} in \julia\ language) in which the data is stored. A data generating function (\texttt{function} in \julia\ language) is also defined in this script. Fig. \ref{fig:DCAP_data.jl} shows the data separation example for \dcap: \texttt{DCAP\_data.jl}.
+	\noindent\textit{data} (optional) For some problems that have complicated data generation procedure, we implement this script separately from the \textit{model} script. This includes a definition of composite-type in which data is stored. A data generating function is also defined in this script. The function generates the data and returns it in a object of the composite-type we defined. Whenever this \textit{data} script exists separately, it must be included in the \textit{model} script. Fig. \ref{fig:DCAP_data.jl} shows an example for \dcap: \texttt{DCAP\_data.jl}.
 \end{quote}
 
 %
@@ -197,7 +197,7 @@ Adding a new problem to the \siplibtwo\ package is as simple as adding a line to
 \begin{figure}[]
 	\centering
 	\begin{lstlisting}[frame=single,language=julia]
-	# definition of data container
+	# definition of a composite type
 	mutable struct DCAPData	
 		# Sets
 		R   
@@ -216,7 +216,7 @@ Adding a new problem to the \siplibtwo\ package is as simple as adding a line to
 		DCAPData() = new()	# constructor
 	end
 	
-	# data generating function
+	# definition of a data generating function
 	function DCAPData(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int)::DCAPData
 
 		srand(seed)
@@ -244,7 +244,7 @@ Adding a new problem to the \siplibtwo\ package is as simple as adding a line to
 \end{figure}
 
 \subsection{Scripts for convenient functionalities}
-To provide convenience for users, we implement various functions for investigating the factors we have discussed in the previous Section \ref{sec:summary}. The following scripts stand for that purpose.
+The \siplibtwo\ package implements various functions for investigating the factors we have discussed in the previous Section \ref{sec:summary}. Each of the following scripts contains core components that comprise the functions.
 \begin{quotation}
 	\noindent\textit{generator} This script defines user-interfacing functions that directly generate \smps\ or \mps\ files of an instance and simultaneously returns corresponding \jumpmodel\ object.
 \end{quotation}

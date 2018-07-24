@@ -1,5 +1,58 @@
 In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We also explain data generation procedures. Due to limited access to the original data in reference papers, we selectively choose the methods from several available references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
 
+\subsection{\airlift: Airlift operations scheduling} \label{AIRLIFT}
+\subsubsection{\airlift: Mathematical formulation}
+
+\begin{subequations} \label{airlift:formulation}
+	\begin{align}
+	(\airlift)\ \textrm{min}\ &\sum_{i\in A}\sum_{j\in R} c_{ij}x_{ij}+\sum_{s\in\mathcal{S}}\PP(s)\Bigg[ \sum_{i\in A}\sum_{j\in R}\sum_{k\in R\backslash \{j\} }\left( \gamma_{ijk}-c_{ij}\frac{\alpha_{ijk}}{a_{ij}} \right)\chi_{ijk}^s \nonumber \\ 
+	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{j\in R}\left( c_j^+ y_j^{+s}+c_j^- y_j^{-s} \right)\Bigg]\label{airlift:obj} \\
+	\textrm{s.t.}\ & \sum_{j\in R}a_{ij}x_{ij}\le F_i,\quad\forall i\in A,	\label{airlift:b}\\
+	&\sum_{k\in R\backslash\{j\}}\alpha_{ijk}\chi_{ijk}^s\le a_{ij}x_{ij},\quad\forall i\in A,\ \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:c}\\
+	&-\sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\left(\frac{\alpha_{ijk}}{a_{ij}}\right)\chi_{ijk}^s + \sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\chi_{ikj}^s + y_j^{+s} - y_j^{-s} \nonumber \\
+	&\qquad\qquad\qquad\qquad\qquad\qquad= d_j^s - \sum_{i\in A}b_{ij}x_{ij},\quad \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:d}\\
+	&x_{ij}\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R, \\
+	&\chi_{ijk}^s\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R,\ \forall k\in R\backslash\{j\},\ \forall s\in\mathcal{S}, \\
+	& y_j^{+s},y_j^{-s}\ge 0,\quad\forall j\in R,\ \forall s\in\mathcal{S}.
+	\end{align}
+\end{subequations}
+
+\begin{table}[H]
+	\caption{Notations for \airlift}
+	\label{aiflift:notation}
+	\resizebox{\textwidth}{!}
+	{
+%		{@{}llp{3in}}
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$A$ & index set of aircraft types ($i,k\in A$)\\ 
+			$R$ & index set of flying routes ($j\in R$)\\ 
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$) \\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$F_i$ & the maximum number of flying hours for aircraft of type $i$ available during the month\\
+			$a_{ij}$ & number of hours that aircraft type $i$ requires to fly an initially assigned route $j$  \\
+			$\alpha_{ijk}$ & number of hours that a re-scheduled aircraft of type $i$ requires to fly route $k$ where the initially assigned route was $j$ ($\alpha_{ijk}\ge a_{ik}$)\\
+			$c_{ij}$ & cost per flight of aircraft type $i$ initially assigned to and flown on route $j$ ($c_{ij}\ge 0$)\\
+			%$\gamma_{ijk} $& cost per flight of aircraft type $i$ assigned to route $k$ that uses hours made available by canceling flights on route $j$ ($\gamma_{ijk}\ge c_{ik}$)\\			
+			$\gamma_{ijk} $& cost per flight of aircraft of type $i$ whose flying route is re-assigned from $j$ to $k$ ($\gamma_{ijk}\ge c_{ik}$)\\			
+			$b_{ij}$ & carrying capacity of a flight of an aircraft type $i$ on route $j$\\
+			$c_j^+$ & unit cost of commercially contracted transport on route $j$\\
+			$c_j^-$ & unit penalty cost per of unused carrying capacity on route $j$\\
+			$d_j^s$ & total demand for route $j$ under scenario $s$ \\
+			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_{ij}$ (1st-stage) & number of flights of aircraft type $i$ initially assigned to route $j$ \\
+			$\chi_{ijk}^s$ (2nd-stage) & number re-scheduled flights of aircraft type $i$ from route $j$ to $k$ \\ 
+			$y_j^{+s}$ (2nd-stage) & amount of commercial demand on route $j$ under scenario $s$\\
+			$y_j^{-s}$ (2nd-stage) & amount of unused capacity on route $j$ under scenario $s$\\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+\subsubsection{\airlift: Data generation}
+
 \subsection{\dcap: Dynamic capacity planning with stochastic demand} \label{DCAP}
 \dcap\ is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. We refer to the main reference \cite{journal:AG2004}.
 
@@ -373,7 +426,7 @@ The objective (\ref{smkp:obj}) is to minimize the expected value of the total we
 \end{table} 
 
 \subsubsection{\smkp: Data generation}
-There are two factors that define the instance of \smkp: $|I|$ and $|\mathcal{S}|$. The sizes for another sets are fixed by $|J|=50$ and $|K|=5$ following \cite{journal:AAD2014}. Once we decide the factors $|I|$, $|\mathcal{S}|$, $|T|$, and $|\mathcal{S}|$, each instance is named by SMKP\_$|I|$\_$|\mathcal{S}|$. Again directly following \cite{journal:AAD2014}, we randomly generate the parameters. Let $U$ be a discrete uniform random variable: $U\sim Unif[1,100]$. Then, the parameters are generated as follows:
+There are two factors that define the instance of \smkp: $|I|$ and $|\mathcal{S}|$. The sizes for another sets are fixed by $|J|=50$ and $|K|=5$ following \cite{journal:AAD2014}. Once we decide the factors $|I|$ and $|\mathcal{S}|$, each instance is named by SMKP\_$|I|$\_$|\mathcal{S}|$. Again directly following \cite{journal:AAD2014}, we randomly generate the parameters. Let $U$ be a discrete uniform random variable: $U\sim Unif[1,100]$. Then, the parameters are generated as follows:
 \begin{align*}
 c_i		&=	U,\quad\forall i\in I, \\
 d_i		&=	U,\quad\forall i\in I, \\

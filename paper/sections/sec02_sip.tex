@@ -1,4 +1,4 @@
-In this section, we explain the general description of SIP of interest. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
+In this section, we explain the general description of SIP mainly with the computational aspect. This includes formal mathematical formulation, existing general solution methods to solve the SIPs, and currently available software libraries.
 \subsection{Formulation}
 %We introduce the form of SIP of interest. The notations and dimensional information are summarized in Table \ref{notation:SIP}. 
 
@@ -75,7 +75,7 @@ where $\mathrm{y}:=\{y_1,\ldots,y_r\}$. The RP-EF explicitly describes all the r
 
 
 \subsection{Solution methods}
-Assuming finite and discrete distribution, we can always formulate SIP in the EF as in Equations (\ref{ef:obj})-(\ref{ef:e}).  %much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation \ref{eq:SIP_1}, 
+Assuming finite and discrete distribution, we can always formulate SIP in EF as in Equations (\ref{ef:obj})-(\ref{ef:e}).  %much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation \ref{eq:SIP_1}, 
 %Much of the solution methods in SIP is studied to resolve the difficulty of optimizing the extensive form. %That is, the sum of the first-stage costs and the expected costs in the second-stage. 
 Most computational solution methods in SIP assume that a single scenario evaluation is somehow tractable in a reasonable time. In reality, we often need to consider a vast number of scenario realizations. In this case, EF easily becomes a large MIP, but with a special structure in it. Solving this problem without exploiting the structure can quickly go with inefficiency. In this section, we introduce representative approaches to resolve the computational difficulties in SIP when many scenarios should be considered.
 

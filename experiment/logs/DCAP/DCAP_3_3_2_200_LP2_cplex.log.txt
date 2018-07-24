@@ -1,0 +1,65 @@
+Creating DSP environment
+Reading SMPS files: ../SMPS/DCAP/DCAP_3_3_2_200_LP2
+Coin0001I At line 1 NAME          DCAP_3_3_2_200_LP2
+Coin0001I At line 2 ROWS
+Coin0001I At line 22 COLUMNS
+Coin0001I At line 85 RHS
+Coin0001I At line 95 BOUNDS
+Coin0001I At line 126 ENDATA
+Coin0002I Problem DCAP_3_3_2_200_LP2 has 18 rows, 36 columns and 63 elements
+Coin0001I At line 1 TIME          DCAP_3_3_2_200_LP2
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         DCAP_3_3_2_200_LP2
+Coin0001I At line 2 SCENARIOS
+Coin0001I At line 8561 ENDATA
+Read SMPS files: 0.005 sec.
+Reading parameter files: /home/choy/Siplib/experiment/DSP/parameters/de_3h.txt
+Invalid parameter format.
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               300
+CPX0000  CPXPARAM_Threads                                 1
+CPX0000  Found incumbent of value 4482.048075 after 0.00 sec. (0.28 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 2406 rows, 4812 columns, and 10212 nonzeros.
+CPX0000  Reduced MIP has 6 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (4.64 ticks)
+CPX0000  Probing time = 0.00 sec. (0.41 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 2406 rows, 4812 columns, and 10212 nonzeros.
+CPX0000  Reduced MIP has 6 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (5.81 ticks)
+CPX0000  Probing time = 0.00 sec. (0.37 ticks)
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: none, using 1 thread.
+CPX0000  Root relaxation solution time = 0.04 sec. (51.55 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                         4482.0481        0.0000           100.00%
+CPX0000        0     0      307.1973     1     4482.0481      307.1973     1979   93.15%
+CPX0000  *     0+    0                          311.0367      307.1973             1.23%
+CPX0000        0     0      307.8454     1      311.0367     Cuts: 436     2170    1.03%
+CPX0000        0     0      308.1983     1      311.0367      Cuts: 82     2221    0.91%
+CPX0000        0     0      308.1989     1      311.0367       Cuts: 6     2227    0.91%
+CPX0000        0     0      308.1991     1      311.0367    MIRcuts: 3     2230    0.91%
+CPX0000        0     2      308.1991     1      311.0367      308.5246     2230    0.81%
+CPX0000  Elapsed time = 0.17 sec. (152.25 ticks, tree = 0.01 MB
+CPX0000
+CPX0000  Implied bound cuts applied:  35
+CPX0000  Flow cuts applied:  47
+CPX0000  Mixed integer rounding cuts applied:  278
+CPX0000  Gomory fractional cuts applied:  2
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    0.17 sec. (152.36 ticks)
+CPX0000  Sequential b&c:
+CPX0000    Real time             =    0.00 sec. (2.28 ticks)
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =    0.18 sec. (154.64 ticks)
+Status: 3000
+Primal Bound: 311.037
+Dual Bound  : 311.037

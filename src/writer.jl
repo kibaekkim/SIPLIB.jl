@@ -503,10 +503,10 @@ function writeStoc(FILE_NAME, nscen, probability, mdata_all::Array{ModelData,1},
 
     #            123456789 123456789
     println(fp, "STOCH         ", basename(FILE_NAME))
-    println(fp, "SCENARIOS")
+    println(fp, "SCENARIOS     DISCRETE")
 
     for s in 1:nscen
-        @printf(fp, " SC %-8s  %-8s  %-8f  PERIOD2\n", "SCEN"*string(s), "ROOT", probability[s])
+        @printf(fp, " SC %-8s  %-8s  %-8f  PERIOD2\n", "SCEN"*string(s), "'ROOT'", probability[s])
 
         # row bounds
         for i in 1:nrows2

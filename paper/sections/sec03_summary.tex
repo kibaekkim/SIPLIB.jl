@@ -11,6 +11,7 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 			\begin{tabular}{@{}llll@{}}
 				\toprule
 				Problem		  		  & Description                                                        & Main reference              \\ \midrule
+				\airlift\ & Airlift operations scheduling (\ref{AIRLIFT}) & Midler and Wollmer \cite{journal:MW1969} \\
 				\dcap\         & \makecell[tl]{Dynamic capacity planning with stochastic\\ demand (\ref{DCAP}) }                  & Ahmed and Garcia \cite{journal:AG2004}                          \\
 				\mptsps\       & \makecell[tl]{Multi-path traveling salesman problem with\\ stochastic travel costs (\ref{MPTSPs})}& Tadei et al. \cite{journal:TPP2017}                            \\
 				\sizes\        & \makecell[tl]{Optimal product substitution with stochastic\\ demand (\ref{SIZES})}         & Jorjani et al. \cite{journal:JSW1999}          \\
@@ -50,7 +51,7 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 				Problem & \multicolumn{1}{c}{Remark}                                                \\ \midrule
 				\dcap   & We go with the error in constraint (\ref{dcap:b})                                              \\
 				\mptsps & \makecell[tl]{We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation \\procedure \ref{mptsps:datagen}} \\
-				\sizes  & We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h})                                                    \\
+				\sizes  &  \makecell[tl]{We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h}), We develop data generation \\procedure}                                                 \\
 				\smkp   & -                                                                         \\
 				\sslp   & \makecell[tl]{We keep the zonal components empty and let the redundant constraint (\ref{sslp:b})\\ present }                                    \\
 				\suc    & We generate and provide up to 1,000 stochastic wind scenario data                                    \\ \bottomrule
@@ -104,6 +105,7 @@ We consider three types of variable: continuous, binary, and integer. Considerin
 			\toprule
 			& \multicolumn{2}{c}{1st stage}                              				  	& \multicolumn{2}{c}{2nd stage}                             			        \\ \midrule
 			Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
+			\airlift\ (\ref{airlift:formulation}) & $\mathbb{I}$ & \texttt{IKN}& $\mathbb{C}$, $\mathbb{I}$ & \texttt{BIN}, \texttt{GEN}\\
 			\dcap\ (\ref{dcap:formulation})    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBB}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
 			\mptsps\ (\ref{mptsps:formulation})  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\
 			\sizes\ (\ref{sizes:formulation})   & $\mathbb{I}$ 			   & \texttt{VBD}, \texttt{GEN} 	& $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}             						\\
