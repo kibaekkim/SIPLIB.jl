@@ -42,6 +42,9 @@ end # end module Siplib
 #=
 using Siplib
 
+m = generateSMPS(:AIRLIFT, [10], splice=false)
+print(m)
+
 m = generateSMPS(:SSLP, [5,5,3], smpsfile=true, genericnames=false, splice=false)
 generateSMPS(:DCAP, [5,5,5,3], smpsfile=true, genericnames=false)
 generateSMPS(:SSLP, [5,5,3], smpsfile=true, genericnames=false)

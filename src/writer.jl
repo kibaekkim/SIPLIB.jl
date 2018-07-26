@@ -207,10 +207,10 @@ function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd
 
         println(fp, "RHS")
         pos = 1
-        @printf(fp, "    %-8s", "rhs")
+        @printf(fp, "    %-8s", "RHS")
         for i in 1:nrows
             if pos >= 3
-                @printf(fp, "\n    %-8s", "rhs")
+                @printf(fp, "\n    %-8s", "RHS")
                 pos = 1
             end
             @printf(fp, "  %-8s", "CON"*string(i))
@@ -328,10 +328,10 @@ function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd
 
         println(fp, "RHS")
         pos = 1
-        @printf(fp, "    %-8s", "rhs")
+        @printf(fp, "    %-8s", "RHS")
         for i in 1:nrows
             if pos >= 3
-                @printf(fp, "\n    %-8s", "rhs")
+                @printf(fp, "\n    %-8s", "RHS")
                 pos = 1
             end
             @printf(fp, "  %-8s", "CON"*string(i))
@@ -511,7 +511,7 @@ function writeStoc(FILE_NAME, nscen, probability, mdata_all::Array{ModelData,1},
         # row bounds
         for i in 1:nrows2
             if mdata_core.rhs[nrows1+i] != mdata_all[s+1].rhs[i]
-                @printf(fp, "    %-8s  %-8s  %-12f\n", "rhs", "CON"*string(nrows1+i), mdata_all[s+1].rhs[i])
+                @printf(fp, "    %-8s  %-8s  %-12f\n", "RHS", "CON"*string(nrows1+i), mdata_all[s+1].rhs[i])
             end
         end
 
@@ -570,7 +570,7 @@ smpsfile (optional, keyword): 'true' if you want to generate .smps file together
 function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true, smpsfile::Bool=false)
 
     FILE_NAME = "$DIR_NAME/$INSTANCE_NAME"
-    println("Writing SMPS files for $INSTANCE_NAME.")
+    println("Writing SMPS files for $INSTANCE_NAME")
 
     # Check if m is a StructJuMP model
     if !haskey(m.ext, :Stochastic)
@@ -616,9 +616,9 @@ function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::Str
     FILE_NAME = "$DIR_NAME/$INSTANCE_NAME"
 
     if !decfile
-        println("Writing MPS file for $INSTANCE_NAME.")
+        println("Writing MPS file for $INSTANCE_NAME")
     else
-        println("Writing MPS with .dec file for $INSTANCE_NAME.")
+        println("Writing MPS with .dec file for $INSTANCE_NAME")
     end
 
     # Check if m is a StructJuMP model

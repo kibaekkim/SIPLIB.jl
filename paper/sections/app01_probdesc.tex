@@ -9,8 +9,8 @@ In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We 
 	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{j\in R}\left( c_j^+ y_j^{+s}+c_j^- y_j^{-s} \right)\Bigg]\label{airlift:obj} \\
 	\textrm{s.t.}\ & \sum_{j\in R}a_{ij}x_{ij}\le F_i,\quad\forall i\in A,	\label{airlift:b}\\
 	&\sum_{k\in R\backslash\{j\}}\alpha_{ijk}\chi_{ijk}^s\le a_{ij}x_{ij},\quad\forall i\in A,\ \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:c}\\
-	&-\sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\left(\frac{\alpha_{ijk}}{a_{ij}}\right)\chi_{ijk}^s + \sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\chi_{ikj}^s + y_j^{+s} - y_j^{-s} \nonumber \\
-	&\qquad\qquad\qquad\qquad\qquad\qquad= d_j^s - \sum_{i\in A}b_{ij}x_{ij},\quad \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:d}\\
+	&\sum_{i\in A}b_{ij}x_{ij}-\sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\left(\frac{\alpha_{ijk}}{a_{ij}}\right)\chi_{ijk}^s + \sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\chi_{ikj}^s \nonumber \\
+	&\qquad\qquad\qquad\qquad\qquad\quad+ y_j^{+s} - y_j^{-s} = d_j^s,\quad \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:d}\\
 	&x_{ij}\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R, \\
 	&\chi_{ijk}^s\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R,\ \forall k\in R\backslash\{j\},\ \forall s\in\mathcal{S}, \\
 	& y_j^{+s},y_j^{-s}\ge 0,\quad\forall j\in R,\ \forall s\in\mathcal{S}.
@@ -33,18 +33,18 @@ In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We 
 			$F_i$ & the maximum number of flying hours for aircraft of type $i$ available during the month\\
 			$a_{ij}$ & number of hours that aircraft type $i$ requires to fly an initially assigned route $j$  \\
 			$\alpha_{ijk}$ & number of hours that a re-scheduled aircraft of type $i$ requires to fly route $k$ where the initially assigned route was $j$ ($\alpha_{ijk}\ge a_{ik}$)\\
+			$b_{ij}$ & carrying capacity of a flight of an aircraft type $i$ on route $j$\\
 			$c_{ij}$ & cost per flight of aircraft type $i$ initially assigned to and flown on route $j$ ($c_{ij}\ge 0$)\\
 			%$\gamma_{ijk} $& cost per flight of aircraft type $i$ assigned to route $k$ that uses hours made available by canceling flights on route $j$ ($\gamma_{ijk}\ge c_{ik}$)\\			
 			$\gamma_{ijk} $& cost per flight of aircraft of type $i$ whose flying route is re-assigned from $j$ to $k$ ($\gamma_{ijk}\ge c_{ik}$)\\			
-			$b_{ij}$ & carrying capacity of a flight of an aircraft type $i$ on route $j$\\
-			$c_j^+$ & unit cost of commercially contracted transport on route $j$\\
-			$c_j^-$ & unit penalty cost per of unused carrying capacity on route $j$\\
+			$c_j^+$ & unit cost of meeting demand by commercial transport on route $j$\\
+			$c_j^-$ & unit penalty cost of unused capacity on route $j$\\
 			$d_j^s$ & total demand for route $j$ under scenario $s$ \\
 			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
 			$x_{ij}$ (1st-stage) & number of flights of aircraft type $i$ initially assigned to route $j$ \\
 			$\chi_{ijk}^s$ (2nd-stage) & number re-scheduled flights of aircraft type $i$ from route $j$ to $k$ \\ 
-			$y_j^{+s}$ (2nd-stage) & amount of commercial demand on route $j$ under scenario $s$\\
+			$y_j^{+s}$ (2nd-stage) & amount of demand carried by commercial transportation on route $j$ under scenario $s$\\
 			$y_j^{-s}$ (2nd-stage) & amount of unused capacity on route $j$ under scenario $s$\\
 			\bottomrule
 		\end{tabular}
@@ -52,6 +52,31 @@ In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We 
 \end{table} 
 
 \subsubsection{\airlift: Data generation}
+The original reference \cite{journal:MW1969} provides a numerical example with $|A|=2$ and $|R|=2$. 
+% Please add the following required packages to your document preamble:
+% \usepackage{multirow}
+% \usepackage{graphicx}
+\begin{table}[H]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{cccccccccccc}
+			\hline
+			\multirow{2}{*}{\begin{tabular}[c]{@{}c@{}}Aircraft \\ type $(i)$\end{tabular}} & \multicolumn{2}{c}{$a_{ij}$ (hours)} & \multicolumn{2}{c}{$b_{ij}$ (tons)} & \multicolumn{2}{c}{$c_{ij}$ (dollars)} & $\alpha_{ijk}-a_{ij}$ (hours) & $\gamma_{ijk}-c_{ij}$ (dollars) & \multicolumn{2}{c}{$c_j^+$ (dollars)}       & $c_j^-$ (dollars)\$ \\ \cline{2-12} 
+			& $j=1$             & $j=2$            & $j=1$            & $j=2$            & $j=1$              & $j=2$             & $\forall (j,k)$               & $\forall (j,k)$                 & $j=1$                & $j=2$                & $j=1,2$             \\ \hline
+			1                                                                               & 24                & 14               & 50               & 75               & 7200               & 6000              & 5                             & 1000                            & \multirow{2}{*}{500} & \multirow{2}{*}{250} & \multirow{2}{*}{0}  \\
+			2                                                                               & 49                & 29               & 20               & 20               & 7200               & 4000              & 7                             & 1500                            &                      &                      &                     \\ \hline
+		\end{tabular}%
+	}
+\end{table}
+
+There are three factors that define the instance of \airlift: $|A|$, $|R|$, and $|\mathcal{S}|$. Once we decide the factors, the instance is named by AIRLIFT\_$|A|$\_$|R|$\_$|\mathcal{S}|$. Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
+\begin{align*}
+\alpha_{it}&=5U+5,\quad\forall i\in R,\ \forall t\in T, \\
+\beta_{it} &=40U+10,\quad\forall i\in R,\ \forall t\in T, \\
+c_{ijt}^s  &=5U+5,\quad\forall i\in R,\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
+c_{0jt}^s  &=500U+500,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
+d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
+\end{align*}
 
 \subsection{\dcap: Dynamic capacity planning with stochastic demand} \label{DCAP}
 \dcap\ is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. We refer to the main reference \cite{journal:AG2004}.
