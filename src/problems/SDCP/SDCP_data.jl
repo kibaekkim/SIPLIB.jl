@@ -1,6 +1,7 @@
-mutable struct DCLPData
+mutable struct SDCPData
 
     # Sets
+    S      # scenarios
     G      # generators
     L      # transmission lines
     N      # buses
@@ -18,12 +19,11 @@ mutable struct DCLPData
     Cr # renewable spillage cost
     Cw # wind spillage cost
 
-
     # Capacity parameters
     B  # line susceptance
     Pmax # max generation capacity
-    Rmax # max ramping capacity
-    Rmin # min ramping capacity
+    Rdown # ramping down limit
+    Rup # ramping up limit
     TC   # transmission line capacity
 
     # Supply/demand parameters
@@ -43,11 +43,11 @@ mutable struct DCLPData
 
     Pr # probability
 
-    DCLPData() = new()
+    SDCPData() = new()
 end
 
 
-function DCLPData(PenetPercent::Any, Season::String, nScenarios::Int)::DCLPData
+function SDCPData(PenetPercent::Any, Season::String, nScenarios::Int)::SDCPData
 
     # read file and create dictionary
     function readDict(f)
@@ -76,7 +76,7 @@ function DCLPData(PenetPercent::Any, Season::String, nScenarios::Int)::DCLPData
     DATA_DIR = "$(dirname(@__FILE__))/DATA";
     WIND_DIR = "$DATA_DIR/WIND/$Season";
 
-    data = DCLPData()
+    data = SDCPData()
 
     # ---------------
     # Read data files
@@ -93,8 +93,8 @@ function DCLPData(PenetPercent::Any, Season::String, nScenarios::Int)::DCLPData
     # Generators
     data.G = readdlm("$DATA_DIR/Generators.txt");         # list of generators (ZC_data.jl: GENERATORS)
     data.Pmax = readDict("$DATA_DIR/MaxRunCapacity.txt"); # max generation capacity
-    data.Rmin = readDict("$DATA_DIR/RampDown.txt");       # ramp down limit
-    data.Rmax = readDict("$DATA_DIR/RampUp.txt");         # ramp up limit
+    data.Rdown = readDict("$DATA_DIR/RampDown.txt");       # ramp down limit
+    data.Rup = readDict("$DATA_DIR/RampUp.txt");         # ramp up limit
     data.C = readDict("$DATA_DIR/FuelPrice.txt");         # generation cost (ZC_data.jl: gen_cost)
 
     # Calculated Netdemand load
@@ -127,7 +127,6 @@ function DCLPData(PenetPercent::Any, Season::String, nScenarios::Int)::DCLPData
     # @show length(data.WIND)
 
     # ADDITIONAL PARAMETERS
-#    penetration = 0.1
     nPeriods = 24
     data.Pr = ones(nScenarios) / nScenarios # equal probabilities
     data.Cl = 1000 # value of lost load ($/MWh) (ZC_data.jl: voll)
@@ -136,6 +135,7 @@ function DCLPData(PenetPercent::Any, Season::String, nScenarios::Int)::DCLPData
     data.Cw = 100  # wind spillage penalty
 
     # ADDITIONAL SETS
+    data.S = 1:nScenarios
     data.T0 = 0:nPeriods;
     data.T = 1:nPeriods; # (ZC_data.jl: PERIODS)
 

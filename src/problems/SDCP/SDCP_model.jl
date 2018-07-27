@@ -1,19 +1,18 @@
-include("./DCLP_data.jl")
+include("./SDCP_data.jl")
 
-function DCLP(M::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::JuMP.Model
+function SDCP(K::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::JuMP.Model
 
     ## read data
-    data = DCLPData(PenetPercent, Season, nS)
+    data = SDCPData(PenetPercent, Season, nS)
 
     # copy
-    G, L, N, T, T0 = data.G, data.L, data.N, data.T, data.T0
-    LOAD, IMPORT, WIND, RE = data.LOAD, data.IMPORT, data.WIND, data.RE
-    C, Cl, Ci, Cr, Cw = data.C, data.Cl, data.Ci, data.Cr, data.Cw
-    B, Pmax, Rmax, Rmin, TC = data.B, data.Pmax, data.Rmax, data.Rmin, data.TC
-    Igen, Rgen, Wgen, load = data.Igen, data.Rgen, data.Wgen, data.load
-    gen2bus, import2bus, load2bus = data.gen2bus, data.import2bus, data.load2bus
-    re2bus, wind2bus, fbus, tbus = data.re2bus, data.wind2bus, data.fbus, data.tbus
-    Pr = data.Pr
+    S, G, L, N, T, T0, Pr           = data.S, data.G, data.L, data.N, data.T, data.T0, data.Pr
+    LOAD, IMPORT, WIND, RE          = data.LOAD, data.IMPORT, data.WIND, data.RE
+    C, Cl, Ci, Cr, Cw               = data.C, data.Cl, data.Ci, data.Cr, data.Cw
+    B, Pmax, Rup, Rdown, TC         = data.B, data.Pmax, data.Rup, data.Rdown, data.TC
+    Igen, Rgen, Wgen, load          = data.Igen, data.Rgen, data.Wgen, data.load
+    gen2bus, import2bus, load2bus   = data.gen2bus, data.import2bus, data.load2bus
+    re2bus, wind2bus, fbus, tbus    = data.re2bus, data.wind2bus, data.fbus, data.tbus
 
     # construct JuMP.Model
     model = StructuredModel(num_scenarios=nS)
@@ -21,10 +20,10 @@ function DCLP(M::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::
     ## 1st stage
     @variable(model, d[n=N] >= 0, Int)
     @objective(model, Min, 0)
-    @constraint(model, sum(d[n] for n in N) <= M)
+    @constraint(model, sum(d[n] for n in N) <= K)
 
     ## 2nd stage
-    for s in 1:nS
+    for s in S
         sb = StructuredModel(parent=model, id = s, prob = Pr[s])
 
         @variable(sb, u[n=N,t=T] >= 0)  # dispatchable load served at bus n at time t
@@ -45,6 +44,9 @@ function DCLP(M::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::
             + sum(Cw*wspill[i,t] for i in WIND for t in T)
         )
 
+        # Dispatchable load capacity
+        @constraint(sb, [n=N,t=T], u[n,t] <= 200*d[n])
+
         # Flow balance
         @constraint(sb, [n=N,t=T],
             sum(f[l,t] for l in L if tbus[l] == n)
@@ -62,8 +64,8 @@ function DCLP(M::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::
         @constraint(sb, [l=L,t=T], f[l,t] == B[l] * (theta[fbus[l],t] - theta[tbus[l],t]))
 
         # Ramping capacity
-        @constraint(sb, [g=G,t=T], p[g,t] - p[g,t-1] <= Rmax[g])
-        @constraint(sb, [g=G,t=T], p[g,t] - p[g,t-1] >= -Rmin[g])
+        @constraint(sb, [g=G,t=T], p[g,t] - p[g,t-1] <= Rup[g])
+        @constraint(sb, [g=G,t=T], p[g,t] - p[g,t-1] >= -Rdown[g])
     end
 
     return model

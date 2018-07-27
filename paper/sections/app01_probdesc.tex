@@ -1,6 +1,17 @@
-In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We also explain data generation procedures. Due to limited access to the original data in reference papers, we selectively choose the methods from several available references and modify some of them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links.  %This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
+In this section, we explain the meaning of the problems in \texttt{SIPLIB 2.0}. For each problem, we provide the extensive form formulation which we believe the compactest and clearest way to describe what the problem wants to do. We also give numerical parameter values together with stochastic data generation procedures. Due to the limited access to the original data in reference papers, we sometimes selectively choose the methods from several available references and modify them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links. The information in this section is completely implemented and contained in the accompanied \julia\ package's \texttt{/src/problems} directory. We recommend users to take a look inside the \julia\ implementation to easily catch all the details.
+
+
+%This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
 
 \subsection{\airlift: Airlift operations scheduling} \label{AIRLIFT}
+
+Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{AIRLIFT_1}
+	\caption{AIRLIFT\_1: Extensive form constraint matrix plot}
+	\label{fig:airlift_sparsity}
+\end{figure}
 \subsubsection{\airlift: Mathematical formulation}
 
 \begin{subequations} \label{airlift:formulation}
@@ -52,11 +63,11 @@ In this section, we explain details for each problem in \texttt{SIPLIB 2.0}. We 
 \end{table} 
 
 \subsubsection{\airlift: Data generation}
-The original reference \cite{journal:MW1969} provides a numerical example with $|A|=2$ and $|R|=2$. 
-% Please add the following required packages to your document preamble:
-% \usepackage{multirow}
-% \usepackage{graphicx}
+The original reference \cite{journal:MW1969} provides a numerical example with $|A|=2$ and $|R|=2$ (Table \ref{AIRLIFT:numeric}). 
+
 \begin{table}[H]
+	\caption{Numerical data in \cite{journal:MW1969}}
+	\label{AIRLIFT:numeric}
 	\centering
 	\resizebox{\textwidth}{!}{%
 		\begin{tabular}{cccccccccccc}
@@ -145,13 +156,6 @@ There are four factors that define the instance of \dcap: $|R|$, $|N|$, $|T|$, a
 	c_{0jt}^s  &=500U+500,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
 	d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
 \end{align*}
-
-%\subsection{\texttt{DCLP}: Data center location problem} \label{DCLP}
-%
-%\subsubsection{\texttt{DCLP}: Mathematical formulation}
-%
-%\subsubsection{\texttt{DCLP}: Data generation}
-
 
 \subsection{\mptsps: Mutli-path traveling salesman problem with stochastic travel times} \label{MPTSPs}
 \mptsps\ is a variant of the travelling salesman problem (TSP) where a set of paths exists between any two nodes and each path is characterized by a random travel time. 
@@ -255,6 +259,141 @@ Given $D,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follo
 	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
 \end{enumerate}
 
+
+\subsection{\sdcp: Stochastic data center placement} \label{SDCP}
+The stochastic data center placement (SDCP) problem is to find the optimal placement of data centers (as dispatchable loads) that minimizes the expected total electricity dispatch cost over stochastic wind power generation scenarios. We refer to \cite{journal:KYZC2017} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{web:wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
+
+Fig. \ref{fig:sdcp_sparsity} shows the sparsity pattern presents in extensive form \sdcp\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{SDCP_5_10_FallWD_1}
+	\caption{SDCP\_5\_10\_FallWD\_1: Extensive form constraint matrix plot}
+	\label{fig:sdcp_sparsity}
+\end{figure}
+
+\subsubsection{\sdcp: Mathematical formulation}
+In \sdcp, we make a here-and-now decision on the number and locations of data centers to be installed at location (bus) $n\in N$ at the first stage. In the second stage, the minimal cost recourse decision to dispatch loads and electricity is made considering wind power generation scenarios. The dispatching decision involves flows, angles, supply, loads, and spillages.
+
+Using the notation in Table \ref{SDCP:notation}, the extensive form of \sdcp\ can be stated as in the following model \ref{sdcp:formulation}.
+\begin{subequations} \label{sdcp:formulation}
+	\begin{align}
+	(\sdcp)\ \textrm{min}\ &\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
+	\Bigg[\sum_{g\in G}C_g p_{gts} + \sum_{\lambda\in \mathcal{L}} C^{\mathcal{L}}x_{\lambda ts}^{\mathcal{L}} \nonumber \\&\qquad\qquad\qquad\qquad\qquad + \sum_{\iota\in \mathcal{I}} C^{\mathcal{I}}x_{\iota ts}^{\mathcal{I}} + \sum_{\rho\in \mathcal{R}} C^{\mathcal{R}}x_{\rho ts}^{\mathcal{R}} + \sum_{\omega\in \mathcal{W}} C^{\mathcal{W}}x_{\omega ts}^{\mathcal{W}} \Bigg]
+	\label{sdcp:obj}\\
+	\textrm{s.t.}\ &  \textrm{(First-stage constraints)} \nonumber\\
+	&\sum_{n\in N} d_n \le K,\label{sdcp:b}\\
+	&\textrm{(Second-stage constraints)} \nonumber\\
+	&u_{nts} \le Ud_n,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:c}\\
+	&\sum_{l\in L_n^+}f_{lts}-\sum_{l\in L_n^-}f_{lts}+\sum_{g\in G_n}p_{gts}+\sum_{\iota\in IG_n^\mathcal{I}}\left(IC_{\iota t}^\mathcal{I}-x_{\iota ts}^\mathcal{I}\right)\nonumber\\
+	&+\sum_{\omega\in IG_n^\mathcal{W}}\left(IC_{\omega t}^\mathcal{W}-x_{\omega ts}^\mathcal{W}\right)
+	+\sum_{\rho\in IG_n^\mathcal{R}}\left(IC_{\rho t}^\mathcal{R}-x_{\rho ts}^\mathcal{R}\right)
+	-u_{nts} \nonumber\\
+	&=\sum_{\lambda\in IG_n^\mathcal{L}}\left(IC_{\lambda t}^\mathcal{L}-x_{\lambda ts}^\mathcal{L}\right),\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:d}\\
+	&f_{lts}=B_l\left(  \theta_{n_1 ts}-\theta_{n_2 ts}  \right),\quad\forall l\equiv (n_1, n_2)\in L,\ t\in T, s\in\mathcal{S},\label{sdcp:e}\\
+	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:f}\\
+	&  \textrm{(First-stage variable bounds)} \nonumber\\
+	&d_n \in \mathbb{Z}_+,\quad \forall n\in N,\label{sdcp:g}\\
+	&  \textrm{(Second-stage variable bounds)} \nonumber\\
+	&u_{nts}\ge 0,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:h}\\
+	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:i}\\
+	&-TC_l\le f_{lts}\le TC_l,\quad\forall l\in L,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:j}\\
+	&0\le p_{gts}\le P_g^+,\quad\forall g\in G,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{sdcp:k}\\
+	&0\le x_{\lambda ts}^\mathcal{L}\le IC_{\lambda t}^\mathcal{L},\quad\forall \lambda\in \mathcal{L},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:l}\\
+	&0\le x_{\iota ts}^\mathcal{I}\le IC_{\iota t}^\mathcal{I},\quad\forall \iota \in \mathcal{I},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:m}\\
+	&0\le x_{\rho ts}^\mathcal{R} \le IC_{\rho t}^\mathcal{R},\quad\forall \rho\in\mathcal{R},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:n}\\
+	&0\le x_{\omega ts}^\mathcal{W}\le IC_{\omega t}^W,\quad\forall \omega\in\mathcal{W},\ \forall t\in T,\ \forall s\in\mathcal{S}.\label{sdcp:o}
+	\end{align}	
+\end{subequations}
+The objective function (\ref{sdcp:obj}) is to minimize expected total dispatch costs. Constraints (\ref{sdcp:b}) is for the first-stage that represents the limitation of budget to install data centers. Constraint (\ref{sdcp:c}) sets the upper limit ($U$ for each data center) of the dispatchable loads from bus $n$. Constraint (\ref{sdcp:d}) guarantees the power flow balance of the network. Constraint (\ref{sdcp:e}) determines the best phase angle difference between two buses $n_1$ and $n_2$ on the line to minimize the power loss during transmission based on the Kirchhoff's law. Constraint (\ref{sdcp:f}) restricts ramping up/down capacity between two successive time slots. Constraints (\ref{sdcp:g})-(\ref{sdcp:o}) define the types and bounds for decision variables.
+
+\begin{table}[H]
+	\centering
+	\caption{Notations for \sdcp}
+	\label{SDCP:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\ 		
+			$N$ & index set of all buses ($n\in N$)\\
+			$T$ & index set of all time periods ($t\in T$)\\
+			$L$ & index set of all transmission lines ($l\in L$) \\
+			$\mathcal{L}$ & index set of all loads ($\lambda \in \mathcal{L}$)\\
+			$\mathcal{I}$ & index set of all import points ($\iota\in \mathcal{I}$)\\
+			$\mathcal{R}$ & index set of all non-wind renewable generators ($\rho\in \mathcal{R}$)\\
+			$\mathcal{W}$ & index set of all wind generators ($\omega\in \mathcal{W}$)\\
+			$G$ & index set of all generators ($g\in G$)\\
+			\multicolumn{2}{l}{\textbf{(mapping sets)}} \\
+			$G_n$ & index set of generators that are located in bus $n$ ($g\in G_n$)\\
+			$IG_n^\mathcal{L}$ & index set of loads that bus $n$ can supply ($\lambda\in IG_n^\mathcal{L}$)\\
+			$IG_n^\mathcal{I}$ & index set of import points that can supply bus $n$ ($\iota\in IG_n^\mathcal{I}$) \\
+			$IG_n^\mathcal{R}$ & index set of non-wind renewable generators that can supply bus $n$ ($\rho\in IG_n^\mathcal{R}$) \\
+			$IG_n^\mathcal{W}$ & index set of wind generators that can supply bus $n$ ($\omega\in IG_n^\mathcal{W}$)\\
+			$L_n^{+}$ & index set of outgoing transmission lines from bus $n$ ($l\in L_n^+$)\\
+			$L_n^{-}$ & index set of incoming transmission lines to bus $n$ ($l\in L_n^-$)\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$\PP(s)$	&probability of occurence for scenario $s$\\
+			$K$	& Maximum number of data centers \\
+			$U$ & Dispatchable load capacity per data center \\
+			\multicolumn{2}{l}{\textbf{(cost)}} \\
+			$C_g$ & marginal generation cost of generator $g$	\\
+			$C^\mathcal{L}$ & marginal load shedding cost of loads in $\mathcal{L}$	\\
+			$C^\mathcal{I}$ & marginal spillage cost of import points in $\mathcal{I}$ \\
+			$C^\mathcal{R}$ & marginal spillage cost of non-wind  renewable generators in $\mathcal{R}$ \\ 
+			$C^\mathcal{W}$ & marginal spillage cost of wind generators in $\mathcal{W}$ \\
+			\multicolumn{2}{l}{\textbf{(capacity)}} \\
+			$B_{l}$ & susceptance of line $l$ under scenario $s$\\
+			$TC_l$ & capacity of transmission line $l$\\
+			$P_{g}^+$ & maximum generation capacity of generator $g$\\
+			$R_{g}^+$ & ramping up capacity of generator $g$\\
+			$R_{g}^-$ & ramping down capacity of generator $g$\\
+			\multicolumn{2}{l}{\textbf{(supply/demand)}} \\
+			$IC_{\lambda t}^\mathcal{L}$ & demand at load $\lambda$\\
+			$IC_{\iota t}^\mathcal{I}$ & generation from import point $\iota$\\
+			$IC_{\rho t}^\mathcal{R}$ & generation from renewable generator $\rho$\\
+			$IC_{\omega ts}^\mathcal{W}$ & generation from wind generator $\omega$ under scenario $s$\\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$d_n$ (1st-stage) 	& (integer) number of dispatchable loads installed at bus $n$\\
+			$u_{nts}$ (2nd-stage)	&	(continuous) load dispatching amount served at bus $n$ at time $t$ under scenario $s$\\
+			$\theta_{gts}$ (2nd-stage)	&	(continuous) phase angle of generator $g$ at time $t$ under scenario $s$\\
+			$f_{lts}$ (2nd-stage)	&	(continuous) power flow on line $l$ at time $t$ under scenario $s$\\
+			$p_{gts}$ (2nd-stage)	&	(continuous) generation of generator $g$ at time $t$ under scenario $s$\\
+			$x_{\lambda ts}^\mathcal{L}$	(2nd-stage) & (continuous) load shedding at load $\lambda$ at time $t$ under scenario $s$	\\
+			$x_{\iota ts}^\mathcal{I}$	(2nd-stage) &	(continuous) spillage for import point $\iota$ at time $t$ under scenario $s$\\
+			$x_{\rho ts}^\mathcal{R}$ (2nd-stage)	& (continuous) spillage for non-wind renewable generator $\rho$ at time $t$ under scenario $s$  	\\
+			$x_{\omega ts}^\mathcal{W}$ (2nd-stage)	& (continuous) spillage for wind generator $\omega$ at time $t$ under scenario $s$ 	\\
+			\hline
+		\end{tabular}
+	}
+\end{table}
+
+\subsubsection{\sdcp: Data generation}
+Each \sdcp\ instance has four user-specifiable parameters: $K$, $P$, $D$, and $|\mathcal{S}|$. $K$ is the maximum number of installable data centers, $P$ is the wind penetration level (\%), $D$ is the season-day type which is one of FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE, and $|\mathcal{S}|$ is the number of scenarios. Once the four parameters are decided, the instance in named by SDCP\_$K$\_$P$\_$D$\_$|\mathcal{S}|$. For the default setting, we recommend to use $K=5$ and $P=10$.
+
+For model parameters, we use a reduced model of the CAISO to follow the reference \cite{journal:KYZC2017}. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
+Based on the WECC, set cardinalities in \sdcp\ are as follows.
+\begin{align*}
+|N|&=225 \\
+|T|&=24 \\
+|L|&=375 \\
+|\mathcal{L}|&=40\\
+|\mathcal{I}|&=5\\
+|\mathcal{R}|&=11\\
+|\mathcal{W}|&=5\\
+|G|&=130
+\end{align*}
+
+The marginal cost parameters for additional sources (load, import, non-wind renewable, wind) are fixed by
+\begin{align*}
+C^\mathcal{L}&=1000,\\
+C^\mathcal{I}&=1000,\\
+C^\mathcal{R}&=2000,\\
+C^\mathcal{W}&=100.
+\end{align*}
+The dispatchable load capacity per data center ($U$) is fixed by 200 MWh.
+
+Unlike other problems where stochastic data is generated while \julia\ script is running, we pre-generate and provide up to 1,000 wind power production profiles for each $D$ type. This data is included in ``\texttt{$\sim$/Siplib/src/problems/SCDP/data/WIND}'' folder and used to generate the stochastic wind data $IC_{\omega ts}^\mathcal{W}$. Hence, the number of scenarios that can be considered in an instance is limited to 1,000, which we think is large enough for computational experimental purpose.
 
 \subsection{\sizes: Selection of an optimal subset of sizes} \label{SIZES}
 \sizes\ is a simplified version of the cutting-stock problem with multi-period stochastic demand. We only consider the two-periods model to follow \cite{journal:JSW1999}. The first period demand is deterministic and the demand for the second period is stochastic. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \jumpmodel. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \siplibtwo.
@@ -607,7 +746,7 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 			$N$ & index set of all buses ($n\in N$)\\
 			$T$ & index set of all time periods ($t\in T$)\\
 			$L$ & index set of all transmission lines ($l\in L$) \\
-			$\mathcal{L}$ & index set of all loads for shedding ($\lambda \in \mathcal{L}$)\\
+			$\mathcal{L}$ & index set of all loads ($\lambda \in \mathcal{L}$)\\
 			$\mathcal{I}$ & index set of all import points ($\iota\in \mathcal{I}$)\\
 			$\mathcal{R}$ & index set of all non-wind renewable generators ($\rho\in \mathcal{R}$)\\
 			$\mathcal{W}$ & index set of all wind generators ($\omega\in \mathcal{W}$)\\
@@ -616,7 +755,7 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 			$G_f$ & index set of fast generators ($g\in G_f$)\\
 			\multicolumn{2}{l}{\textbf{(mapping sets)}} \\
 			$G_n$ & index set of generators that are located in bus $n$ ($g\in G_n$)\\
-			$IG_n^\mathcal{L}$ & index set of loads that bus $n$ can shed ($\lambda\in IG_n^\mathcal{L}$)\\
+			$IG_n^\mathcal{L}$ & index set of loads that bus $n$ can supply ($\lambda\in IG_n^\mathcal{L}$)\\
 			$IG_n^\mathcal{I}$ & index set of import points that can supply bus $n$ ($\iota\in IG_n^\mathcal{I}$) \\
 			$IG_n^\mathcal{R}$ & index set of non-wind renewable generators that can supply bus $n$ ($\rho\in IG_n^\mathcal{R}$) \\
 			$IG_n^\mathcal{W}$ & index set of wind generators that can supply bus $n$ ($\omega\in IG_n^\mathcal{W}$)\\
@@ -628,7 +767,7 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 			$K_g$ & fixed commitment cost of generator $g$ \\
 			$S_g$ & fixed startup cost of generator $g$\\
 			$C_g$ & marginal generation cost of generator $g$	\\
-			$C^\mathcal{L}$ & marginal load shedding cost of loads in $\mathcal{L}$	\\
+			$C^\mathcal{L}$ & marginal shedding cost of loads in $\mathcal{L}$	\\
 			$C^\mathcal{I}$ & marginal spillage cost of import points in $\mathcal{I}$ \\
 			$C^\mathcal{R}$ & marginal spillage cost of non-wind  renewable generators in $\mathcal{R}$ \\ 
 			$C^\mathcal{W}$ & marginal spillage cost of wind generators in $\mathcal{W}$ \\
@@ -637,13 +776,13 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 			$TC_l$ & capacity of transmission line $l$\\
 			$P_{g}^+$ & maximum generation capacity of generator $g$\\
 			$P_{g}^-$ & minimum generation capacity of generator $g$ \\
-			$R_{g}^+$ & maximum ramping capacity of generator $g$\\
-			$R_{g}^-$ & minimum ramping capacity of generator $g$\\
+			$R_{g}^+$ & ramping up capacity of generator $g$\\
+			$R_{g}^-$ & ramping down capacity of generator $g$\\
 			$UT_{g}$ & minimum up time of generator $g$\\
 			$DT_{g}$ & minimum down time of generator $g$\\
 			\multicolumn{2}{l}{\textbf{(supply/demand)}} \\
 			$D_{nt}$ & net demand in bus $n$ at time $t$ \\
-			$IC_{\lambda t}^\mathcal{L}$ & shedding from load $\lambda$\\
+			$IC_{\lambda t}^\mathcal{L}$ & demand from load $\lambda$\\
 			$IC_{\iota t}^\mathcal{I}$ & generation from import point $\iota$\\
 			$IC_{\rho t}^\mathcal{R}$ & generation from renewable generator $\rho$\\
 			$IC_{\omega ts}^\mathcal{W}$ & generation from wind generator $\omega$ under scenario $s$\\ \midrule
@@ -655,7 +794,7 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 			$\theta_{gts}$ (2nd-stage)	&	(continuous) phase angle of generator $g$ at time $t$ under scenario $s$\\
 			$f_{lts}$ (2nd-stage)	&	(continuous) power flow on line $l$ at time $t$ under scenario $s$\\
 			$p_{gts}$ (2nd-stage)	&	(continuous) production of generator $g$ at time $t$ under scenario $s$\\
-			$x_{\lambda ts}^\mathcal{L}$	(2nd-stage) & (continuous) load shedding for load $\lambda$ at time $t$ under scenario $s$	\\
+			$x_{\lambda ts}^\mathcal{L}$	(2nd-stage) & (continuous) shedding from load $\lambda$ at time $t$ under scenario $s$	\\
 			$x_{\iota ts}^\mathcal{I}$	(2nd-stage) &	(continuous) spillage for import point $\iota$ at time $t$ under scenario $s$\\
 			$x_{\rho ts}^\mathcal{R}$ (2nd-stage)	& (continuous) spillage for non-wind renewable generator $\rho$ at time $t$ under scenario $s$  	\\
 			$x_{\omega ts}^\mathcal{W}$ (2nd-stage)	& (continuous) spillage for wind generator $\omega$ at time $t$ under scenario $s$ 	\\
@@ -665,7 +804,9 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 \end{table}
 
 \subsubsection{\suc: Data generation}
-For model parameters, we use a reduced model of the CAISO to follow the reference \cite{journal:AF2004}. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
+Each \suc\ instance has two user-specifiable parameters: $D$, and $|\mathcal{S}|$. $D$ is the season-day type which is one of FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE, and $|\mathcal{S}|$ is the number of scenarios. Once the two parameters are decided, the instance in named by SUC\_$D$\_$|\mathcal{S}|$. 
+
+For model parameters, we use a reduced model of the CAISO to follow the reference \cite{journal:PO2013}. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
 Based on the WECC, set cardinalities in \suc\ are as follows.
 \begin{align*}
 |N|&=225 \\
