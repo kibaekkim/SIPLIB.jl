@@ -11,6 +11,7 @@ function SUC(Season::AbstractString, nS::Integer, seed::Int=1)::JuMP.Model
     # read & generate instance data
     data = SUCData(Season, nS)
 
+    # copy (for convenience)
     G, Gf, Gs, L, N, T, T0, LOAD, IMPORT, WIND, RE = data.G, data.Gf, data.Gs, data.L, data.N, data.T, data.T0, data.LOAD, data.IMPORT, data.WIND, data.RE
     C, Cl, Ci, Cr, Cw, K, S = data.C, data.Cl, data.Ci, data.Cr, data.Cw, data.K, data.S
     B, Pmax, Pmin, Rmax, Rmin, TC, DT, UT = data.B, data.Pmax, data.Pmin, data.Rmax, data.Rmin, data.TC, data.DT, data.UT
@@ -51,10 +52,10 @@ function SUC(Season::AbstractString, nS::Integer, seed::Int=1)::JuMP.Model
         @objective(sb, Min,
               sum(K[g]*u[g,t] + S[g]*v[g,t] for g in Gf for t in T)
             + sum(C[g]*p[g,t] for g in G for t in T)
-            + sum(Cl * loadshed[i,t] for i in LOAD for t in T)
-            + sum(Ci * ispill[i,t] for i in IMPORT for t in T)
-            + sum(Cr * rspill[i,t] for i in RE for t in T)
-            + sum(Cw * wspill[i,t] for i in WIND for t in T)
+            + sum(Cl*loadshed[i,t] for i in LOAD for t in T)
+            + sum(Ci*ispill[i,t] for i in IMPORT for t in T)
+            + sum(Cr*rspill[i,t] for i in RE for t in T)
+            + sum(Cw*wspill[i,t] for i in WIND for t in T)
         )
 
         # Unit commitment for fast generators

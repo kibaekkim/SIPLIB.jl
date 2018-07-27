@@ -63,8 +63,8 @@ function AIRLIFTData(nS::Integer, seed::Integer)::AIRLIFTData
     function LogNormal_generator(desired_mean::Any, desired_std::Any)
         μ = desired_mean
         σ = desired_std
-        param2 = sqrt(log((σ^2)/exp(2*log(μ)) + 1)) # param2 stands for μ for LogNormal
-        param1 = log(μ)-(param2^2)/2    # param1 stands for σ for LogNormal
+        param2 = sqrt(log((σ^2)/exp(2*log(μ)) + 1)) # param2 stands for 'μ' for LogNormal
+        param1 = log(μ)-(param2^2)/2    # param1 stands for 'σ' for LogNormal
         return LogNormal(param1, param2)
     end
 

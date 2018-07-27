@@ -5,6 +5,7 @@ function SIZES(nS::Integer, seed::Int=1)::JuMP.Model
     # read & generate instance data
     data = SIZESData(nS, seed)
 
+    # copy (for convenience)
     N, T, S, f, r, P, C, D, Pr = data.N, data.T, data.S, data.f, data.r, data.P, data.C, data.D, data.Pr
 
     # construct JuMP.Model

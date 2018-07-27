@@ -8,9 +8,12 @@
 using JuMP;
 
 
-SEASON           = ARGS[1];
-penetration      = float(ARGS[2]);
-numDispatchables = parse(Int,ARGS[3]);
+#SEASON           = ARGS[1];
+SEASON           = FallWD;
+#penetration      = float(ARGS[2]);
+penetration      = 0.1
+#numDispatchables = parse(Int,ARGS[3]);
+numDispatchables = 5
 
 nScenarios       = 1000;
 maxDispatchable  = 200; # 200 MW for each dispatchable load
@@ -49,11 +52,11 @@ m = Model();
 	+ 1000 * sum{ImportCurtailment[i,t], i=IMPORTS, t=PERIODS}
 	+ 2000 * sum{RenewableCurtailment[r,t], r=REGENERATORS, t=PERIODS});
 
-@addConstraint(m, NUMDISPLOAD, 
+@addConstraint(m, NUMDISPLOAD,
 	sum{InstallDispatchable[n], n=BUSES} <= numDispatchables);
 
 # Dispatchable load
-@addConstraint(m, DISPLOAD[n=BUSES,t=PERIODS], 
+@addConstraint(m, DISPLOAD[n=BUSES,t=PERIODS],
 	 maxDispatchable * InstallDispatchable[n] - DLoad[n,t] >= 0);
 
 # Ramping rate in normal operating status
@@ -68,9 +71,9 @@ m = Model();
 
 # Power balance constraints for system
 @addConstraint(m, POWER_BALANCE[n=BUSES,t=PERIODS],
-	sum{Flow[l,t], l=LINES; tobus[l] == n} 
+	sum{Flow[l,t], l=LINES; tobus[l] == n}
 	- sum{Flow[l,t], l=LINES; frombus[l] == n}
-	+ sum{Gen[i,t], i=GENERATORS; gen2bus[i] == n} 
+	+ sum{Gen[i,t], i=GENERATORS; gen2bus[i] == n}
 	- DLoad[n,t]
 	+ sum{LoadShed[j,t], j=LOADS; dBusLoads[j] == n}
 	- sum{ImportCurtailment[i,t], i=IMPORTS; dBusImportPoints[i] == n}

@@ -14,6 +14,7 @@ function MPTSPs(D::String, nN::Integer, nS::Integer, seed::Int=1)::JuMP.Model
     # generate instance data
     data = MPTSPsData(D, nN, nS, seed)
 
+    # copy (for convenience)
     N, K, S, Cs, Ce, E, Pr = data.N, data.K, data.S, data.Cs, data.Ce, data.E, data.Pr
 
     # construct JuMP.Model

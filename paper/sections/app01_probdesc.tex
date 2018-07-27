@@ -558,8 +558,9 @@ In \suc, we make commitment decision on slow generators in the first stage. In t
 Using the notation in Table \ref{SUC:notation}, the extensive form of \suc\ can be stated as in the following model \ref{SUC:formulation}.
 \begin{subequations} \label{SUC:formulation}
 	\begin{align}
-	(\suc)\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
-	\Bigg[	 \sum_{g\in G_f} \left(K_g u_{gt}+S_g v_{gt}\right) + \sum_{g\in G}C_g p_{gt} + \sum_{j\in J} C^{J}\lambda_{dt} \nonumber \\&\qquad\qquad\qquad\qquad\qquad\quad  + \sum_{i\in I} C^{I}\mu_{it} + \sum_{r\in R} C^{R}\lambda_{rt} + \sum_{k\in W} C^{W}\omega_{kt} \Bigg]
+	(\suc)\ \textrm{min}\ &\sum_{g\in G_s}\sum_{t \in T}\left(K_g w_{gt}+S_g z_{gt}\right) \nonumber \\	
+	&+ \sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
+	\Bigg[	 \sum_{g\in G_f} \left(K_g u_{gts}+S_g v_{gts}\right) + \sum_{g\in G}C_g p_{gts} + \sum_{\lambda\in \mathcal{L}} C^{\mathcal{L}}x_{\lambda ts}^{\mathcal{L}} \nonumber \\&\qquad\qquad\qquad\qquad\qquad\quad  + \sum_{\iota\in \mathcal{I}} C^{\mathcal{I}}x_{\iota ts}^{\mathcal{I}} + \sum_{\rho\in \mathcal{R}} C^{\mathcal{R}}x_{\rho ts}^{\mathcal{R}} + \sum_{\omega\in \mathcal{W}} C^{\mathcal{W}}x_{\omega ts}^{\mathcal{W}} \Bigg]
 	\label{SUC:obj}\\
 	\textrm{s.t.}\ &  \textrm{(First-stage constraints)} \nonumber\\
 	&\sum_{q=t-UT_g+1}^t z_{gq}\le w_{qt},\quad\forall g\in G_s,\ \forall t\ge UT_g,	\label{SUC:b}\\
@@ -569,10 +570,10 @@ Using the notation in Table \ref{SUC:notation}, the extensive form of \suc\ can 
 	&  \sum_{q=t-UT_g+1}^t v_{gqs}\le u_{qts},\quad\forall g\in G_f,\ \forall t\ge UT_g,\ \forall s\in\mathcal{S},\label{SUC:e}\\
 	&\sum_{q=t+1}^{t+DT_g} v_{gqs}\le 1-u_{gts},\quad\forall g\in G_f,\ \forall t\le |T|-DT_g,\ \forall s\in\mathcal{S},\label{SUC:f}\\
 	&v_{gts}\ge u_{gts}-u_{g,t-1,s},\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:g}\\
-	&\sum_{l\in L_n^-}e_{lts}+\sum_{g\in G_n} p_{gts}+\sum_{\lambda\in IG_n^\mathcal{L}}x_{\lambda ts}^\mathcal{L} +\sum_{\omega\in IG_n^\mathcal{W}} IC_{\omega ts}^\mathcal{W} \nonumber \\ 
-	&= D_{nt}+\sum_{l\in L_n^+}e_{lts}+\sum_{\iota\in IG_n^\mathcal{I}}x_{\iota ts}^\mathcal{I} + \sum_{\rho\in IG_n^\mathcal{R}} x_{\rho ts}^\mathcal{R} +\sum_{\omega\in IG_n^\mathcal{W}} x_{\omega ts}^\mathcal{W}, \nonumber \\
+	&\sum_{l\in L_n^-}f_{lts}+\sum_{g\in G_n} p_{gts}+\sum_{\lambda\in IG_n^\mathcal{L}}x_{\lambda ts}^\mathcal{L} +\sum_{\omega\in IG_n^\mathcal{W}} IC_{\omega ts}^\mathcal{W} \nonumber \\ 
+	&= D_{nt}+\sum_{l\in L_n^+}f_{lts}+\sum_{\iota\in IG_n^\mathcal{I}}x_{\iota ts}^\mathcal{I} + \sum_{\rho\in IG_n^\mathcal{R}} x_{\rho ts}^\mathcal{R} +\sum_{\omega\in IG_n^\mathcal{W}} x_{\omega ts}^\mathcal{W}, \nonumber \\
 	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:h}\\
-	&e_{lts}=B_l\left(  \theta_{n_1 ts}-\theta_{n_2 ts}  \right),\quad\forall l\equiv (n_1, n_2)\in L,\ t\in T, s\in\mathcal{S},\label{SUC:i}\\
+	&f_{lts}=B_l\left(  \theta_{n_1 ts}-\theta_{n_2 ts}  \right),\quad\forall l\equiv (n_1, n_2)\in L,\ t\in T, s\in\mathcal{S},\label{SUC:i}\\
 	&P_g^- w_{gt} \le p_{gts} \le P_g^+ w_{gt},\quad\forall g\in G_s,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:j}\\
 	&P_g^- u_{gts} \le p_{gts} \le P_g^+ u_{gts},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:k}\\
 	&-R_g^- \le p_{gts}-p_{g,t-1,s} \le R_g^+ ,\quad\forall g\in G,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:l}\\
@@ -583,7 +584,7 @@ Using the notation in Table \ref{SUC:notation}, the extensive form of \suc\ can 
 	&u_{gts}\in\{0,1\},\quad\forall g\in G_f,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:o}\\
 	&0\le v_{gts}\le 1,\quad\forall g\in G_f,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:p}\\
 	&-360\le\theta_{nts}\le 360,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:q}\\
-	&-TC_l\le e_{lts}\le TC_l,\quad\forall l\in L,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:r}\\
+	&-TC_l\le f_{lts}\le TC_l,\quad\forall l\in L,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:r}\\
 	&p_{gts}\ge 0,\quad\forall g\in G,\ \forall t\in T\cup\{0\},\ \forall s\in\mathcal{S},\label{SUC:s}\\
 	&0\le x_{\lambda ts}^\mathcal{L}\le IC_{\lambda t}^\mathcal{L},\quad\forall \lambda\in \mathcal{L},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:t}\\
 	&0\le x_{\iota ts}^\mathcal{I}\le IC_{\iota t}^\mathcal{I},\quad\forall \iota \in \mathcal{I},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{SUC:u}\\
@@ -652,7 +653,7 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 			$u_{gts}$ (2nd-stage)	&	(binary) commitment of fast generator $g$ at time $t$ under scenario $s$\\
 			$v_{gts}$ (2nd-stage)	&	(continuous) startup of fast generator $g$ at time $t$ under scenario $s$\\
 			$\theta_{gts}$ (2nd-stage)	&	(continuous) phase angle of generator $g$ at time $t$ under scenario $s$\\
-			$e_{lts}$ (2nd-stage)	&	(continuous) power flow on line $l$ at time $t$ under scenario $s$\\
+			$f_{lts}$ (2nd-stage)	&	(continuous) power flow on line $l$ at time $t$ under scenario $s$\\
 			$p_{gts}$ (2nd-stage)	&	(continuous) production of generator $g$ at time $t$ under scenario $s$\\
 			$x_{\lambda ts}^\mathcal{L}$	(2nd-stage) & (continuous) load shedding for load $\lambda$ at time $t$ under scenario $s$	\\
 			$x_{\iota ts}^\mathcal{I}$	(2nd-stage) &	(continuous) spillage for import point $\iota$ at time $t$ under scenario $s$\\

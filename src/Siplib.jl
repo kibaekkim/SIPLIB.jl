@@ -42,6 +42,8 @@ end # end module Siplib
 #=
 using Siplib
 
+generateSMPS(:DCLP,[5,10,"FallWD",5],genericnames=false,smpsfile=true)
+
 m = generateSMPS(:AIRLIFT, [10], splice=false)
 print(m)
 

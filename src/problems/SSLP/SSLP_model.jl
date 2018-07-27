@@ -41,6 +41,7 @@ function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::JuMP.Model
     # generate instance data
     data = SSLPData(nJ, nI, nS, seed)
 
+    # copy (for convenience)
     J, I, S, Z = data.J, data.I, data.S, data.Z
     c, q, q0, d, u, v, w, Jz, h, Pr = data.c, data.q, data.q0, data.d, data.u, data.v, data.w, data.Jz, data.h, data.Pr
 

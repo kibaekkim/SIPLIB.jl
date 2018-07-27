@@ -12,8 +12,9 @@ include("CAISO_data_common_functions.jl");
 @assert(isdefined(:SEASON));
 
 # Set paths
-DATA_DIR = "/Users/kibaekkim/Box Sync/DATA/PowerGrid/CAISOfromAnthony";
-WINDCASE = "Case33";
+DATA_DIR = "$(dirname(@__FILE__))/../SUC/DATA";
+WINDCASE = "WIND";
+SEASON = "FallWD"
 WIND_DIR = "$DATA_DIR/$WINDCASE/$SEASON";
 
 # ---------------
@@ -92,4 +93,3 @@ for w in 1:length(WINDS)
     end
     setindex!(dictWindProduction, wind, WINDS[w]);
 end
-
