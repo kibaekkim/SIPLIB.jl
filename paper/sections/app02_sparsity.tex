@@ -1,4 +1,19 @@
 In this section, we provide block-wise size information as well as the sparsity. Block A is only related with the 1st stage, Block W is only related with the 2nd stage, and Block T is related with both stages. For graphical representation, please refer to Figure \ref{fig:stagewise_sparsity}. Based on this information, one can easily derive the sparsity of the coefficient matrix in extensive form as well.
+
+% AIRLIFT
+\begin{table}[H]
+	\centering
+	\caption{\airlift: Block-wise sparsity information}
+	\label{table:sparsity_AIRLIFT}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero           & Sparsity                   \\ \midrule
+		A (1st-stage)             & $A$     & $AR$    & $AR$               & $\frac{1}{A}$             \\
+		W (2nd-stage)             & $R(1+A)$ & $2R+AR(R-1)$ & $3AR(R-1)+2R$       & $\frac{3A(R-1)+2}{R(1+A)(2+A(R-1))}$ \\
+		T (technology)            & $R(1+A)$ & $AR$    & $2AR$ & $\frac{2}{R(1+A)}$      \\ \bottomrule
+	\end{tabular}
+\end{table}
+
 % DCAP
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -14,9 +29,6 @@ In this section, we provide block-wise size information as well as the sparsity.
 		T (technology)          & $(R+N)T$ & $2RT$    & $\frac{1}{2}T(T+1)$ & $\frac{1+T}{4T(R+N)}$      \\ \bottomrule
 	\end{tabular}
 \end{table}
-
-
-% DCLP
 
 
 % MPTSPs
@@ -35,6 +47,21 @@ In this section, we provide block-wise size information as well as the sparsity.
 	\end{tabular}
 \end{table}
 
+% SDCP
+\begin{table}[H]
+	\centering
+	\caption{\sdcp: Block-wise sparsity information}
+	\label{table:sparsity_SDCP}
+	\resizebox{\textwidth}{!}{%
+	\begin{tabular}{@{}lccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero           \\ \midrule
+		A (1st-stage)             & $1$     & $N$    & $N$               \\
+		W (2nd-stage)             & $T(2N+L+2G)$ & $G+T(2N+L+G+\mathcal{I}+\mathcal{W}+\mathcal{R}+\mathcal{L})$ & $T\left(2N+3L+4G+\sum_{n\in N}\left(L_n^+ + L_n^- + G_n+IG_n^\mathcal{I}+IG_n^\mathcal{W}+IG_n^\mathcal{R}+IG_n^\mathcal{L}\right)\right)$       \\
+		T (technology)          & $T(2N+L+2G)$ & $N$    & $NT$ \\ \bottomrule
+	\end{tabular}
+	}
+\end{table}
 
 % SIZES
 % Please add the following required packages to your document preamble:
@@ -85,22 +112,21 @@ In this section, we provide block-wise size information as well as the sparsity.
 	\end{tabular}
 \end{table}
 
-
 \begin{table}[H]
 	\centering
 	\caption{\suc: Block-wise sparsity information}
 	\label{table:sparsity_SUC}
 	\begin{threeparttable}
 		\resizebox{\textwidth}{!}{%
-		\begin{tabular}{@{}lccc@{}}
-			\toprule
-			\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                  \\ \midrule
-			A (1st-stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                           \\
-			W (2nd-stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}                  \\
-			& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+L+\mathcal{L}+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$          \\
-			&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                                       \\
-			T (technology)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                                     \\ \bottomrule
-		\end{tabular}%
+			\begin{tabular}{@{}lccc@{}}
+				\toprule
+				\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                  \\ \midrule
+				A (1st-stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^{|T|} \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                           \\
+				W (2nd-stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^{|T|} \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}                  \\
+				& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+L+\mathcal{L}+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$          \\
+				&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                                       \\
+				T (technology)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                                     \\ \bottomrule
+			\end{tabular}%
 		}
 		\begin{tablenotes}
 			\small
@@ -108,6 +134,7 @@ In this section, we provide block-wise size information as well as the sparsity.
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
+
 %
 %\begin{table}[H]
 %	\centering

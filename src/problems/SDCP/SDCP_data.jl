@@ -155,4 +155,47 @@ function SDCPData(PenetPercent::Any, Season::String, nScenarios::Int)::SDCPData
     return data
 end
 
-# data = DCLPData(5, "FallWD", 10)
+#=
+data = SDCPData(5, "FallWD", 10)
+
+count = 0
+for n in data.N
+    for l in data.L
+        if data.tbus[l] == n
+            count += 1
+        end
+    end
+    for l in data.L
+        if data.fbus[l] == n
+            count += 1
+        end
+    end
+    for g in data.G
+        if data.gen2bus[g] == n
+            count += 1
+        end
+    end
+    for i in data.IMPORT
+        if data.import2bus[i] == n
+            count += 1
+        end
+    end
+    for i in data.LOAD
+        if data.load2bus[i] == n
+            count += 1
+        end
+    end
+    for i in data.WIND
+        if data.wind2bus[i] == n
+            count += 1
+        end
+    end
+    for i in data.RE
+        if data.re2bus[i] == n
+            count += 1
+        end
+    end
+    count += 1
+end
+count = 24*count
+=#

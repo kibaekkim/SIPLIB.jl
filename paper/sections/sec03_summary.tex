@@ -88,7 +88,7 @@ The capital Roman letters mean the sets defining the problems. In particular, th
 			\airlift	& AIRLIFT\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\
 			\dcap\    & DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
 			\mptsps\  & MPTSPs\_$D$\_$N$\_$\mathcal{S}$ &$D$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
-			\sdcp\ & SDCP\_$M$\_$P$\_$D$\_$\mathcal{S}$ & $M$: maximum number of dispatchable loads, $P$: wind penetration level (\%), $D$: day type, $\mathcal{S}$: number of scenarios\\
+			\sdcp\ & SDCP\_$K$\_$P$\_$D$\_$\mathcal{S}$ & $K$: maximum number of dispatchable loads, $P$: wind penetration level (\%), $D$: day type, $\mathcal{S}$: number of scenarios\\
 			\sizes\   & SIZES\_$\mathcal{S}$                            & $\mathcal{S}$: number of scenarios   															\\
 			\smkp\    &   SMKP\_$I$\_$\mathcal{S}$    &   $I$: number of types for item, $\mathcal{S}$: number of scenarios  													 \\
 			\sslp\    &  SSLP\_$I$\_$J$\_$\mathcal{S}$      &    $I$: number of clients, $J$: number of server locations, $\mathcal{S}$: number of scenarios                 				   \\
@@ -144,12 +144,18 @@ The increase in the number of constraint, although not always, is an important f
 				\toprule
 				&               & \multicolumn{4}{c}{Components}                                                                         \\ \cmidrule(l){3-6} 
 				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
+				\multirow{3}{*}{\airlift\ (\ref{airlift:notation})}   & 1st stage & -           & -                               & 4                    & 2                      \\
+				& 2nd stage & $8$             & -               & 4                    & $6$                  \\ \cmidrule(l){2-6} 
+				& Total          & $8\mathcal{S}$           & - & 4(1+$\mathcal{S}$)                    & $2(1+3\mathcal{S})$    \\ \midrule
 				\multirow{3}{*}{\dcap\ (\ref{dcap:notation})}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
 				& 2nd stage & -             & $(1+R)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 
 				& Total          & $RT$           & $RT+(1+R)NTS$ & -                    & $RT+(R+N)T\mathcal{S}$    \\ \midrule
-				\multirow{3}{*}{\mptsps (\ref{mptsps:notation})} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
+				\multirow{3}{*}{\mptsps\ (\ref{mptsps:notation})} & 1st stage & $(N-1)N$          & $(N-1)N$                              & -                    & $N^2+2N-1$                \\
 				& 2nd stage & -              & $3(N-1)N$                            & -                    & $(N-1)N$                     \\ \cmidrule(l){2-6} 
 				& Total          & $(N-1)N$          & $(N-1)(1+3\mathcal{S})N$              & -                    & $(1+\mathcal{S})N^2+(2-\mathcal{S})N-1$ \\ \midrule
+				\multirow{3}{*}{\sdcp\ (\ref{sdcp:notation})}  & 1st stage & -              & -                               & $225$                  & $1$                  \\
+				& 2nd stage & $24514$              & -                                  & -             & $26040$                     \\ \cmidrule(l){2-6} 
+				& Total          & $24514\mathcal{S}$              & -                               & $225$ & $1+26040\mathcal{S}$    \\ \midrule
 				\multirow{3}{*}{\sizes\ (\ref{sizes:notation})}  & 1st stage & -              & $2N$                               & $2N$                 & $2(1+N)$                  \\
 				& 2nd stage & -              & -                                  & $N(N+1)$              & $4N$                     \\ \cmidrule(l){2-6} 
 				& Total          & -              & $2N$                               & $2N+N(N+1)\mathcal{S}$ & $2(1+N+2N\mathcal{S})$    \\ \midrule
@@ -167,7 +173,7 @@ The increase in the number of constraint, although not always, is an important f
 			\begin{tablenotes}
 				\small
 				\item *For convenience, we skip the cardinality sign $|\cdot|$ for sets.
-				\item **We insert numerical value for the predetermined set, e.g., for \sizes, we use $|T|=2$ and for \mptsps, we use $|K_{ij}|=3$. In \suc, all the sets are predetermined based on the given data except for the scenario set $\mathcal{S}$.
+				\item **We insert numerical value for the predetermined set, e.g., for \sizes, we use $|T|=2$ and for \mptsps, we use $|K_{ij}|=3$. In \airlift, \sdcp, and \suc, all the sets are predetermined based on the given data except for the scenario set $\mathcal{S}$.
 			\end{tablenotes}
 		\end{threeparttable}
 	}

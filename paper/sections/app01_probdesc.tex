@@ -1,14 +1,11 @@
-In this section, we explain the meaning of the problems in \texttt{SIPLIB 2.0}. For each problem, we provide the extensive form formulation which we believe the compactest and clearest way to describe what the problem wants to do. We also give numerical parameter values together with stochastic data generation procedures. Due to the limited access to the original data in reference papers, we sometimes selectively choose the methods from several available references and modify them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links. The information in this section is completely implemented and contained in the accompanied \julia\ package's \texttt{/src/problems} directory. We recommend users to take a look inside the \julia\ implementation to easily catch all the details.
-
-
-%This does not mean that users need to know the whole procedure in order to generate new scenario data. Those who feel the given instances are not large enough can simply generate more scenario data by just modifying the parameter corresponding to the number of scenarios.
-
+In this section, we explain the meaning of the problems in \texttt{SIPLIB 2.0}. For each problem, we provide the extensive form formulation which we believe the clearest way to describe what the problem wants to do. We also give numerical parameter values together with random data generation procedures. Due to the limited access to the original data in reference papers, we sometimes selectively choose the methods from several available references and modify them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links. The information in this section is completely implemented and contained in the accompanied \julia\ package: \texttt{Siplib/src/problems}. We recommend users to take a look inside the \julia\ implementation to verify the conformance of all the details.
 \subsection{\airlift: Airlift operations scheduling} \label{AIRLIFT}
+\airlift\ is a scheduling problem that allocates flight routes and flying number for different types of aircraft to meet uncertain cargo demands from all routes. Each aircraft type has limited number of available flying hours and different flight hours/costs. In the first stage, the number of flights and corresponding routes are initially assigned to each aircraft type. The second stage recourse action includes reallocation of flight time/route and purchase of commercial transportation. Switching aircraft from one route to another causes increased hours/costs than it is supposed to be. Moreover, it sometimes gives rise to cancellation of initially assigned flights due to the different flying ability for each type.    
 
 Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\linewidth]{AIRLIFT_1}
+	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
 	\caption{AIRLIFT\_1: Extensive form constraint matrix plot}
 	\label{fig:airlift_sparsity}
 \end{figure}
@@ -30,7 +27,7 @@ Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive
 
 \begin{table}[H]
 	\caption{Notations for \airlift}
-	\label{aiflift:notation}
+	\label{airlift:notation}
 	\resizebox{\textwidth}{!}
 	{
 %		{@{}llp{3in}}
@@ -66,7 +63,7 @@ Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive
 The original reference \cite{journal:MW1969} provides a numerical example with $|A|=2$ and $|R|=2$ (Table \ref{AIRLIFT:numeric}). 
 
 \begin{table}[H]
-	\caption{Numerical data in \cite{journal:MW1969}}
+	\caption{\airlift: Numerical data in \cite{journal:MW1969}}
 	\label{AIRLIFT:numeric}
 	\centering
 	\resizebox{\textwidth}{!}{%
@@ -79,14 +76,10 @@ The original reference \cite{journal:MW1969} provides a numerical example with $
 		\end{tabular}%
 	}
 \end{table}
-
-There are three factors that define the instance of \airlift: $|A|$, $|R|$, and $|\mathcal{S}|$. Once we decide the factors, the instance is named by AIRLIFT\_$|A|$\_$|R|$\_$|\mathcal{S}|$. Let $U$ be a continuous uniform random variable: $U\sim Unif(0,1)$. Then, the parameters are generated as follows:
+According to the original reference, demand on each route is lognormally distributed with mean and standard deviation pairs (1000, 50) and (1500, 300). To get the desired result, we generate random numbers from the following lognormal distributions:
 \begin{align*}
-\alpha_{it}&=5U+5,\quad\forall i\in R,\ \forall t\in T, \\
-\beta_{it} &=40U+10,\quad\forall i\in R,\ \forall t\in T, \\
-c_{ijt}^s  &=5U+5,\quad\forall i\in R,\ \forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
-c_{0jt}^s  &=500U+500,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}, \\
-d_{jt}^s   &=U+0.5,\quad\forall j\in N,\ \forall t\in T,\ \forall s\in\mathcal{S}.
+d_1^s&=Lognormal(\mu=6.906,\ \sigma=0.05),\quad\forall s\in\mathcal{S},\\
+d_2^s&=Lognormal(\mu=7.2936,\ \sigma=0.198),\quad\forall s\in\mathcal{S}.
 \end{align*}
 
 \subsection{\dcap: Dynamic capacity planning with stochastic demand} \label{DCAP}
@@ -274,7 +267,7 @@ Fig. \ref{fig:sdcp_sparsity} shows the sparsity pattern presents in extensive fo
 \subsubsection{\sdcp: Mathematical formulation}
 In \sdcp, we make a here-and-now decision on the number and locations of data centers to be installed at location (bus) $n\in N$ at the first stage. In the second stage, the minimal cost recourse decision to dispatch loads and electricity is made considering wind power generation scenarios. The dispatching decision involves flows, angles, supply, loads, and spillages.
 
-Using the notation in Table \ref{SDCP:notation}, the extensive form of \sdcp\ can be stated as in the following model \ref{sdcp:formulation}.
+Using the notation in Table \ref{sdcp:notation}, the extensive form of \sdcp\ can be stated as in the following model \ref{sdcp:formulation}.
 \begin{subequations} \label{sdcp:formulation}
 	\begin{align}
 	(\sdcp)\ \textrm{min}\ &\sum_{s\in\mathcal{S}}\PP(s)\sum_{t\in T} 
@@ -285,7 +278,7 @@ Using the notation in Table \ref{SDCP:notation}, the extensive form of \sdcp\ ca
 	&\textrm{(Second-stage constraints)} \nonumber\\
 	&u_{nts} \le Ud_n,\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:c}\\
 	&\sum_{l\in L_n^+}f_{lts}-\sum_{l\in L_n^-}f_{lts}+\sum_{g\in G_n}p_{gts}+\sum_{\iota\in IG_n^\mathcal{I}}\left(IC_{\iota t}^\mathcal{I}-x_{\iota ts}^\mathcal{I}\right)\nonumber\\
-	&+\sum_{\omega\in IG_n^\mathcal{W}}\left(IC_{\omega t}^\mathcal{W}-x_{\omega ts}^\mathcal{W}\right)
+	&+\sum_{\omega\in IG_n^\mathcal{W}}\left(IC_{\omega ts}^\mathcal{W}-x_{\omega ts}^\mathcal{W}\right)
 	+\sum_{\rho\in IG_n^\mathcal{R}}\left(IC_{\rho t}^\mathcal{R}-x_{\rho ts}^\mathcal{R}\right)
 	-u_{nts} \nonumber\\
 	&=\sum_{\lambda\in IG_n^\mathcal{L}}\left(IC_{\lambda t}^\mathcal{L}-x_{\lambda ts}^\mathcal{L}\right),\quad\forall n\in N,\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:d}\\
@@ -301,7 +294,7 @@ Using the notation in Table \ref{SDCP:notation}, the extensive form of \sdcp\ ca
 	&0\le x_{\lambda ts}^\mathcal{L}\le IC_{\lambda t}^\mathcal{L},\quad\forall \lambda\in \mathcal{L},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:l}\\
 	&0\le x_{\iota ts}^\mathcal{I}\le IC_{\iota t}^\mathcal{I},\quad\forall \iota \in \mathcal{I},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:m}\\
 	&0\le x_{\rho ts}^\mathcal{R} \le IC_{\rho t}^\mathcal{R},\quad\forall \rho\in\mathcal{R},\ \forall t\in T,\ \forall s\in\mathcal{S},\label{sdcp:n}\\
-	&0\le x_{\omega ts}^\mathcal{W}\le IC_{\omega t}^W,\quad\forall \omega\in\mathcal{W},\ \forall t\in T,\ \forall s\in\mathcal{S}.\label{sdcp:o}
+	&0\le x_{\omega ts}^\mathcal{W}\le IC_{\omega ts}^W,\quad\forall \omega\in\mathcal{W},\ \forall t\in T,\ \forall s\in\mathcal{S}.\label{sdcp:o}
 	\end{align}	
 \end{subequations}
 The objective function (\ref{sdcp:obj}) is to minimize expected total dispatch costs. Constraints (\ref{sdcp:b}) is for the first-stage that represents the limitation of budget to install data centers. Constraint (\ref{sdcp:c}) sets the upper limit ($U$ for each data center) of the dispatchable loads from bus $n$. Constraint (\ref{sdcp:d}) guarantees the power flow balance of the network. Constraint (\ref{sdcp:e}) determines the best phase angle difference between two buses $n_1$ and $n_2$ on the line to minimize the power loss during transmission based on the Kirchhoff's law. Constraint (\ref{sdcp:f}) restricts ramping up/down capacity between two successive time slots. Constraints (\ref{sdcp:g})-(\ref{sdcp:o}) define the types and bounds for decision variables.
@@ -309,7 +302,7 @@ The objective function (\ref{sdcp:obj}) is to minimize expected total dispatch c
 \begin{table}[H]
 	\centering
 	\caption{Notations for \sdcp}
-	\label{SDCP:notation}
+	\label{sdcp:notation}
 	\resizebox{\textwidth}{!}
 	{
 		\begin{tabular}{ll}
@@ -326,7 +319,7 @@ The objective function (\ref{sdcp:obj}) is to minimize expected total dispatch c
 			$G$ & index set of all generators ($g\in G$)\\
 			\multicolumn{2}{l}{\textbf{(mapping sets)}} \\
 			$G_n$ & index set of generators that are located in bus $n$ ($g\in G_n$)\\
-			$IG_n^\mathcal{L}$ & index set of loads that bus $n$ can supply ($\lambda\in IG_n^\mathcal{L}$)\\
+			$IG_n^\mathcal{L}$ & index set of loads (or demand) that bus $n$ can supply ($\lambda\in IG_n^\mathcal{L}$)\\
 			$IG_n^\mathcal{I}$ & index set of import points that can supply bus $n$ ($\iota\in IG_n^\mathcal{I}$) \\
 			$IG_n^\mathcal{R}$ & index set of non-wind renewable generators that can supply bus $n$ ($\rho\in IG_n^\mathcal{R}$) \\
 			$IG_n^\mathcal{W}$ & index set of wind generators that can supply bus $n$ ($\omega\in IG_n^\mathcal{W}$)\\
@@ -369,7 +362,7 @@ The objective function (\ref{sdcp:obj}) is to minimize expected total dispatch c
 \end{table}
 
 \subsubsection{\sdcp: Data generation}
-Each \sdcp\ instance has four user-specifiable parameters: $K$, $P$, $D$, and $|\mathcal{S}|$. $K$ is the maximum number of installable data centers, $P$ is the wind penetration level (\%), $D$ is the season-day type which is one of FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE, and $|\mathcal{S}|$ is the number of scenarios. Once the four parameters are decided, the instance in named by SDCP\_$K$\_$P$\_$D$\_$|\mathcal{S}|$. For the default setting, we recommend to use $K=5$ and $P=10$.
+Each \sdcp\ instance has four user-specifiable parameters: $K$, $P$, $D$, and $|\mathcal{S}|$. $K$ is the maximum number of installable data centers, $P$ is the wind penetration level (\%), $D$ is the season-day type which is one of FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE, and $|\mathcal{S}|$ is the number of scenarios. Once the four parameters are decided, the instance is named by SDCP\_$K$\_$P$\_$D$\_$|\mathcal{S}|$. For the default setting, we recommend to use $K=5$ and $P=10$.
 
 For model parameters, we use a reduced model of the CAISO to follow the reference \cite{journal:KYZC2017}. The model includes a sparse representation of the entire WECC western interconnect outside of California. 
 Based on the WECC, set cardinalities in \sdcp\ are as follows.

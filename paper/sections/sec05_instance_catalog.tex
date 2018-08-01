@@ -22,6 +22,14 @@ Table \ref{table:instance_size_info_dcap}-\ref{table:instance_size_info_suc} in 
 In Table \ref{table:computation_report}, we report computational information resulted from experiments. Unlike the size and sparsity information, this should be obtained in highly computational way, which implies that the result is strongly affected depending on the computing environment in which experiments are performed. Throughout the following subsections, we explain about our computational experiments.
 
 \subsubsection{Experimental setting}
+\yoc{Experiment plan}
+\begin{itemize}
+	\item computer: Bebop
+	\item running time: 3 hours
+	\item resource: single-node with 36 cores (Bebop has 1 thread/core) per instance
+	\item solvers (default setting): CPLEX 12.8, SCIP 6.0, DSP (latest version?)
+\end{itemize}
+
 %Table \ref{table:experimental_setting} summarizes the experimental setting. 
 All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory and two sockets for Intel Xeon Processor E5-2695 v4 that consists of 18 cores each of which has single thread hence 36 cores as well as threads per node in total. The base processor frequency is 2.10GHz and maximum turbo frequency is 3.30GHz. Note that we only use 1 node for each instance.
 
