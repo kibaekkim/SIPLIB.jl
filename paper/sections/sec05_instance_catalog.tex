@@ -26,8 +26,39 @@ In Table \ref{table:computation_report}, we report computational information res
 \begin{itemize}
 	\item computer: Bebop
 	\item running time: 3 hours
-	\item resource: single-node with 36 cores (Bebop has 1 thread/core) per instance
-	\item solvers (default setting): CPLEX 12.8, SCIP 6.0, DSP (latest version?)
+	\item resource: single-node with 36 cores (1 thread/core) per instance
+	\item solvers (default parameter setting): CPLEX 12.8, SCIP 6.0, DSP \textcolor{NavyBlue}{(latest version?)}
+	\item calculating gaps
+		\begin{itemize}
+			\item Optimality gap: CPLEX (log file), SCIP (log file)
+			\item Duality gap: DSP (log file)
+			\item Integrality gap
+			\begin{itemize}
+				\item $\hat{z}$: the best solution amongst CPLEX, SCIP, DSP
+				\item $\hat{z}_{LP2}$: LP-relaxed SMPS instance will be generated (from Siplib.jl) and solve by CPLEX 
+			\end{itemize}
+			\item REVPI
+			\begin{itemize}
+				\item $\hat{z}$: the best solution amongst CPLEX, SCIP, DSP
+				\item $\hat{z}_{WS}$
+				\begin{enumerate}
+					\item Generate single-scenario instances \textcolor{NavyBlue}{(this needs implementation on Siplib.jl)}
+					\item Solve them using CPLEX and save the log files
+					\item Take average on the objective values
+				\end{enumerate}
+			\end{itemize}
+			\item RVSS
+			\begin{itemize}
+				\item $\hat{z}$: the best solution amongst CPLEX, SCIP, DSP
+				\item $\hat{z}_{EEV}$
+				\begin{enumerate}
+					\item Generate the averaged-scenario instance \textcolor{NavyBlue}{(this needs implementation on Siplib.jl)}
+					\item Solve it using CPLEX and \textcolor{NavyBlue}{save the first-stage solution}
+					\item Generate the instance in which the first-stage solution is fixed \textcolor{NavyBlue}{(this needs implementation on Siplib.jl)}
+					\item Solve it using CPLEX and calculate the RVSS
+				\end{enumerate}
+			\end{itemize}
+		\end{itemize}
 \end{itemize}
 
 %Table \ref{table:experimental_setting} summarizes the experimental setting. 
