@@ -42,6 +42,9 @@ end # end module Siplib
 #=
 using Siplib
 
+generateMPS(:AIRLIFT, [10], ss=true, genericnames=false)
+generateMPS(:SDCP, [5,10,"FallWD",10], ssp=true, genericnames=false)
+
 m = getModel(:SDCP,[5,10,"FallWD",1])
 getSparsity(m)
 
@@ -49,6 +52,9 @@ getSparsity(m)
 generateSMPS(:DCLP,[5,10,"FallWD",5],genericnames=false,smpsfile=true)
 
 m = generateSMPS(:AIRLIFT, [10], splice=false)
+
+m.ext[:Stochastic].num_scen
+
 print(m)
 
 m = generateSMPS(:SSLP, [5,5,3], smpsfile=true, genericnames=false, splice=false)

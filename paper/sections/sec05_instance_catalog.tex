@@ -149,10 +149,10 @@ $z_{WS}$ is called the \textit{wait-and-see solution value} defined by
 \begin{align} \label{ws}
 	z_{WS}:=\sum_{s=1}^r \PP(s)z^*(x,y_s),
 \end{align}
-where $z^*(x,y_s)$ is the optimal objective value of a single scenario problem: 
+where $z^*(x,y_s)$ is the optimal objective value of a \textit{single scenario problem} given a scenario $s$: 
 \begin{subequations}
 	\begin{align}
-	\min_{x,y_s}\ z(x,y_s):=&\ c^\top x+q_s^\top y_s \label{ssp:obj}\\
+	\min_{x,y_s}\ z_{SS(s)}(x,y_s):=&\ c^\top x+q_s^\top y_s \label{ssp:obj}\\
 	\mathrm{s.t.}\ &Ax \ge b \label{ssp:b}\\
 	&T_s x + W_s y_s\ge h_s,  \label{ssp:c}\\
 	&x\in X,  \label{ssp:d}\\
@@ -176,7 +176,8 @@ Noticeably, the inequality $z^*_{WS}\le z^*\le z^*_{EEV}$ is known to always hol
 			$z_{LD}$  & Objective value of the Lagrangian dual problem of RP (\ref{ld:obj}) and (\ref{ld:b}) \\ 
 			$z_{EV}$ & Objective value of the expected value problem (\ref{ev:obj})-(\ref{ev:d})\\
 			$z_{EEV}$ & Objective value of RP using the first-stage solution obtained from (\ref{eev:obj})-(\ref{eev:c})\\
-			$z_{WS}$ & Expected objective value of single scenario problem (\ref{ssp:obj})-(\ref{ssp:e})\\
+			$z_{SS}$ & Objective value of a single scenario problem given scenario $s$ (\ref{ssp:obj})-(\ref{ssp:e})\\
+			$z_{WS}$ & Averaged value of all single scenario problem objectives $z_{SS(s)}$\\
 			\bottomrule
 		\end{tabular}%
 				
