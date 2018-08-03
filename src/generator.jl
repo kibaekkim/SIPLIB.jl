@@ -45,7 +45,7 @@ function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirn
 
     if lprelax != 0
         INSTANCE_NAME *= "_LP$(lprelax)"
-        lprelaxModel(model,lprelax)
+        lprelaxModel!(model,lprelax)
         writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
     # generating EEV instance given the first-stage solutions (expected result of using the first-stage solution obtained from EVP)
     elseif FIRST_STAGE_SOLUTION_FILE != ""
@@ -72,7 +72,7 @@ function generateMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirna
     # LP relaxation
     if lprelax != 0
         INSTANCE_NAME *= "_LP$(lprelax)"
-        lprelaxModel(model,lprelax)
+        lprelaxModel!(model,lprelax)
         writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, decfile)
     # Genarating single scenario instances (to get WS solution)
     elseif ss == true

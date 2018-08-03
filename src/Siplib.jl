@@ -1,5 +1,6 @@
 module Siplib
     # dependent packages
+    using MathProgBase
     using StructJuMP
     using Distributions
     using PyPlot
@@ -9,7 +10,7 @@ module Siplib
     include("./utility.jl")
     include("./generator.jl")
     include("./analyzer.jl")
-#    include("./solver.jl")
+    include("./solver.jl")
 
     global problem = Symbol[]
     global numParams = Dict{Symbol,Int}()
@@ -18,8 +19,9 @@ module Siplib
     setGlobalVariables()
     includeModelingScripts()
 
-    export getInstanceName,                 # return Instance name using problem & parameters
+    export getInstanceName,                 # returns Instance name using problem & parameters
            getModel,                        # only returns JuMP.Model object
+           getSingleScenarioModel,          # returns a single scenario extensive form JuMP.Model object from a StructJuMP object
            generateSMPS,                    # generate SMPS files & return JuMP.Model object (to use returned object, set splice=false)
            generateMPS,                     # generate MPS file with optional .dec file (set decfile=true) & return JuMP.Model object (to use returned object, set splice=false)
            writeSMPS,                       # convert JuMP.Model object to SMPS files
@@ -33,19 +35,185 @@ module Siplib
            generateSparsityPlots,           # save all sparsity plots into "plot" folder (default)
            getSparsity,
            getSize,
-           lprelaxModel,
+           lprelaxModel!,
            problem,
            numParams,
-           noteParams
+           noteParams,
+           WS
 
 end # end module Siplib
 #=
 using Siplib
+using CPLEX
+using JuMP
+
+m = getModel(:DCAP, [3,4,5,10])
+ssm = getSingleScenarioModel(m,1)
+JuMP.setsolver(ssm, CplexSolver())
+status = solve(ssm)
+ssm.objVal
+
+m.ext[:Stochastic]
+
+m = getModel(:DCAP, [3,4,5,10])
+m = getModel(:SDCP, [5,10,"FallWD",3])
+m1 = getSingleScenarioModel(m, 1, false)
+print(m1)
+WS(m, CplexSolver())
+
+function getEEV(model::JuMP.Model)
+
+
+end
+
 
 generateMPS(:AIRLIFT, [10], ss=true, genericnames=false)
 generateMPS(:SDCP, [5,10,"FallWD",10], ssp=true, genericnames=false)
 
-m = getModel(:SDCP,[5,10,"FallWD",1])
+
+m = getModel(:DCAP, [3,4,5,10])
+in(:Stochastic, m.ext.keys)
+m1 = m.ext[:Stochastic].children[1]
+mdata_all = Siplib.getStructModelData(m, false)
+
+empty!(m.ext)
+print(m)
+m_par = m.ext[:Stochastic].children[1].ext[:Stochastic].parent
+m.colNames
+JuMP.setsolver(m,CplexSolver())
+status = JuMP.solve(m)
+JuMP.getObjectiveValue(m)
+JuMP.getValue()
+
+############
+function category(c::Char)
+    if c == 'C'
+        return :Cont
+    elseif c == 'B'
+        return :Bin
+    else
+        return :Int
+    end
+end
+
+m = getModel(:DCAP, [3,4,5,10])
+m.ext[:Stochastic].children[1]
+mdata_all = Siplib.getStructModelData(m, false)
+m1 = mdata_all[1]
+m2 = mdata_all[2]
+# get # of first-stage rows and columns
+nrows1, ncols1 = size(m1.mat)
+
+# get # of rows and columns for the scenario block
+nrows2, ncols = size(m2.mat)
+ncols2 = ncols - ncols1
+
+ef = Model(quiet=true)
+x = []
+y = []
+
+for j in 1:ncols1
+    push!(x, @variable(ef, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j], basename = m1.cname[j]))
+end
+
+for j in 1:ncols2
+    push!(y, @variable(ef, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j], basename = m2.cname[j]))
+end
+
+@objective(ef, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
+
+for i in 1:nrows1
+    if m1.sense[i] == :L
+        @constraint(ef, dot(m1.mat[i,:],x) <= m1.rhs[i])
+    elseif m1.sense[i] == :G
+        @constraint(ef, dot(m1.mat[i,:],x) >= m1.rhs[i])
+    else
+        @constraint(ef, dot(m1.mat[i,:],x) == m1.rhs[i])
+    end
+end
+
+for i in 1:nrows2
+    if m2.sense[i] == :L
+        @constraint(ef, dot(m2.mat[i,1:ncols1],x) + dot(m2.mat[i,ncols1+1:end],y) <= m2.rhs[i])
+    elseif m2.sense[i] == :G
+        @constraint(ef, dot(m2.mat[i,1:ncols1],x) + dot(m2.mat[i,ncols1+1:end],y) >= m2.rhs[i])
+    else
+        @constraint(ef, dot(m2.mat[i,1:ncols1],x) + dot(m2.mat[i,ncols1+1:end],y) == m2.rhs[i])
+    end
+end
+
+setsolver(ef,CplexSolver())
+status = solve(ef)
+ef.objVal
+
+function getSingleScenarioEFModel(model::JuMP.Model, s::Int)::JuMP.Model
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
+        return
+    end
+
+    m1 = Siplib.getModelData(model, false)
+    m2 = Siplib.getModelData(model.ext[:Stochastic].children[s], false)
+
+    # get # of first-stage rows and columns
+    nrows1, ncols1 = size(m1.mat)
+    # get # of rows and columns for the scenario block
+    nrows2, ncols = size(m2.mat)
+    ncols2 = ncols - ncols1
+
+    # declare a single scenario Extensive Form model
+    ssef = Model()
+
+    # first-stage variable container
+    x = []
+    # second-stage variable container
+    y = []
+
+    # variables
+    ## first-stage
+    for j in 1:ncols1
+        push!(x, @variable(ssef, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j], basename = m1.cname[j]))
+    end
+    ## second-stage
+    for j in 1:ncols2
+        push!(y, @variable(ssef, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j], basename = m2.cname[j]))
+    end
+
+    # objective
+    @objective(ssef, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
+
+    # constraints
+    ## first-stage
+    for i in 1:nrows1
+        if m1.sense[i] == :L
+            @constraint(ssef, dot(m1.mat[i,:],x) <= m1.rhs[i])
+        elseif m1.sense[i] == :G
+            @constraint(ssef, dot(m1.mat[i,:],x) >= m1.rhs[i])
+        else
+            @constraint(ssef, dot(m1.mat[i,:],x) == m1.rhs[i])
+        end
+    end
+    ## second-stage
+    for i in 1:nrows2
+        if m2.sense[i] == :L
+            @constraint(ssef, dot(m2.mat[i,1:ncols1],x) + dot(m2.mat[i,ncols1+1:end],y) <= m2.rhs[i])
+        elseif m2.sense[i] == :G
+            @constraint(ssef, dot(m2.mat[i,1:ncols1],x) + dot(m2.mat[i,ncols1+1:end],y) >= m2.rhs[i])
+        else
+            @constraint(ssef, dot(m2.mat[i,1:ncols1],x) + dot(m2.mat[i,ncols1+1:end],y) == m2.rhs[i])
+        end
+    end
+
+    return ssef
+end
+
+model = getModel(:DCAP, [3,4,5,10])
+ssef = getSingleScenarioEFModel(model, 1)
+setsolver(ssef,CplexSolver())
+solve(ssef)
+ssef.objVal
+
 getSparsity(m)
 
 

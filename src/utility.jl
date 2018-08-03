@@ -21,7 +21,7 @@ function getInstanceName(problem::Symbol, params_arr::Any)::String
     return INSTANCE_NAME
 end
 
-function lprelaxModel(m::JuMP.Model, level::Int)
+function lprelaxModel!(m::JuMP.Model, level::Int)
     # no LP relaxation
     if level == 0
         return m
@@ -72,31 +72,129 @@ function lprelaxModel(m::JuMP.Model, level::Int)
         return m
     else
         warn("Please use one of the (0: no relax, 1: 1st-stage only, 2: 2nd-stage only, 3: full relax) for the LP-relaxation level argument.")
+        return
     end
 end
 
-function getSingleScenarioModelData(mdata_all::Array{ModelData}, s::Int)::ModelData
+function category(c::Char)
+    if c == 'C'
+        return :Cont
+    elseif c == 'B'
+        return :Bin
+    else # c == 'E'
+        return :Int
+    end
+end
+
+# this function returns a single scenario (s-th scenario) extensive formed JuMP.Model object.
+function getSingleScenarioModel(model::JuMP.Model, s::Int, genericnames::Bool=true)::JuMP.Model
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
+        return
+    end
+
+    # extract model data
+    ## first-stage
+    m1 = getModelData(model, genericnames, false)
+    ## second-stage, s-th scenario
+    m2 = getModelData(model.ext[:Stochastic].children[s], genericnames, false)
 
     # get # of first-stage rows and columns
-    nrows1, ncols1 = size(mdata_all[1].mat)
-
+    nrows1, ncols1 = size(m1.mat)
     # get # of rows and columns for the scenario block
-    nrows2, ncols = size(mdata_all[s+1].mat)
+    nrows2, ncols = size(m2.mat)
     ncols2 = ncols - ncols1
 
-    # core data (includes 1st stage & 2nd stage's 1st scenario data)
-    objsense = mdata_all[1].objsense
-    obj      = [mdata_all[1].obj  ; mdata_all[s+1].obj]
-    rhs      = [mdata_all[1].rhs  ; mdata_all[s+1].rhs]
-    sense    = [mdata_all[1].sense; mdata_all[s+1].sense]
-    clbd     = [mdata_all[1].clbd ; mdata_all[s+1].clbd]
-    cubd     = [mdata_all[1].cubd ; mdata_all[s+1].cubd]
-    ctype    = mdata_all[1].ctype * mdata_all[s+1].ctype
-    cname    = [mdata_all[1].cname ; mdata_all[s+1].cname]    # for column name
-    mat      = [[mdata_all[1].mat zeros(nrows1, ncols-ncols1)] ; mdata_all[s+1].mat]
+    # declare a single scenario Extensive Form model
+    ssm = Model()
 
-    return ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname)
+    # first-stage variable container
+    x = []
+    # second-stage variable container
+    y = []
+
+    if genericnames == false
+        # variables
+        ## first-stage
+        for j in 1:ncols1
+            push!(x, @variable(ssm, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j], basename = m1.cname[j]))
+        end
+        ## second-stage
+        for j in 1:ncols2
+            push!(y, @variable(ssm, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j], basename = m2.cname[j]))
+        end
+
+        # objective
+        @objective(ssm, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
+
+        # constraints
+        ## first-stage
+        for i in 1:nrows1
+            if m1.sense[i] == :L
+                @constraint(ssm, dot(m1.mat[i,:],x) <= m1.rhs[i])
+            elseif m1.sense[i] == :G
+                @constraint(ssm, dot(m1.mat[i,:],x) >= m1.rhs[i])
+            else
+                @constraint(ssm, dot(m1.mat[i,:],x) == m1.rhs[i])
+            end
+        end
+        ## second-stage
+        for i in 1:nrows2
+            aff = AffExpr(x,m2.mat[i,1:ncols1],0)
+            aff2 = AffExpr(y,m2.mat[i,ncols1+1:end],0)
+            append!(aff,aff2)
+            if m2.sense[i] == :L
+                @constraint(ssm, aff <= m2.rhs[i])
+            elseif m2.sense[i] == :G
+                @constraint(ssm, aff >= m2.rhs[i])
+            else
+                @constraint(ssm, aff == m2.rhs[i])
+            end
+        end
+    elseif genericnames == true
+        # variables
+        ## first-stage
+        for j in 1:ncols1
+            push!(x, @variable(ssm, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j]))
+        end
+        ## second-stage
+        for j in 1:ncols2
+            push!(y, @variable(ssm, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j]))
+        end
+
+        # objective
+        @objective(ssm, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
+
+        # constraints
+        ## first-stage
+        for i in 1:nrows1
+            if m1.sense[i] == :L
+                @constraint(ssm, dot(m1.mat[i,:],x) <= m1.rhs[i])
+            elseif m1.sense[i] == :G
+                @constraint(ssm, dot(m1.mat[i,:],x) >= m1.rhs[i])
+            else
+                @constraint(ssm, dot(m1.mat[i,:],x) == m1.rhs[i])
+            end
+        end
+        ## second-stage
+        for i in 1:nrows2
+            aff = AffExpr(x,m2.mat[i,1:ncols1],0)
+            aff2 = AffExpr(y,m2.mat[i,ncols1+1:end],0)
+            append!(aff,aff2)
+            if m2.sense[i] == :L
+                @constraint(ssm, aff <= m2.rhs[i])
+            elseif m2.sense[i] == :G
+                @constraint(ssm, aff >= m2.rhs[i])
+            else
+                @constraint(ssm, aff == m2.rhs[i])
+            end
+        end
+    end
+
+    return ssm
 end
+
 
 function getEVPModelData()
 
@@ -123,6 +221,7 @@ function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dir
         PyPlot.close()
     end
 end
+
 
 
 #=

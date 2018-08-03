@@ -132,6 +132,29 @@ function getStructModelData(m::JuMP.Model, genericnames::Bool=true, splice::Bool
     return mdata_all
 end
 
+function getSingleScenarioModelData(mdata_all::Array{ModelData}, s::Int)::ModelData
+
+    # get # of first-stage rows and columns
+    nrows1, ncols1 = size(mdata_all[1].mat)
+
+    # get # of rows and columns for the scenario block
+    nrows2, ncols = size(mdata_all[s+1].mat)
+    ncols2 = ncols - ncols1
+
+    # core data (includes 1st stage & 2nd stage's s-th scenario data)
+    objsense = mdata_all[1].objsense
+    obj      = [mdata_all[1].obj  ; mdata_all[s+1].obj]
+    rhs      = [mdata_all[1].rhs  ; mdata_all[s+1].rhs]
+    sense    = [mdata_all[1].sense; mdata_all[s+1].sense]
+    clbd     = [mdata_all[1].clbd ; mdata_all[s+1].clbd]
+    cubd     = [mdata_all[1].cubd ; mdata_all[s+1].cubd]
+    ctype    = mdata_all[1].ctype * mdata_all[s+1].ctype
+    cname    = [mdata_all[1].cname ; mdata_all[s+1].cname]    # for column name
+    mat      = [[mdata_all[1].mat zeros(nrows1, ncols-ncols1)] ; mdata_all[s+1].mat]
+
+    return ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname)
+end
+
 # general purpose MPS writing function (e.g., writing .cor file)
 function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname, genericnames::Bool=true)
 
