@@ -21,6 +21,7 @@ module Siplib
 
     export getInstanceName,                 # returns Instance name using problem & parameters
            getModel,                        # only returns JuMP.Model object
+           getExtensiveFormModel,
            getSingleScenarioModel,          # returns a single scenario extensive form JuMP.Model object from a StructJuMP object
            generateSMPS,                    # generate SMPS files & return JuMP.Model object (to use returned object, set splice=false)
            generateMPS,                     # generate MPS file with optional .dec file (set decfile=true) & return JuMP.Model object (to use returned object, set splice=false)
@@ -39,13 +40,243 @@ module Siplib
            problem,
            numParams,
            noteParams,
-           WS
+           WS,
+           EEV,
+           RP
 
 end # end module Siplib
+
 #=
 using Siplib
 using CPLEX
+
+model = getModel(:DCAP,[5,5,5,10])
+WS(model, CplexSolver())
+RP(model, CplexSolver())
+EEV(model, CplexSolver())
+
+function getAveragedScenarioModel(model::JuMP.Model, genericnames::Bool=true)::JuMP.Model
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
+        return
+    end
+    # extract model data
+    mdata_all = Siplib.getStructModelData(model, genericnames, false)
+    m1 = mdata_all[1]
+
+    # average up 2nd-stage data
+    avg_mat =
+    avg_obj
+    avg_rhs
+    for
+
+end
+model = getModel(:DCAP,[3,4,5,10])
+
+
+
+
+
+WS(model, CplexSolver())
 using JuMP
+model = getModel(:DCAP,[3,4,5,10])
+WS(model, CplexSolver())
+
+efm = getExtensiveFormModel(model)
+setsolver(efm, CplexSolver())
+status = solve(efm)
+efm.objVal
+
+generateSMPS(:DCAP,[3,4,5,10])
+
+# extract model data
+mdata_all = Siplib.getStructModelData(model, false, false)
+nS = length(mdata_all)-1
+## copy first-stage
+m1 = mdata_all[1]
+
+# get the number of first-stage rows and columns
+nrows1, ncols1 = size(m1.mat)
+# get the number of rows and columns for the scenario block
+nrows2, ncols = size(mdata_all[2].mat)
+ncols2 = ncols - ncols1
+
+# declare an Extensive Form model
+efm = JuMP.Model()
+
+# declare variables
+x = []
+y = []
+
+if isempty(m1.cname)
+    for j in 1:ncols1
+        push!(x, @variable(efm, category = Siplib.category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j]))
+    end
+else
+    for j in 1:ncols1
+        push!(x, @variable(efm, category = Siplib.category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j], basename = m1.cname[j]))
+    end
+end
+
+for s in 1:nS
+    m2 = mdata_all[s+1]
+    tempv = []
+    if isempty(mdata_all[s+1].cname)
+        for j in 1:ncols2
+            push!(tempv, @variable(efm, category = Siplib.category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j]))
+        end
+    else
+        for j in 1:ncols2
+            push!(tempv, @variable(efm, category = Siplib.category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j], basename = "$(m2.cname[j])_$s"))
+        end
+    end
+    push!(y,tempv)
+end
+
+# declare objective
+aff = AffExpr(x,m1.obj,0)
+for s in 1:nS
+    m2 = mdata_all[s+1]
+    append!(aff, (1/nS)*AffExpr(y[s], m2.obj, 0))
+end
+@objective(efm, m1.objsense, aff)
+
+# declare constraints
+## first-stage
+for i in 1:nrows1
+    if m1.sense[i] == :L
+        @constraint(efm, AffExpr(x,m1.mat[i,:],0) <= m1.rhs[i])
+    elseif m1.sense[i] == :G
+        @constraint(efm, AffExpr(x,m1.mat[i,:],0) >= m1.rhs[i])
+    else
+        @constraint(efm, AffExpr(x,m1.mat[i,:],0) == m1.rhs[i])
+    end
+end
+
+for s in 1:nS
+    m2 = mdata_all[s+1]
+    for i in 1:nrows2
+        aff = AffExpr(x,m2.mat[i,1:ncols1],0)
+        append!(aff, AffExpr(y[s],m2.mat[i,ncols1+1:end],0))
+        if m2.sense[i] == :L
+            @constraint(efm, aff <= m2.rhs[i])
+        elseif m2.sense[i] == :G
+            @constraint(efm, aff >= m2.rhs[i])
+        else
+            @constraint(efm, aff == m2.rhs[i])
+        end
+    end
+end
+
+setsolver(efm, CplexSolver())
+status = solve(efm)
+efm.objVal
+
+
+# second-stage variable container
+y = []
+
+if genericnames == false
+    # variables
+    ## first-stage
+    for j in 1:ncols1
+        push!(x, @variable(ssm, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j], basename = m1.cname[j]))
+    end
+    ## second-stage
+    for j in 1:ncols2
+        push!(y, @variable(ssm, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j], basename = m2.cname[j]))
+    end
+
+    # objective
+    @objective(ssm, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
+
+    # constraints
+    ## first-stage
+    for i in 1:nrows1
+        if m1.sense[i] == :L
+            @constraint(ssm, AffExpr(x,m1.mat[i,:],0) <= m1.rhs[i])
+        elseif m1.sense[i] == :G
+            @constraint(ssm, AffExpr(x,m1.mat[i,:],0) >= m1.rhs[i])
+        else
+            @constraint(ssm, AffExpr(x,m1.mat[i,:],0) == m1.rhs[i])
+        end
+    end
+    ## second-stage
+    for i in 1:nrows2
+        aff = AffExpr(x,m2.mat[i,1:ncols1],0)
+        aff2 = AffExpr(y,m2.mat[i,ncols1+1:end],0)
+        append!(aff,aff2)
+        if m2.sense[i] == :L
+            @constraint(ssm, aff <= m2.rhs[i])
+        elseif m2.sense[i] == :G
+            @constraint(ssm, aff >= m2.rhs[i])
+        else
+            @constraint(ssm, aff == m2.rhs[i])
+        end
+    end
+elseif genericnames == true
+    # variables
+    ## first-stage
+    for j in 1:ncols1
+        push!(x, @variable(ssm, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j]))
+    end
+    ## second-stage
+    for j in 1:ncols2
+        push!(y, @variable(ssm, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j]))
+    end
+
+    # objective
+    @objective(ssm, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
+
+    # constraints
+    ## first-stage
+    for i in 1:nrows1
+        if m1.sense[i] == :L
+            @constraint(ssm, AffExpr(x,m1.mat[i,:],0) <= m1.rhs[i])
+        elseif m1.sense[i] == :G
+            @constraint(ssm, AffExpr(x,m1.mat[i,:],0) >= m1.rhs[i])
+        else
+            @constraint(ssm, AffExpr(x,m1.mat[i,:],0) == m1.rhs[i])
+        end
+    end
+    ## second-stage
+    for i in 1:nrows2
+        aff = AffExpr(x,m2.mat[i,1:ncols1],0)
+        aff2 = AffExpr(y,m2.mat[i,ncols1+1:end],0)
+        append!(aff,aff2)
+        if m2.sense[i] == :L
+            @constraint(ssm, aff <= m2.rhs[i])
+        elseif m2.sense[i] == :G
+            @constraint(ssm, aff >= m2.rhs[i])
+        else
+            @constraint(ssm, aff == m2.rhs[i])
+        end
+    end
+end
+
+
+
+
+
+
+
+
+model = getModel(:DCAP,[3,4,5,10])
+
+# extract model data
+mdata_all = Siplib.getStructModelData(model, false, false)
+m1 = mdata_all[1]
+
+# average up 2nd-stage data
+avg_mat = SparseMatrixCSC{Float64,Int64}
+avg_obj = Any[]
+avg_rhs = Any[]
+for s in model.ext[:Stochastic].num_scen
+
+end
+
+
 
 m = getModel(:DCAP, [3,4,5,10])
 ssm = getSingleScenarioModel(m,1)
@@ -60,11 +291,6 @@ m = getModel(:SDCP, [5,10,"FallWD",3])
 m1 = getSingleScenarioModel(m, 1, false)
 print(m1)
 WS(m, CplexSolver())
-
-function getEEV(model::JuMP.Model)
-
-
-end
 
 
 generateMPS(:AIRLIFT, [10], ss=true, genericnames=false)

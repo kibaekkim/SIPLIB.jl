@@ -86,113 +86,109 @@ function category(c::Char)
     end
 end
 
+# from ModelData array, returns EF JuMP.Model
+function getExtensiveFormModel(mdata_all::Array{ModelData}; return_x::Bool=false)
+    # save the number of scenarios
+    nS = length(mdata_all)-1
+    # copy first-stage
+    m1 = mdata_all[1]
+
+    # get the number of first-stage rows and columns
+    nrows1, ncols1 = size(m1.mat)
+    # get the number of rows and columns for the scenario block
+    nrows2, ncols = size(mdata_all[2].mat)
+    ncols2 = ncols - ncols1
+
+    # declare an Extensive Form Model
+    efm = JuMP.Model()
+
+    # variables
+    ## declare variables constainers
+    x = []  # first-stage
+    y = []  # second-stage
+
+    ## declare variables
+    if isempty(m1.cname)
+        for j in 1:ncols1
+            push!(x, @variable(efm, category = Siplib.category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j]))
+        end
+    else
+        for j in 1:ncols1
+            push!(x, @variable(efm, category = Siplib.category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j], basename = m1.cname[j]))
+        end
+    end
+
+    for s in 1:nS
+        m2 = mdata_all[s+1]
+        tempv = []
+        if isempty(mdata_all[s+1].cname)
+            for j in 1:ncols2
+                push!(tempv, @variable(efm, category = Siplib.category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j]))
+            end
+        else
+            for j in 1:ncols2
+                push!(tempv, @variable(efm, category = Siplib.category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j], basename = "$(m2.cname[j])_$s"))
+            end
+        end
+        push!(y,tempv)
+    end
+
+    # objective
+    aff = AffExpr(x,m1.obj,0)
+    aff2 = AffExpr(y[1],(1/nS)*mdata_all[2].obj,0)
+    for s in 2:nS
+        m2 = mdata_all[s+1]
+        append!(aff2, (1/nS)*AffExpr(y[s], m2.obj, 0))
+    end
+    @objective(efm, m1.objsense, aff + aff2)
+    #@objective(efm, m1.objsense, aff)
+
+    # constraints
+    ## first-stage
+    for i in 1:nrows1
+        if m1.sense[i] == :L
+            @constraint(efm, AffExpr(x,m1.mat[i,:],0) <= m1.rhs[i])
+        elseif m1.sense[i] == :G
+            @constraint(efm, AffExpr(x,m1.mat[i,:],0) >= m1.rhs[i])
+        else
+            @constraint(efm, AffExpr(x,m1.mat[i,:],0) == m1.rhs[i])
+        end
+    end
+    ## second-stage
+    for s in 1:nS
+        m2 = mdata_all[s+1]
+        for i in 1:nrows2
+            aff = AffExpr(x,m2.mat[i,1:ncols1],0)
+            append!(aff, AffExpr(y[s],m2.mat[i,ncols1+1:end],0))
+            if m2.sense[i] == :L
+                @constraint(efm, aff <= m2.rhs[i])
+            elseif m2.sense[i] == :G
+                @constraint(efm, aff >= m2.rhs[i])
+            else
+                @constraint(efm, aff == m2.rhs[i])
+            end
+        end
+    end
+
+    if !return_x
+        return efm
+    else
+        return (efm, x)
+    end
+end
+
 # this function returns a single scenario (s-th scenario) extensive formed JuMP.Model object.
-function getSingleScenarioModel(model::JuMP.Model, s::Int, genericnames::Bool=true)::JuMP.Model
+function getSingleScenarioModel(model::JuMP.Model, s::Int, genericnames::Bool=true, splice::Bool=true)::JuMP.Model
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
         warn("Not a stochastic model.")
         return
     end
+    mdata_all = ModelData[]
+    push!(mdata_all, getModelData(model, genericnames, splice))
+    push!(mdata_all, getModelData(model.ext[:Stochastic].children[s], genericnames, splice))
 
-    # extract model data
-    ## first-stage
-    m1 = getModelData(model, genericnames, false)
-    ## second-stage, s-th scenario
-    m2 = getModelData(model.ext[:Stochastic].children[s], genericnames, false)
-
-    # get # of first-stage rows and columns
-    nrows1, ncols1 = size(m1.mat)
-    # get # of rows and columns for the scenario block
-    nrows2, ncols = size(m2.mat)
-    ncols2 = ncols - ncols1
-
-    # declare a single scenario Extensive Form model
-    ssm = Model()
-
-    # first-stage variable container
-    x = []
-    # second-stage variable container
-    y = []
-
-    if genericnames == false
-        # variables
-        ## first-stage
-        for j in 1:ncols1
-            push!(x, @variable(ssm, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j], basename = m1.cname[j]))
-        end
-        ## second-stage
-        for j in 1:ncols2
-            push!(y, @variable(ssm, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j], basename = m2.cname[j]))
-        end
-
-        # objective
-        @objective(ssm, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
-
-        # constraints
-        ## first-stage
-        for i in 1:nrows1
-            if m1.sense[i] == :L
-                @constraint(ssm, dot(m1.mat[i,:],x) <= m1.rhs[i])
-            elseif m1.sense[i] == :G
-                @constraint(ssm, dot(m1.mat[i,:],x) >= m1.rhs[i])
-            else
-                @constraint(ssm, dot(m1.mat[i,:],x) == m1.rhs[i])
-            end
-        end
-        ## second-stage
-        for i in 1:nrows2
-            aff = AffExpr(x,m2.mat[i,1:ncols1],0)
-            aff2 = AffExpr(y,m2.mat[i,ncols1+1:end],0)
-            append!(aff,aff2)
-            if m2.sense[i] == :L
-                @constraint(ssm, aff <= m2.rhs[i])
-            elseif m2.sense[i] == :G
-                @constraint(ssm, aff >= m2.rhs[i])
-            else
-                @constraint(ssm, aff == m2.rhs[i])
-            end
-        end
-    elseif genericnames == true
-        # variables
-        ## first-stage
-        for j in 1:ncols1
-            push!(x, @variable(ssm, category = category(m1.ctype[j]), lowerbound = m1.clbd[j], upperbound = m1.cubd[j]))
-        end
-        ## second-stage
-        for j in 1:ncols2
-            push!(y, @variable(ssm, category = category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j]))
-        end
-
-        # objective
-        @objective(ssm, m1.objsense, dot(x, m1.obj) + dot(y, m2.obj))
-
-        # constraints
-        ## first-stage
-        for i in 1:nrows1
-            if m1.sense[i] == :L
-                @constraint(ssm, dot(m1.mat[i,:],x) <= m1.rhs[i])
-            elseif m1.sense[i] == :G
-                @constraint(ssm, dot(m1.mat[i,:],x) >= m1.rhs[i])
-            else
-                @constraint(ssm, dot(m1.mat[i,:],x) == m1.rhs[i])
-            end
-        end
-        ## second-stage
-        for i in 1:nrows2
-            aff = AffExpr(x,m2.mat[i,1:ncols1],0)
-            aff2 = AffExpr(y,m2.mat[i,ncols1+1:end],0)
-            append!(aff,aff2)
-            if m2.sense[i] == :L
-                @constraint(ssm, aff <= m2.rhs[i])
-            elseif m2.sense[i] == :G
-                @constraint(ssm, aff >= m2.rhs[i])
-            else
-                @constraint(ssm, aff == m2.rhs[i])
-            end
-        end
-    end
-
-    return ssm
+    return getExtensiveFormModel(mdata_all)
 end
 
 

@@ -23,6 +23,21 @@ end
 # getModel(): no optional arguments version
 getModel(problem::Symbol, params_arr::Any, _seed::Int) = getModel(problem, params_arr, seed = _seed)
 
+# convert a StructModel to normal model that can be solved by any MIP solver
+function getExtensiveFormModel(model::JuMP.Model ; genericnames::Bool=true, splice::Bool=true)::JuMP.Model
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
+        return
+    end
+
+    mdata_all = getStructModelData(model, genericnames, splice)
+    return getExtensiveFormModel(mdata_all)
+end
+
+# getExtensiveFormModel(): no optional arguments version
+getExtensiveFormModel(model::JuMP.Model, _genericnames::Bool, _splice::Bool) = getExtensiveFormModel(model, genericnames=_genericnames, splice=_splice)
+
 """
     generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ; seed::Int=1, varname::Bool=false, splice::Bool=true, smpsfile::Bool=false)
 
@@ -49,6 +64,8 @@ function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirn
         writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
     # generating EEV instance given the first-stage solutions (expected result of using the first-stage solution obtained from EVP)
     elseif FIRST_STAGE_SOLUTION_FILE != ""
+        writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
+    else
         writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
     end
 
@@ -85,6 +102,8 @@ function generateMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirna
     # Generating EVP instance (expected value problem)
     elseif ev == true
         writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, decfile)
+    else
+        writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
     end
 
 end
