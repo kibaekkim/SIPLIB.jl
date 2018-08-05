@@ -13,27 +13,33 @@ end
 =#
 
 # calculate Wait-and-See solution (needs any MIP solver, e.g., using CPLEX)
-function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, splice::Bool=false)
+function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, ss_timelimit::Float64=Inf, splice::Bool=false)
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
         warn("Not a stochastic model.")
         return
     end
 
-#    println("Calculating the Wait-and-See solution ...")
+    println("Calculating the Wait-and-See solution (WS)")
 
     num_notoptimal = 0 # counts the number of single scenario model that is not solved to optimality
     sum = 0.0
+    println("  Solving $(model.ext[:Stochastic].num_scen) single scenario problems")
     if !output
-        TT = STDOUT # save original STDOUT stream
-        redirect_stdout()
+        MathProgBase.setparameters!(solver,Silent=true)
     end
+    if ss_timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=ss_timelimit)
+    end
+
     for s in 1:model.ext[:Stochastic].num_scen
 #        tic()
-#        println("Solving single scenario problem with scenario $s ...")
+        print("    Scenario $s ... ")
         ssm = getSingleScenarioModel(model, s, true, splice)
         setsolver(ssm, solver)
-        status = solve(ssm)
+        status = solve(ssm, suppress_warnings=true)
+        ssm_gap = getobjgap(ssm)
+        println("$status (gap: $(round(ssm_gap,3))%)")
         if status != :Optimal
             num_notoptimal += 1
         end
@@ -41,24 +47,27 @@ function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
         ssm = Model()   # free memory?
 #        toc()
     end
+    println("  Done")
     if !output
-        redirect_stdout(TT) # restore STDOUT
+        MathProgBase.setparameters!(solver,Silent=false)
     end
-
-    if num_notoptimal != 0
-        warn("$num_notoptimal single scenario problem is not solved to optimality.")
+    if ss_timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=Inf)
     end
-
+    WS = sum/model.ext[:Stochastic].num_scen
+    println("WS = $(round(WS,3)) (# of nonoptimal single scenario problems: $num_notoptimal)")
     return sum/model.ext[:Stochastic].num_scen
 end
 
 
-function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false)
+function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, ev_timelimit::Float64=Inf, eev_timelimit::Float64=Inf)
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
         warn("Not a stochastic model.")
         return
     end
+
+    println("Calculating the effect of using the expected value solution (EEV)")
 
     # save the number of scenarios
     nS = model.ext[:Stochastic].num_scen
@@ -82,16 +91,18 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
     push!(mdata_all_2, m1)
     push!(mdata_all_2, ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,m2.clbd,m2.cubd,m2.ctype,m2.cname))
     evp, x = getExtensiveFormModel(mdata_all_2,return_x=true)
+    if !output
+        MathProgBase.setparameters!(solver,Silent=true)
+    end
+    if ev_timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=ev_timelimit)
+    end
     setsolver(evp, solver)
-    if !output
-        TT = STDOUT # save original STDOUT stream
-        redirect_stdout()
-    end
-    status = solve(evp)
-    if !output
-        redirect_stdout(TT) # restore STDOUT
-    end
+    print("  Solving the expected value problem (EV) ... ")
+    status = solve(evp, suppress_warnings=true)
+    println("$status")
     ev_sol = getvalue(x)
+    ev_gap = getobjgap(evp)
     evp = Model()
 
     # Step 2: fix the first-stage variables and get EEV
@@ -101,36 +112,48 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
     end
 
     setsolver(eev, solver)
+    print("  Solving the recourse problem with fixed first-stage (EEV) ... ")
+    status = solve(eev, suppress_warnings=true)
+    println("$status")
     if !output
-        TT = STDOUT # save original STDOUT stream
-        redirect_stdout()
+        MathProgBase.setparameters!(solver,Silent=false)
     end
-    solve(eev)
-    if !output
-        redirect_stdout(TT) # restore STDOUT
+    if ev_timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=Inf)
     end
     EEV = eev.objVal
+    eev_gap = getobjgap(eev)
     eev = Model()
+    println("EV gap: $(round(ev_gap,3))%")
+    println("EEV = $(round(EEV,3)) (gap: $(round(eev_gap,3))%)")
     return EEV
 end
 
-function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, genericnames::Bool=true, splice::Bool=false)
+function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false)
     efrp = getExtensiveFormModel(model, genericnames, splice)
     setsolver(efrp, solver)
 
     if !output
-        TT = STDOUT # save original STDOUT stream
-        redirect_stdout()
+        MathProgBase.setparameters!(solver,Silent=true)
+    end
+    if timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=timelimit)
     end
 
-    status = solve(efrp)
-
+    print("Solving recourse problem in the extensive form (RP) ... ")
+    status = solve(efrp, suppress_warnings=true)
+    println("$status")
     if !output
-        redirect_stdout(TT) # restore STDOUT
+        MathProgBase.setparameters!(solver,Silent=false)
+    end
+    if timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=Inf)
     end
 
     RP = efrp.objVal
+    gap = getobjgap(efrp)
     efrp = Model()
+    println("RP = $(round(RP,3)) (gap: $(round(gap,3))%)")
     return RP
 end
 

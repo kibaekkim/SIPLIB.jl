@@ -45,15 +45,15 @@ module Siplib
            RP
 
 end # end module Siplib
-
 #=
+
 using Siplib
 using CPLEX
 
-model = getModel(:DCAP,[5,5,5,10])
-WS(model, CplexSolver())
-RP(model, CplexSolver())
-EEV(model, CplexSolver())
+model = getModel(:SMKP,[120,10])
+WS(model, CplexSolver(), ss_timelimit=10.0)
+RP(model, CplexSolver(), timelimit=20.0)
+EEV(model, CplexSolver(), ev_timelimit=20.0, eev_timelimit=20.0)
 
 function getAveragedScenarioModel(model::JuMP.Model, genericnames::Bool=true)::JuMP.Model
     # check if model is stochastic (or structured) model
