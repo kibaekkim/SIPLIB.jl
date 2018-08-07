@@ -4,6 +4,7 @@ module Siplib
     using StructJuMP
     using Distributions
     using PyPlot
+    using Combinatorics
 
     # include Siplib utility sources
     include("./writer.jl")
@@ -45,15 +46,26 @@ module Siplib
            RP
 
 end # end module Siplib
-#=
 
+#=
 using Siplib
 using CPLEX
 
+model = getModel(:PHONE, [1])
+
+print(model)
+RP(model, CplexSolver(), output=true)
+
+
 model = getModel(:SMKP,[120,10])
+model = getModel(:DCAP,[3,4,5,10])
+model = getModel(:SSLP,[5,5,10])
 WS(model, CplexSolver(), ss_timelimit=10.0)
 RP(model, CplexSolver(), timelimit=20.0)
-EEV(model, CplexSolver(), ev_timelimit=20.0, eev_timelimit=20.0)
+EEV(model, CplexSolver(), genericnames=false)
+generateSMPS(:SSLP,[5,5,10],genericnames=false)
+model = getExtensiveFormModel(model,genericnames=false)
+Siplib.writeMPS(model)
 
 function getAveragedScenarioModel(model::JuMP.Model, genericnames::Bool=true)::JuMP.Model
     # check if model is stochastic (or structured) model

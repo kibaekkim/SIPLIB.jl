@@ -595,10 +595,9 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
     FILE_NAME = "$DIR_NAME/$INSTANCE_NAME"
     println("Writing SMPS files for $INSTANCE_NAME")
 
-    # Check if m is a StructJuMP model
-    if !haskey(m.ext, :Stochastic)
-        JuMP.writeMPS(m, "$FILE_NAME.mps")
-        warn("This is not a stochastic model. $FILE_NAME.mps is generated.")
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
         return
     end
 
@@ -635,6 +634,12 @@ writeSMPS(m, INSTANCE_NAME="instance", DIR_NAME="$(dirname(@__FILE__))/../instan
 
 # MPS writer (+ dec file) for a stochastic model instance
 function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true, decfile::Bool=false)
+
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
+        return
+    end
 
     FILE_NAME = "$DIR_NAME/$INSTANCE_NAME"
 
