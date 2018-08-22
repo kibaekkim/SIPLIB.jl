@@ -8,7 +8,7 @@ function PHONE(nS::Integer, seed::Int=1)::JuMP.Model
     # sets
     P = 1:length(data.P)
     E = 1:length(data.E)
-    R = [1:length(data.R[i]) for i in P]
+    R = [1:length(data.R[i]) for i in P] # 2 dim array
     S = 1:nS
 
     # parameters

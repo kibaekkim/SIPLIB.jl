@@ -51,18 +51,30 @@ end # end module Siplib
 using Siplib
 using CPLEX
 
-model = getModel(:PHONE, [1])
+generateSMPS(:MPTSPs,["D0",10,10],genericnames=false,smpsfile=true)
 
-print(model)
-RP(model, CplexSolver(), output=true)
+model = getModel(:MPTSPs,["D0",10,10])
+
+
+EEV(model, CplexSolver())
+print(model.)
+
+
+generateSMPS(:PHONE,[5],genericnames=false)
+generateSMPS(:PHONE,[1000],genericnames=false)
+
+model = getModel(:PHONE, [100])
+model.varData
+print(model.)
+EEV(model, CplexSolver(), output=true)
 
 
 model = getModel(:SMKP,[120,10])
 model = getModel(:DCAP,[3,4,5,10])
 model = getModel(:SSLP,[5,5,10])
 WS(model, CplexSolver(), ss_timelimit=10.0)
-RP(model, CplexSolver(), timelimit=20.0)
-EEV(model, CplexSolver(), genericnames=false)
+RP(model, CplexSolver(), timelimit=20.0, output=true)
+EEV(model, CplexSolver(), genericnames=false, output=true)
 generateSMPS(:SSLP,[5,5,10],genericnames=false)
 model = getExtensiveFormModel(model,genericnames=false)
 Siplib.writeMPS(model)

@@ -82,6 +82,175 @@ d_1^s&=Lognormal(\mu=6.906,\ \sigma=0.05),\quad\forall s\in\mathcal{S},\\
 d_2^s&=Lognormal(\mu=7.2936,\ \sigma=0.198),\quad\forall s\in\mathcal{S}.
 \end{align*}
 
+\subsection{\chem: Design of batch chemical plants} \label{CHEM}
+
+
+Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive form \chem\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
+	\caption{CHEM\_1: Extensive form constraint matrix plot}
+	\label{fig:chem_sparsity}
+\end{figure}
+
+\subsubsection{\chem: Mathematical formulation}
+
+\begin{subequations} \label{chem:formulation}
+	\begin{align}
+	(\chem)\ \textrm{max}\ & \sum_{\sigma\in\mathcal{S}}\PP(\sigma)\sum_{t\in T}\left[ \sum_{r\in R}\left( v_{rt\sigma}^{\textrm{s}}q_{rt\sigma}^{\textrm{s0}}-v_{rt}^\textrm{b}q_{rt}^\textrm{b}\right) - \sum_{j\in J}\left( n_{j,t+\delta}C_{jt}+\sum_{i\in I}c_{ijt}^\textrm{o}y_{ijt} \right)  \right] \label{chem:obj}\\
+%	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{j\in R}\left( c_j^+ y_j^{+s}+c_j^- y_j^{-s} \right)\Bigg]\label{airlift:obj} \\
+	\textrm{s.t.}\ & \sum_{i\in I_j^{\textrm{tasks}}}p_{ij}y_{ijt}\le H_t\sum_{\tau=1}^{t}n_{j\tau},\quad\forall j\in J,\ \forall t\in T,\label{chem:b}\\
+	&\sum_{j\in J}\sum_{i\in I_j^{\textrm{tasks}}}c_{ijt}^\textrm{o} y_{ijt} \le C_t^\textrm{o}\sum_{j\in J}\sum_{\tau=1}^{t}n_{j\tau},\quad\forall t\in T, \label{chem:c} \\
+	&A_{rt}=A_{r,t-1}+\sum_{i\in I_r^{\textrm{tasks,p}}}\sum_{j\in I_i^\textrm{equip}}f_{ri}^\textrm{p}B_{ijt}-\sum_{i\in I_r^{\textrm{tasks,c}}}\sum_{j\in I_i^\textrm{equip}}f_{ri}^\textrm{c}B_{ijt}\nonumber\\
+	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad\quad  -q_{rt}^\textrm{s}+q_{rt}^\textrm{b},\quad\forall r\in R,\ \forall t\in T,\label{chem:d}\\
+	&A_{rt}\le A_{rt}^\textrm{max},\quad\forall r\in R,\ \forall t\in T,\label{chem:e}\\
+	&B_{ijt}\le m_{ij}y_{ijt},\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\label{chem:f}\\
+	&q_{rt}^\textrm{s}=q_{rt\sigma}^{\textrm{s0}}+q_{rt\sigma}^{\textrm{s+}},\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S},\label{chem:g}\\
+	&q_{rt\sigma}^\textrm{s0}\le Q_{rt\sigma}^\textrm{s},\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S},\label{chem:h}\\
+	&q_{rt}^\textrm{b}\le Q_{rt}^\textrm{b},\quad\forall r\in R,\ \forall t\in T,\label{chem:i}\\
+	&\sum_{j\in J}C_{jt}n_{jt}+\sum_{r\in R}v_{rt}^\textrm{b}q_{rt}^\textrm{b}\le MC_t,\quad\forall t\in T,\label{chem:j}\\
+	&x_{rt}=\left\{ 
+				\begin{array}{ll}
+					1& \textrm{if for each $r$, $q_{rt\sigma}^\textrm{s0}=Q_{rt\sigma}^\textrm{s}$,}\\ 
+					0& \textrm{otherwise,}
+				\end{array}	
+			\right. \quad\forall t\in T,\ \forall \sigma\in\mathcal{S}, \label{chem:k}\\
+	&\sum_{\sigma\in\mathcal{S}}x_{rt}\ge G_t,\quad\forall t\in T,\label{chem:l}\\
+	&\textrm{(First-stage variable bounds)} \nonumber\\	
+	&A_{rt},q_{rt}^\textrm{b},q_{rt}^\textrm{s}\ge 0,\quad\forall r\in R,\ \forall t\in T,\label{chem:m}\\
+	&B_{ijt}\ge 0,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\label{chem:n}\\
+	&n_{jt}\in\mathbb{Z}_+,\quad\forall j\in J,\ \forall t\in T,\label{chem:o}\\
+	&y_{ijt}\in\mathbb{Z}_+,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\label{chem:p}\\
+	&\textrm{(Second-stage variable bounds)} \nonumber\\	
+	&q_{rt\sigma}^\textrm{s0},q_{rt\sigma}^\textrm{s+}\ge 0,\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S}.\label{chem:q}
+	\end{align}
+\end{subequations}
+
+\begin{table}[H]
+	\caption{Notations for \chem}
+	\label{chem:notation}
+	\resizebox{\textwidth}{!}
+	{
+		%		{@{}llp{3in}}
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$I$ & index set of tasks ($i\in I$)\\ 
+			$J$ & index set of equipment types ($j\in J$)\\ 
+			$R$ & index set of resources ($r\in R$)\\ 
+			$T$ & index set of time periods ($t\in T$)\\ 
+			$\mathcal{S}$ & index set of scenarios ($\sigma\in \mathcal{S}$)\\
+			$I_j^{\textrm{tasks}}$ & index set of tasks which can be processed in equipment $j$\\ 
+			$I_i^{\textrm{equip}}$ & index set of equipment types which can process task $i$\\ 			
+			$I_{r}^{\textrm{tasks,p}}$ & index set of tasks which produce resource $r$\\ 
+			$I_{r}^{\textrm{tasks,c}}$ & index set of tasks which consume resource $r$\\
+			\midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$C_{jt}$ & cost of purchasing an equipment type $j$ for subsequent use \\
+			$v_{rt}^\textrm{b}$ & cost of resource when bought from suppliers $r$ at time $t$\\
+			$v_{rt\sigma}^\textrm{s}$ & value of resource $r$ when sold to customers at time $t$ under scenario $\sigma$ \\		
+			$p_{ij}$ & processing time of task $i$ in equipment type $j$\\
+			$c_{ijt}^\textrm{o}$ & operating cost of task $i$ on equipment $j$ in time period $t$  \\
+			$C_t^\textrm{o}$ & maximum available budget for time $t$\\
+			$f_{ri}^{\textrm{p}}$ & fraction of resource $r$ produced in one unit of output of task $i$\\
+			$f_{ri}^{\textrm{c}}$ & fraction of resource $r$ consumed in one unit of output of task $i$\\
+			$m_{ij}$& amount of output from task $i$ on equipment $j$\\			
+			$A_{rt}^{\textrm{max}}$& maximum amount of resource $r$ that can be stored at time $t$\\
+			$Q_{rt}^\textrm{b}$ & maximum amount of resource $r$ which can be bought at time $t$ from external sources\\
+			$Q_{rt\sigma}^\textrm{s}$ & maximum amount of resource $r$ which can be sold under scenario $\sigma$ at time $t$ for profit\\
+			$MC_t$ & maximum budget investment that is allowed in time period $t$\\
+			$G_t$ & the minimum number of scenarios for which the demand may be met exactly \\
+			$\delta$ & construction delay once the equipment has been ordered\\	
+			$\PP(\sigma)$ & \textrm{the probability of occurence of scenario $\sigma$} \\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			\textrm{(First-stage)} \nonumber\\
+			$n_{jt}$ & number of new units of equipment type $j$ to come into the production line at time period $t$\\
+			$q_{rt}^\textrm{s}$ & amount of resource $r$ sold at time $t$\\
+			$q_{rt}^\textrm{b}$ & amount of resource $r$ bought at time $t$\\
+			$A_{rt}$ & amount of resource $r$ in inventory at time $t$\\
+			$B_{ijt}$ & total processed amount of task $i$ on equipment type $j$ during time $t$\\
+			$y_{ijt}$ & number of times task $i$ is performed on equipment $j$ during time period $t$\\
+			\textrm{(Second-stage)} \nonumber\\
+			$q_{rt\sigma}^\textrm{s0}$ & amount of resource $r$ produced and sold at time $t$ which is lower than the demand level under scenario $\sigma$ \\
+			$q_{rt\sigma}^\textrm{s+}$ & amount of resource $r$ produced and sold at time $t$ which is above the demand level under scenario $\sigma$ \\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+%\subsubsection{\chem: Data generation}
+%\begin{align*}
+%\delta&=0,\\
+%c_{ijt}^\textrm{o}&=0,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\\
+%p_{ij}&=4,\quad\forall i\in I,\ \forall j\in J,\\
+%f_{ri}^\textrm{p}&=f_{ri}^\textrm{c}=1,\quad\forall r\in R,\ \forall i\in I,\\
+%m_{i1}&=100,\ m_{i2}=200,\ m_{i3}=150, \quad\forall i\in I,\\
+%H_1&=H_2=80,\\
+%A_{rt}^\textrm{max}&=400,\quad\forall r\in R,\ \forall t\in T,\\
+%C_{11}&=2500,\ C_{12}=2600,\\
+%C_{21}&=3000,\ C_{22}=3100,\\
+%C_{31}&=2800,\ C_{32}=2900,\\
+%v_{11}^\textrm{b}&=23,\ v_{12}^\textrm{b}=24,\\
+%v_{21}^\textrm{b}&=25,\ v_{22}^\textrm{b}=26,\\
+%Q_{1t}^\textrm{b}&=200,\quad\forall t\in T,\\
+%Q_{2t}^\textrm{b}&=250,\quad\forall t\in T,\\
+%\textrm{(Task-Equipment relationship)}&\\
+%I_1^\textrm{tasks}&=I_2^\textrm{tasks}=\{1,4\},\\
+%I_3^\textrm{tasks}&=\{2,3\},\\
+%I_1^\textrm{equip}&=I_4^\textrm{equip}=\{1,2\},\\
+%I_2^\textrm{equip}&=I_3^\textrm{equip}=\{3\},\\
+%\textrm{(Resource-Task relationship)}&\\
+%I_1^\textrm{tasks,p}&=I_2^\textrm{tasks,p}=\{\emptyset\},\\
+%I_3^\textrm{tasks,p}&=\{1\},\\
+%I_4^\textrm{tasks,p}&=I_5^\textrm{tasks,p}=\{2\},\\
+%I_6^\textrm{tasks,p}&=\{3\},\\
+%I_7^\textrm{tasks,p}&=\{4\},\\
+%I_1^\textrm{tasks,c}&=\{1\},\\
+%I_2^\textrm{tasks,c}&=\{1,3\},\\
+%I_3^\textrm{tasks,c}&=\{2\},\\
+%I_4^\textrm{tasks,c}&=\{\emptyset\},\\
+%I_5^\textrm{tasks,c}&=\{3\},\\
+%I_6^\textrm{tasks,c}&=\{4\},\\
+%I_7^\textrm{tasks,c}&=\{\emptyset\}.
+%\end{align*}
+
+\begin{gather*}
+\textrm{(Deterministic parameters)}\\
+\delta=0,\\
+c_{ijt}^\textrm{o}=0,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\\
+p_{ij}=4,\quad\forall i\in I,\ \forall j\in J,\\
+f_{ri}^\textrm{p}=f_{ri}^\textrm{c}=1,\quad\forall r\in R,\ \forall i\in I,\\
+m_{i1}=100,\ m_{i2}=200,\ m_{i3}=150, \quad\forall i\in I,\\
+H_1=H_2=80,\\
+A_{rt}^\textrm{max}=400,\quad\forall r\in R,\ \forall t\in T,\\
+C_{11}=2500,\ C_{12}=2600,\\
+C_{21}=3000,\ C_{22}=3100,\\
+C_{31}=2800,\ C_{32}=2900,\\
+v_{11}^\textrm{b}=23,\ v_{12}^\textrm{b}=24,\\
+v_{21}^\textrm{b}=25,\ v_{22}^\textrm{b}=26,\\
+Q_{1t}^\textrm{b}=200,\quad\forall t\in T,\\
+Q_{2t}^\textrm{b}=250,\quad\forall t\in T,\\
+\textrm{(Task-Equipment relationship)}\\
+I_1^\textrm{tasks}=I_2^\textrm{tasks}=\{1,4\},\\
+I_3^\textrm{tasks}=\{2,3\},\\
+I_1^\textrm{equip}=I_4^\textrm{equip}=\{1,2\},\\
+I_2^\textrm{equip}=I_3^\textrm{equip}=\{3\},\\
+\textrm{(Resource-Task relationship)}\\
+I_1^\textrm{tasks,p}=I_2^\textrm{tasks,p}=\{\emptyset\},\\
+I_3^\textrm{tasks,p}=\{1\},\\
+I_4^\textrm{tasks,p}=I_5^\textrm{tasks,p}=\{2\},\\
+I_6^\textrm{tasks,p}=\{3\},\\
+I_7^\textrm{tasks,p}=\{4\},\\
+I_1^\textrm{tasks,c}=\{1\},\\
+I_2^\textrm{tasks,c}=\{1,3\},\\
+I_3^\textrm{tasks,c}=\{2\},\\
+I_4^\textrm{tasks,c}=\{\emptyset\},\\
+I_5^\textrm{tasks,c}=\{3\},\\
+I_6^\textrm{tasks,c}=\{4\},\\
+I_7^\textrm{tasks,c}=\{\emptyset\}.
+\end{gather*}
+
+
 \subsection{\dcap: Dynamic capacity planning with stochastic demand} \label{DCAP}
 \dcap\ is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. We refer to the main reference \cite{journal:AG2004}.
 
@@ -654,7 +823,7 @@ The objective function (\ref{sslp:obj}) is to maximize total expected revenue of
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
 			$x_j$ (1st-stage)  	 & 1 if a server is located at site $j$, 0 otherwise \\
 			$y_{ij}^s$ (2nd-stage) & 1 if client $i$ is served by a server at location $j$ under scenario $s$, 0 otherwise\\
-			$y_{0j}^s$ (2nd-stage) & non-negative amount of overflows that are not served due to limitations in server $j$'s capacity	\\
+			$y_{0j}^s$ (2nd-stage) & non-negative amount of overflows that are not served due to the limitation on server $j$'s capacity	\\
 			\bottomrule
 		\end{tabular}
 	}

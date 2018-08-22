@@ -596,7 +596,7 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
     println("Writing SMPS files for $INSTANCE_NAME")
 
     # check if model is stochastic (or structured) model
-    if in(:Stochastic, model.ext.keys) == false
+    if in(:Stochastic, m.ext.keys) == false
         warn("Not a stochastic model.")
         return
     end

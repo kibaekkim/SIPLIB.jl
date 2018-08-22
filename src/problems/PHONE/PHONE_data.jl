@@ -17,7 +17,7 @@ end
 
 function PHONEData(nS::Int, seed::Int=1)::PHONEData
 
-    # helper function to enumerate all routes
+    # helper function to enumerate all routes: returns all possible next nodes given a trajectory
     function next_possible_dest(v::Int, traj::Array{Int}, adjacency_matrix::Array{Float64,2})
         npd = []
         for j in 1:size(adjacency_matrix)[1]
@@ -75,8 +75,10 @@ function PHONEData(nS::Int, seed::Int=1)::PHONEData
     data.R = [allroutes(pair[1],pair[2],adjacency_matrix,Int[],Array{Int}[]) for pair in data.P]
     data.S = 1:nS
     data.Pr = ones(nS)/nS
-    data.d = rand(Uniform(1.0,9.9),length(data.P),nS)
+    data.d = rand(5:15,length(data.P),nS)
     data.a = []
+
+    # generating incidence vectors & store in data.a
     edge_index = getEdgeIndexDict(file_array)
     for i in 1:length(data.P)
         push!(data.a, [])
