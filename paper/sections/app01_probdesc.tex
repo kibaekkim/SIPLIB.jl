@@ -1,4 +1,5 @@
 In this section, we explain the meaning of the problems in \texttt{SIPLIB 2.0}. For each problem, we provide the extensive form formulation which we believe the clearest way to describe what the problem wants to do. We also give numerical parameter values together with random data generation procedures. Due to the limited access to the original data in reference papers, we sometimes selectively choose the methods from several available references and modify them without harming validity. Also, we guess some parameters about scenario generation to connect the missing links. The information in this section is completely implemented and contained in the accompanied \julia\ package: \texttt{Siplib/src/problems}. We recommend users to take a look inside the \julia\ implementation to verify the conformance of all the details.
+
 \subsection{\airlift: Airlift operations scheduling} \label{AIRLIFT}
 \airlift\ is a scheduling problem that allocates flight routes and flying number for different types of aircraft to meet uncertain cargo demands from all routes. Each aircraft type has limited number of available flying hours and different flight hours/costs. In the first stage, the number of flights and corresponding routes are initially assigned to each aircraft type. The second stage recourse action includes reallocation of flight time/route and purchase of commercial transportation. Switching aircraft from one route to another causes increased hours/costs than it is supposed to be. Moreover, it sometimes gives rise to cancellation of initially assigned flights due to the different flying ability for each type.    
 
@@ -97,7 +98,8 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 
 \begin{subequations} \label{chem:formulation}
 	\begin{align}
-	(\chem)\ \textrm{max}\ & \sum_{\sigma\in\mathcal{S}}\PP(\sigma)\sum_{t\in T}\left[ \sum_{r\in R}\left( v_{rt\sigma}^{\textrm{s}}q_{rt\sigma}^{\textrm{s0}}-v_{rt}^\textrm{b}q_{rt}^\textrm{b}\right) - \sum_{j\in J}\left( n_{j,t+\delta}C_{jt}+\sum_{i\in I}c_{ijt}^\textrm{o}y_{ijt} \right)  \right] \label{chem:obj}\\
+	(\chem)\ \textrm{max}\ & -\sum_{t\in T}\left[ \sum_{r\in R}v_{rt}^\textrm{b}q_{rt}^\textrm{b} + \sum_{j\in J}\left( C_{jt}n_{j,t+\delta}+\sum_{i\in I}c_{ijt}^\textrm{o}y_{ijt} \right) \right] \nonumber \\ 
+	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad+ \sum_{\sigma\in\mathcal{S}}\PP(\sigma)\sum_{t\in T}\sum_{r\in R} v_{rt\sigma}^{\textrm{s}}q_{rt\sigma}^{\textrm{s0}} \label{chem:obj}\\
 %	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{j\in R}\left( c_j^+ y_j^{+s}+c_j^- y_j^{-s} \right)\Bigg]\label{airlift:obj} \\
 	\textrm{s.t.}\ & \sum_{i\in I_j^{\textrm{tasks}}}p_{ij}y_{ijt}\le H_t\sum_{\tau=1}^{t}n_{j\tau},\quad\forall j\in J,\ \forall t\in T,\label{chem:b}\\
 	&\sum_{j\in J}\sum_{i\in I_j^{\textrm{tasks}}}c_{ijt}^\textrm{o} y_{ijt} \le C_t^\textrm{o}\sum_{j\in J}\sum_{\tau=1}^{t}n_{j\tau},\quad\forall t\in T, \label{chem:c} \\
@@ -105,23 +107,24 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad\quad  -q_{rt}^\textrm{s}+q_{rt}^\textrm{b},\quad\forall r\in R,\ \forall t\in T,\label{chem:d}\\
 	&A_{rt}\le A_{rt}^\textrm{max},\quad\forall r\in R,\ \forall t\in T,\label{chem:e}\\
 	&B_{ijt}\le m_{ij}y_{ijt},\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\label{chem:f}\\
+	&q_{rt}^\textrm{b}\le Q_{rt}^\textrm{b},\quad\forall r\in R,\ \forall t\in T,\label{chem:i}\\
 	&q_{rt}^\textrm{s}=q_{rt\sigma}^{\textrm{s0}}+q_{rt\sigma}^{\textrm{s+}},\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S},\label{chem:g}\\
 	&q_{rt\sigma}^\textrm{s0}\le Q_{rt\sigma}^\textrm{s},\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S},\label{chem:h}\\
-	&q_{rt}^\textrm{b}\le Q_{rt}^\textrm{b},\quad\forall r\in R,\ \forall t\in T,\label{chem:i}\\
 	&\sum_{j\in J}C_{jt}n_{jt}+\sum_{r\in R}v_{rt}^\textrm{b}q_{rt}^\textrm{b}\le MC_t,\quad\forall t\in T,\label{chem:j}\\
-	&x_{rt}=\left\{ 
+	&x_{t\sigma}=\left\{ 
 				\begin{array}{ll}
 					1& \textrm{if for each $r$, $q_{rt\sigma}^\textrm{s0}=Q_{rt\sigma}^\textrm{s}$,}\\ 
 					0& \textrm{otherwise,}
 				\end{array}	
 			\right. \quad\forall t\in T,\ \forall \sigma\in\mathcal{S}, \label{chem:k}\\
-	&\sum_{\sigma\in\mathcal{S}}x_{rt}\ge G_t,\quad\forall t\in T,\label{chem:l}\\
+	&\sum_{\sigma\in\mathcal{S}}x_{t\sigma}\ge G_t,\quad\forall t\in T,\label{chem:l}\\
 	&\textrm{(First-stage variable bounds)} \nonumber\\	
 	&A_{rt},q_{rt}^\textrm{b},q_{rt}^\textrm{s}\ge 0,\quad\forall r\in R,\ \forall t\in T,\label{chem:m}\\
 	&B_{ijt}\ge 0,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\label{chem:n}\\
 	&n_{jt}\in\mathbb{Z}_+,\quad\forall j\in J,\ \forall t\in T,\label{chem:o}\\
 	&y_{ijt}\in\mathbb{Z}_+,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\label{chem:p}\\
 	&\textrm{(Second-stage variable bounds)} \nonumber\\	
+	&x_{t\sigma}\in \{0,1\},\quad \forall t\in T,\ \forall\sigma\in\mathcal{S},\\
 	&q_{rt\sigma}^\textrm{s0},q_{rt\sigma}^\textrm{s+}\ge 0,\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S}.\label{chem:q}
 	\end{align}
 \end{subequations}
@@ -147,6 +150,7 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 			\midrule
 			\multicolumn{2}{l}{\textbf{Parameters:}} \\
 			$C_{jt}$ & cost of purchasing an equipment type $j$ for subsequent use \\
+			$H_t$ & length of stage $t$\\
 			$v_{rt}^\textrm{b}$ & cost of resource when bought from suppliers $r$ at time $t$\\
 			$v_{rt\sigma}^\textrm{s}$ & value of resource $r$ when sold to customers at time $t$ under scenario $\sigma$ \\		
 			$p_{ij}$ & processing time of task $i$ in equipment type $j$\\
@@ -159,17 +163,18 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 			$Q_{rt}^\textrm{b}$ & maximum amount of resource $r$ which can be bought at time $t$ from external sources\\
 			$Q_{rt\sigma}^\textrm{s}$ & maximum amount of resource $r$ which can be sold under scenario $\sigma$ at time $t$ for profit\\
 			$MC_t$ & maximum budget investment that is allowed in time period $t$\\
-			$G_t$ & the minimum number of scenarios for which the demand may be met exactly \\
+			$G_t$ & minimum number of scenarios for which the demand may be met exactly \\
 			$\delta$ & construction delay once the equipment has been ordered\\	
 			$\PP(\sigma)$ & \textrm{the probability of occurence of scenario $\sigma$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
 			\textrm{(First-stage)} \nonumber\\
+			$x_{t\sigma }$ & 1 if demand be met exactly (i.e., $q_{rt\sigma}^{\textrm{s0}}=Q_{rt\sigma}^{\textrm{s}}$), 0 otherwise\\	
 			$n_{jt}$ & number of new units of equipment type $j$ to come into the production line at time period $t$\\
-			$q_{rt}^\textrm{s}$ & amount of resource $r$ sold at time $t$\\
-			$q_{rt}^\textrm{b}$ & amount of resource $r$ bought at time $t$\\
 			$A_{rt}$ & amount of resource $r$ in inventory at time $t$\\
 			$B_{ijt}$ & total processed amount of task $i$ on equipment type $j$ during time $t$\\
 			$y_{ijt}$ & number of times task $i$ is performed on equipment $j$ during time period $t$\\
+			$q_{rt}^\textrm{b}$ & amount of resource $r$ bought at time $t$\\
+			$q_{rt}^\textrm{s}$ & amount of resource $r$ sold at time $t$\\
 			\textrm{(Second-stage)} \nonumber\\
 			$q_{rt\sigma}^\textrm{s0}$ & amount of resource $r$ produced and sold at time $t$ which is lower than the demand level under scenario $\sigma$ \\
 			$q_{rt\sigma}^\textrm{s+}$ & amount of resource $r$ produced and sold at time $t$ which is above the demand level under scenario $\sigma$ \\
@@ -215,7 +220,7 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 %\end{align*}
 
 \begin{gather*}
-\textrm{(Deterministic parameters)}\\
+\textbf{\textrm{(Deterministic parameters)}}\\
 \delta=0,\\
 c_{ijt}^\textrm{o}=0,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\\
 p_{ij}=4,\quad\forall i\in I,\ \forall j\in J,\\
@@ -247,7 +252,12 @@ I_3^\textrm{tasks,c}=\{2\},\\
 I_4^\textrm{tasks,c}=\{\emptyset\},\\
 I_5^\textrm{tasks,c}=\{3\},\\
 I_6^\textrm{tasks,c}=\{4\},\\
-I_7^\textrm{tasks,c}=\{\emptyset\}.
+I_7^\textrm{tasks,c}=\{\emptyset\}.\\
+\textbf{\textrm{(Stochastic parameters)}}\\
+Q_{4t\sigma}^{\textrm{s}}=Unif(0,150),\quad\forall t\in T,\ \forall\sigma\in\mathcal{S},\\
+Q_{7t\sigma}^{\textrm{s}}=Unif(0,200),\quad\forall t\in T,\ \forall\sigma\in\mathcal{S},\\
+v_{4t\sigma}^{\textrm{s}}=Unif(50,60),\quad\forall t\in T,\ \forall\sigma\in\mathcal{S},\\
+v_{7t\sigma}^{\textrm{s}}=Unif(70,80),\quad\forall t\in T,\ \forall\sigma\in\mathcal{S}.
 \end{gather*}
 
 
@@ -996,3 +1006,66 @@ D_{nt}=\sum_{n\in N} \sum_{t\in T}\left(  \sum_{\lambda\in IG_n^\mathcal{L}}IC_{
 \end{align*}
 
 Unlike other problems where stochastic data is generated while \julia\ script is running, we pre-generate and provide up to 1,000 wind power production profiles for each day type. This data is included in ``\texttt{$\sim$/Siplib/src/problems/SUC/data/WIND}'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$. Hence, the number of scenarios that can be considered in an instance is limited to 1,000, which we think is large enough regarding the intrinsic large-scale size of the problem \suc.
+
+\subsection{\node: Cargo network scheduling} \label{4NODE}
+\airlift\ is a scheduling problem that allocates flight routes and flying number for different types of aircraft to meet uncertain cargo demands from all routes. Each aircraft type has limited number of available flying hours and different flight hours/costs. In the first stage, the number of flights and corresponding routes are initially assigned to each aircraft type. The second stage recourse action includes reallocation of flight time/route and purchase of commercial transportation. Switching aircraft from one route to another causes increased hours/costs than it is supposed to be. Moreover, it sometimes gives rise to cancellation of initially assigned flights due to the different flying ability for each type.    
+
+Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
+	\caption{AIRLIFT\_1: Extensive form constraint matrix plot}
+	\label{fig:airlift_sparsity}
+\end{figure}
+\subsubsection{\node: Mathematical formulation}
+
+\begin{subequations} \label{airlift:formulation}
+	\begin{align}
+	(\airlift)\ \textrm{min}\ &\sum_{i\in A}\sum_{j\in R} c_{ij}x_{ij}+\sum_{s\in\mathcal{S}}\PP(s)\Bigg[ \sum_{i\in A}\sum_{j\in R}\sum_{k\in R\backslash \{j\} }\left( \gamma_{ijk}-c_{ij}\frac{\alpha_{ijk}}{a_{ij}} \right)\chi_{ijk}^s \nonumber \\ 
+	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{j\in R}\left( c_j^+ y_j^{+s}+c_j^- y_j^{-s} \right)\Bigg]\label{airlift:obj} \\
+	\textrm{s.t.}\ & \sum_{j\in R}a_{ij}x_{ij}\le F_i,\quad\forall i\in A,	\label{airlift:b}\\
+	&\sum_{k\in R\backslash\{j\}}\alpha_{ijk}\chi_{ijk}^s\le a_{ij}x_{ij},\quad\forall i\in A,\ \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:c}\\
+	&\sum_{i\in A}b_{ij}x_{ij}-\sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\left(\frac{\alpha_{ijk}}{a_{ij}}\right)\chi_{ijk}^s + \sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\chi_{ikj}^s \nonumber \\
+	&\qquad\qquad\qquad\qquad\qquad\quad+ y_j^{+s} - y_j^{-s} = d_j^s,\quad \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:d}\\
+	&x_{ij}\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R, \\
+	&\chi_{ijk}^s\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R,\ \forall k\in R\backslash\{j\},\ \forall s\in\mathcal{S}, \\
+	& y_j^{+s},y_j^{-s}\ge 0,\quad\forall j\in R,\ \forall s\in\mathcal{S}.
+	\end{align}
+\end{subequations}
+
+\begin{table}[H]
+	\caption{Notations for \airlift}
+	\label{airlift:notation}
+	\resizebox{\textwidth}{!}
+	{
+		%		{@{}llp{3in}}
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$A$ & index set of aircraft types ($i,k\in A$)\\ 
+			$R$ & index set of flying routes ($j\in R$)\\ 
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$) \\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$F_i$ & the maximum number of flying hours for aircraft of type $i$ available during the month\\
+			$a_{ij}$ & number of hours that aircraft type $i$ requires to fly an initially assigned route $j$  \\
+			$\alpha_{ijk}$ & number of hours that a re-scheduled aircraft of type $i$ requires to fly route $k$ where the initially assigned route was $j$ ($\alpha_{ijk}\ge a_{ik}$)\\
+			$b_{ij}$ & carrying capacity of a flight of an aircraft type $i$ on route $j$\\
+			$c_{ij}$ & cost per flight of aircraft type $i$ initially assigned to and flown on route $j$ ($c_{ij}\ge 0$)\\
+			%$\gamma_{ijk} $& cost per flight of aircraft type $i$ assigned to route $k$ that uses hours made available by canceling flights on route $j$ ($\gamma_{ijk}\ge c_{ik}$)\\			
+			$\gamma_{ijk} $& cost per flight of aircraft of type $i$ whose flying route is re-assigned from $j$ to $k$ ($\gamma_{ijk}\ge c_{ik}$)\\			
+			$c_j^+$ & unit cost of meeting demand by commercial transport on route $j$\\
+			$c_j^-$ & unit penalty cost of unused capacity on route $j$\\
+			$d_j^s$ & total demand for route $j$ under scenario $s$ \\
+			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_{ij}$ (1st-stage) & number of flights of aircraft type $i$ initially assigned to route $j$ \\
+			$\chi_{ijk}^s$ (2nd-stage) & number re-scheduled flights of aircraft type $i$ from route $j$ to $k$ \\ 
+			$y_j^{+s}$ (2nd-stage) & amount of demand carried by commercial transportation on route $j$ under scenario $s$\\
+			$y_j^{-s}$ (2nd-stage) & amount of unused capacity on route $j$ under scenario $s$\\
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+\subsubsection{\node: Data generation}
+

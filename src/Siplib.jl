@@ -46,8 +46,17 @@ module Siplib
            RP
 
 end # end module Siplib
-
 #=
+using Siplib
+using CPLEX
+model = getModel(:CHEM, [5])
+model = getModel(:SDCP,[5,10,"FallWD",3])
+RP(model, CplexSolver())
+
+print(model)
+generateSMPS(:CHEM,[10])
+
+
 using Siplib
 using CPLEX
 
