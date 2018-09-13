@@ -12,8 +12,11 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 				\toprule
 				Problem		  		  & Description                                                        & Main reference              \\ \midrule
 				\airlift\ & Airlift operations scheduling (\ref{AIRLIFT}) & Midler and Wollmer \cite{journal:MW1969} \\
+				\cargo\ & Cargo network scheduling (\ref{CARGO}) & Mulvey and Ruszczy\`{n}ski \cite{journal:MR1995}\\
+				\chem\ & Design of batch chemical plants (\ref{CHEM}) & Subrahmanyam et al. \cite{journal:SPR1994}\\				
 				\dcap\         & \makecell[tl]{Dynamic capacity planning with stochastic\\ demand (\ref{DCAP}) }                  & Ahmed and Garcia \cite{journal:AG2004}                          \\
 				\mptsps\       & \makecell[tl]{Multi-path traveling salesman problem with\\ stochastic travel costs (\ref{MPTSPs})}& Tadei et al. \cite{journal:TPP2017}                            \\
+				\phone\       & Telecommunication network planning (\ref{PHONE})& Sen et al. \cite{journal:SDC1994}                            \\
 				\sdcp\ 	& Stochastic data center placement (\ref{SDCP}) & Kim et al. \cite{journal:KYZC2017}\\
 				\sizes\        & \makecell[tl]{Optimal product substitution with stochastic\\ demand (\ref{SIZES})}         & Jorjani et al. \cite{journal:JSW1999}          \\
 				\smkp\		  & Stochastic multiple knapsack problem (\ref{SMKP})                              & Angulo et al. \cite{journal:AAD2014}                            \\
@@ -51,8 +54,11 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 				\toprule
 				Problem & \multicolumn{1}{c}{Remark}                                                \\ \midrule
 				\airlift & -\\
+				\cargo & We adopt the numerical example provided by \cite{journal:AF2004}. We use an uniform distribution to generate random amount of cargo to be shipped. We add additional constraints (\ref{cargo:k})-(\ref{cargo:m}) to make the model valid.\\
+				\chem & \\
 				\dcap   & We go with the error in constraint (\ref{dcap:b})                                              \\
 				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation procedure \ref{mptsps:datagen} \\
+				\phone & \\
 				\sdcp & We generate and provide up to 1,000 scenarios\\
 				\sizes  &  We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h}), We develop data generation procedure                                                 \\
 				\smkp   & -                                                                         \\
@@ -86,8 +92,11 @@ The capital Roman letters mean the sets defining the problems. In particular, th
 			\toprule
 			Problem & Instance name                 & \multicolumn{1}{c}{Remark}                                                                    					      \\ \midrule
 			\airlift	& AIRLIFT\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\
+			\cargo	& CARGO\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\		
+			\chem	& CHEM\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\				
 			\dcap\    & DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
 			\mptsps\  & MPTSPs\_$D$\_$N$\_$\mathcal{S}$ &$D$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
+			\phone	& PHONE\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\
 			\sdcp\ & SDCP\_$K$\_$P$\_$D$\_$\mathcal{S}$ & $K$: maximum number of dispatchable loads, $P$: wind penetration level (\%), $D$: day type, $\mathcal{S}$: number of scenarios\\
 			\sizes\   & SIZES\_$\mathcal{S}$                            & $\mathcal{S}$: number of scenarios   															\\
 			\smkp\    &   SMKP\_$I$\_$\mathcal{S}$    &   $I$: number of types for item, $\mathcal{S}$: number of scenarios  													 \\
@@ -111,8 +120,11 @@ We consider three types of variable: continuous, binary, and integer. Considerin
 			& \multicolumn{2}{c}{1st stage}                              				  	& \multicolumn{2}{c}{2nd stage}                             			        \\ \midrule
 			Problem 	     & Variable                    & Constraint                   	& Variable                    & Constraint                  				    \\ \midrule
 			\airlift\ (\ref{airlift:formulation}) & $\mathbb{I}$ & \texttt{IKN}& $\mathbb{C}$, $\mathbb{I}$ & \texttt{BIN}, \texttt{GEN}\\
+			\cargo\ (\ref{cargo:formulation}) &  & & & \\		
+			\chem\ (\ref{chem:formulation}) &  & & & \\				
 			\dcap\ (\ref{dcap:formulation})    & $\mathbb{C}$, $\mathbb{B}$  & \texttt{VBD}                	& $\mathbb{B}$                & \texttt{PAR}, \texttt{M01} 			    		\\
 			\mptsps\ (\ref{mptsps:formulation})  & $\mathbb{C}$, $\mathbb{B}$  & \texttt{PAR}, \texttt{GEN}		& $\mathbb{B}$                & \texttt{GEN}               						\\
+			\phone\ (\ref{phone:formulation}) &  & & & \\			
 			\sdcp\ (\ref{sdcp:formulation}) & $\mathbb{I}$ & \texttt{IKN}& $\mathbb{C}$ & \texttt{GEN}\\
 			\sizes\ (\ref{sizes:formulation})   & $\mathbb{I}$ 			   & \texttt{VBD}, \texttt{GEN} 	& $\mathbb{B}$, $\mathbb{I}$  & \texttt{IKN}             						\\
 			\smkp\ (\ref{smkp:formulation})   & $\mathbb{B}$                & \texttt{KNA}                	& $\mathbb{B}$                & \texttt{KNA}              						\\
@@ -146,6 +158,9 @@ The increase in the number of constraint, although not always, is an important f
 				&                & \#Continuous   & \#Binary                           & \#Integer            & \#Constraint              \\ \midrule
 				\multirow{3}{*}{\airlift\ (\ref{airlift:notation})}   & 1st stage & -           & -                               & 4                    & 2                      \\
 				& 2nd stage & $8$             & -               & 4                    & $6$                  \\ \cmidrule(l){2-6} 
+				& Total          & $8\mathcal{S}$           & - & 4(1+$\mathcal{S}$)                    & $2(1+3\mathcal{S})$    \\ \midrule
+				\multirow{3}{*}{\cargo\ (\ref{cargo:notation})}   & 1st stage &            &                                &                     &                       \\
+				& 2nd stage &              &                &                     &                   \\ \cmidrule(l){2-6} 
 				& Total          & $8\mathcal{S}$           & - & 4(1+$\mathcal{S}$)                    & $2(1+3\mathcal{S})$    \\ \midrule
 				\multirow{3}{*}{\dcap\ (\ref{dcap:notation})}   & 1st stage & $RT$           & $RT$                               & -                    & $RT$                      \\
 				& 2nd stage & -             & $(1+R)NT$               & -                    & $(R+N)T$                  \\ \cmidrule(l){2-6} 

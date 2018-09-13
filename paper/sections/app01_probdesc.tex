@@ -83,9 +83,145 @@ d_1^s&=Lognormal(\mu=6.906,\ \sigma=0.05),\quad\forall s\in\mathcal{S},\\
 d_2^s&=Lognormal(\mu=7.2936,\ \sigma=0.198),\quad\forall s\in\mathcal{S}.
 \end{align*}
 
+
+\subsection{\cargo: Cargo network scheduling} \label{CARGO}
+\cargo\ is a two-stage cargo network scheduling problem.  
+
+\airlift\ is a scheduling problem that allocates flight routes and flying number for different types of aircraft to meet uncertain cargo demands from all routes. Each aircraft type has limited number of available flying hours and different flight hours/costs. In the first stage, the number of flights and corresponding routes are initially assigned to each aircraft type. The second stage recourse action includes reallocation of flight time/route and purchase of commercial transportation. Switching aircraft from one route to another causes increased hours/costs than it is supposed to be. Moreover, it sometimes gives rise to cancellation of initially assigned flights due to the different flying ability for each type.    
+
+Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
+	\caption{CARGO\_1: Extensive form constraint matrix plot}
+	\label{fig:airlift_sparsity}
+\end{figure}
+\subsubsection{\cargo: Mathematical formulation}
+
+\begin{subequations} \label{cargo:formulation}
+	\begin{align}
+	(\cargo)\ \textrm{min}\ &\sum_{\pi\in P}\sum_{a\in A}c_a h_{\pi a}x_{\pi a}+ \nonumber \\ &\sum_{s\in\mathcal{S}}\PP(s)\left[q\sum_{\pi\in P}\sum_{(m,n)\in\pi}\left(d_{\pi m n}^s+r_{\pi m n}^s+\sum_{k\in N}t_{\pi m n k}^s\right)+\rho\sum_{m\in N}\sum_{n\in N}y_{mn}^s \right] \label{cargo:obj} \\ 
+	\textrm{s.t.}\ & \sum_{a\in A}\sum_{\pi\in U_{mn}}x_{\pi a}\ge f_{mn},\quad\forall m\in N,\ \forall n\in N,\label{cargo:b}\\
+	&\sum_{a\in A}\sum_{\pi\in W_n}x_{\pi a}\le \sigma_n,\quad\forall n\in N, \label{cargo:c}\\
+	&\sum_{\pi\in V_{1n}}x_{\pi a}=\sum_{\pi\in V_{ln}}x_{\pi a},\quad\forall a\in A,\ \forall n\in N,\label{cargo:d}\\
+	&\sum_{\pi\in P}h_{\pi a}x_{\pi a}\ge h_a^{\textrm{min}},\quad\forall a\in A, \label{cargo:e}\\
+	&\sum_{\pi\in P}h_{\pi a}x_{\pi a}\le h_a^{\textrm{max}},\quad\forall a\in A, \label{cargo:f}\\	
+	&\sum_{\pi \in P}\left(d_{\pi m n}^s+\sum_{k\in N}t_{\pi mkn}^s\right)+y_{mn}^s\ge b_{mn}^s,\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S}, \label{cargo:g}\\
+	&\sum_{\pi \in P}\sum_{m\in N}t_{\pi mkn}^s=\sum_{\pi \in P}r_{\pi kn}^s,\quad\forall k\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:h}\\
+	&\sum_{k\in N}\left(d_{\pi,v_{\pi 1},k}^s+r_{\pi,v_{\pi 1},k}^s+\sum_{n\in N}t_{\pi,v_{\pi 1},k,n}^s\right)\nonumber\\
+	&\qquad\qquad\qquad\qquad\qquad\qquad=\sum_{a\in A}\delta_a x_{\pi a}^s-z_{\pi 1}^s,\quad\forall \pi\in P,\ \forall s\in\mathcal{S}, \label{cargo:i}\\
+	&\sum_{k\in N}\left(d_{\pi,v_{\pi j},k}^s+r_{\pi,v_{\pi j},k}^s+\sum_{n\in N}t_{\pi,v_{\pi j},k,n}^s\right) \nonumber\\
+	&\quad-\sum_{k\in N}\left(d_{\pi,k,v_{\pi j}}^s+r_{\pi,k,v_{\pi j}}^s+\sum_{n\in N}t_{\pi,k,v_{\pi j},n}^s\right) \nonumber\\
+	&\qquad\qquad=z_{\pi,j-1}^s - z_{\pi j}^s,\quad\forall\pi\in P,\ \forall j\in\{2,\ldots,l_\pi-1\},\ \forall s\in\mathcal{S},\label{cargo:j}\\
+	&d_{\pi m n}^s = 0,\quad\forall m\in N,\ \forall n\in N,\ \forall \pi\notin U_{mn},\ \forall s\in\mathcal{S},\label{cargo:k}\\
+	&t_{\pi m k n}^s = 0,\quad\forall m\in N,\ \forall k\in N,\ \forall \pi\notin U_{mk},\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:l}\\
+	&r_{\pi k n}^s = 0,\quad\forall k\in N,\ \forall n\in N,\ \forall \pi\notin U_{kn},\ \forall s\in\mathcal{S},\label{cargo:m}\\
+	&x_{\pi a}\in\mathbb{Z}_+,\quad\forall \pi\in P,\ \forall a\in A,\label{cargo:n}\\
+	&d_{\pi m n}^s\ge 0,\quad\forall \pi\in P,\ \forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:o}\\
+	&t_{\pi mkn}^s\ge 0,\quad\forall \pi\in P,\ \forall m\in N,\ \forall k\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:p}\\
+	&r_{\pi kn}^s\ge 0,\quad\forall \pi\in P,\ \forall k\in N,\ \forall n\in N,\label{cargo:q}\\
+	&y_{mn}^s\ge 0,\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:r}\\
+	&z_{\pi j}^s\ge 0,\quad\forall\pi\in P,\ \forall j\in \{1,\ldots,l_\pi-1\},\ \forall s\in\mathcal{S}.\label{cargo:s}
+	\end{align}
+\end{subequations}
+
+\begin{table}[H]
+	\caption{Notations for \cargo}
+	\label{cargo:notation}
+	\resizebox{\textwidth}{!}
+	{
+		%		{@{}llp{3in}}
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$N$ & index set of nodes ($n\in N$)\\ 
+			$N_\pi $ & index set of nodes in route $\pi$\\
+			$P$ & index set of routes ($\pi\in P$)\\ 
+			$A$ & index set of aircraft types ($a\in A$)\\
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$) \\ 
+			$U_{mn}$ & $\{\pi\in P:m=v_{\pi,j_1}\textrm{ and }n=v_{\pi,j_2}\textrm{ for some } j_1<j_2\}$ \\ 
+			$V_{1n}$ & $\{\pi\in P:n=v_{\pi 1}\}$ \\ 
+			$V_{ln}$ & $\{\pi\in P:n=v_{\pi,l_\pi}\} $\\
+			$W_n$ & $\{\pi\in P:n=v_{\pi j}\textrm{ for some }j \}$\\
+			\midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$b_{mn}^s$ & the amount of cargo to be shipped from node $m$ to node $n$ under scenario $s$\\
+			$c_a$ & the cost of an hour of flight time for aircraft type $a$\\
+			$h_{\pi a}$& flight hours required for aircraft type $a$ to complete route $\pi$\\ 
+			$q$ & the unit cargo cost for loading and unloading an aircraft\\
+			$\rho$ & the unit penalty for undelivered cargo \\
+			$v_{\pi j}$ & the $j^{\textrm{th}}$ node in route $\pi$\\
+			$l_\pi$ & the number of nodes in route $\pi$ \\
+			$\sigma_n$ & the maximum number of landings allowed in node $n$ \\
+			$\delta_a$ & the maximum payload of an aircraft of type $a$\\
+			$f_{mn}$ & the minimum number of flights from node $m$ to node $n$\\
+			$h_a^{\textrm{max}}$ & the maximum flying hours for aircraft of type $a$\\
+			$h_a^{\textrm{min}}$ & the minimum flying hours for aircraft of type $a$\\
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_{\pi a}$ (1st-stage) & the number of aircraft of type $a$ assigned to fly route $\pi$\\
+			$d_{\pi mn}^s$ (2nd-stage)& the amount of cargo delivered directly from $m$ to $n$ on route $\pi$ under scenario $s$\\
+			$t_{\pi m k n}^s$ (2nd-stage)& the amount of cargo from node $m$ to $n$ to be moved to the transshipment node $k$ over route $\pi$ under scenario $s$\\
+			$r_{\pi kn}^s$ (2nd-stage)& the amount of transshipment cargo to be moved from the transshipment node $k$ to node $n$ over route $\pi$ under scenario $s$\\
+			$y_{mn}^s$ (2nd-stage)& the amount of cargo moving from $m$ to $n$ which is undelivered under scenario $s$\\
+			$z_{\pi j}^s$ (2nd-stage)& the unused capacity of $j^{\textrm{th}}$ leg on route $\pi$ under scenario $s$\\ 
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
+
+\subsubsection{\cargo: Data generation}
+\begin{gather*}
+\textbf{\textrm{(Deterministic parameters)}}\\
+q=1,\ \rho=1300\\
+f_{mn}=0,\quad\forall m\in N,\ \forall n\in N,\\
+\sigma_1=\sigma_2=\sigma_3=\sigma_4=25,\\
+h_1^{\textrm{min}}=0,\ h_1^{\textrm{max}}=480,\ c_1=5,\ \delta_1=8,\\
+h_2^{\textrm{min}}=0,\ h_2^{\textrm{max}}=240,\ c_2=4,\ \delta_2=6.\\
+\textbf{\textrm{(Stochastic parameters)}}\\
+b_{mn}^s\sim Unif(3,12),\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S}.
+\end{gather*}
+
+\begin{table}[]
+	\caption{Enumeration of possible routes for the numerical example \cite{journal:AF2004}}
+	\resizebox{\textwidth}{!}
+	{
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		Flight index $(\pi)$                           & 1   & 2   & 3   & 4   & 5   & 6   & 7   & 8   & 9   & 10  & 11  & 12  & 13  \\ \hline
+		\textbf{Route} & ABA & ABE & ABC & ACA & ACE & ACB & BAB & BAC & BCA & BCB & BCE & BEB & BEC \\ \hline
+		Flight index $(\pi)$                           & 14  & 15  & 16  & 17  & 18  & 19  & 20  & 21  & 22  & 23  & 24  & 25  & 26  \\ \hline
+		\textbf{Route} & ECE & ECB & ECA & EBE & EBC & EBA & CAC & CAB & CBC & CBA & CBE & CEC & CEB \\ \hline
+	\end{tabular}
+	}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Flight hours between two nodes for airplane type 1 \cite{journal:AF2004}}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		& A & B & C & E \\ \hline
+		A & - & 5 & 7 & - \\ \hline
+		B & 5 & - & 4 & 8 \\ \hline
+		C & 7 & 4 & - & 5 \\ \hline
+		E & - & 8 & 5 & - \\ \hline
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{Flight hours between two nodes for airplane type 2 \cite{journal:AF2004}}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		& A & B & C & E \\ \hline
+		A & - & 6 & 8.4 & - \\ \hline
+		B & 6 & - & 4.8 & 9.6 \\ \hline
+		C & 8.4 & 4.8 & - & 6 \\ \hline
+		E & - & 9.6 & 6 & - \\ \hline
+	\end{tabular}
+\end{table}
+
 \subsection{\chem: Design of batch chemical plants} \label{CHEM}
-
-
 Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive form \chem\ (single scenario).
 \begin{figure}[H]
 	\centering
@@ -430,6 +566,12 @@ Given $D,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follo
 	\end{itemize}
 	\item Finally, we multiply 3600 for each component of $c_{ijk}^{s}$ to convert the unit from \textit{hours} to \textit{seconds}.
 \end{enumerate}
+
+\subsection{\phone: Telecommunication network planning} \label{PHONE}
+
+\subsubsection{\phone: Mathematical formulation}
+
+\subsubsection{\phone: Data generation}
 
 
 \subsection{\sdcp: Stochastic data center placement} \label{SDCP}
@@ -1006,66 +1148,4 @@ D_{nt}=\sum_{n\in N} \sum_{t\in T}\left(  \sum_{\lambda\in IG_n^\mathcal{L}}IC_{
 \end{align*}
 
 Unlike other problems where stochastic data is generated while \julia\ script is running, we pre-generate and provide up to 1,000 wind power production profiles for each day type. This data is included in ``\texttt{$\sim$/Siplib/src/problems/SUC/data/WIND}'' folder and used to generate the stochastic parameter $IC_{\omega ts}^\mathcal{W}$. Hence, the number of scenarios that can be considered in an instance is limited to 1,000, which we think is large enough regarding the intrinsic large-scale size of the problem \suc.
-
-\subsection{\node: Cargo network scheduling} \label{4NODE}
-\airlift\ is a scheduling problem that allocates flight routes and flying number for different types of aircraft to meet uncertain cargo demands from all routes. Each aircraft type has limited number of available flying hours and different flight hours/costs. In the first stage, the number of flights and corresponding routes are initially assigned to each aircraft type. The second stage recourse action includes reallocation of flight time/route and purchase of commercial transportation. Switching aircraft from one route to another causes increased hours/costs than it is supposed to be. Moreover, it sometimes gives rise to cancellation of initially assigned flights due to the different flying ability for each type.    
-
-Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
-	\caption{AIRLIFT\_1: Extensive form constraint matrix plot}
-	\label{fig:airlift_sparsity}
-\end{figure}
-\subsubsection{\node: Mathematical formulation}
-
-\begin{subequations} \label{airlift:formulation}
-	\begin{align}
-	(\airlift)\ \textrm{min}\ &\sum_{i\in A}\sum_{j\in R} c_{ij}x_{ij}+\sum_{s\in\mathcal{S}}\PP(s)\Bigg[ \sum_{i\in A}\sum_{j\in R}\sum_{k\in R\backslash \{j\} }\left( \gamma_{ijk}-c_{ij}\frac{\alpha_{ijk}}{a_{ij}} \right)\chi_{ijk}^s \nonumber \\ 
-	&\qquad\qquad\qquad\qquad\qquad\qquad\qquad\qquad+\sum_{j\in R}\left( c_j^+ y_j^{+s}+c_j^- y_j^{-s} \right)\Bigg]\label{airlift:obj} \\
-	\textrm{s.t.}\ & \sum_{j\in R}a_{ij}x_{ij}\le F_i,\quad\forall i\in A,	\label{airlift:b}\\
-	&\sum_{k\in R\backslash\{j\}}\alpha_{ijk}\chi_{ijk}^s\le a_{ij}x_{ij},\quad\forall i\in A,\ \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:c}\\
-	&\sum_{i\in A}b_{ij}x_{ij}-\sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\left(\frac{\alpha_{ijk}}{a_{ij}}\right)\chi_{ijk}^s + \sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\chi_{ikj}^s \nonumber \\
-	&\qquad\qquad\qquad\qquad\qquad\quad+ y_j^{+s} - y_j^{-s} = d_j^s,\quad \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:d}\\
-	&x_{ij}\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R, \\
-	&\chi_{ijk}^s\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R,\ \forall k\in R\backslash\{j\},\ \forall s\in\mathcal{S}, \\
-	& y_j^{+s},y_j^{-s}\ge 0,\quad\forall j\in R,\ \forall s\in\mathcal{S}.
-	\end{align}
-\end{subequations}
-
-\begin{table}[H]
-	\caption{Notations for \airlift}
-	\label{airlift:notation}
-	\resizebox{\textwidth}{!}
-	{
-		%		{@{}llp{3in}}
-		\begin{tabular}{ll}
-			\toprule
-			\multicolumn{2}{l}{\textbf{Index sets:}} \\
-			$A$ & index set of aircraft types ($i,k\in A$)\\ 
-			$R$ & index set of flying routes ($j\in R$)\\ 
-			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$) \\ \midrule
-			\multicolumn{2}{l}{\textbf{Parameters:}} \\
-			$F_i$ & the maximum number of flying hours for aircraft of type $i$ available during the month\\
-			$a_{ij}$ & number of hours that aircraft type $i$ requires to fly an initially assigned route $j$  \\
-			$\alpha_{ijk}$ & number of hours that a re-scheduled aircraft of type $i$ requires to fly route $k$ where the initially assigned route was $j$ ($\alpha_{ijk}\ge a_{ik}$)\\
-			$b_{ij}$ & carrying capacity of a flight of an aircraft type $i$ on route $j$\\
-			$c_{ij}$ & cost per flight of aircraft type $i$ initially assigned to and flown on route $j$ ($c_{ij}\ge 0$)\\
-			%$\gamma_{ijk} $& cost per flight of aircraft type $i$ assigned to route $k$ that uses hours made available by canceling flights on route $j$ ($\gamma_{ijk}\ge c_{ik}$)\\			
-			$\gamma_{ijk} $& cost per flight of aircraft of type $i$ whose flying route is re-assigned from $j$ to $k$ ($\gamma_{ijk}\ge c_{ik}$)\\			
-			$c_j^+$ & unit cost of meeting demand by commercial transport on route $j$\\
-			$c_j^-$ & unit penalty cost of unused capacity on route $j$\\
-			$d_j^s$ & total demand for route $j$ under scenario $s$ \\
-			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\ \midrule
-			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
-			$x_{ij}$ (1st-stage) & number of flights of aircraft type $i$ initially assigned to route $j$ \\
-			$\chi_{ijk}^s$ (2nd-stage) & number re-scheduled flights of aircraft type $i$ from route $j$ to $k$ \\ 
-			$y_j^{+s}$ (2nd-stage) & amount of demand carried by commercial transportation on route $j$ under scenario $s$\\
-			$y_j^{-s}$ (2nd-stage) & amount of unused capacity on route $j$ under scenario $s$\\
-			\bottomrule
-		\end{tabular}
-	}
-\end{table} 
-
-\subsubsection{\node: Data generation}
 
