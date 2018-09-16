@@ -23,13 +23,13 @@ function PHONE(nS::Integer, seed::Int=1)::JuMP.Model
     @constraint(model, sum(x[j] for j in E) <= 3) # budget = 3
 
     ## 2nd stage
-    for k in S
-        sb = StructuredModel(parent = model, id = k, prob = Pr[k])
-        @variable(sb, s[i=P] >= 0)
+    for s in S
+        sb = StructuredModel(parent = model, id = s, prob = Pr[s])
+        @variable(sb, u[i=P] >= 0)
         @variable(sb, f[i=P, r=R[i]] >= 0, Int)
-        @objective(sb, Min, sum(s[i] for i in P))
-        @constraint(sb, [j=E], sum(data.a[i][r][j]*f[i,r] for i in P for r in R[i] for j in E) <= x[j] + e[j])
-        @constraint(sb, [i=P], sum(f[i,r] for r in R[i]) + s[i] == d[i,k])
+        @objective(sb, Min, sum(u[i] for i in P))
+        @constraint(sb, [j=E], sum(sum(data.a[i][r][j]*f[i,r] for r in R[i]) for i in P) <= x[j] + e[j])
+        @constraint(sb, [i=P], sum(f[i,r] for r in R[i]) + u[i] == d[i,s])
     end
 
     return model

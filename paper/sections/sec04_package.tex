@@ -89,8 +89,8 @@ An object of this type contains every information of an instance. Hence, most fu
 %\end{figure}
 %
 %\texttt{src} folder on the top contains every implementation of the package. In the directly descendant folder \texttt{problems}, another folders with names for each problem present. Some folders in \texttt{problems} (e.g., \texttt{SIZES}) have \texttt{DATA} folder in it which contains external data for generating the instances. For example, the \texttt{DATA} folder under \texttt{SIZES} contains \texttt{oneperioddata.csv} file corresponding to Table \ref{sizes:data} for \sizes\ instances. 
-\subsection{How to add a SIP problem into the package}
-Adding a new problem to the \siplibtwo\ package is as  simple as (1) adding a line to the existing file and (2) implementing one or two \julia\ scripts for the problem. One thing to keep in mind is that this procedure should follow the predefined way, e.g., folder name, script file name, composite-type name, function name, and arguments of the functions.\\
+\subsection{How to add a new SIP problem into the package}
+Adding a new problem to the \siplibtwo\ package is as  simple as (1) adding a line to the existing .csv file and (2) implementing one or two \julia\ scripts for the problem. One thing to keep in mind is that this procedure should follow the predefined way, e.g., folder name, script file name, composite-type name, function name, and arguments of the functions.\\
 
 \noindent\textit{Step 1. Modification of \texttt{problem\_info.csv}} The .csv file contains basic information of each problem: problem name, number of parameters, simple description for the parameters. Table \ref{table:problem_info.csv} shows the spread sheet representation of the .csv file. In order to add a new problem into the package, a new line for that problem should be appended at the bottom.
 \begin{table}[H]
@@ -109,7 +109,7 @@ Adding a new problem to the \siplibtwo\ package is as  simple as (1) adding a li
 %\subsubsection{Implementation of modeling script \texttt{\_model.jl}}
 \noindent\textit{Step 2. Implementation of a modeling script} The modeling function for a problem should be defined in the script \textit{model}. When an user wants to add a new problem, this script is the minimum required implementation. Sometimes the data generating part is separated from the \textit{model} script by \textit{data} script when the data generation is complicated so that makes the modeling function too messy (e.g., \suc).
 \begin{quote}
-	\noindent\textit{model} (necessary) This kind of script contains a definition of the function that constructs a \jumpmodel-type object. This function calls \structjump\ package. Fig \ref{fig:DCAP_model.jl} shows an example of \dcap: \texttt{DCAP\_model.jl}
+	\noindent\textit{model} (necessary) This kind of script contains a definition of the function that constructs a \jumpmodel-type object. This function calls \structjump\ package. Fig. \ref{fig:DCAP_model.jl} shows an example of \dcap: \texttt{DCAP\_model.jl}
 \end{quote}
 \begin{quote}
 	\noindent\textit{data} (optional) For some problems that have complicated data generation procedure, we implement this script separately from the \textit{model} script. This includes a definition of composite-type in which data is stored. A data generating function is also defined in this script. The function generates the data and returns it in a object of the composite-type we defined. Whenever this \textit{data} script exists separately, it must be included in the \textit{model} script. Fig. \ref{fig:DCAP_data.jl} shows an example for \dcap: \texttt{DCAP\_data.jl}.

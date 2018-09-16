@@ -55,7 +55,6 @@ function CARGO(nS::Int, seed::Int=1)::JuMP.Model
 
     # generate & store instance data
     # sets
-    nS = 5
     N = 1:4
     P = 1:26
     A = 1:2

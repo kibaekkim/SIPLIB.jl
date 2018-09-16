@@ -51,15 +51,18 @@ using Siplib
 using CPLEX
 
 model = getModel(:AIRLIFT,[2])
-model = getModel(:CHEM, [2])
+model = getModel(:CARGO, [3])
+model = getModel(:CHEM, [1])
 model = getModel(:DCAP,[3,3,3,2])
 model = getModel(:MPTSPs,["D0",5,2])
-model = getModel(:PHONE, [2])
+model = getModel(:PHONE, [3])
 model = getModel(:SDCP,[5,0.1,"FallWD",1])
 model = getModel(:SIZES,[2])
 model = getModel(:SMKP,[10,2])
 model = getModel(:SSLP,[5,5,2])
 model = getModel(:SUC,["FallWD",1])
+
+plotAll(model)
 
 RP(model, CplexSolver(), timelimit=120.0)
 WS(model, CplexSolver(), ss_timelimit=60.0)

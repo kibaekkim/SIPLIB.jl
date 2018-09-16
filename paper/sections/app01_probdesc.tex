@@ -11,7 +11,7 @@ Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive
 	\label{fig:airlift_sparsity}
 \end{figure}
 \subsubsection{\airlift: Mathematical formulation}
-
+Table \ref{airlift:notation} summarizes the notation used to formulate \airlift. Using the notation, the problem can be formulated by the following extensive form.
 \begin{subequations} \label{airlift:formulation}
 	\begin{align}
 	(\airlift)\ \textrm{min}\ &\sum_{i\in A}\sum_{j\in R} c_{ij}x_{ij}+\sum_{s\in\mathcal{S}}\PP(s)\Bigg[ \sum_{i\in A}\sum_{j\in R}\sum_{k\in R\backslash \{j\} }\left( \gamma_{ijk}-c_{ij}\frac{\alpha_{ijk}}{a_{ij}} \right)\chi_{ijk}^s \nonumber \\ 
@@ -20,11 +20,12 @@ Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive
 	&\sum_{k\in R\backslash\{j\}}\alpha_{ijk}\chi_{ijk}^s\le a_{ij}x_{ij},\quad\forall i\in A,\ \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:c}\\
 	&\sum_{i\in A}b_{ij}x_{ij}-\sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\left(\frac{\alpha_{ijk}}{a_{ij}}\right)\chi_{ijk}^s + \sum_{i\in A}\sum_{k\in R\backslash\{j\}}b_{ij}\chi_{ikj}^s \nonumber \\
 	&\qquad\qquad\qquad\qquad\qquad\quad+ y_j^{+s} - y_j^{-s} = d_j^s,\quad \forall j\in R,\ \forall s\in\mathcal{S}, \label{airlift:d}\\
-	&x_{ij}\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R, \\
-	&\chi_{ijk}^s\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R,\ \forall k\in R\backslash\{j\},\ \forall s\in\mathcal{S}, \\
-	& y_j^{+s},y_j^{-s}\ge 0,\quad\forall j\in R,\ \forall s\in\mathcal{S}.
+	&x_{ij}\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R, \label{airlift:e}\\
+	&\chi_{ijk}^s\in\mathbb{Z}_+,\quad\forall i\in A,\ \forall j\in R,\ \forall k\in R\backslash\{j\},\ \forall s\in\mathcal{S}, \label{airlift:f}\\
+	& y_j^{+s},y_j^{-s}\ge 0,\quad\forall j\in R,\ \forall s\in\mathcal{S}.\label{airlift:g}
 	\end{align}
 \end{subequations}
+The objective function (\ref{airlift:obj}) minimizes the total operating costs including penalty costs. Constraint (\ref{airlift:b}) restricts the maximum number of flight hours for each aircraft type available during the month. Constraint (\ref{airlift:c}) corresponds the fact that we cannot switch away more flight hours. Constraint (\ref{airlift:d}) balances the demand and supply for each route considering the unused capacity together. Constraint (\ref{airlift:e})-(\ref{airlift:g}) set the space in which the decision variables can have values.
 
 \begin{table}[H]
 	\caption{Notations for \airlift}
@@ -85,19 +86,17 @@ d_2^s&=Lognormal(\mu=7.2936,\ \sigma=0.198),\quad\forall s\in\mathcal{S}.
 
 
 \subsection{\cargo: Cargo network scheduling} \label{CARGO}
-\cargo\ is a two-stage cargo network scheduling problem.  
+\cargo\ is a two-stage cargo network scheduling problem. The problem is to plan flights over the possible routes in a network in order to ship cargo from some nodes to other nodes. The cargo amounts to be shipped between two nodes are uncertain. The first-stage decision is to determine the number of flights on each route by a certain type of aircraft. We allow cargo to be moved either by direct delivery by a single route, or by transshipment, i.e., by more than one route. Then, the second-stage decision must satisfy the maximum capacity constraints towards minimizing total costs by considering both direct delivery and transshipment.
 
-\airlift\ is a scheduling problem that allocates flight routes and flying number for different types of aircraft to meet uncertain cargo demands from all routes. Each aircraft type has limited number of available flying hours and different flight hours/costs. In the first stage, the number of flights and corresponding routes are initially assigned to each aircraft type. The second stage recourse action includes reallocation of flight time/route and purchase of commercial transportation. Switching aircraft from one route to another causes increased hours/costs than it is supposed to be. Moreover, it sometimes gives rise to cancellation of initially assigned flights due to the different flying ability for each type.    
-
-Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
+Fig. \ref{fig:cargo_sparsity} shows the sparsity pattern presents in extensive form \cargo\ (single scenario).
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
+	\includegraphics[width=0.85\linewidth]{CARGO_1}
 	\caption{CARGO\_1: Extensive form constraint matrix plot}
-	\label{fig:airlift_sparsity}
+	\label{fig:cargo_sparsity}
 \end{figure}
 \subsubsection{\cargo: Mathematical formulation}
-
+Table \ref{cargo:notation} summarizes the notation used to formulate \cargo. Using the notation, the problem can be formulated by the following extensive form.
 \begin{subequations} \label{cargo:formulation}
 	\begin{align}
 	(\cargo)\ \textrm{min}\ &\sum_{\pi\in P}\sum_{a\in A}c_a h_{\pi a}x_{\pi a}+ \nonumber \\ &\sum_{s\in\mathcal{S}}\PP(s)\left[q\sum_{\pi\in P}\sum_{(m,n)\in\pi}\left(d_{\pi m n}^s+r_{\pi m n}^s+\sum_{k\in N}t_{\pi m n k}^s\right)+\rho\sum_{m\in N}\sum_{n\in N}y_{mn}^s \right] \label{cargo:obj} \\ 
@@ -124,6 +123,7 @@ Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive
 	&z_{\pi j}^s\ge 0,\quad\forall\pi\in P,\ \forall j\in \{1,\ldots,l_\pi-1\},\ \forall s\in\mathcal{S}.\label{cargo:s}
 	\end{align}
 \end{subequations}
+The objective function (\ref{cargo:obj}) minimizes total cost of scheduling including the penalty cost due to the undelivered cargo. Constraint (\ref{cargo:b}) enforces the minimum required number of flights from nodes $m$ to $n$ must be satisfied. Constraint (\ref{cargo:c}) guarantees the maximum number of landings allowed in node $n$ must not be exceeded. Constraint (\ref{cargo:d}) is for the landing and take-off balance for each node. Constraint (\ref{cargo:e}) and (\ref{cargo:f}) restricts the flying hours for each type of aircraft between the minimum and maximum. Constraints (\ref{cargo:g})-(\ref{cargo:j}) are for recourse actions. Constraint (\ref{cargo:g}) ensures the cargo material balance. Constraint (\ref{cargo:h}) corresponds to the balance of all transshipments which go through node $k$ and wind up at node $n$. Constraint (\ref{cargo:i}) is for loading and unloading that occur throughout the course of a route at the initial node. For the remaining nodes in the route, a payload balance yields constraint (\ref{cargo:j}). Constraints (\ref{cargo:k})-(\ref{cargo:m}) does not present in the references but we add this to make the model nontrivial. Finally, constraints (\ref{cargo:n})-(\ref{cargo:s}) defines the space in which the decision variables can vary.
 
 \begin{table}[H]
 	\caption{Notations for \cargo}
@@ -170,6 +170,7 @@ Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive
 \end{table} 
 
 \subsubsection{\cargo: Data generation}
+Since the original reference \cite{journal:MR1995} does not provide numerical data, we adopt the data in \cite{journal:AF2004}. The authors provide both deterministic and stochastic parameters but we only use deterministic parameters and change the stochastic parameters by ourselves towards following an uniform distribution. Table \ref{cargo:routes} enumerates the possible routes in the cargo network. Table \ref{cargo:air1}-\ref{cargo:air2} provide the flight hours between two nodes for each airplane type.
 \begin{gather*}
 \textbf{\textrm{(Deterministic parameters)}}\\
 q=1,\ \rho=1300\\
@@ -181,8 +182,9 @@ h_2^{\textrm{min}}=0,\ h_2^{\textrm{max}}=240,\ c_2=4,\ \delta_2=6.\\
 b_{mn}^s\sim Unif(3,12),\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S}.
 \end{gather*}
 
-\begin{table}[]
+\begin{table}[H]
 	\caption{Enumeration of possible routes for the numerical example \cite{journal:AF2004}}
+	\label{cargo:routes}
 	\resizebox{\textwidth}{!}
 	{
 	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
@@ -198,6 +200,7 @@ b_{mn}^s\sim Unif(3,12),\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\math
 \begin{table}[H]
 	\centering
 	\caption{Flight hours between two nodes for airplane type 1 \cite{journal:AF2004}}
+	\label{cargo:air1}
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
 		& A & B & C & E \\ \hline
@@ -211,6 +214,7 @@ b_{mn}^s\sim Unif(3,12),\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\math
 \begin{table}[H]
 	\centering
 	\caption{Flight hours between two nodes for airplane type 2 \cite{journal:AF2004}}
+	\label{cargo:air2}	
 	\begin{tabular}{|c|c|c|c|c|}
 		\hline
 		& A & B & C & E \\ \hline
@@ -222,6 +226,8 @@ b_{mn}^s\sim Unif(3,12),\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\math
 \end{table}
 
 \subsection{\chem: Design of batch chemical plants} \label{CHEM}
+\chem\ considers scheduling of batch chemical plants under market uncertainty. The decision factors include how many plants (or equipments) to build, when to build, how to operate them, and how much amount of resources to store, buy, and sell. The market uncertainty is realized as the value of resources to be sold and their maximum selling amount.
+
 Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive form \chem\ (single scenario).
 \begin{figure}[H]
 	\centering
@@ -231,7 +237,7 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 \end{figure}
 
 \subsubsection{\chem: Mathematical formulation}
-
+Table \ref{chem:notation} summarizes the notation used to formulate \chem. Using the notation, the problem can be formulated by the following extensive form.
 \begin{subequations} \label{chem:formulation}
 	\begin{align}
 	(\chem)\ \textrm{max}\ & -\sum_{t\in T}\left[ \sum_{r\in R}v_{rt}^\textrm{b}q_{rt}^\textrm{b} + \sum_{j\in J}\left( C_{jt}n_{j,t+\delta}+\sum_{i\in I}c_{ijt}^\textrm{o}y_{ijt} \right) \right] \nonumber \\ 
@@ -260,11 +266,11 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 	&n_{jt}\in\mathbb{Z}_+,\quad\forall j\in J,\ \forall t\in T,\label{chem:o}\\
 	&y_{ijt}\in\mathbb{Z}_+,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\label{chem:p}\\
 	&\textrm{(Second-stage variable bounds)} \nonumber\\	
-	&x_{t\sigma}\in \{0,1\},\quad \forall t\in T,\ \forall\sigma\in\mathcal{S},\\
-	&q_{rt\sigma}^\textrm{s0},q_{rt\sigma}^\textrm{s+}\ge 0,\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S}.\label{chem:q}
+	&x_{t\sigma}\in \{0,1\},\quad \forall t\in T,\ \forall\sigma\in\mathcal{S},\label{chem:q}\\
+	&q_{rt\sigma}^\textrm{s0},q_{rt\sigma}^\textrm{s+}\ge 0,\quad\forall r\in R,\ \forall t\in T,\ \forall \sigma\in\mathcal{S}.\label{chem:r}
 	\end{align}
 \end{subequations}
-
+The objective function (\ref{chem:obj}) maximizes the total profit from operating the chemical plants. Constraint (\ref{chem:b}) restricts the operation times of equipment (or plant) does not exceed the length of time in each time period for each type of equipment. Constraint (\ref{chem:c}) guarantees the total operating expense does not exceed the total operating budget. Constraints (\ref{chem:d}) and (\ref{chem:e}) the material balance on the systems that includes inventory, production, consumption, sales, and purchasing. Constraint (\ref{chem:f}) corresponds to the relationship between the total processed amount of task and the amount of output from the processing. Constraints (\ref{chem:g}) and (\ref{chem:j}) restrict the purchasing of each resource. Constraint (\ref{chem:h}) denotes a simple balance for the amount of resources to be sold. Constraint (\ref{chem:i}) restricts the maximum amount of resources to be sold which is lower than the demand level. Constraint (\ref{chem:k}) defines the indicator variable which is 1 if the demand be met exactly, 0 otherwise. Constraint (\ref{chem:l}) guarantees the minimum number of scenarios for which the demand may be met exactly. Finally, constraints (\ref{chem:m})-(\ref{chem:r}) restrict the space where the decision variables can take values from.
 \begin{table}[H]
 	\caption{Notations for \chem}
 	\label{chem:notation}
@@ -304,7 +310,6 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 			$\PP(\sigma)$ & \textrm{the probability of occurence of scenario $\sigma$} \\ \midrule
 			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
 			\textrm{(First-stage)} \nonumber\\
-			$x_{t\sigma }$ & 1 if demand be met exactly (i.e., $q_{rt\sigma}^{\textrm{s0}}=Q_{rt\sigma}^{\textrm{s}}$), 0 otherwise\\	
 			$n_{jt}$ & number of new units of equipment type $j$ to come into the production line at time period $t$\\
 			$A_{rt}$ & amount of resource $r$ in inventory at time $t$\\
 			$B_{ijt}$ & total processed amount of task $i$ on equipment type $j$ during time $t$\\
@@ -312,6 +317,7 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 			$q_{rt}^\textrm{b}$ & amount of resource $r$ bought at time $t$\\
 			$q_{rt}^\textrm{s}$ & amount of resource $r$ sold at time $t$\\
 			\textrm{(Second-stage)} \nonumber\\
+			$x_{t\sigma }$ & 1 if demand be met exactly (i.e., $q_{rt\sigma}^{\textrm{s0}}=Q_{rt\sigma}^{\textrm{s}}$), 0 otherwise\\				
 			$q_{rt\sigma}^\textrm{s0}$ & amount of resource $r$ produced and sold at time $t$ which is lower than the demand level under scenario $\sigma$ \\
 			$q_{rt\sigma}^\textrm{s+}$ & amount of resource $r$ produced and sold at time $t$ which is above the demand level under scenario $\sigma$ \\
 			\bottomrule
@@ -319,7 +325,10 @@ Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive fo
 	}
 \end{table} 
 
-%\subsubsection{\chem: Data generation}
+\subsubsection{\chem: Data generation}
+We use the same deterministic parameters that is provided by the original reference \cite{journal:SPR1994}: $|I|=4$, $|J|=3$, $|R|=7$, $|T|=2$. Since we neglect the operating costs ($c_{ijt}^\textrm{o}=0$) and the construction delay ($\delta=0$), constraints (\ref{chem:c}), (\ref{chem:j})-(\ref{chem:l}) do not need to be incorporated. 
+
+For the stochastic parameters, unlike the original reference, we use uniform distributions that will generate the reasonable values compared to the probability distributions given in the reference.
 %\begin{align*}
 %\delta&=0,\\
 %c_{ijt}^\textrm{o}&=0,\quad\forall i\in I,\ \forall j\in J,\ \forall t\in T,\\
@@ -568,11 +577,66 @@ Given $D,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follo
 \end{enumerate}
 
 \subsection{\phone: Telecommunication network planning} \label{PHONE}
+\phone\ is a planning problem associated with networks for private line services. A manager of a network decides where and how much to expand the network capacity under the demand uncertainty between any two nodes. The manager has a limited budget with which the expansion is not penalized. Usually networks are very interconnected so that there is often more than one route that can satisfy a demand.
 
+Fig. \ref{fig:phone_sparsity} shows the sparsity pattern presents in extensive form \phone\ (single scenario).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{PHONE_1}
+	\caption{PHONE\_1: Extensive form constraint matrix plot}
+	\label{fig:phone_sparsity}
+\end{figure}
 \subsubsection{\phone: Mathematical formulation}
+Table \ref{phone:notation} summarizes the notation used to formulate \phone. Using the notation, the problem can be formulated by the following extensive form.
+\begin{subequations} \label{phone:formulation}
+	\begin{align}
+	(\phone)\ \textrm{min}\ &\sum_{s\in\mathcal{S}}\sum_{i\in P}u_i^s \label{phone:obj}\\
+	\textrm{s.t.}\ &\sum_{j\in E} x_j \le b, \label{phone:b} \\
+	&\sum_{i\in P} \sum_{r\in R(i)} a_{irj}f_{ir}^s\le x_j+e_j,\quad\forall j\in E,\ \forall s\in\mathcal{S},\label{phone:c}\\
+	&\sum_{r\in R(i)}f_{ir}^s+u_i^s = d_i^s,\quad\forall i\in P,\ \forall s\in\mathcal{S}, \label{phone:d}\\
+	&x_j\ge 0,\quad\forall j\in E, \label{phone:e}\\
+	&u_{i}^s\ge 0,\quad\forall i\in P,\ \forall s\in\mathcal{S}, \label{phone:f}\\
+	&f_{ir}^s\in\mathbb{Z}_+,\quad\forall i\in P,\ \forall r\in R(i),\ \forall s\in\mathcal{S}. \label{phone:g}
+	\end{align}
+\end{subequations}
+The objective function (\ref{phone:obj}) minimizes the number of unserved requests. Constraint (\ref{phone:b}) stands for the budget limitation. Constraint (\ref{phone:c}) ensures that the number of connections serving pair $i$ must be less than the capacity. Constraint (\ref{phone:d}) means the sum of served and unserved requests equals to the original demands. Constraints (\ref{phone:e})-(\ref{phone:g}) define the range of the decision variables. 
+\begin{table}[H]
+	\caption{Notations for \phone}
+	\label{phone:notation}
+	\resizebox{\textwidth}{!}
+	{
+		\begin{tabular}{ll}
+			\toprule
+			\multicolumn{2}{l}{\textbf{Index sets:}} \\
+			$P$ & index set of point-to-point pairs ($i\in P$) \\ 
+			$E$ & index set of edges ($j\in E$) \\ 
+			$R(i)$ & index set of routes to satisfy the requests between two points in pair $i$\\ 
+			$\mathcal{S}$ & index set of scenarios ($s\in \mathcal{S}$)\\ \midrule
+			\multicolumn{2}{l}{\textbf{Parameters:}} \\
+			$b$ & total budget \\
+			$a_{irj}$ & incidence parameter that is 1 if link $j\in R(i)$ for route $r$, 0 otherwise \\ 
+			$e_j$ & the existing initial capacity in the network \\ 
+			$d_{i}^s$ & the demands for service on pair $i$\\
+			$\PP(s)$ & \textrm{the probability of occurence of scenario $s$} \\  \midrule
+			\multicolumn{2}{l}{\textbf{Decision variables:}} \\
+			$x_j$ (1st-stage) & the expanded capacity of link $j$\\
+			$u_{is}$ (2nd-stage) & the number of unserved requests on point-to-point pair $i$ under scenario $s$\\  
+			$f_{irs}$ (2nd-stage) & the number of connections serving point-to-point pair $i$ over route $r$ under scenario $s$\\ 
+			\bottomrule
+		\end{tabular}
+	}
+\end{table} 
 
 \subsubsection{\phone: Data generation}
+We adopt the numerical example provided in \cite{journal:AF2004}. The budget parameter $b$ is 3. The network comprises 6 nodes and 8 edges. Fig. \ref{fig:phone_network} shows the network structure with the initial capacity on each edge. We implement a recursive function to enumerate all possible routes for this example (see the function \texttt{allroutes()} in \texttt{Siplib/problems/PHONE/PHONE\_data.jl}).
 
+Unlike the references, we use an uniform distribution: $Unif(5,15)$ for all the pairs to generate the uncertain demands.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{phone_network}
+	\caption{Illustration of routing for telephone network example \cite{journal:AF2004}} 
+	\label{fig:phone_network}
+\end{figure}
 
 \subsection{\sdcp: Stochastic data center placement} \label{SDCP}
 The stochastic data center placement (SDCP) problem is to find the optimal placement of data centers (as dispatchable loads) that minimizes the expected total electricity dispatch cost over stochastic wind power generation scenarios. We refer to \cite{journal:KYZC2017} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{web:wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
