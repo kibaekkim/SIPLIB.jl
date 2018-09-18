@@ -164,6 +164,7 @@ function v(pi::Int, j::Int, Route::Array{String}, Ndict::Dict{Char,Int64})
 end
 
 
+
 # sets
 nS = 5
 N = 1:4
@@ -217,6 +218,17 @@ for s in S
 end
 
 
+cnt = 0
+for m in N
+    for n in N
+        for pi in P
+            if pi ∉ U(Node[m],Node[n],Route)
+                cnt += 1
+            end
+        end
+    end
+end
+cnt
 
 RP(model, CplexSolver())
 EEV(model, CplexSolver())

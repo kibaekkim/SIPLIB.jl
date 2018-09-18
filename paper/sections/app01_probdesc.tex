@@ -108,7 +108,7 @@ Table \ref{cargo:notation} summarizes the notation used to formulate \cargo. Usi
 	&\sum_{\pi \in P}\left(d_{\pi m n}^s+\sum_{k\in N}t_{\pi mkn}^s\right)+y_{mn}^s\ge b_{mn}^s,\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S}, \label{cargo:g}\\
 	&\sum_{\pi \in P}\sum_{m\in N}t_{\pi mkn}^s=\sum_{\pi \in P}r_{\pi kn}^s,\quad\forall k\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:h}\\
 	&\sum_{k\in N}\left(d_{\pi,v_{\pi 1},k}^s+r_{\pi,v_{\pi 1},k}^s+\sum_{n\in N}t_{\pi,v_{\pi 1},k,n}^s\right)\nonumber\\
-	&\qquad\qquad\qquad\qquad\qquad\qquad=\sum_{a\in A}\delta_a x_{\pi a}^s-z_{\pi 1}^s,\quad\forall \pi\in P,\ \forall s\in\mathcal{S}, \label{cargo:i}\\
+	&\qquad\qquad\qquad\qquad\qquad\qquad=\sum_{a\in A}\delta_a x_{\pi a}-z_{\pi 1}^s,\quad\forall \pi\in P,\ \forall s\in\mathcal{S}, \label{cargo:i}\\
 	&\sum_{k\in N}\left(d_{\pi,v_{\pi j},k}^s+r_{\pi,v_{\pi j},k}^s+\sum_{n\in N}t_{\pi,v_{\pi j},k,n}^s\right) \nonumber\\
 	&\quad-\sum_{k\in N}\left(d_{\pi,k,v_{\pi j}}^s+r_{\pi,k,v_{\pi j}}^s+\sum_{n\in N}t_{\pi,k,v_{\pi j},n}^s\right) \nonumber\\
 	&\qquad\qquad=z_{\pi,j-1}^s - z_{\pi j}^s,\quad\forall\pi\in P,\ \forall j\in\{2,\ldots,l_\pi-1\},\ \forall s\in\mathcal{S},\label{cargo:j}\\
@@ -118,7 +118,7 @@ Table \ref{cargo:notation} summarizes the notation used to formulate \cargo. Usi
 	&x_{\pi a}\in\mathbb{Z}_+,\quad\forall \pi\in P,\ \forall a\in A,\label{cargo:n}\\
 	&d_{\pi m n}^s\ge 0,\quad\forall \pi\in P,\ \forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:o}\\
 	&t_{\pi mkn}^s\ge 0,\quad\forall \pi\in P,\ \forall m\in N,\ \forall k\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:p}\\
-	&r_{\pi kn}^s\ge 0,\quad\forall \pi\in P,\ \forall k\in N,\ \forall n\in N,\label{cargo:q}\\
+	&r_{\pi kn}^s\ge 0,\quad\forall \pi\in P,\ \forall k\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:q}\\
 	&y_{mn}^s\ge 0,\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\mathcal{S},\label{cargo:r}\\
 	&z_{\pi j}^s\ge 0,\quad\forall\pi\in P,\ \forall j\in \{1,\ldots,l_\pi-1\},\ \forall s\in\mathcal{S}.\label{cargo:s}
 	\end{align}
@@ -231,7 +231,7 @@ b_{mn}^s\sim Unif(3,12),\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\math
 Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive form \chem\ (single scenario).
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
+	\includegraphics[width=0.85\linewidth]{CHEM_1}
 	\caption{CHEM\_1: Extensive form constraint matrix plot}
 	\label{fig:chem_sparsity}
 \end{figure}
@@ -628,15 +628,24 @@ The objective function (\ref{phone:obj}) minimizes the number of unserved reques
 \end{table} 
 
 \subsubsection{\phone: Data generation}
-We adopt the numerical example provided in \cite{journal:AF2004}. The budget parameter $b$ is 3. The network comprises 6 nodes and 8 edges. Fig. \ref{fig:phone_network} shows the network structure with the initial capacity on each edge. We implement a recursive function to enumerate all possible routes for this example (see the function \texttt{allroutes()} in \texttt{Siplib/problems/PHONE/PHONE\_data.jl}).
-
-Unlike the references, we use an uniform distribution: $Unif(5,15)$ for all the pairs to generate the uncertain demands.
+We adopt the numerical example provided in \cite{journal:AF2004}. The budget parameter $b$ is 3. The network comprises 6 nodes and 8 edges. Fig. \ref{fig:phone_network} shows the network structure with the index on each edge. Table \ref{table:phone_network} contains the initial capacity for each edge. We implement a recursive function to enumerate all possible routes for this example (see the function \texttt{allroutes()} in \texttt{Siplib/problems/PHONE/PHONE\_data.jl}). Finally, we use an uniform distribution $Unif(5,15)$ for all the pairs to generate the uncertain demands unlike the references.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{phone_network}
 	\caption{Illustration of routing for telephone network example \cite{journal:AF2004}} 
 	\label{fig:phone_network}
 \end{figure}
+
+\begin{table}[H]
+	\centering
+	\caption{Initial capacity of the network \cite{journal:AF2004}} 
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		Edge             & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\ \hline
+		Initial capacity & 2 & 2 & 4 & 4 & 2 & 4 & 3 & 1 \\ \hline
+	\end{tabular}
+	\label{table:phone_network}
+\end{table}
 
 \subsection{\sdcp: Stochastic data center placement} \label{SDCP}
 The stochastic data center placement (SDCP) problem is to find the optimal placement of data centers (as dispatchable loads) that minimizes the expected total electricity dispatch cost over stochastic wind power generation scenarios. We refer to \cite{journal:KYZC2017} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{web:wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 

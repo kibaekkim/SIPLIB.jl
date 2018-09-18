@@ -11,6 +11,61 @@ function solveSMPSInstance(solve_type::Symbol,
     return status
 end
 =#
+function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_eev::Bool=false, output::Bool=false, timelimit::Float64=Inf, splice::Bool=false, genericnames::Bool=true)
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
+        return
+    end
+
+#    println("Calculating the effect of using the expected value solution (EEV)")
+
+    # save the number of scenarios
+    nS = model.ext[:Stochastic].num_scen
+
+    # Step 1: get expected value problem and save the first-stage solution
+    mdata_all = getStructModelData(model, genericnames, false)
+    m1 = mdata_all[1]
+    m2 = mdata_all[2]
+    avg_mat = m2.mat
+    avg_rhs = m2.rhs
+    avg_obj = m2.obj
+    for s in 2:nS
+        avg_mat += mdata_all[s+1].mat
+        avg_rhs += mdata_all[s+1].rhs
+        avg_obj += mdata_all[s+1].obj
+    end
+    avg_mat = avg_mat/nS
+    avg_obj = avg_obj/nS
+    avg_rhs = avg_rhs/nS
+    mdata_all_evp = ModelData[]
+    push!(mdata_all_evp, m1)
+    push!(mdata_all_evp, ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,m2.clbd,m2.cubd,m2.ctype,m2.cname))
+    evp, x = getExtensiveFormModel(mdata_all_evp, return_x=true)
+
+    if !output
+        MathProgBase.setparameters!(solver, Silent=true)
+    end
+    if timelimit != Inf
+        MathProgBase.setparameters!(solver, TimeLimit=timelimit)
+    end
+
+    setsolver(evp, solver)
+    print("  Solving the expected value problem (EV) ... ")
+    st = time()
+    status = solve(evp, suppress_warnings=true)
+    ev_sol = getvalue(x)
+    ev_gap = getobjgap(evp)
+    ev_time = time() - st
+    println("$status (gap: $(round(ev_gap,3))%, elapsed time: $(round(ev_time,2))s)")
+#    evp = Model()
+
+    if for_eev
+        return (ev_sol, ev_gap)
+    else
+        return evp.objVal
+    end
+end
 
 # calculate Wait-and-See solution (needs any MIP solver, e.g., using CPLEX)
 function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, ss_timelimit::Float64=Inf, splice::Bool=false)
@@ -75,11 +130,8 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
 
     println("Calculating the effect of using the expected value solution (EEV)")
 
-    # save the number of scenarios
-    nS = model.ext[:Stochastic].num_scen
-
+#=
     # Step 1: get expected value problem and save the first-stage solution
-    mdata_all = getStructModelData(model, genericnames, false)
     m1 = mdata_all[1]
     m2 = mdata_all[2]
     avg_mat = m2.mat
@@ -114,8 +166,14 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
     ev_time = time() - st
     println("$status (gap: $(round(ev_gap,3))%, elapsed time: $(round(ev_time,2))s)")
     evp = Model()
+=#
+    # save the number of scenarios
+    nS = model.ext[:Stochastic].num_scen
+    # Step 1: get expected value problem and save the first-stage solution
+    ev_sol, ev_gap = EV(model, solver, for_eev=true, timelimit=ev_timelimit)
 
     # Step 2: fix the first-stage variables and get EEV
+    mdata_all = getStructModelData(model, genericnames, false)
     eev, x = getExtensiveFormModel(mdata_all,return_x=true)
     for j in 1:length(x)
         JuMP.fix(x[j],ev_sol[j])
@@ -129,11 +187,11 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
     println("$status")
 
     EEV = eev.objVal
-    eev_gap = getobjgap(eev)
+#    eev_gap = getobjgap(eev)
     eev = Model()
     println("EV gap: $(round(ev_gap,3))%")
-    println("EEV = $(round(EEV,3)) (gap: $(round(eev_gap,3))%, elapsed time: $(round(eev_time,2))s)")
-
+    #println("EEV = $(round(EEV,3)) (gap: $(round(eev_gap,3))%, elapsed time: $(round(eev_time,2))s)")
+    println("EEV = $(round(EEV,3)), elapsed time: $(round(eev_time,2))s)")
     if !output
         MathProgBase.setparameters!(solver,Silent=false)
     end

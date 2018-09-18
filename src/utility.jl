@@ -135,10 +135,9 @@ function getExtensiveFormModel(mdata_all::Array{ModelData}; return_x::Bool=false
 
     # objective
     aff = AffExpr(x,m1.obj,0)
-    aff2 = AffExpr(y[1],(1/nS)*mdata_all[2].obj,0)
+    aff2 = (1/nS)*AffExpr(y[1],mdata_all[2].obj,0)
     for s in 2:nS
-        m2 = mdata_all[s+1]
-        append!(aff2, (1/nS)*AffExpr(y[s], m2.obj, 0))
+        append!(aff2, (1/nS)*AffExpr(y[s], mdata_all[s+1].obj, 0))
     end
     @objective(efm, m1.objsense, aff + aff2)
     #@objective(efm, m1.objsense, aff)
@@ -154,11 +153,12 @@ function getExtensiveFormModel(mdata_all::Array{ModelData}; return_x::Bool=false
             @constraint(efm, AffExpr(x,m1.mat[i,:],0) == m1.rhs[i])
         end
     end
+
     ## second-stage
     for s in 1:nS
         m2 = mdata_all[s+1]
         for i in 1:nrows2
-            aff = AffExpr(x,m2.mat[i,1:ncols1],0)
+            aff = AffExpr(x, m2.mat[i,1:ncols1], 0)
             append!(aff, AffExpr(y[s],m2.mat[i,ncols1+1:end],0))
             if m2.sense[i] == :L
                 @constraint(efm, aff <= m2.rhs[i])

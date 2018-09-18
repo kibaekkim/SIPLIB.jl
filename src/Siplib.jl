@@ -43,37 +43,37 @@ module Siplib
            noteParams,
            WS,
            EEV,
-           RP
+           RP,
+           EV
 
 end # end module Siplib
 #=
 using Siplib
 using CPLEX
 
-model = getModel(:AIRLIFT,[2])
-model = getModel(:CARGO, [3])
-model = getModel(:CHEM, [1])
+model = getModel(:AIRLIFT,[1000])
+model = getModel(:CARGO, [100])
+model = getModel(:CHEM, [3])
 model = getModel(:DCAP,[3,3,3,2])
-model = getModel(:MPTSPs,["D0",5,2])
-model = getModel(:PHONE, [3])
-model = getModel(:SDCP,[5,0.1,"FallWD",1])
-model = getModel(:SIZES,[2])
+model = getModel(:MPTSPs,["D0",5,5],seed=2)
+model = getModel(:PHONE, [100])
+model = getModel(:SDCP,[5,10,"FallWD",1])
+model = getModel(:SIZES,[10])
 model = getModel(:SMKP,[10,2])
-model = getModel(:SSLP,[5,5,2])
+model = getModel(:SSLP,[5,5,10])
 model = getModel(:SUC,["FallWD",1])
 
-plotAll(model)
 
-RP(model, CplexSolver(), timelimit=120.0)
+EV(model,CplexSolver())
 WS(model, CplexSolver(), ss_timelimit=60.0)
+RP(model, CplexSolver(), output=true, timelimit=120.0)
 EEV(model, CplexSolver(), ev_timelimit=60.0)
-
 
 model = getModel(:SDCP,[5,10,"FallWD",3])
 RP(model, CplexSolver())
 
 print(model)
-generateSMPS(:CHEM,[10])
+generateSMPS(:CARGO,[100])
 
 
 using Siplib

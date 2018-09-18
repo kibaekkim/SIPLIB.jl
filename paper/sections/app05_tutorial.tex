@@ -53,13 +53,20 @@ julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
 			\begin{tabular}{@{}ccl@{}}
 				\toprule
 				\texttt{problem}  & \texttt{params\_arr}     & Remark                                                                                                                                     \\ \midrule
+				\texttt{:AIRLIFT}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
+				\texttt{:CARGO}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
+				\texttt{:CHEM}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\								
 				\texttt{:DCAP}               & \texttt{[R, T, N, $\mathcal{S}$]} & All parameters are integer.                                                                                                                \\
 				\texttt{:MPTSPs}             & \texttt{[D, N, $\mathcal{S}$]}    & String $\texttt{D}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$. All other parameters are integer.                                                              \\
+				\texttt{:PHONE}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
+				\texttt{:SDCP}                & \texttt{[K, P, D, $\mathcal{S}$]}       & \multicolumn{1}{l}{Integer \texttt{K}. Percentage $\texttt{P}\in [0.0,100.0]$.  Integer $\mathcal{S}\le 1000$.}                                             \\
+				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, \mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$}\\				
 				\texttt{:SIZES}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
 				\texttt{:SMKP}               & \texttt{[I, $\mathcal{S}$]}       & All parameters are integer.                                                                                                                \\
 				\texttt{:SSLP}               & \texttt{[I, J, $\mathcal{S}$]}    & All parameters are integer.                                                                                                                \\
-				\texttt{:SUC}                & \texttt{[D, $\mathcal{S}$]}       & \multicolumn{1}{l}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, $}                                             \\
-				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{$\mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$} Integer $\mathcal{S}\le 1000$. \\ \bottomrule
+				\texttt{:SUC}                & \texttt{[D, $\mathcal{S}$]}       & \multicolumn{1}{l}{Integer $\mathcal{S}\le 1000$.}                                             \\
+				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, \mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$}\\				
+				\bottomrule
 			\end{tabular}
 			\begin{tablenotes}
 				\item Note: $\mathcal{S}$ is always the number of scenarios.
@@ -67,6 +74,21 @@ julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
 		\end{threeparttable}
 	}
 \end{table}
+
+\subsubsection{Solving an instance and calculating its bounds}
+First, use \texttt{getModel(problem, params\_arr)} to construct a \jumpmodel\ object of an instance. For example:
+\begin{lstlisting}[frame=single,language=julia]
+julia> m = getModel(:DCAP, [2,2,2,10])
+\end{lstlisting}
+Then, use \texttt{RP(model, solver)}, \texttt{WS(model, solver)}, and \texttt{EEV(model, solver)} with including any solver (e.g., \texttt{using CPLEX}) to solve the instance in three different ways:
+\begin{lstlisting}[frame=single,language=julia]
+julia> using CPLEX
+julia> RP(m, CplexSolver())
+julia> WS(m, CplexSolver())
+julia> EEV(m, CplexSolver())
+\end{lstlisting}
+Detailed definitions for RP, WS, and EEV are found in Section \ref{subsec:sol_report}.
+
 \subsubsection{Plotting sparsity}
 Use \texttt{generateSparsityPlots(problem, params\_arr)} to generate and save the sparsity plots. Excute the following lines:
 \begin{lstlisting}[frame=single,language=julia]
@@ -271,6 +293,89 @@ julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 %\begin{lstlisting}[frame=single,language=julia]
 %function getInstanceName(problem::Symbol, param_arr::Any)::String
 %\end{lstlisting}
+
+\subsection{Solving an instance and calculating its bounds} \label{tutorial:solve_instance}
+\siplibjl\ provides functions to solve instances inside \julia\ environment. To use the functions, any MIP solvers should be installed and included first. For example, one can install \cplex\ and enter \texttt{using CPLEX}.
+\subsubsection{function \texttt{RP()}}
+\begin{lstlisting}[frame=single,language=julia]
+function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false)
+\end{lstlisting}
+\begin{quote}
+	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of an instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{solver}} (necessary, positional) The \texttt{MathProgBase.AbstractMathProgSolver}-type argument that will solve the instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{output}} (optional, keyword) The \texttt{Bool}-type argument that decides whether or not the solver output is printed in a console.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{timelimit}} (optional, keyword) The \texttt{Float64}-type argument that decides the termination time of the solver.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. 
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{splice}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not the stochastic data stored in the \jumpmodel-type object is spliced after extraction.
+\end{quote}
+
+\subsubsection{function \texttt{WS()}}
+\begin{lstlisting}[frame=single,language=julia]
+function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, ss_timelimit::Float64=Inf, splice::Bool=false)
+\end{lstlisting}
+\begin{quote}
+	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of an instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{solver}} (necessary, positional) The \texttt{MathProgBase.AbstractMathProgSolver}-type argument that will solve the instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{output}} (optional, keyword) The \texttt{Bool}-type argument that decides whether or not the solver output is printed in a console.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{ss\_timelimit}} (optional, keyword) The \texttt{Float64}-type argument that decides the termination time of the solver when solving single scenario problems.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{splice}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not the stochastic data stored in the \jumpmodel-type object is spliced after extraction.
+\end{quote}
+
+\subsubsection{function \texttt{EEV()}}
+\begin{lstlisting}[frame=single,language=julia]
+function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, ev_timelimit::Float64=Inf, eev_timelimit::Float64=Inf, genericnames::Bool=true)
+\end{lstlisting}
+
+\begin{quote}
+	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of an instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{solver}} (necessary, positional) The \texttt{MathProgBase.AbstractMathProgSolver}-type argument that will solve the instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{output}} (optional, keyword) The \texttt{Bool}-type argument that decides whether or not the solver output is printed in a console.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{ev\_timelimit}} (optional, keyword) The \texttt{Float64}-type argument that decides the termination time of the solver when solving the expected value (EV) problem.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{eev\_timelimit}} (optional, keyword) The \texttt{Float64}-type argument that decides the termination time of the solver when solving EEV problem defined by (\ref{eev:obj})-(\ref{eev:c}).
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. 
+\end{quote}
 
 \subsection{Pre-analyzing instances: size, sparsity, plot} \label{tutorial:analyze_instance}
 \siplibjl\ provides pre-analysis functions for instances. By ``size'', we mean the number of components (continuous, binary, integer, constraint) in an instance. The sparsity is analyzed block-wisely. The size and sparsity information is stored in the object of the following composite types: \texttt{Size} and \texttt{Sparsity}.
