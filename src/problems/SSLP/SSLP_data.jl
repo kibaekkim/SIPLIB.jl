@@ -32,7 +32,7 @@ function SSLPData(nJ::Int, nI::Int, nS::Int, seed::Int)::SSLPData
     data.Z = []
 
     data.c = rand(40:80,nJ)
-    data.q = rand(0:25,nI,nJ)
+    data.q = rand(0:25,nI,nJ,nS)
     data.q0 = ones(nJ)*1000
     data.d = data.q
     data.u = 1.5*sum(data.d)/nJ

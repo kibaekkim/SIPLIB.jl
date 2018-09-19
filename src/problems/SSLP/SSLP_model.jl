@@ -52,14 +52,14 @@ function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::JuMP.Model
     @variable(model, x[j=J], Bin)
     @objective(model, Min, sum(c[j]*x[j] for j in J))
     @constraint(model, sum(x[j] for j in J) <= v)
-    @constraint(model, [z=Z], sum(x[j] for j in Jz[z]) >= w[z])
+#    @constraint(model, [z=Z], sum(x[j] for j in Jz[z]) >= w[z])
 
     ## 2nd stage
     for s in S
         sb = StructuredModel(parent=model, id = s, prob = Pr[s])
         @variable(sb, y[i=I,j=J], Bin)
         @variable(sb, y0[j=J] >= 0)
-        @objective(sb, Min, -sum(q[i,j]*y[i,j] for i in I for j in J) + sum(q0[j]*y0[j] for j in J))
+        @objective(sb, Min, -sum(q[i,j,s]*y[i,j] for i in I for j in J) + sum(q0[j]*y0[j] for j in J))
         @constraint(sb, [j=J], sum(d[i,j]*y[i,j] for i in I) - y0[j] <= u*x[j])
         @constraint(sb, [i=I], sum(y[i,j] for j in J) == h[i,s])
     end

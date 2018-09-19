@@ -1,6 +1,6 @@
 include("./SDCP_data.jl")
 
-function SDCP(K::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::JuMP.Model
+function SDCP(k::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::JuMP.Model
 
     ## read data
     data = SDCPData(PenetPercent, Season, nS)
@@ -20,7 +20,7 @@ function SDCP(K::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::
     ## 1st stage
     @variable(model, d[n=N] >= 0, Int)
     @objective(model, Min, 0)
-    @constraint(model, sum(d[n] for n in N) <= K)
+    @constraint(model, sum(d[n] for n in N) <= k)
 
     ## 2nd stage
     for s in S

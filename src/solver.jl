@@ -18,8 +18,6 @@ function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_
         return
     end
 
-#    println("Calculating the effect of using the expected value solution (EEV)")
-
     # save the number of scenarios
     nS = model.ext[:Stochastic].num_scen
 
@@ -30,17 +28,24 @@ function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_
     avg_mat = m2.mat
     avg_rhs = m2.rhs
     avg_obj = m2.obj
+    avg_clbd = m2.clbd
+    avg_cubd = m2.cubd
     for s in 2:nS
         avg_mat += mdata_all[s+1].mat
         avg_rhs += mdata_all[s+1].rhs
         avg_obj += mdata_all[s+1].obj
+        avg_clbd += mdata_all[s+1].clbd
+        avg_cubd += mdata_all[s+1].cubd
     end
     avg_mat = avg_mat/nS
     avg_obj = avg_obj/nS
     avg_rhs = avg_rhs/nS
+    avg_clbd = avg_clbd/nS
+    avg_cubd = avg_cubd/nS
+
     mdata_all_evp = ModelData[]
     push!(mdata_all_evp, m1)
-    push!(mdata_all_evp, ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,m2.clbd,m2.cubd,m2.ctype,m2.cname))
+    push!(mdata_all_evp, ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,avg_clbd,avg_cubd,m2.ctype,m2.cname))
     evp, x = getExtensiveFormModel(mdata_all_evp, return_x=true)
 
     if !output
@@ -54,16 +59,20 @@ function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_
     print("  Solving the expected value problem (EV) ... ")
     st = time()
     status = solve(evp, suppress_warnings=true)
-    ev_sol = getvalue(x)
-    ev_gap = getobjgap(evp)
-    ev_time = time() - st
-    println("$status (gap: $(round(ev_gap,3))%, elapsed time: $(round(ev_time,2))s)")
-#    evp = Model()
 
-    if for_eev
-        return (ev_sol, ev_gap)
+    if status == :Infeasible
+        println("EV is infeasible.")
+        return (status, [], 0.0)
     else
-        return evp.objVal
+        ev_sol = getvalue(x)
+        ev_gap = getobjgap(evp)
+        ev_time = time() - st
+        println("$status (gap: $(round(ev_gap,3))%, elapsed time: $(round(ev_time,2))s)")
+        if for_eev
+            return (status, ev_sol, ev_gap)
+        else
+            return evp.objVal
+        end
     end
 end
 
@@ -130,47 +139,14 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
 
     println("Calculating the effect of using the expected value solution (EEV)")
 
-#=
-    # Step 1: get expected value problem and save the first-stage solution
-    m1 = mdata_all[1]
-    m2 = mdata_all[2]
-    avg_mat = m2.mat
-    avg_rhs = m2.rhs
-    avg_obj = m2.obj
-    for s in 2:nS
-        avg_mat += mdata_all[s+1].mat
-        avg_rhs += mdata_all[s+1].rhs
-        avg_obj += mdata_all[s+1].obj
-    end
-    avg_mat = avg_mat/nS
-    avg_obj = avg_obj/nS
-    avg_rhs = avg_rhs/nS
-    mdata_all_2 = ModelData[]
-    push!(mdata_all_2, m1)
-    push!(mdata_all_2, ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,m2.clbd,m2.cubd,m2.ctype,m2.cname))
-    evp, x = getExtensiveFormModel(mdata_all_2,return_x=true)
-
-    if !output
-        MathProgBase.setparameters!(solver,Silent=true)
-    end
-    if ev_timelimit != Inf
-        MathProgBase.setparameters!(solver,TimeLimit=ev_timelimit)
-    end
-
-    setsolver(evp, solver)
-    print("  Solving the expected value problem (EV) ... ")
-    st = time()
-    status = solve(evp, suppress_warnings=true)
-    ev_sol = getvalue(x)
-    ev_gap = getobjgap(evp)
-    ev_time = time() - st
-    println("$status (gap: $(round(ev_gap,3))%, elapsed time: $(round(ev_time,2))s)")
-    evp = Model()
-=#
     # save the number of scenarios
     nS = model.ext[:Stochastic].num_scen
     # Step 1: get expected value problem and save the first-stage solution
-    ev_sol, ev_gap = EV(model, solver, for_eev=true, timelimit=ev_timelimit)
+    status, ev_sol, ev_gap = EV(model, solver, for_eev=true, timelimit=ev_timelimit)
+    if status == :Infeasible
+#        println("EV is infeasible.")
+        return
+    end
 
     # Step 2: fix the first-stage variables and get EEV
     mdata_all = getStructModelData(model, genericnames, false)

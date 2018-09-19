@@ -57,15 +57,15 @@ julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
 				\texttt{:CARGO}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
 				\texttt{:CHEM}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\								
 				\texttt{:DCAP}               & \texttt{[R, T, N, $\mathcal{S}$]} & All parameters are integer.                                                                                                                \\
-				\texttt{:MPTSPs}             & \texttt{[D, N, $\mathcal{S}$]}    & String $\texttt{D}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$. All other parameters are integer.                                                              \\
+				\texttt{:MPTSPs}             & \texttt{[d, N, $\mathcal{S}$]}    & String $\texttt{d}\in \{\mathrm{``D0"}, \mathrm{``D1"}, \mathrm{``D2"}, \mathrm{``D3"}\}$. All other parameters are integer.                                                              \\
 				\texttt{:PHONE}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
-				\texttt{:SDCP}                & \texttt{[K, P, D, $\mathcal{S}$]}       & \multicolumn{1}{l}{Integer \texttt{K}. Percentage $\texttt{P}\in [0.0,100.0]$.  Integer $\mathcal{S}\le 1000$.}                                             \\
-				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, \mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$}\\				
+				\texttt{:SDCP}                & \texttt{[k, p, d, $\mathcal{S}$]}       & \multicolumn{1}{l}{Integer \texttt{k}. Percentage $\texttt{p}\in [0.0,100.0]$.  Integer $\mathcal{S}\le 1000$.}                                             \\
+				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{String $\texttt{d}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, \mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$}\\				
 				\texttt{:SIZES}              & \texttt{[$\mathcal{S}$]}          & Integer $\mathcal{S}$.                                                                                   \\
 				\texttt{:SMKP}               & \texttt{[I, $\mathcal{S}$]}       & All parameters are integer.                                                                                                                \\
 				\texttt{:SSLP}               & \texttt{[I, J, $\mathcal{S}$]}    & All parameters are integer.                                                                                                                \\
-				\texttt{:SUC}                & \texttt{[D, $\mathcal{S}$]}       & \multicolumn{1}{l}{Integer $\mathcal{S}\le 1000$.}                                             \\
-				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{String $\texttt{D}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, \mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$}\\				
+				\texttt{:SUC}                & \texttt{[d, $\mathcal{S}$]}       & \multicolumn{1}{l}{Integer $\mathcal{S}\le 1000$.}                                             \\
+				\multicolumn{1}{l}{}         & \multicolumn{1}{l}{}            & \multicolumn{1}{r}{String $\texttt{d}\in \{\mathrm{``FallWD"}, \mathrm{``FallWE"}, \mathrm{``WinterWD"}, \mathrm{``WinterWE"}, \mathrm{``SpringWD"}, \mathrm{``SpringWE"}, \mathrm{``SummerWD"}, \mathrm{``SummerWE"} \}.$}\\				
 				\bottomrule
 			\end{tabular}
 			\begin{tablenotes}
@@ -300,6 +300,7 @@ julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 \begin{lstlisting}[frame=single,language=julia]
 function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false)
 \end{lstlisting}
+\texttt{RP()} solves the instance in extensive form and returns objective value of the recourse problem.
 \begin{quote}
 	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of an instance.
 \end{quote}
@@ -328,6 +329,8 @@ function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
 \begin{lstlisting}[frame=single,language=julia]
 function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, ss_timelimit::Float64=Inf, splice::Bool=false)
 \end{lstlisting}
+\texttt{WS()} solves the instance and returns the wait-and-see solution.
+
 \begin{quote}
 	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of an instance.
 \end{quote}
@@ -352,7 +355,7 @@ function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
 \begin{lstlisting}[frame=single,language=julia]
 function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, ev_timelimit::Float64=Inf, eev_timelimit::Float64=Inf, genericnames::Bool=true)
 \end{lstlisting}
-
+\texttt{EEV()} solves the instance and returns the expected result of using the first-stage solution of the expected value (EV) problem (EEV).
 \begin{quote}
 	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of an instance.
 \end{quote}
@@ -366,7 +369,7 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
 \end{quote}
 
 \begin{quote}
-	\noindent\underline{\texttt{ev\_timelimit}} (optional, keyword) The \texttt{Float64}-type argument that decides the termination time of the solver when solving the expected value (EV) problem.
+	\noindent\underline{\texttt{ev\_timelimit}} (optional, keyword) The \texttt{Float64}-type argument that decides the termination time of the solver when solving the EV problem.
 \end{quote}
 
 \begin{quote}

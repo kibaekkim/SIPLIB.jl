@@ -9,7 +9,7 @@ global NK = 3            # MPTSPs: default number of paths between two nodes
 global VC = 40.0         # MPTSPs: default deterministic velocity profile for central node
 global VS = 80.0         # MPTSPs: default deterministic velocity profile for suburban node
 
-function MPTSPs(D::String, nN::Integer, nS::Integer, seed::Int=1)::JuMP.Model
+function MPTSPs(D::String, nN::Integer, nS::Integer, seed::Int)::JuMP.Model
 
     # generate instance data
     data = MPTSPsData(D, nN, nS, seed)

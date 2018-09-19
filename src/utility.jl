@@ -121,7 +121,7 @@ function getExtensiveFormModel(mdata_all::Array{ModelData}; return_x::Bool=false
     for s in 1:nS
         m2 = mdata_all[s+1]
         tempv = []
-        if isempty(mdata_all[s+1].cname)
+        if isempty(m2.cname)
             for j in 1:ncols2
                 push!(tempv, @variable(efm, category = Siplib.category(m2.ctype[j]), lowerbound = m2.clbd[j], upperbound = m2.cubd[j]))
             end
@@ -135,11 +135,16 @@ function getExtensiveFormModel(mdata_all::Array{ModelData}; return_x::Bool=false
 
     # objective
     aff = AffExpr(x,m1.obj,0)
+#=
     aff2 = (1/nS)*AffExpr(y[1],mdata_all[2].obj,0)
     for s in 2:nS
         append!(aff2, (1/nS)*AffExpr(y[s], mdata_all[s+1].obj, 0))
     end
-    @objective(efm, m1.objsense, aff + aff2)
+=#
+    for s in 1:nS
+        append!(aff, (1/nS)*AffExpr(y[s], mdata_all[s+1].obj, 0))
+    end
+    @objective(efm, m1.objsense, aff)
     #@objective(efm, m1.objsense, aff)
 
     # constraints
@@ -191,10 +196,6 @@ function getSingleScenarioModel(model::JuMP.Model, s::Int, genericnames::Bool=tr
     return getExtensiveFormModel(mdata_all)
 end
 
-
-function getEVPModelData()
-
-end
 
 function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dirname(@__FILE__))/../plot", close::Bool=false)
     PyPlot.@pyimport matplotlib.patches as pcs

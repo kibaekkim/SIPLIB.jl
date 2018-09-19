@@ -16,7 +16,7 @@ The real-valued map $\phi:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of
 \end{align}
 where $\xi_s$ is given by an arbitrarily realized scenario.
 The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
-The first-stage data comprises $A$, $b$, and $c$. The second-stage data is given by the scenario-dependent values $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notation $(T_s,W_s,h_s,q_s)$ for the second-stage data. 
+The first-stage data comprises $A$, $b$, and $c$. The second-stage data is given by scenario-dependent values $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notation $(T_s,W_s,h_s,q_s)$ for the second-stage data. 
 
 The RP (\ref{eq:SIP_1}) can be then rewritten in the \textit{extensive form} (EF)
 \begin{subequations}\label{sip:ef}
@@ -45,7 +45,7 @@ where $\mathrm{y}:=\{y_1,\ldots,y_r\}$. The RP-EF explicitly describes all the r
 				\multicolumn{2}{l}{\textbf{Scalas:}} \\ 
 	%			$z\in\mathbb{R}$ & optimal objective value of the SIP \\ 
 				$r\in\mathbb{N}$	& total number of scenarios	\\	
-				$s\in\mathcal{S}$	& index denoting scenario	\\
+				$s\in\mathcal{S}$	& scenario index 	\\
 				$\PP(s)\in[0,1]$ & probability that scenario $s$ occurs, i.e., $\PP(s):=\PP[\pmb{\xi}=\xi_s]$ \\ \midrule
 				\multicolumn{2}{l}{\textbf{Vectors:}} \\  
 				$x\in\mathbb{R}^{n_1}$	& first-stage decision vector	\\
@@ -77,17 +77,17 @@ where $\mathrm{y}:=\{y_1,\ldots,y_r\}$. The RP-EF explicitly describes all the r
 \subsection{Solution methods}
 Assuming finite and discrete distribution, we can always formulate SIP in EF as in Equations (\ref{ef:obj})-(\ref{ef:e}).  %much of the solution methods in SIP is studied to resolve the difficulty of optimizing the form in Equation \ref{eq:SIP_1}, 
 %Much of the solution methods in SIP is studied to resolve the difficulty of optimizing the extensive form. %That is, the sum of the first-stage costs and the expected costs in the second-stage. 
-Most computational solution methods in SIP assume that a single scenario evaluation is somehow tractable in a reasonable time. In reality, we often need to consider a vast number of scenario realizations. In this case, EF easily becomes a large MIP, but with a special structure in it. Solving this problem without exploiting the structure can quickly go with inefficiency. In this section, we introduce representative approaches to resolve the computational difficulties in SIP when many scenarios should be considered.
+Most computational solution methods in SIP assume that a single scenario evaluation is somehow tractable in a reasonable time. In reality, we often need to consider a vast number of scenario realizations. In this case, EF easily becomes a large MIP, but with a special structure in it. Solving this problem without exploiting the structure can quickly go with computational intractability. In this section, we introduce representative approaches to resolve the difficulties in SIP when many scenarios are considered.
 
 \subsubsection{Stage-wise decomposition}
-In this type of algorithms, the primary purpose is to naturally optimize the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible solutions for the first-stage. Briefly, the problem is decomposed stage-wisely to derive associated master and subproblem. Then, the algorithm alternately solves each problem to seek the true optimality of the original problem.
+In this type of algorithms, the primary purpose is to naturally optimize the objective function in Equation (\ref{eq:SIP_1}) over the set of feasible solutions for the first-stage. Briefly, the problem is decomposed stage-wisely to derive associated master problem and subproblem. Then, the algorithm alternately solves each problem to seek the true optimality of the original problem.
  
-To be more specific, at each iteration of the algorithm, it builds an outer linearization of the second-stage recourse function and uses a solution of the first-stage problem plus this linearization \cite{book:BL2011}. This cutting plane technique is called \textit{Benders decomposition} \cite{journal:B1962} in general or the \textit{L-shaped method} in stochastic optimization, from which a variants of stage-wise decomposition methods have been derived. 
+To be more specific, at each iteration of the algorithm, it builds an outer linearization of the second-stage recourse function and uses a solution of the first-stage problem plus this linearization \cite{book:BL2011}. This cutting plane technique is called \textit{Benders decomposition} \cite{journal:B1962} in general or \textit{L-shaped method} in stochastic programming, from which a variants of stage-wise decomposition methods have been derived. 
 
-L-shaped method has long history since 1962 even before its successful application to the stochastic optimization. For SIP, however, the method required to be revised mostly due to the various kind of integrality presents in the problem. For example, the integer L-shaped method \cite{journal:LL1993} developed a cut generation method that approximates the second-stage recourse function only when the SIP is of pure binary first-stage and mixed integer second-stage. When the first-stage variables are not necessarily binary, Car{\o}e and Tind \cite{journal:CT1998} suggested a method to use the duality of the second-stage integer program to generate cuts that build the approximation of the recourse function.
+L-shaped method has long history since 1962 even before its successful application to stochastic programming. For SIP, however, the method required to be revised mostly due to the various kind of integrality presents in the problem. For example, the integer L-shaped method \cite{journal:LL1993} developed a cut generation method that approximates the second-stage recourse function only when the SIP is of pure binary first-stage and mixed integer second-stage. When the first-stage variables are not necessarily binary, Car{\o}e and Tind \cite{journal:CT1998} suggested a method to use the duality of the second-stage integer program to generate cuts that build an approximation of the recourse function.
 
 \subsubsection{Scenario-wise decomposition}
-The advantage of using this type algorithms is their ability to allow us naturally parallelized computation hence fully utilize state-of-the-art powerful computing cluster. Assuming the tractability of a single-scenario problem, this type algorithms are known to be one of the most effective solution methods to solve the real world large-scale problems.
+The advantage of using this type algorithms is their ability to allow us naturally parallelizing computation hence fully utilize the power of the state-of-the-art computing cluster. Assuming the tractability of a single-scenario problem, this type algorithms are known to be one of the most effective solution methods to solve the real world large-scale problems.
 
 To briefly explain the idea of scenario-wise decomposition, we first introduce the following terms for solution systems:
 \begin{itemize}
@@ -96,7 +96,7 @@ To briefly explain the idea of scenario-wise decomposition, we first introduce t
 	\item \textit{feasible}: a solution system that is both admissible and implementable
 \end{itemize}
 
-Scenario-wise decomposition starts with introducing the copies of the first-stage variables into the second-stage. Then, the RP-EF in (\ref{sip:ef}) is written as below.
+Scenario-wise decomposition starts by introducing the copies of the first-stage variables into the second-stage. Then, the RP-EF in (\ref{sip:ef}) is written as below.
 \begin{subequations} \label{sip:ef'}
 	\begin{align}
 	\textrm{(RP-EF') }\min_{\mathrm{x},\mathrm{y}}\ z(x,y):=\ &\sum_{s=1}^{r}\PP(s)\left(c^{\top}x_s+q_s^{\top}y_s\right)	\label{eq:SIP_2-1}\\ 
@@ -121,7 +121,7 @@ The main idea of DD algorithm is to relax the nonanticipativity constraints usin
 	\item Update the best upper bound based on the $k$-step solutions.
 	\item Go to step 3. with $k=k+1$ and then updating $\lambda^{(k+1)}$ based on the $k$-step solutions if the convergence criterion is yet to be satisfied.
 \end{enumerate}
-Due to the nonconvexities, there may exist a duality gap between relaxed problem and the original problem so that the primal feasibility needs to be attained by branch-and-bound or heuristic schemes. However, achieving that primal feasibility is not always available when the problem does not have relatively complete recourse hence a crucial limitation of DD. Nevertheless, DD is known to be one of the effective methods since it often provides an useful tight lower bounds for the original problem.
+Due to the nonconvexities, there may exist a duality gap between relaxed problem and the original problem so that the primal feasibility needs to be attained by branch-and-bound or heuristic schemes. However, achieving that primal feasibility is not always available when the problem does not have relatively complete recourse hence a crucial limitation of DD. Nevertheless, DD is known to be one of the effective methods since it often provides an useful tight lower bound for the original problem.
 
 PH algorithm is developed by Rockafellar and Wets \cite{journal:RW1991} motivated by augmented Lagrangian theory. 
 A brief steps of the PH procedure can be summarized as follows \cite{book:pyomo}:
@@ -139,12 +139,12 @@ A brief steps of the PH procedure can be summarized as follows \cite{book:pyomo}
 \end{enumerate}
 A notable limitation of PH algorithm is that it does not always guarantee the convergence. However, PH is advantageous in the sense that it often provides high quality solution within a reasonable number of iterations. 
 \subsection{Software libraries}
-SIP considering finite number of scenarios can be represented by any algebraic modeling languages and then solved by standard MIP solvers like \cplex. However, such manual implementation without exploiting structural characteristics in SIP can easily result in inefficient computation and unnecessary memory allocation. In this subsection, we introduce some software libraries that handle SIP instances.
+SIP with finite number of scenarios can be represented by any algebraic modeling languages and then solved by standard MIP solvers like \cplex. However, such manual implementation without exploiting structural characteristics in SIP requires wasteful memory allocation and results in inefficient computation. In this subsection, we introduce some software libraries dedicated to SIP.
 
 \subsubsection{Modeling language}
 We introduce two relatively new algebraic SIP modeling languages which are compatible with general purpose high-level programming languages \julia\ and \python, respectively. Both modeling libraries are designed to allow non-specialists to easily write mathematical model on the computing environment.
 
-\structjump\ is a \julia\ package provides a parallel algebraic modeling framework for block-structured optimization models \cite{web:StructJuMP}. \structjump\ is an extension of \jump\ modeling package (\julia\ for Mathematical Optimization \cite{journal:JuMP}), which is faster than any other modeling tools. \structjump\ enables \jump\ to express the structure of problems and efficiently interface with structure-exploiting solvers. It also works in parallel using distributed memory, and thus allows the specification of much larger problems than \jump\ can handle. Most noticeable benefit of using \structjump\ is its straightforward modeling syntax that almost feels like moving the paper-written model directly into the computer.
+\structjump\ is a \julia\ package provides a parallel algebraic modeling framework for block-structured optimization models \cite{web:StructJuMP}. \structjump\ is an extension of \jump\ modeling package (\julia\ for Mathematical Optimization \cite{journal:JuMP}), which is faster than any other modeling tools. \structjump\ enables \jump\ to express the structure of problems and efficiently interface with structure-exploiting solvers. It also works in parallel using distributed memory, and thus allows the specification of much larger problems than \jump\ can handle. Most noticeable benefit of using \structjump\ is its straightforward modeling syntax that almost feels like moving the paper-written model directly into computer.
 
 \pysp\ is a stochastic programming extension of a \python-based algebraic modeling package \pyomo\ \cite{book:pyomo} that supports variants of mathematical optimization. In \pysp, users can express stochastic programming problems by extending deterministic models, which are usually constructed first. To be specific, users should specify the deterministic base model with associated scenario tree presenting uncertain parameters. One advantage of using \pysp\ is its modeler-solver integration that enables users to easily get the optimization result.
 
@@ -166,9 +166,9 @@ Although \scip\ recently started to support SIP, it is still preliminary phase a
 	\item L-shaped method
 	\item Dual Decomposition algorithm
 \end{itemize}
-\dsp\ is known as a remarkable DD-based solver and consistently improves its computational performance \cite{journal:KZ2015}. \dsp\ provides parallel implementations for the two decomposition-based algorithms, which allows users fully exploit computing clusters and multi-core processors. \dsp\ basically reads \smps\ files as input sources. In addition, \dsp\ provides \julia\ interface to improve its usability.
+\dsp\ is known as a remarkable DD-based solver and consistently improves its computational performance \cite{journal:KZ2015}. \dsp\ provides parallel implementations for the two decomposition-based algorithms, which allow users fully exploit computing clusters and multi-core processors. In addition, \dsp\ provides \julia\ interface to improve its usability.
 
-\pysp\ package, which we have introduced in the previous subsection, includes not only modeling framework but solver capability providing three ways to solve the instance. 
+\pysp\ package, which we have introduced in the previous subsection, includes not only modeling framework but solver capability providing three ways to solve SIP instances. 
 \begin{itemize}
 	\item Invoking standard MIP solver to solve EF
 	\item L-shaped method

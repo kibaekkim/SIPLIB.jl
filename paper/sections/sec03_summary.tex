@@ -1,8 +1,8 @@
 %\yoc{I strengthened this section towards discussing why the things we consider are important. }
-In this section, we explain information about the test problems in summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We discuss why they are important for advances in SIP research study. This section reflects our philosophy in developing \siplibtwo. Detailed problem-specific information is available in Section \ref{sec:prob_desc} for those who are interested in.
+In this section, we explain information about the test problems included in \siplibtwo\ in a summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We discuss why they are important for advances in SIP research study. This section also reflects our philosophy in developing \siplibtwo. Detailed problem-specific explanation is available in Section \ref{sec:prob_desc} for those who are interested in.
 
 \subsection{Origin of the problems}
-Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The five of them are adopted from \siplib\ \cite{web:SIPLIB1}. We tried to implement the \siplib\ problems as the same as the original references possible. Not all of them, however, are exactly the same due to insufficient information on some parameters. We sometimes needed to guess the missing links and develop our own way to implement the problems. 
+Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The nine of them (except \sdcp\ and \suc) are adopted from existing libraries, Shabbir Ahmed's \siplib\ \cite{web:SIPLIB1} and Andy Felt's test-problem collection for stochastic linear programming \cite{journal:AF2004}. We tried to implement the problems as the same as the original references possible. Not all of them, however, are exactly the same mainly due to insufficient information. We sometimes needed to guess the missing links and develop our own way to implement the problems. 
 \begin{table}[H]
 	\centering
 %	\resizebox{\textwidth}{!}{%
@@ -33,7 +33,7 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 
 \subsubsection{How we deal with missing links and errors}
 %\yoc{This subsection is newely added to discuss the issues on implementaion.}
-During implementation, we often have faced some missing links and errors. The missing links are largely from the two parts: data generation and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
+During implementation, we often faced some missing links and errors. The missing links are largely from the two parts: data generation procedure and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the relevant references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
 
 We also found some errors. The errors are not critical so the accompanied instances are still solvable somehow. The result, however, might be different from the originally intended. For example, we found from \smps\ files of \dcap\ that the big-M constant in the logical constraint (\ref{dcap:b}) in \dcap\ is set to be 1 rather than suitably large value. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
 
@@ -56,14 +56,14 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 				\airlift & -\\
 				\cargo & We adopt the numerical example provided by \cite{journal:AF2004}. We use an uniform distribution to generate random amount of cargo to be shipped. We add additional constraints (\ref{cargo:k})-(\ref{cargo:m}) to make the model valid.\\
 				\chem & We use the same numerical example created in \cite{journal:AF2004}. We use uniform distributions for the random parameters. \\
-				\dcap   & We go with the error in constraint (\ref{dcap:b})                                              \\
-				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}, We develop data generation procedure \ref{mptsps:datagen} \\
+				\dcap   & We go with the error in constraint (\ref{dcap:b}).                                              \\
+				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}. We develop data generation procedure \ref{mptsps:datagen}. \\
 				\phone & We use the same numerical example created in \cite{journal:AF2004}. \\
-				\sdcp & We generate and provide up to 1,000 scenarios\\
-				\sizes  &  We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h}), We develop data generation procedure                                                 \\
+				\sdcp & We generate and provide up to 1,000 scenarios.\\
+				\sizes  &  We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h}). We develop data generation procedure.                                                 \\
 				\smkp   & -                                                                         \\
-				\sslp   & We keep the zonal components empty and let the redundant constraint (\ref{sslp:b}) present                                     \\
-				\suc    & We generate and provide up to 1,000 scenarios                              \\ \bottomrule
+				\sslp   & We keep the zonal components empty and let the redundant constraint (\ref{sslp:b}) present.                                     \\
+				\suc    & We generate and provide up to 1,000 scenarios.                              \\ \bottomrule
 			\end{tabular}
 			\begin{tablenotes}
 				\small
@@ -79,9 +79,11 @@ Table \ref{table:naming_rule} shows how we name the instances. We change the ori
 	\centering dcap$RNT$\_$\mathcal{S}$ $\longrightarrow$ DCAP$\_R\_N\_T\_\mathcal{S}$\\
 	smkp$\_\mathcal{S}$ $\longrightarrow$ SMKP$\_I\_\mathcal{S}$
 \end{quote}
-For \dcap, we just add underbars ``\_'' to delimit set cardinalities. Without delimiter, the instance name causes confusion when set cardinality is greater than or equal to 10. For \smkp, we add new set cardinality $I$ since the fixed number $|I|=120$ can be changed by user if desired.
+For \dcap, we just add underbars ``\_'' to delimit set cardinalities. Without such a delimiter, the instance name causes confusion when set cardinality is greater than or equal to 10. For \smkp, we add new set cardinality $I$ since the fixed number $|I|=120$ can be changed by user if desired.
 
-The capital Roman letters mean the sets defining the problems. In particular, the calligraphic letter $\mathcal{S}$ always denotes the scenario set. For notational convenience, we sometimes skip the cardinality sign $|\cdot|$ for sets, i.e., for a set $S$, $S$ itself denotes the number of elements $|S|$ in Table \ref{table:naming_rule} and \ref{table:num_components}. Note that not all sets are used to define an instance. The sets that do not appear in the instance name are fixed by some pre-determined value by the original references so we follow them. For example, in \smkp\ there are four sets in total, $I,J,K,\mathcal{S}$, but the numbers of knapsacks $|J|$ and $|K|$ are fixed by 50 and 5 so do not appear in the instance name.
+The capital Roman letters mean the sets defining the instances. In particular, the calligraphic letter $\mathcal{S}$ always denotes the scenario set. For notational convenience, we sometimes skip the cardinality sign $|\cdot|$ for sets, i.e., for a set $S$, $S$ itself denotes the number of elements $|S|$ in Table \ref{table:naming_rule} and \ref{table:num_components}. Note that not all sets are used to define an instance. The sets that do not appear in the instance name are fixed by some pre-determined value by the original references so we follow them. For example, in \smkp\ there are four sets in total, $I,J,K,\mathcal{S}$, but the numbers of knapsacks $|J|$ and $|K|$ are fixed by 50 and 5 so do not appear in the instance name.
+
+The lowercase letters in the instance names denote the non-set parameters defining the instances. Some of them are numbers and some are strings. For SDCP\_$k$\_$p$\_$d$\_$\mathcal{S}$, for example, $k$ is a positive integer, $p$ is a real number between 0.0 and 100.0, and $d$ is a string that would be chosen as one of the \{FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE\}. 
 \begin{table}[H]
 	\centering
 	\caption{Instance naming rules}
@@ -95,21 +97,21 @@ The capital Roman letters mean the sets defining the problems. In particular, th
 			\cargo	& CARGO\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\		
 			\chem	& CHEM\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\				
 			\dcap\    & DCAP\_$R$\_$N$\_$T$\_$\mathcal{S}$    &   $R$: number of resources, $N$: number of tasks, $T$: number of time periods, $\mathcal{S}$: number of scenarios        \\
-			\mptsps\  & MPTSPs\_$D$\_$N$\_$\mathcal{S}$ &$D$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
+			\mptsps\  & MPTSPs\_$d$\_$N$\_$\mathcal{S}$ &$d$: node distribution strategy, $N$: number of nodes, $\mathcal{S}$: number of scenarios\\
 			\phone	& PHONE\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\
-			\sdcp\ & SDCP\_$K$\_$P$\_$D$\_$\mathcal{S}$ & $K$: maximum number of dispatchable loads, $P$: wind penetration level (\%), $D$: day type, $\mathcal{S}$: number of scenarios\\
+			\sdcp\ & SDCP\_$k$\_$p$\_$d$\_$\mathcal{S}$ & $k$: maximum number of dispatchable loads, $p$: wind penetration level (\%), $d$: day type, $\mathcal{S}$: number of scenarios\\
 			\sizes\   & SIZES\_$\mathcal{S}$                            & $\mathcal{S}$: number of scenarios   															\\
 			\smkp\    &   SMKP\_$I$\_$\mathcal{S}$    &   $I$: number of types for item, $\mathcal{S}$: number of scenarios  													 \\
 			\sslp\    &  SSLP\_$I$\_$J$\_$\mathcal{S}$      &    $I$: number of clients, $J$: number of server locations, $\mathcal{S}$: number of scenarios                 				   \\
-			\suc\    & 	SUC\_$D$\_$\mathcal{S}$    &  $D$: day type, $\mathcal{S}$: number of scenarios                                                 						 \\ \bottomrule
+			\suc\    & 	SUC\_$d$\_$\mathcal{S}$    &  $d$: day type, $\mathcal{S}$: number of scenarios                                                 						 \\ \bottomrule
 		\end{tabular}%
 	}
 \end{table}
 
 \subsection{Type of the problems}
-In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. Many decomposition-based solution methods in SIP require specific type of variables to be presented in each stage, e.g., \cite{journal:LL1993,journal:SSV1998,journal:CT1998,journal:CS1999,journal:SF2002}. They oftentimes exploit the characteristics of the variables to extend the former decomposition methods developed for NLP, LP, IP, and MIP. Therefore, the stage-wise variable type is one of the most important factor that classifies SIP problems.
+In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. Many decomposition-based solution methods in SIP require specific type of variables to be presented in each stage, e.g., \cite{journal:LL1993,journal:SSV1998,journal:CT1998,journal:CS1999,journal:SF2002}. They oftentimes exploit the characteristics of the variables to extend the existing decomposition methods. Therefore, the stage-wise variable type is one of the most important factor that classifies SIP problems.
 
-We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation on the constraints, we refer to \miplib\ \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, i.e., different problem contains different constraints, which we cannot easily capture the insight from the problem type classification. 
+We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation in the constraint column, we refer to \miplib\ \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, i.e., different problem contains different constraints, which we cannot easily capture the insight from the problem type classification. 
 \begin{table}[H]
 	\centering
 	\caption{Components of the problems}
@@ -135,17 +137,17 @@ We consider three types of variable: continuous, binary, and integer. Considerin
 		\begin{tablenotes}
 			\small
 			\item Remark 1. $\mathbb{C}$: continuous, $\mathbb{B}$: binary, $\mathbb{I}$: integer
-			\item Remark 2. Constraint type notation is adopted from \texttt{MIPLIB 2010}. Refer to the tables in Section \ref{sec:miplibconstraint}.
+			\item Remark 2. Constraint type notation is adopted from \miplib. Refer to the tables in Section \ref{sec:miplibconstraint}.
 		\end{tablenotes}
 	\end{threeparttable}
 \end{table}
 
 \subsection{Number of components}
-Table \ref{table:num_components} summarizes the number of components in each problem from \siplibtwo. The numbers can be calculated based on the cardinality of the sets that define the problems. Those who want to generate instances with some desired number of components can utilize Table \ref{table:num_components}.
-
 Although an universally effective way to measure the difficulty of MIP has not been discovered yet, the number of components is definitely one of the closely related factor. For example, instances tend to be more difficult as the number of discrete variables increases. The continuous variables, which hardly are problematic when solely present by themselves, can also let the instance burdensome when they are mixed with integer variables. 
 
 The increase in the number of constraint, although not always, is an important factor that difficultizes the instance. Specifically, this affects every iteration from the LP relaxation given the requirement of inverting a matrix for every basic feasible solution visited in the solution process. 
+
+Table \ref{table:num_components} summarizes the number of components in each problem from \siplibtwo. The numbers can be calculated based on the cardinality of the sets that define the problems. Those who want to generate instances with some desired number of components can utilize Table \ref{table:num_components}.
 \begin{table}[H]
 	\centering
 	\resizebox{\textwidth}{!}{%

@@ -5,7 +5,7 @@ mutable struct MPTSPsData
     S   # set of time scenarios : s ∈ S
 
     # Parameters
-    Cs  # nonnegative unit random travel time cost under the time scenario s ∈ S : Cs[s][i][j][p]
+    Cs  # nonnegative unit random travel time cost under scenario s ∈ S : Cs[s][i][j][p]
     Ce  # nonnegative estimation of the mean unit travel time cost : Ce[i][j]
     E   # the error on the travel time cost estimated for the path k ∈ K under time scenario s ∈ S : E[s][i][j][p] ≡ Cs[s][i][j][p] - Ce[i][j]
     Pr  # probability distribution of scenario s ∈ S : Pr[s] ≡ 1/nScenario
@@ -13,7 +13,7 @@ mutable struct MPTSPsData
     MPTSPsData() = new()
 end
 
-function MPTSPsData(D::String, nN::Int, nS::Int, seed::Int)::MPTSPsData
+function MPTSPsData(d::String, nN::Int, nS::Int, seed::Int)::MPTSPsData
 
     data = MPTSPsData()
 
@@ -21,8 +21,8 @@ function MPTSPsData(D::String, nN::Int, nS::Int, seed::Int)::MPTSPsData
     data.K = 1:NK
     data.S = 1:nS
 
-    Nodes = generate_nodes(D, nN, seed)
-    data.Cs = generate_scenario_data(Nodes, D, nN, nS, seed)
+    Nodes = generate_nodes(d, nN, seed)
+    data.Cs = generate_scenario_data(Nodes, d, nN, nS, seed)
     data.Ce = Array{Float64}[]
     for i in data.N
         push!(data.Ce, Float64[])
@@ -32,9 +32,14 @@ function MPTSPsData(D::String, nN::Int, nS::Int, seed::Int)::MPTSPsData
     end
 
     data.E = deepcopy(data.Cs)
+
     for s in data.S
-        for i in data.N, j in data.N, k in data.K
-            data.E[s,i,j,k] -= data.Ce[i][j]
+        for i in data.N
+            for j in data.N
+                for k in data.K
+                    data.E[s,i,j,k] -= data.Ce[i][j]
+                end
+            end
         end
     end
 
@@ -61,40 +66,49 @@ function isCentral(center::Node, P::Node)::Bool
     return euclidean_distance(center, P) <= central_radius ? true : false
 end
 
-function generate_nodes(D::String, nN::Int, seed::Int, radius::Float64=RADIUS)::Array{Node}    # nN: number of nodes, D: node partition strategy
+function generate_nodes(d::String, nN::Int, seed::Int, radius::Float64=RADIUS)::Array{Node}    # nN: number of nodes, D: node partition strategy
 
-    rand(seed)
+    srand(seed)
 
     Nodes = Node[]
     center = Node(radius, radius, true)
+    random_numbers = rand(Uniform(0.0, 2*radius), 2, 10000*nN)
 
-    if D == "D0"
+    if d == "D0"
         n = 0
+        cnt = 1
         while n < nN
-            temp = rand(Uniform(0.0, 2*radius),2)
+            #temp = rand(Uniform(0.0, 2*radius),2)
+            #rand_point = Node(temp[1],temp[2],false)
+            temp = random_numbers[:,cnt]
             rand_point = Node(temp[1],temp[2],false)
             rand_point.centrality = isCentral(center, rand_point)
             if rand_point.centrality
                 push!(Nodes, rand_point)
                 n += 1
             end
+            cnt += 1
         end
-    elseif D == "D1"
+    elseif d == "D1"
         n = 0
+        cnt = 1
         while n < nN
-            temp = rand(Uniform(0.0, 2*radius),2)
+            #temp = rand(Uniform(0.0, 2*radius),2)
+            temp = random_numbers[:,n+1]
             rand_point = Node(temp[1],temp[2],false)
             rand_point.centrality = isCentral(center, rand_point)
             if !rand_point.centrality
                 push!(Nodes, rand_point)
                 n += 1
             end
+            cnt += 1
         end
-    elseif D == "D2"
-        n1, n2 = 0, 0
+    elseif d == "D2"
+        cnt, n1, n2 = 0, 0, 0
         nN1, nN2 = Int(floor(nN*(3/4))), nN-Int(floor(nN*(3/4)))
         while n1 < nN1 || n2 < nN2
-            temp = rand(Uniform(0.0, 2*radius),2)
+            #temp = rand(Uniform(0.0, 2*radius),2)
+            temp = random_numbers[:,cnt+1]
             rand_point = Node(temp[1],temp[2],false)
             rand_point.centrality = isCentral(center, rand_point)
             if n1 < nN1 && rand_point.centrality
@@ -104,12 +118,14 @@ function generate_nodes(D::String, nN::Int, seed::Int, radius::Float64=RADIUS)::
                 push!(Nodes, rand_point)
                 n2 += 1
             end
+            cnt += 1
         end
-    elseif D == "D3"
-        n1, n2 = 0, 0
+    elseif d == "D3"
+        cnt, n1, n2 = 0, 0, 0
         nN1, nN2 = Int(nN*(1/2)), nN-Int(nN*(1/2))
         while n1 < nN1 || n2 < nN2
-            temp = rand(Uniform(0.0, 2*radius),2)
+            #temp = rand(Uniform(0.0, 2*radius),2)
+            temp = random_numbers[:,cnt+1]
             rand_point = Node(temp[1],temp[2],false)
             rand_point.centrality = isCentral(center, rand_point)
             if n1 < nN1 && rand_point.centrality
@@ -119,6 +135,7 @@ function generate_nodes(D::String, nN::Int, seed::Int, radius::Float64=RADIUS)::
                 push!(Nodes, rand_point)
                 n2 += 1
             end
+            cnt += 1
         end
     end
 
@@ -140,14 +157,16 @@ function calculate_euclidean_distances(Nodes::Array{Node})::Matrix{Float64}
     end
 
     return EC
-end
+end#
 
-function generate_scenario_data(Nodes::Array{Node}, D::String, nN::Int, nS::Int, seed::Int, nK::Int=NK, radius::Float64=RADIUS, vc::Float64=VC, vs::Float64=VS)
+function generate_scenario_data(Nodes::Array{Node}, d::String, nN::Int, nS::Int, seed::Int, nK::Int=NK, radius::Float64=RADIUS, vc::Float64=VC, vs::Float64=VS)
 
-    rand(seed)
+    srand(seed)
 
     EC = calculate_euclidean_distances(Nodes)
     Cs = zeros(nS, nN, nN, nK)
+    random_numbers_1 = rand(Uniform(vc/2,2*vc), nS, nN, nN, nK)
+    random_numbers_2 = rand(Uniform(vc/2,2*vs), nS, nN, nN, nK)
 
     for s in 1:nS
         for i in 1:nN
@@ -156,22 +175,26 @@ function generate_scenario_data(Nodes::Array{Node}, D::String, nN::Int, nS::Int,
                     if Nodes[i].centrality == Nodes[j].centrality
                         if Nodes[i].centrality
                             for k in 1:nK
-                                Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vc/2,2*vc))
+                                #Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vc/2,2*vc))
+                                Cs[s,i,j,k] = EC[i,j]/random_numbers_1[s,i,j,k]
                                 Cs[s,j,i,k] = Cs[s,i,j,k]
                             end
                         elseif !Nodes[i].centrality
                             for k in 1:nK
-                                Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vs/2,2*vs))
+                                #Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vs/2,2*vs))
+                                Cs[s,i,j,k] = EC[i,j]/random_numbers_2[s,i,j,k]
                                 Cs[s,j,i,k] = Cs[s,i,j,k]
                             end
                         end
                     elseif Nodes[i].centrality != Nodes[j].centrality
                         for k in 1:Int(ceil(nK/3))
-                            Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vc/2,2*vc))
+                            #Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vc/2,2*vc))
+                            Cs[s,i,j,k] = EC[i,j]/random_numbers_1[s,i,j,k]
                             Cs[s,j,i,k] = Cs[s,i,j,k]
                         end
                         for k in Int(ceil(nK/3))+1:nK
-                            Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vs/2,2*vs))
+                            #Cs[s,i,j,k] = EC[i,j]/rand(Uniform(vs/2,2*vs))
+                            Cs[s,i,j,k] = EC[i,j]/random_numbers_2[s,i,j,k]
                             Cs[s,j,i,k] = Cs[s,i,j,k]
                         end
                     end
@@ -183,7 +206,8 @@ function generate_scenario_data(Nodes::Array{Node}, D::String, nN::Int, nS::Int,
     return 3600*Cs
 end
 
-function store_scenario_data(DIR::String, Cs::Array{Float64,4}, D, nN, nS)
+
+function store_scenario_data(DIR::String, Cs::Array{Float64,4}, d, nN, nS)
 
     for s in 1:nS
         scenario_file = open("$DIR/Scenario$(s).dat", "w")

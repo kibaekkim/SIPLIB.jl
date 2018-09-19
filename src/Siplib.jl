@@ -51,23 +51,68 @@ end # end module Siplib
 using Siplib
 using CPLEX
 
-model = getModel(:AIRLIFT,[1000])
+model = getModel(:AIRLIFT,[10])
 model = getModel(:CARGO, [100])
 model = getModel(:CHEM, [3])
 model = getModel(:DCAP,[3,3,3,2])
-model = getModel(:MPTSPs,["D0",5,5],seed=2)
+model = getModel(:MPTSPs,["D1",5,5],seed=1)
 model = getModel(:PHONE, [100])
 model = getModel(:SDCP,[5,10,"FallWD",1])
 model = getModel(:SIZES,[10])
 model = getModel(:SMKP,[10,2])
-model = getModel(:SSLP,[5,5,10])
+model = getModel(:SSLP,[4,4,2])
 model = getModel(:SUC,["FallWD",1])
-
 
 EV(model,CplexSolver())
 WS(model, CplexSolver(), ss_timelimit=60.0)
 RP(model, CplexSolver(), output=true, timelimit=120.0)
 EEV(model, CplexSolver(), ev_timelimit=60.0)
+
+
+
+# save the number of scenarios
+nS = model.ext[:Stochastic].num_scen
+
+# Step 1: get expected value problem and save the first-stage solution
+mdata_all = Siplib.getStructModelData(model, false, false)
+m1 = mdata_all[1]
+m2 = mdata_all[2]
+avg_mat = m2.mat
+avg_rhs = m2.rhs
+avg_obj = m2.obj
+avg_clbd = m2.clbd
+avg_cubd = m2.cubd
+for s in 2:nS
+    avg_mat += mdata_all[s+1].mat
+    avg_rhs += mdata_all[s+1].rhs
+    avg_obj += mdata_all[s+1].obj
+    avg_clbd += mdata_all[s+1].clbd
+    avg_cubd += mdata_all[s+1].cubd
+end
+avg_mat = avg_mat/nS
+avg_obj = avg_obj/nS
+avg_rhs = avg_rhs/nS
+avg_clbd = avg_clbd/nS
+avg_cubd = avg_cubd/nS
+
+mdata_all_evp = Siplib.ModelData[]
+push!(mdata_all_evp, m1)
+push!(mdata_all_evp, Siplib.ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,avg_clbd,avg_cubd,m2.ctype,m2.cname))
+evp, x = getExtensiveFormModel(mdata_all_evp, return_x=true)
+
+print(evp)
+
+Siplib.setsolver(evp, CplexSolver())
+Siplib.solve(evp)
+
+
+
+
+
+
+
+
+
 
 model = getModel(:SDCP,[5,10,"FallWD",3])
 RP(model, CplexSolver())
