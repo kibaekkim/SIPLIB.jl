@@ -44,31 +44,43 @@ module Siplib
            WS,
            EEV,
            RP,
-           EV
+           EV,
+           LP
 
 end # end module Siplib
 #=
 using Siplib
 using CPLEX
 
-model = getModel(:AIRLIFT,[10])
-model = getModel(:CARGO, [100])
+model = getModel(:AIRLIFT,[200])
+model = getModel(:CARGO, [3])
 model = getModel(:CHEM, [3])
-model = getModel(:DCAP,[3,3,3,2])
+model = getModel(:DCAP,[3,3,3,10])
 model = getModel(:MPTSPs,["D1",5,5],seed=1)
 model = getModel(:PHONE, [100])
 model = getModel(:SDCP,[5,10,"FallWD",1])
-model = getModel(:SIZES,[10])
+model = getModel(:SIZES,[3])
 model = getModel(:SMKP,[10,2])
 model = getModel(:SSLP,[4,4,2])
 model = getModel(:SUC,["FallWD",1])
 
+LP(model, CplexSolver(),level=2)
 EV(model,CplexSolver())
 WS(model, CplexSolver(), ss_timelimit=60.0)
 RP(model, CplexSolver(), output=true, timelimit=120.0)
 EEV(model, CplexSolver(), ev_timelimit=60.0)
 
-
+generateSMPS(:AIRLIFT, [10], smpsfile=true)
+generateSMPS(:CARGO, [3], smpsfile=true)
+generateSMPS(:CHEM, [10], smpsfile=true)
+generateSMPS(:DCAP, [3,3,3,10], smpsfile=true)
+generateSMPS(:MPTSPs, ["D0",5,5], smpsfile=true)
+generateSMPS(:PHONE, [10], smpsfile=true)
+generateSMPS(:SDCP, [5,10,"FallWD",1], smpsfile=true)
+generateSMPS(:SIZES, [10], smpsfile=true)
+generateSMPS(:SMKP, [10,10], smpsfile=true)
+generateSMPS(:SSLP, [4,4,10], smpsfile=true)
+generateSMPS(:SUC, ["FallWD",1], smpsfile=true)
 
 # save the number of scenarios
 nS = model.ext[:Stochastic].num_scen

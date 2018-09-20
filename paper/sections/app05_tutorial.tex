@@ -80,14 +80,15 @@ First, use \texttt{getModel(problem, params\_arr)} to construct a \jumpmodel\ ob
 \begin{lstlisting}[frame=single,language=julia]
 julia> m = getModel(:DCAP, [2,2,2,10])
 \end{lstlisting}
-Then, use \texttt{RP(model, solver)}, \texttt{WS(model, solver)}, and \texttt{EEV(model, solver)} with including any solver (e.g., \texttt{using CPLEX}) to solve the instance in three different ways:
+After that, use \texttt{RP(model, solver)}, \texttt{WS(model, solver)}, \texttt{EEV(model, solver)}, and \texttt{LP(model, solver)} with including any solver (e.g., \texttt{using CPLEX}) to solve the instance in three different ways:
 \begin{lstlisting}[frame=single,language=julia]
 julia> using CPLEX
 julia> RP(m, CplexSolver())
 julia> WS(m, CplexSolver())
 julia> EEV(m, CplexSolver())
+julia> LP(m, CplexSolver())
 \end{lstlisting}
-Detailed definitions for RP, WS, and EEV are found in Section \ref{subsec:sol_report}.
+Detailed definitions for RP, WS, EEV, and LP are found in Section \ref{subsec:sol_report}.
 
 \subsubsection{Plotting sparsity}
 Use \texttt{generateSparsityPlots(problem, params\_arr)} to generate and save the sparsity plots. Excute the following lines:
@@ -379,6 +380,40 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
 \begin{quote}
 	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. 
 \end{quote}
+
+\subsubsection{function \texttt{LP()}}
+\begin{lstlisting}[frame=single,language=julia]
+function LP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; level::Int=3, output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false)
+\end{lstlisting}
+\texttt{LP()} solves the LP-relaxed instance in extensive form and returns objective value. The default level of LP-relaxation is 3 (i.e., relaxing all the integrality of the variables) but can be specified by varying an optional keyword argument \texttt{level}.  
+\begin{quote}
+	\noindent\underline{\texttt{model}} (necessary, positional) The \jumpmodel-type object of an instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{solver}} (necessary, positional) The \texttt{MathProgBase.AbstractMathProgSolver}-type argument that will solve the instance.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{level}} (optional, keyword) The \texttt{Int}-type argument that decides the level of LP-relaxation: 1 (first-stage only), 2 (second-stage only), 3 (first + second stage).  
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{output}} (optional, keyword) The \texttt{Bool}-type argument that decides whether or not the solver output is printed in a console.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{timelimit}} (optional, keyword) The \texttt{Float64}-type argument that decides the termination time of the solver.
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{genericnames}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not we keep the original variable names. 
+\end{quote}
+
+\begin{quote}
+	\noindent\underline{\texttt{splice}} (optional, keyword) The \texttt{Bool}-type keyword argument that decides whether or not the stochastic data stored in the \jumpmodel-type object is spliced after extraction.
+\end{quote}
+
 
 \subsection{Pre-analyzing instances: size, sparsity, plot} \label{tutorial:analyze_instance}
 \siplibjl\ provides pre-analysis functions for instances. By ``size'', we mean the number of components (continuous, binary, integer, constraint) in an instance. The sparsity is analyzed block-wisely. The size and sparsity information is stored in the object of the following composite types: \texttt{Size} and \texttt{Sparsity}.

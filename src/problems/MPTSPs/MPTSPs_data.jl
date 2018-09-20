@@ -222,35 +222,3 @@ function store_scenario_data(DIR::String, Cs::Array{Float64,4}, d, nN, nS)
         close(scenario_file)
     end
 end
-
-
-#=
-function mptspsdata(D::String, nN::Int, nS::Int, seed::Int)::MPTSPsModel
-
-    tsp = MPTSPsModel()
-    tsp.N = 1:nN
-    tsp.K = 1:NK
-    tsp.S = 1:nS
-
-    Nodes = generate_nodes(D, nN, seed)
-    tsp.Cs = generate_scenario_data(Nodes, D, nN, nS, seed)
-    tsp.Ce = Array{Float64}[]
-    for i in tsp.N
-        push!(tsp.Ce, Float64[])
-        for j in tsp.N
-             push!(tsp.Ce[i], sum(sum(tsp.Cs[s,i,j,:]) for s in tsp.S)*(1/length(tsp.K))*(1/nS))
-        end
-    end
-
-    tsp.E = deepcopy(tsp.Cs)
-    for s in tsp.S
-        for i in tsp.N, j in tsp.N, k in tsp.K
-            tsp.E[s,i,j,] -= tsp.Ce[i][j]
-        end
-    end
-
-    tsp.Pr = [1/nS for s in tsp.S]
-
-    return tsp
-end
-=#

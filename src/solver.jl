@@ -1,22 +1,46 @@
-#=
-# read SMPS files
-function solveSMPSInstance(solve_type::Symbol,
-                           INSTANCE::String,
-                           DIR_NAME::String="$(dirname(@__FILE__))/../instance",
-                           PARAMETER::String="$(dirname(@__FILE__))/solver_parameters/parameters.txt")
+function LP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; level::Int=3, output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false)
 
-    readSmps("$DIR_NAME/$INSTANCE")
-    status = optimize(solve_type = :Benders, param = PARAMETER) # solve_types = [:Extensive, :Dual, :Benders]
+    m = deepcopy(model)
+    lprelaxModel!(m, level)
+    efrp = getExtensiveFormModel(m, genericnames, splice)
 
-    return status
+    if !output
+        MathProgBase.setparameters!(solver,Silent=true)
+    end
+    if timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=timelimit)
+    end
+
+    setsolver(efrp, solver)
+    print("Solving Level $level LP-relaxed recourse problem (RP-LP$level) in the extensive form ... ")
+    st = time()
+    status = solve(efrp, suppress_warnings=true)
+    rp_time = time() - st
+    println("$status")
+    RPLP = efrp.objVal
+    gap = getobjgap(efrp)
+    efrp = Model()
+    println("RP-LP$level = $(round(RPLP,3)) (gap: $(round(gap,3))%, elapsed time: $(round(rp_time,2))s)")
+
+    if !output
+        MathProgBase.setparameters!(solver,Silent=false)
+    end
+    if timelimit != Inf
+        MathProgBase.setparameters!(solver,TimeLimit=Inf)
+    end
+
+    return RPLP
 end
-=#
+
 function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_eev::Bool=false, output::Bool=false, timelimit::Float64=Inf, splice::Bool=false, genericnames::Bool=true)
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
         warn("Not a stochastic model.")
         return
     end
+
+    # trial counter
+    tc = 1
 
     # save the number of scenarios
     nS = model.ext[:Stochastic].num_scen
@@ -61,7 +85,32 @@ function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_
     status = solve(evp, suppress_warnings=true)
 
     if status == :Infeasible
-        println("EV is infeasible.")
+        println("EV is infeasible. Trying again with the rounded RHS ...")
+    else
+        ev_sol = getvalue(x)
+        ev_gap = getobjgap(evp)
+        ev_time = time() - st
+        println("$status (gap: $(round(ev_gap,3))%, elapsed time: $(round(ev_time,2))s)")
+        if for_eev
+            return (status, ev_sol, ev_gap)
+        else
+            return evp.objVal
+        end
+    end
+
+    # solve EV with rounded RHS
+    mdata_all_evp = ModelData[]
+    push!(mdata_all_evp, m1)
+    push!(mdata_all_evp, ModelData(avg_mat,round.(avg_rhs),m2.sense,avg_obj,m2.objsense,avg_clbd,avg_cubd,m2.ctype,m2.cname))
+    evp, x = getExtensiveFormModel(mdata_all_evp, return_x=true)
+
+    setsolver(evp, solver)
+    print("  Solving the expected value problem with the rounded RHS ... ")
+    st = time()
+    status = solve(evp, suppress_warnings=true)
+
+    if status == :Infeasible
+        println("EV is again infeasible.")
         return (status, [], 0.0)
     else
         ev_sol = getvalue(x)
@@ -210,12 +259,6 @@ function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
     return RP
 end
 
-#=
-# read JuMP.Model object
-INSTANCE = "DCAP_5_5_5_2"
-DIR_NAME = "$(dirname(@__FILE__))/../instance"
-PARAMETER = "$(dirname(@__FILE__))/solver_parameters/parameters.txt"
-model = getJuMPModelInstance(:DCAP, [5,5,5,2])
-status = optimize(model, solve_type = :Extensive, param = PARAMETER)
-optimize(solve_type = :Benders, param = PARAMETER)
-=#
+function STD()
+
+end
