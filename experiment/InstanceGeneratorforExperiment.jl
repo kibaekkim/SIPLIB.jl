@@ -20,6 +20,42 @@ using Siplib
 ##############################
 param_set = Dict{Symbol, Array{Array{Any}}}()
 
+# AIRLIFT
+param = [[]]
+nS = [200, 300, 500, 1000]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:AIRLIFT] = param_array
+
+# CARGO
+param = [[]]
+nS = [10, 50, 100]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:CARGO] = param_array
+
+# CHEM
+param = [[]]
+nS = [200, 300, 500, 1000]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:CHEM] = param_array
+
 # DCAP
 param = [[2,3,3], [2,4,3], [3,3,2], [3,4,2]]
 nS = [200,300,500]
@@ -43,6 +79,30 @@ for p in param
     end
 end
 param_set[:MPTSPs] = param_array
+
+# PHONE
+param = [[]]
+nS = [200, 300, 500, 1000]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:PHONE] = param_array
+
+# SDCP
+param = [[5,10,"FallWD"], [5,10,"FallWE"], [5,10,"SpringWD"], [5,10,"SpringWE"], [5,10,"SummerWD"], [5,10,"SummerWE"], [5,10,"WinterWD"], [5,10,"WinterWE"]]
+nS = [10]
+param_array = Any[]
+for p in param
+    for n in nS
+        push!(param_array, copy(p))
+        push!(param_array[end], n)
+    end
+end
+param_set[:SDCP] = param_array
 
 # SMKP
 param = [[120]]
@@ -105,11 +165,11 @@ param_set[:SUC] = param_array
 ###################################
 
 SMPS_PATH = "$THIS_FILE_PATH/../experiment/SMPS"
-#for prob in [:DCAP, :MPTSPs, :SMKP, :SIZES, :SSLP, :SUC]
-for prob in [:DCAP]
+for prob in [:AIRLIFT, :CARGO, :CHEM, :DCAP, :MPTSPs, :PHONE, :SDCP, :SMKP, :SIZES, :SSLP, :SUC]
+#for prob in [:MPTSPs]
     for param in param_set[prob]
         generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false)
-        generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, lprelax=2)
+#        generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, lprelax=2)
     end
 end
 
