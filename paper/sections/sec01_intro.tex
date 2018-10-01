@@ -1,125 +1,113 @@
 %(What SIP is and our restriction) 
 Stochastic (mixed) integer programming (SIP) is the mathematical programming that accounts for 
 both continuous and discrete decision variables with uncertain parameters~\cite{book:BL2011}. 
-Modeling and algorithms for SIP have been advanced for the last few decades. Applications of SIP include power systems~\cite{?}, healthcare~\cite{?}, manufacturing systems~\cite{?}, and transportation~\cite{?}. With the advances, a number of solution methods have been developed and shown to be computationally effective for stochastic problems (e.g.,~\cite{?}). Moreover, many of the algorithms have been implemented as software packages either specific for certain problems~\cite{?} or for generic problems~\cite{?}.
+Modeling and algorithms for SIP have been advanced for the last few decades. Applications of SIP include but not limited to power systems \cite{journal:PO2013,journal:KYZC2017}, telecommunications \cite{journal:SDC1994}, manufacturing systems \cite{journal:SPR1994,journal:AG2004}, and transportation \cite{journal:MW1969,journal:PGM2017,journal:TPP2017,journal:MPT2014}. With the advances, a number of solution methods have been developed and shown to be computationally effective for stochastic problems. Moreover, many of the algorithms have been implemented as software packages either specific for certain problems or for generic problems \cite{SCIP,journal:WWH2012,journal:KZ2015}.
+
+Throughout this research study, we focus on two-stage SIP with 
+linear objective function and constraints, where the first-stage decision finds a solution before the 
+random parameters are realized, and the second-stage decision takes a recourse action to the 
+uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters (i.e., scenarios) are discrete and finite with known probabilities.
+A key challenge in SIP is that the size of
+the problem increases with the number of scenarios. Moreover, the 
+second-stage value function is not necessarily convex in SIP. Thus, the standard decomposition 
+approaches that work nicely for stochastic non-integer programs, break down when the problem contains integer variables \cite{journal:AG2004}. Hereinafter, we use the 
+term SIP to indicate two-stage SIP. 
 
 Numerical tests and benchmarks are necessary for developing and improving algorithms. However,
-these have been challenging for the stochastic programming community, because of the limited number of test problem instances. 
-SIPLIB is a set of test problem instances for SIP available in~\url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where nine problem instances are available in SMPS format~\cite{?} with additional information such as random parameters, 
-instance size, best known objective value or bounds, optimality gap, and solution time.  
-However, the existing SIPLIB collection has a few limitations. 
+these have been challenging for the stochastic programming community, because of the limited source of test problem instances. 
+\siplib\ is the first SIP-dedicated set of test problem instances available in \url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where instances of nine different problems are available in SMPS format \cite{smps} with additional information such as instance size, best known objective value or bounds, optimality gap, and solution time. There are a few more available stochastic programming test libraries which are not dedicated to SIP.
+A portable stochastic programming test set (POSTS) \cite{POSTS} is a small test set for 
+stochastic linear programming that provides fifteen problems in \smps\ format. The test set is available by a website \url{http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html}. Ariyawansa and Felt \cite{journal:AF2004} also provide a test problem collection for stochastic programming, which comprises of nine different problems. They are available in \url{https://www4.uwsp.edu/math/afelt/slptestset/download.html}. 
+
+The existing collection has a few limitations. 
 First, it provides instances with only a few variations of the number of first- and second-stage variables and the number of scenarios, which could have been easily parameterized in 
 modeling languages. Moreover, the precise information of the problem instances is 
 not easily accessible. Second, only a limited number of problem types are available in 
 the existing collection. Note that, with three variable types (i.e., continuous, 
 binary, integer) in two stages, the possible number of combinations is $\left[\sum_{k=1}
 ^3\binom{3}{k}\right]^2=49$ in total. 
-The existing collection provides only 5 such combinations 
-regarding the problems that can be fully implementable based on the open information \kk{What does this mean?}\yoc{Shabbir's SIPLIB provides instances of 6 2-stage SIPs (DCAP, MPTSPs, SEMI, SMKP, SIZES, SSLP) but SEMI does not open the data generation procedure at all. Hence, we have 5 implemantable problems (although some of them are still not exactly the same as original due to the missing information, e.g., MPTSPs) from Shabbir's SIPLIB.}
+The existing collection provides only five such combinations 
+regarding the problems that can be fully implementable based on the open information.
 Third, \siplib\ needs to be polished systematically in terms of both pre-analysis on the 
 instances and post-analysis on the benchmark results. Currently, there is no predefined 
 contribution rule for \siplib\ so different problem provides different information. 
 Therefore, interpretation on the new results can be inconsistent.
 
-There are a few test libraries available for stochastic linear programming. 
-A portable stochastic programming test set (POSTS)~\cite{POSTS} is a small test set for 
-stochastic linear programming that provides 15 problems in SMPS format. The test set is available in~\url{http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html}.
-%Birge~\cite{POSTSresults} provides some computational results of the POSTS instances, but most of them needs to be updated. Moreover, accompanied information on the instances does not seem to be enough. 
-Ariyawansa and Felt~\cite{journal:AF2004} also present a test problem collection for stochastic programming, which comprises of three two-stage stochastic linear programs, two multi-stage stochastic linear programs, and four two-stage SMIPs. However, the the size of the instances are not large enough to perform intensive computational experiments \kk{This needs to be specific. We should see if we can include these}. 
 
-In this paper, we focus on two-stage SIP with 
-linear objective function and constraints, where the first-stage decision finds a solution before the 
-random parameters are realized, and the second-stage decision takes a recourse action to the 
-uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters (i.e., scenarios) are discrete and finite with known probabilities.
-A key challenge in SIP is that the size of
-the problem increases with the number of scenarios. The main difficulty in solving two-stage SIP is that the 
-second-stage value function is not necessarily convex. Thus, the standard decomposition 
-approaches that work nicely for stochastic \textit{linear} programs, break down when the 
-second stage integer variables are present \cite{journal:AG2004}. Hereinafter, we use the 
-term SIP to indicate the two-stage SIP. 
-
-
-%\subsection{Literature review} \label{subsec:literaturereview}
-Meanwhile, the optimizers, not only SIP researchers, have always needed test instances to 
-figure out the performances of newly developed methods. \miplib\ \cite{MIPLIB} for mixed 
-integer (linear) programming (MIP) is a good example of such collection, which comprises 361 
-instances. The authors collected the instances from various sources and categorized them into 
-several groups after the computational experiments. \miplib\ provides instances in 
-\textsf{MPS} format with a test engine developed to run different solvers in a defined way to 
-check the answers for consistency. 
-
-
-%(Motivation) 
-At the time \siplib\ appeared, it provided enoughly large-sized instances that is reasonable 
-to argue that the performance of algorithm is remarkable if it handles the instances well. 
-State-of-the-art in SIP combined with the speedup in computing machinery, however, makes many 
-instances in \siplib\ trivial so that we have not enough basis to use them for showing the 
-excellence of newly suggested solution methods. At this point, we are motivated to develop 
-the second version of \siplib\, say \siplibtwo\ that provides larger-sized test instances 
-with higher degree of tailorability, e.g., users can easily generate instances of test 
-problems as largely as they want.% in terms of the number of scenarios included.
-
-At the time \siplib\ appeared, it provided enough instances to be used for computational 
-experiments of SIP methods. State-of-the-art in SIP combined with the speedup in computing 
-machinery, however, requires more test sets as the existing instances have been conquered 
-gradually. As \siplib\ only provides limited testing resources (e.g., static instance files), 
-it has less expandability. 
-Based upon the current limitations of \siplib, we conclude that the current \siplib\ needs to 
-be improved since state-of-the-art in SIP combined with the speedup in computing machinery 
-requires more test sets. At this point, we are motivated to develop the second version of 
-\siplib, say \siplibtwo, that includes richer testing resources. By ``richer", we mean the 
-three things. First, instances of the different type of problems other than existing ones. 
-Second, the larger-sized instances of the existing \siplib\ problems. Third, higher degree of 
-freedom for the researchers, e.g., users can easily generate instances of the size/shape as 
-they want.
+%
+%%\subsection{Literature review} \label{subsec:literaturereview}
+%Meanwhile, the optimizers, not only SIP researchers, have always needed test instances to 
+%figure out the performances of newly developed methods. \miplib\ \cite{MIPLIB} for mixed 
+%integer (linear) programming (MIP) is a good example of such collection, which comprises 361 
+%instances. The authors collected the instances from various sources and categorized them into 
+%several groups after the computational experiments. \miplib\ provides instances in 
+%\textsf{MPS} format with a test engine developed to run different solvers in a defined way to 
+%check the answers for consistency. 
+%
+%
+%%(Motivation) 
+%At the time \siplib\ appeared, it provided enoughly large-sized instances that is reasonable 
+%to argue that the performance of algorithm is remarkable if it handles the instances well. 
+%State-of-the-art in SIP combined with the speedup in computing machinery, however, makes many 
+%instances in \siplib\ trivial so that we have not enough basis to use them for showing the 
+%excellence of newly suggested solution methods. At this point, we are motivated to develop 
+%the second version of \siplib\, say \siplibtwo\ that provides larger-sized test instances 
+%with higher degree of tailorability, e.g., users can easily generate instances of test 
+%problems as largely as they want.% in terms of the number of scenarios included.
+%
+%At the time \siplib\ appeared, it provided enough instances to be used for computational 
+%experiments of SIP methods. State-of-the-art in SIP combined with the speedup in computing 
+%machinery, however, requires more test sets as the existing instances have been conquered 
+%gradually. As \siplib\ only provides limited testing resources (e.g., static instance files), 
+%it has less expandability. 
+%Based upon the current limitations of \siplib, we conclude that the current \siplib\ needs to 
+%be improved since state-of-the-art in SIP combined with the speedup in computing machinery 
+%requires more test sets. At this point, we are motivated to develop the second version of 
+%\siplib, say \siplibtwo, that includes richer testing resources. By ``richer", we mean the 
+%three things. First, instances of the different type of problems other than existing ones. 
+%Second, the larger-sized instances of the existing \siplib\ problems. Third, higher degree of 
+%freedom for the researchers, e.g., users can easily generate instances of the size/shape as 
+%they want.
 
 %(SMPS, Julia)
-We provide \siplibtwo\ in two ways: \smps\ files (*.cor, *.tim, *.sto) and open-source 
-\julia\ package. \smps\ is a file format widely used to describe stochastic program 
-instances. Once \smps\ files are given, we can directly solve it using SIP solvers like \dsp\ 
-\cite{web:DSP} and \textsf{SMI} \cite{web:SMI}. A drawback of \smps\ is low 
+We provide \siplibtwo\ in two ways: \smps\ files (*.cor, *.tim, *.sto) \cite{smps} and an open-source \julia\ package. \smps\ is a file format widely used to describe stochastic program 
+instances. Once \smps\ files are given, we can directly solve it using solvers like \dsp\ 
+\cite{web:DSP}, \textsf{SMI} \cite{web:SMI}, and \scip\ \cite{SCIP}. A drawback of \smps\ is the low 
 readability by human, which we decided to provide \julia\ scripts to let users be able to 
-easily catch up the problems and tailor the instances if needed.
+easily catch up the problems and tailor the instances if needed. 
 
-%(Convenience of Julia) 
-\julia\ is an open-source high-level, high-performance dynamic programming language for 
-numerical computing. It is also known as good performance, approaching that of statically-
-compiled languages like \clang\ \cite{journal:BEKS2017}. The syntax of \julia\ is simple and 
-should feel familiar to anyone who has experienced in another high-level languages like 
-\matlab\ or \python. A \julia\ package called \jump\ (\julia\ for Mathematical Programming 
-\cite{journal:JuMP}) provides a domain-specific modeling language for mathematical 
-optimization embedded in \julia. \jump\ enables us to easily translate a paper-written 
-mathematical models to a \texttt{JuMP.Model}-type object. Some structured mathematical models 
-like SIP can also be translated to the \texttt{JuMP.Model}-type object by loading a 
-structured modeling package \structjump\ \cite{web:StructJuMP}. Once we have a \julia\ script 
-for constructing \texttt{JuMP.Model}-type object, it is easy to modify the original model. 
-%For each problem in \siplibtwo, we provide a \julia\ script for constructing 
-\texttt{JuMP.Model}-type object. 
-
-Using SP-related packages, we implement a new \julia\ package to provide various 
-functionalities for handling \siplibtwo\ instances for users' convenience. Those who feel the 
-given instances are not enough can simply generate new instances using the package.
-
+The \julia\ package contains all the \julia\ scripts to construct the problem instances and also provides various functionalities that can be used to support SIP computational study. The representative such functionality is to write \smps\ format files from a \julia\ object of an SIP problem instance which is also constructed by the function of the package. This will allow users to create new problem instances and modify the instances (e.g., increasing the number of scenarios). In addition, the package provides functions to analyze SIP instances, for example, it reports instance size, sparsity pattern, and some known lower/upper bounds.
+%%(Convenience of Julia) 
+%\julia\ is an open-source high-level, high-performance dynamic programming language for 
+%numerical computing. It is also known as good performance, approaching that of statically
+%compiled languages like \clang\ \cite{journal:BEKS2017}. The syntax of \julia\ is simple and 
+%should feel familiar to anyone who has experienced in another high-level languages like 
+%\matlab\ or \python. A \julia\ package called \jump\ (\julia\ for Mathematical Programming 
+%\cite{journal:JuMP}) provides a domain-specific modeling language for mathematical 
+%optimization embedded in \julia. \jump\ enables us to easily translate a paper-written 
+%mathematical models to a \jumpmodel-type object. Some structured mathematical models 
+%like SIP can also be translated to the \jumpmodel-type object by loading a 
+%structured modeling package \structjump\ \cite{web:StructJuMP}. Once we have a \julia\ script 
+%for constructing \texttt{JuMP.Model}-type object, it is easy to modify the original model. 
 
 %(Contribution of SIPLIP2.0) 
 The contributions of this work can be summarized as follows.
 \begin{itemize}
 	\item We provide SIP-dedicated testing resources that are richer than the former \siplib.
 	\item We collect, implement, summarize, and open all the problem-specific details: 
-	mathematical formulation, stochastic data generation, \julia\ scripts.
-	\item We implement and release an open-source \julia\ package for SIP research: 
-	generating and analyzing the instances.
+	mathematical formulation, random data generation, \julia\ scripts.
+	\item We implement and release an open-source \julia\ package for SIP research study.
 	\item We provide both analytical and computational information on the accompanied 
 	instances.
 \end{itemize}
 
-By \texttt{SIPLIB 2.0}, we provide 1) richer collection of test instances for computational 
-and algorithmic research in SIP with benchmarking computational results, 2) not only 
-\texttt{SMPS} files but also utilities for generating/analyzing instances. Hence, the users 
-can obtain as large-sized instances as they need by generating new scenarios and including 
-them into instances. For those who want to utilize the instances in the legacy 
-\texttt{SIPLIB} with strong tailorability provided by \texttt{SIPLIB 2.0}, we include the 
-original \texttt{SIPLIB} instances as well.
+%By \siplibtwo, we provide 1) richer collection of test instances for computational 
+%and algorithmic research in SIP with benchmarking computational results, 2) not only 
+%\smps\ files but also utilities for generating/analyzing instances. Hence, the users 
+%can obtain as large-sized instances as they need by generating new scenarios and including 
+%them into instances. For those who want to utilize the instances in the legacy 
+%\siplib\ with strong tailorability provided by \siplibtwo, we include the 
+%original \siplib\ instances as well.
 
 %(Contents)
 This paper is organized as follows. In Section \ref{sec:sip}, we briefly review SIP. This 
@@ -130,7 +118,7 @@ rule, problem type, the number of components, and sparsity information. We also 
 they are important in each subsection. Together with the problem-specific description given 
 in Section\ref{sec:prob_desc}, we believe that users can quickly catch up what they need 
 without investigating every detail. In Section \ref{sec:package}, we introduce our 
-implementation of a \julia\ package for \siplibtwo\ with a tutorial in Section 
+implementation of the \julia\ package with a tutorial in Section 
 \ref{sec:tutorial}. In Section \ref{sec:instance_catalog}, we report analytical and 
 computational results of the accompanied \smps\ instances. We conclude this study with the 
 emphasis on our spirit for further improvement in SIP in Section \ref{sec:conclusion}. 

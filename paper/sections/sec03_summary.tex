@@ -3,6 +3,9 @@ In this section, we explain information about the test problems included in \sip
 
 \subsection{Origin of the problems}
 Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The nine of them (except \sdcp\ and \suc) are adopted from existing libraries, Shabbir Ahmed's \siplib\ \cite{web:SIPLIB1} and Andy Felt's test-problem collection for stochastic linear programming \cite{journal:AF2004}. We tried to implement the problems as the same as the original references possible. Not all of them, however, are exactly the same mainly due to insufficient information. We sometimes needed to guess the missing links and develop our own way to implement the problems. 
+
+
+	
 \begin{table}[H]
 	\centering
 %	\resizebox{\textwidth}{!}{%
@@ -31,6 +34,32 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 %	}
 \end{table}
 
+%\begin{table}[H]
+%	\centering
+%%	\resizebox{\textwidth}{!}{
+%	\caption{Problems in \siplibtwo}
+%	\label{table:problems}
+%%	\resizebox{\textwidth}{!}{%
+%	\begin{tabular}{@{}llp{0.3 \textwidth}}
+%		\toprule
+%		Problem		  		  & \multicolumn{1}{c}{Description}                                                        & \multicolumn{1}{c}{Main reference}              \\ 
+%		\midrule
+%		\airlift\ & Airlift operations scheduling (\ref{AIRLIFT}) & Midler and Wollmer \cite{journal:MW1969} \\
+%		\cargo\ & Cargo network scheduling (\ref{CARGO}) & Mulvey and Ruszczy\`{n}ski \cite{journal:MR1995}\\
+%		\chem\ & Design of batch chemical plants (\ref{CHEM}) & Subrahmanyam et al. \cite{journal:SPR1994}\\				
+%		\dcap\         & Dynamic capacity planning with stochastic demand (\ref{DCAP})                   & Ahmed and Garcia \cite{journal:AG2004}                          \\
+%		\mptsps\       & Multi-path traveling salesman problem with stochastic travel costs (\ref{MPTSPs}) & Tadei et al. \cite{journal:TPP2017}                            \\
+%		\phone\       & Telecommunication network planning (\ref{PHONE})& Sen et al. \cite{journal:SDC1994}                            \\
+%		\sdcp\ 	& Stochastic data center placement (\ref{SDCP}) & Kim et al. \cite{journal:KYZC2017}\\
+%		\sizes\        & Optimal product substitution with stochastic demand (\ref{SIZES})         & Jorjani et al. \cite{journal:JSW1999}          \\
+%		\smkp\		  & Stochastic multiple knapsack problem (\ref{SMKP})                              & Angulo et al. \cite{journal:AAD2014}                            \\
+%		\sslp\         & Stochastic server location problem (\ref{SSLP})                                & Ntaimo and Sen \cite{journal:NS2005}                           \\
+%		\suc\         & Stochastic unit commitment problem	(\ref{SUC})			               & Papavasiliou and Oren \cite{journal:PO2013}                       \\ 
+%		\bottomrule
+%	\end{tabular}%
+%%	}
+%\end{table}
+
 \subsubsection{How we deal with missing links and errors}
 %\yoc{This subsection is newely added to discuss the issues on implementaion.}
 During implementation, we often faced some missing links and errors. The missing links are largely from the two parts: data generation procedure and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the relevant references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
@@ -46,11 +75,11 @@ We set the following rule to address such issues described above.
 The notable remark for each problem briefly presents in Table \ref{table:remarks}.
 \begin{table}[H]
 	\centering
-%	\resizebox{\textwidth}{!}{%
+	\resizebox{\textwidth}{!}{%
 		\begin{threeparttable}
 			\caption{Implementation remarks for each problem}
 			\label{table:remarks}
-			\begin{tabular}{@{}lp{3in}}
+			\begin{tabular}{@{}lp{0.8\textwidth}}
 				\toprule
 				Problem & \multicolumn{1}{c}{Remark}                                                \\ \midrule
 				\airlift & -\\
@@ -70,7 +99,7 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 				\item Remark. - means no issue presents
 			\end{tablenotes}
 		\end{threeparttable}
-%	}
+	}
 \end{table}
 
 \subsection{Instance naming rule}
@@ -88,9 +117,9 @@ The lowercase letters in the instance names denote the non-set parameters defini
 	\centering
 	\caption{Instance naming rules}
 	\label{table:naming_rule}
-	\resizebox{\textwidth}{!}
-	{%
-		\begin{tabular}{@{}llp{3in}}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}llp{0.6\textwidth}}
+%		\begin{tabular}{@{}llp{3in}}
 			\toprule
 			Problem & Instance name                 & \multicolumn{1}{c}{Remark}                                                                    					      \\ \midrule
 			\airlift	& AIRLIFT\_$\mathcal{S}$& $\mathcal{S}$: number of scenarios\\

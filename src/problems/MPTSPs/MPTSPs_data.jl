@@ -91,17 +91,14 @@ function generate_nodes(d::String, nN::Int, seed::Int, radius::Float64=RADIUS)::
         end
     elseif d == "D1"
         n = 0
-        cnt = 1
         while n < nN
-            #temp = rand(Uniform(0.0, 2*radius),2)
-            temp = random_numbers[:,n+1]
+            temp = rand(Uniform(0.0, 2*radius),2)
             rand_point = Node(temp[1],temp[2],false)
             rand_point.centrality = isCentral(center, rand_point)
             if !rand_point.centrality
                 push!(Nodes, rand_point)
                 n += 1
             end
-            cnt += 1
         end
     elseif d == "D2"
         cnt, n1, n2 = 0, 0, 0

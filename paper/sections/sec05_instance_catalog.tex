@@ -23,35 +23,6 @@ Table \ref{table:instance_size_info_dcap}-\ref{table:instance_size_info_suc} in 
 In Table \ref{table:computation_report}, we report computational information investigated from experiments. Unlike the size and sparsity, this should be obtained in highly computational way, which implies that the result is strongly affected depending on the computing environment in which experiments are performed. Throughout the following subsections, we explain about our computational experiments.
 
 \subsubsection{Experimental setting}
-\yoc{Experiment plan}
-\begin{itemize}
-	\item computer: Bebop
-	\item running time: 3 hours/instance?
-	\item resource: single-node with 36 cores (1 thread/core) per instance
-	\item solvers (default parameter setting): CPLEX 12.8, DSP
-	\item How to obtain gaps?
-		\begin{itemize}
-			\item Optimality gap: CPLEX (log file), DSP (log file)
-			\item LP2-Relax gap
-			\begin{itemize}
-				\item $\hat{z}$: the best solution amongst CPLEX, SCIP, DSP
-				\item $\hat{z}_{LP2}$: LP-relaxed SMPS instance will be generated (from Siplib.jl) and solve by CPLEX 
-			\end{itemize}
-			\item REVPI
-			\begin{itemize}
-				\item $\hat{z}$: the best solution amongst CPLEX, SCIP, DSP
-				\item $\hat{z}_{WS}$: \texttt{Siplib.WS()}
-			\end{itemize}
-			\item RVSS
-			\begin{itemize}
-				\item $\hat{z}$: the best solution amongst CPLEX, SCIP, DSP
-				\item $\hat{z}_{EEV}$: \texttt{Siplib.EEV()}
-			\end{itemize}
-		\end{itemize}
-	\item Standard deviation
-	\item experiment goal
-\end{itemize}
-
 %Table \ref{table:experimental_setting} summarizes the experimental setting. 
 All the experiments were run on \textit{Bebop}, a 1024-node computing cluster at Argonne National Laboratory \cite{bebop}. Each node in Bebop has 128GB DDR4 memory and two sockets for Intel Xeon Processor E5-2695 v4 that consists of 18 cores each of which has single thread hence 36 cores as well as threads per node in total. The base processor frequency is 2.10GHz and maximum turbo frequency is 3.30GHz. Note that we only use 1 node for each instance.
 
@@ -144,7 +115,7 @@ where $z^*(x,y_s)$ is the optimal objective value of a \textit{single scenario p
 \begin{subequations}
 	\begin{align}
 	\min_{x,y_s}\ z_{SS(s)}(x,y_s):=&\ c^\top x+q_s^\top y_s \label{ssp:obj}\\
-	\mathrm{s.t.}\ &Ax \ge b \label{ssp:b}\\
+	\mathrm{s.t.}\ &Ax \ge b, \label{ssp:b}\\
 	&T_s x + W_s y_s\ge h_s,  \label{ssp:c}\\
 	&x\in X,  \label{ssp:d}\\
 	&y_s \in Y. \label{ssp:e}
@@ -165,6 +136,8 @@ where $z^*(x^*,y_s)$ is the optimal objective value of a \textit{single scenario
 	\end{align}
 \end{subequations}
 
+%\begin{tabular}{@{}lp{3in}}
+
 \begin{table}[H]
 	\centering
 	\caption{Solution notation}
@@ -172,7 +145,7 @@ where $z^*(x^*,y_s)$ is the optimal objective value of a \textit{single scenario
 	\resizebox{\textwidth}{!}{%
 	\begin{threeparttable}
 %		\begin{tabular}{@{}ll@{}}
-		\begin{tabular}{@{}ll@{}}
+		\begin{tabular}{@{}lp{0.8\textwidth}}
 			\toprule
 			Notation  & \multicolumn{1}{c}{Meaning}                                                                                                                    \\ \midrule
 			$z$       & Objective value of RP (\ref{ef:obj})-(\ref{ef:e})                                                                                         \\

@@ -28,12 +28,14 @@ Table \ref{airlift:notation} summarizes the notation used to formulate \airlift.
 The objective function (\ref{airlift:obj}) minimizes the total operating costs including penalty costs. Constraint (\ref{airlift:b}) restricts the maximum number of flight hours for each aircraft type available during the month. Constraint (\ref{airlift:c}) corresponds the fact that we cannot switch away more flight hours. Constraint (\ref{airlift:d}) balances the demand and supply for each route considering the unused capacity together. Constraint (\ref{airlift:e})-(\ref{airlift:g}) set the space in which the decision variables can have values.
 
 \begin{table}[H]
+	\centering
 	\caption{Notations for \airlift}
 	\label{airlift:notation}
 	\resizebox{\textwidth}{!}
 	{
 %		{@{}llp{3in}}
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
+%		\begin{tabular}{ll}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$A$ & index set of aircraft types ($i,k\in A$)\\ 
@@ -126,12 +128,12 @@ Table \ref{cargo:notation} summarizes the notation used to formulate \cargo. Usi
 The objective function (\ref{cargo:obj}) minimizes total cost of scheduling including the penalty cost due to the undelivered cargo. Constraint (\ref{cargo:b}) enforces the minimum required number of flights from nodes $m$ to $n$ must be satisfied. Constraint (\ref{cargo:c}) guarantees the maximum number of landings allowed in node $n$ must not be exceeded. Constraint (\ref{cargo:d}) is for the landing and take-off balance for each node. Constraint (\ref{cargo:e}) and (\ref{cargo:f}) restricts the flying hours for each type of aircraft between the minimum and maximum. Constraints (\ref{cargo:g})-(\ref{cargo:j}) are for recourse actions. Constraint (\ref{cargo:g}) ensures the cargo material balance. Constraint (\ref{cargo:h}) corresponds to the balance of all transshipments which go through node $k$ and wind up at node $n$. Constraint (\ref{cargo:i}) is for loading and unloading that occur throughout the course of a route at the initial node. For the remaining nodes in the route, a payload balance yields constraint (\ref{cargo:j}). Constraints (\ref{cargo:k})-(\ref{cargo:m}) does not present in the references but we add this to make the model nontrivial. Finally, constraints (\ref{cargo:n})-(\ref{cargo:s}) defines the space in which the decision variables can vary.
 
 \begin{table}[H]
+	\centering
 	\caption{Notations for \cargo}
 	\label{cargo:notation}
 	\resizebox{\textwidth}{!}
 	{
-		%		{@{}llp{3in}}
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$N$ & index set of nodes ($n\in N$)\\ 
@@ -272,12 +274,13 @@ Table \ref{chem:notation} summarizes the notation used to formulate \chem. Using
 \end{subequations}
 The objective function (\ref{chem:obj}) maximizes the total profit from operating the chemical plants. Constraint (\ref{chem:b}) restricts the operation times of equipment (or plant) does not exceed the length of time in each time period for each type of equipment. Constraint (\ref{chem:c}) guarantees the total operating expense does not exceed the total operating budget. Constraints (\ref{chem:d}) and (\ref{chem:e}) the material balance on the systems that includes inventory, production, consumption, sales, and purchasing. Constraint (\ref{chem:f}) corresponds to the relationship between the total processed amount of task and the amount of output from the processing. Constraints (\ref{chem:g}) and (\ref{chem:j}) restrict the purchasing of each resource. Constraint (\ref{chem:h}) denotes a simple balance for the amount of resources to be sold. Constraint (\ref{chem:i}) restricts the maximum amount of resources to be sold which is lower than the demand level. Constraint (\ref{chem:k}) defines the indicator variable which is 1 if the demand be met exactly, 0 otherwise. Constraint (\ref{chem:l}) guarantees the minimum number of scenarios for which the demand may be met exactly. Finally, constraints (\ref{chem:m})-(\ref{chem:r}) restrict the space where the decision variables can take values from.
 \begin{table}[H]
+	\centering
 	\caption{Notations for \chem}
 	\label{chem:notation}
 	\resizebox{\textwidth}{!}
 	{
 		%		{@{}llp{3in}}
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$I$ & index set of tasks ($i\in I$)\\ 
@@ -442,7 +445,7 @@ The objective function (\ref{dcap:obj}) is to minimize total expected cost for t
 	\label{dcap:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$R$ & index set of resources ($i\in R\cup\{0\}$ where $0$ is a dummy resource with infinite capacity) \\ 
@@ -512,11 +515,12 @@ The extensive form of \mptsps\ is as follows and the notations used are summariz
 The first sum in the objective function (\ref{mptsps:obj}) represents the first stage travel cost, while the second sum represents the recourse action, consisting in choosing the best path $k\in K_{ij}$ under scenario $s\in\mathcal{S}$. The constraints (\ref{mptsps:con1}) and (\ref{mptsps:con2}) form the assignment constraints and ensure that each node is visited only once. Given the fixed values of $y_{ij}$, constraint (\ref{mptsps:con3}) and (\ref{mptsps:con4}) form a network flow problem, and therefore the $\phi_{ij}$ values will be integer. In case the solutions of the above formulation contain at least one subtour, the constraints (\ref{mptsps:con3}) and (\ref{mptsps:con4}) are violated. Moreover, no tour can exist that does not contain node 1 by the two constraints. For more explanation on the subtour breaking mechanism accompanied with rigorous proof, refer to \cite{GG1978}. The constraint (\ref{mptsps:con5}) guarantees that path $k$ between nodes $i$ and $j$ can be chosen at stage 2 only if nodes $i$ and $j$ were part of the tour fixed at stage 1. Finally, the constraints (\ref{mptsps:con6})-(\ref{mptsps:con8}) restrict the space from which the variables take values.
 
 \begin{table}[H]
+	\centering
 	\caption{Notations for \mptsps}
 	\label{mptsps:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$N$ & \textrm{index set of nodes ($i,j,l\in N$)} \\ 
@@ -601,11 +605,12 @@ Table \ref{phone:notation} summarizes the notation used to formulate \phone. Usi
 \end{subequations}
 The objective function (\ref{phone:obj}) minimizes the number of unserved requests. Constraint (\ref{phone:b}) stands for the budget limitation. Constraint (\ref{phone:c}) ensures that the number of connections serving pair $i$ must be less than the capacity. Constraint (\ref{phone:d}) means the sum of served and unserved requests equals to the original demands. Constraints (\ref{phone:e})-(\ref{phone:g}) define the range of the decision variables. 
 \begin{table}[H]
+	\centering
 	\caption{Notations for \phone}
 	\label{phone:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$P$ & index set of point-to-point pairs ($i\in P$) \\ 
@@ -699,7 +704,7 @@ The objective function (\ref{sdcp:obj}) is to minimize expected total dispatch c
 	\label{sdcp:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\ 		
@@ -836,7 +841,7 @@ The first sum of the objective function (\ref{sizes:obj}) is the costs for produ
 	\label{sizes:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets}} \\
 			$N$ & \textrm{index set of items ($i,j\in N$)} \\ 
@@ -951,7 +956,7 @@ The objective (\ref{smkp:obj}) is to minimize the expected value of the total we
 	\label{smkp:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$I$ &  index set of items for each type ($i\in I$)\\ 
@@ -1029,7 +1034,7 @@ The objective function (\ref{sslp:obj}) is to maximize total expected revenue of
 	\label{sslp:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.7\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$J$ 		  & index set of server locations ($j\in J$)\\ 
@@ -1128,7 +1133,7 @@ The objective function (\ref{SUC:obj}) is to minimize expected operating costs. 
 	\label{SUC:notation}
 	\resizebox{\textwidth}{!}
 	{
-		\begin{tabular}{ll}
+		\begin{tabular}{lp{0.8\textwidth}}
 			\toprule
 			\multicolumn{2}{l}{\textbf{Index sets:}} \\
 			$\mathcal{S}$ & index set of scenarios ($s\in\mathcal{S}$) 		\\ 		
