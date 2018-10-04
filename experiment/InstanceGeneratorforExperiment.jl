@@ -12,6 +12,7 @@
 
 # include generator file
 THIS_FILE_PATH = dirname(@__FILE__)
+include("$THIS_FILE_PATH/ParameterSetGenerator.jl")
 include("$THIS_FILE_PATH/../src/Siplib.jl")
 using Siplib
 
@@ -155,6 +156,8 @@ for p in param
 end
 param_set[:SUC] = param_array
 
+param_set = ParamSet()
+
 ############################
 ## parameter setting: End ##
 ############################
@@ -168,6 +171,7 @@ SMPS_PATH = "$THIS_FILE_PATH/../experiment/SMPS"
 for prob in [:AIRLIFT, :CARGO, :CHEM, :DCAP, :MPTSPs, :PHONE, :SDCP, :SMKP, :SIZES, :SSLP, :SUC]
     for param in param_set[prob]
         generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false)
+#        generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false)
 #        generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, lprelax=2)
     end
 end

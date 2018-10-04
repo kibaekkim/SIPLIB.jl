@@ -3,13 +3,14 @@ This appendix provides a brief tutorial for the \julia\ package. We release this
 \subsection{Prerequisites}
 We assume that you are in Linux environment. To use \siplibjl, you need to perform the following steps:
 \begin{enumerate}
-	\item Download $\julia\ge 0.6.2$ and set up.
+	\item Download $\julia$ version 0.6.4 and set up.
 	\item Install \julia\ packages: \texttt{Distributions.jl}, \texttt{StructJuMP.jl}, \texttt{PyPlot.jl}, and \texttt{Combinatorics.jl} by executing
 	\begin{itemize}
 		\item \texttt{Pkg.add("Distributions")}
 		\item \texttt{Pkg.add("StructJuMP")}
 		\item \texttt{Pkg.add("PyPlot")}
 		\item \texttt{Pkg.add("Combinatorics")}
+		
 	\end{itemize}
 	Then, execute \texttt{Pkg.update()} to make them up-to-date.
 	\item Download and place the \siplibjl\ package to any directory (say \texttt{dir}) in your computer
@@ -77,7 +78,7 @@ julia> generateSMPS(:DCAP, [2,2,2,10], "another/directory")
 \end{table}
 
 \subsubsection{Solving an instance and calculating its bounds}
-First, use \texttt{getModel(problem, params\_arr)} to construct a \jumpmodel\ object of an instance. For example:
+It requires a solver like \cplex. We assume that the users have installed \cplex\ on the computing environment. Also, a \julia\ package for interfacing with \cplex\ must be added by executing \texttt{Pkg.add("CPLEX")}. Then, we are ready to use these functionalities. First, use \texttt{getModel(problem, params\_arr)} to construct a \jumpmodel\ object of an instance. For example:
 \begin{lstlisting}[frame=single,language=julia]
 julia> m = getModel(:DCAP, [2,2,2,10])
 \end{lstlisting}
@@ -297,7 +298,7 @@ julia> model = generateSMPS(:DCAP, [3,4,2,100], splice=false)
 %\end{lstlisting}
 
 \subsection{Solving an instance and calculating its bounds} \label{tutorial:solve_instance}
-\siplibjl\ provides functions to solve instances inside \julia\ environment. To use the functions, any MIP solvers should be installed and included first. For example, one can install \cplex\ and enter \texttt{using CPLEX}.
+\siplibjl\ provides functions to solve instances inside \julia\ environment. To use the functions, any MIP solvers should be installed and included first. For example, one can install a version of \cplex\ and add the \julia\ package \texttt{CPLEX}. Then, include the solver in a \julia\ session by executing \texttt{using CPLEX}.
 \subsubsection{function \texttt{RP()}}
 \begin{lstlisting}[frame=single,language=julia]
 function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false)
