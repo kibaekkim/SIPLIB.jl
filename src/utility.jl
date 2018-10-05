@@ -332,7 +332,8 @@ function arrayParams()
 
 
     # SSLP
-    param = [[5,25], [5,50], [10,50], [15,45]]
+#    param = [[5,25], [5,50], [10,50], [15,45]]
+    param = [[5,25], [5,50]]
     nS = [50, 100]
     param_array = Any[]
     for p in param
@@ -341,6 +342,14 @@ function arrayParams()
             push!(param_array[end], n)
         end
     end
+    push!(param_array, [10,50,50])
+    push!(param_array, [10,50,100])
+    push!(param_array, [10,50,500])
+    push!(param_array, [10,50,1000])
+    push!(param_array, [10,50,2000])
+    push!(param_array, [10,45,5])
+    push!(param_array, [10,45,10])
+    push!(param_array, [10,45,15])
     param_set[:SSLP] = param_array
 
     # SUC

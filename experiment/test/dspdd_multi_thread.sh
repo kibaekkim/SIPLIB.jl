@@ -6,8 +6,6 @@
 #SBATCH --ntasks-per-node=36
 #SBATCH -t 00:05:00
 
-srun hostname
-
 export prob=DCAP
 export de_param=/home/choy/Siplib/experiment/DSP/parameters/de_3h.txt
 export dd_param=/home/choy/Siplib/experiment/DSP/parameters/dd_3h.txt

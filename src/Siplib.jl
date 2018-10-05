@@ -50,7 +50,7 @@ module Siplib
            generateBasicInstances
 
 end # end module Siplib
-
+#=
 using Siplib
 using CPLEX
 
@@ -78,7 +78,7 @@ generateSMPS(:AIRLIFT, [10], smpsfile=true)
 generateSMPS(:CARGO, [3], smpsfile=true)
 generateSMPS(:CHEM, [10], smpsfile=true)
 generateSMPS(:DCAP, [3,3,3,10], smpsfile=true)
-generateSMPS(:MPTSPs, ["D0",10,10], smpsfile=true)
+generateSMPS(:MPTSPs, ["D0",10,100], smpsfile=true)
 generateSMPS(:PHONE, [10], smpsfile=true)
 generateSMPS(:SDCP, [5,10,"FallWD",1], smpsfile=true)
 generateSMPS(:SIZES, [10], smpsfile=true)

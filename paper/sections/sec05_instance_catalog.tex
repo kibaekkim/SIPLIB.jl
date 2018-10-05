@@ -130,7 +130,7 @@ Finally, we define the following \textit{standard deviation of the recourse prob
 where $z^*(x^*,y_s)$ is the optimal objective value of a \textit{single scenario problem with a fixed first-stage solution $x^*$ of RP-EF} and a given scenario $s$. That is,
 \begin{subequations}
 	\begin{align}
-	\min_{y_s}\ z_{SS(s)}(x^*,y_s):=&\ c^\top x^*+q_s^\top y_s \label{ssp_ffs:obj}\\
+	z^*(x^*,y_s):=\min_{y_s}\ & c^\top x^*+q_s^\top y_s \label{ssp_ffs:obj}\\
 	\mathrm{s.t.}\ &	W_s y_s\ge h_s-T_s x^*,  \label{ssp_ffs:b}\\
 	&y_s \in Y. \label{ssp_ffs:c}
 	\end{align}
