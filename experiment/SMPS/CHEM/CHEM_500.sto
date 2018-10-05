@@ -1,0 +1,4495 @@
+STOCH         CHEM_500
+SCENARIOS     DISCRETE
+ SC SCEN1     'ROOT'    0.002000  PERIOD2
+ SC SCEN2     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     46.906045   
+    RHS       CON87     1.186393    
+    RHS       CON92     195.974390  
+    RHS       CON93     53.581818   
+    qszero[4,1]  OBJ       58.509255   
+    qszero[4,2]  OBJ       57.686543   
+    qszero[7,1]  OBJ       78.212678   
+    qszero[7,2]  OBJ       75.584100   
+ SC SCEN3     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     73.291925   
+    RHS       CON87     31.645230   
+    RHS       CON92     142.541404  
+    RHS       CON93     58.298420   
+    qszero[4,1]  OBJ       58.546289   
+    qszero[4,2]  OBJ       51.060075   
+    qszero[7,1]  OBJ       79.552961   
+    qszero[7,2]  OBJ       72.208470   
+ SC SCEN4     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.787451  
+    RHS       CON87     149.985699  
+    RHS       CON92     3.976091    
+    RHS       CON93     74.235441   
+    qszero[4,1]  OBJ       50.063180   
+    qszero[4,2]  OBJ       50.425443   
+    qszero[7,1]  OBJ       74.183984   
+    qszero[7,2]  OBJ       72.363620   
+ SC SCEN5     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     37.749327   
+    RHS       CON87     147.999955  
+    RHS       CON92     110.098737  
+    RHS       CON93     158.709480  
+    qszero[4,1]  OBJ       53.356583   
+    qszero[4,2]  OBJ       51.375595   
+    qszero[7,1]  OBJ       76.407428   
+    qszero[7,2]  OBJ       70.385452   
+ SC SCEN6     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     83.362663   
+    RHS       CON87     65.566196   
+    RHS       CON92     124.978393  
+    RHS       CON93     73.502888   
+    qszero[4,1]  OBJ       59.262260   
+    qszero[4,2]  OBJ       55.403239   
+    qszero[7,1]  OBJ       78.767619   
+    qszero[7,2]  OBJ       76.785502   
+ SC SCEN7     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     63.707678   
+    RHS       CON87     115.983457  
+    RHS       CON92     61.299124   
+    RHS       CON93     134.177007  
+    qszero[4,1]  OBJ       57.839968   
+    qszero[4,2]  OBJ       56.756951   
+    qszero[7,1]  OBJ       71.257736   
+    qszero[7,2]  OBJ       75.935694   
+ SC SCEN8     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     42.178535   
+    RHS       CON87     31.420856   
+    RHS       CON92     146.543870  
+    RHS       CON93     64.450777   
+    qszero[4,1]  OBJ       50.816830   
+    qszero[4,2]  OBJ       57.634912   
+    qszero[7,1]  OBJ       71.022292   
+    qszero[7,2]  OBJ       72.268691   
+ SC SCEN9     'ROOT'    0.002000  PERIOD2
+    RHS       CON86     37.706881   
+    RHS       CON87     3.056230    
+    RHS       CON92     125.903718  
+    RHS       CON93     125.852578  
+    qszero[4,1]  OBJ       57.821163   
+    qszero[4,2]  OBJ       52.917549   
+    qszero[7,1]  OBJ       73.619281   
+    qszero[7,2]  OBJ       70.233547   
+ SC SCEN10    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     43.155227   
+    RHS       CON87     128.926820  
+    RHS       CON92     48.719923   
+    RHS       CON93     72.451670   
+    qszero[4,1]  OBJ       50.461600   
+    qszero[4,2]  OBJ       53.823618   
+    qszero[7,1]  OBJ       74.832939   
+    qszero[7,2]  OBJ       73.489666   
+ SC SCEN11    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     11.542633   
+    RHS       CON87     96.059437   
+    RHS       CON92     74.158625   
+    RHS       CON93     172.758839  
+    qszero[4,1]  OBJ       57.652027   
+    qszero[4,2]  OBJ       57.611629   
+    qszero[7,1]  OBJ       79.371967   
+    qszero[7,2]  OBJ       70.389701   
+ SC SCEN12    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     131.031620  
+    RHS       CON87     41.787363   
+    RHS       CON92     14.031034   
+    RHS       CON93     29.173054   
+    qszero[4,1]  OBJ       52.508530   
+    qszero[4,2]  OBJ       58.923124   
+    qszero[7,1]  OBJ       72.941687   
+    qszero[7,2]  OBJ       78.644633   
+ SC SCEN13    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     112.696895  
+    RHS       CON87     96.732503   
+    RHS       CON92     83.130523   
+    RHS       CON93     54.900257   
+    qszero[4,1]  OBJ       53.819073   
+    qszero[4,2]  OBJ       57.726184   
+    qszero[7,1]  OBJ       79.091023   
+    qszero[7,2]  OBJ       74.294313   
+ SC SCEN14    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     11.673967   
+    RHS       CON87     127.227822  
+    RHS       CON92     63.630745   
+    RHS       CON93     20.246764   
+    qszero[4,1]  OBJ       56.920140   
+    qszero[4,2]  OBJ       58.516948   
+    qszero[7,1]  OBJ       74.476942   
+    qszero[7,2]  OBJ       78.737393   
+ SC SCEN15    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     12.845275   
+    RHS       CON87     82.980832   
+    RHS       CON92     1.325211    
+    RHS       CON93     16.925629   
+    qszero[4,1]  OBJ       58.460650   
+    qszero[4,2]  OBJ       53.765274   
+    qszero[7,1]  OBJ       71.698946   
+    qszero[7,2]  OBJ       72.868642   
+ SC SCEN16    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     69.502537   
+    RHS       CON87     27.873196   
+    RHS       CON92     55.740600   
+    RHS       CON93     110.740538  
+    qszero[4,1]  OBJ       52.434458   
+    qszero[4,2]  OBJ       58.675809   
+    qszero[7,1]  OBJ       78.256636   
+    qszero[7,2]  OBJ       75.455659   
+ SC SCEN17    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     16.797132   
+    RHS       CON87     146.446782  
+    RHS       CON92     16.926360   
+    RHS       CON93     119.078693  
+    qszero[4,1]  OBJ       50.191031   
+    qszero[4,2]  OBJ       51.516743   
+    qszero[7,1]  OBJ       79.387945   
+    qszero[7,2]  OBJ       75.483688   
+ SC SCEN18    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     7.742193    
+    RHS       CON87     80.704437   
+    RHS       CON92     169.677059  
+    RHS       CON93     105.795276  
+    qszero[4,1]  OBJ       54.687405   
+    qszero[4,2]  OBJ       57.518184   
+    qszero[7,1]  OBJ       79.568323   
+    qszero[7,2]  OBJ       73.013703   
+ SC SCEN19    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     68.353808   
+    RHS       CON87     41.909267   
+    RHS       CON92     89.156903   
+    RHS       CON93     77.376217   
+    qszero[4,1]  OBJ       56.073426   
+    qszero[4,2]  OBJ       50.436708   
+    qszero[7,1]  OBJ       73.364517   
+    qszero[7,2]  OBJ       77.822042   
+ SC SCEN20    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     26.736916   
+    RHS       CON87     82.347431   
+    RHS       CON92     181.015092  
+    RHS       CON93     117.564749  
+    qszero[4,1]  OBJ       58.545942   
+    qszero[4,2]  OBJ       51.583862   
+    qszero[7,1]  OBJ       70.166849   
+    qszero[7,2]  OBJ       71.464533   
+ SC SCEN21    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     55.645599   
+    RHS       CON87     134.124888  
+    RHS       CON92     130.596004  
+    RHS       CON93     9.237173    
+    qszero[4,1]  OBJ       51.244836   
+    qszero[4,2]  OBJ       55.063964   
+    qszero[7,1]  OBJ       74.089446   
+    qszero[7,2]  OBJ       76.630524   
+ SC SCEN22    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     97.208062   
+    RHS       CON87     62.555903   
+    RHS       CON92     194.567417  
+    RHS       CON93     88.417165   
+    qszero[4,1]  OBJ       59.088434   
+    qszero[4,2]  OBJ       56.969854   
+    qszero[7,1]  OBJ       77.416443   
+    qszero[7,2]  OBJ       73.826804   
+ SC SCEN23    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     21.684831   
+    RHS       CON87     93.360477   
+    RHS       CON92     75.745256   
+    RHS       CON93     93.016613   
+    qszero[4,1]  OBJ       58.239260   
+    qszero[4,2]  OBJ       58.952602   
+    qszero[7,1]  OBJ       72.248789   
+    qszero[7,2]  OBJ       77.875743   
+ SC SCEN24    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     130.850165  
+    RHS       CON87     78.746198   
+    RHS       CON92     54.977215   
+    RHS       CON93     115.146104  
+    qszero[4,1]  OBJ       56.492796   
+    qszero[4,2]  OBJ       54.733304   
+    qszero[7,1]  OBJ       78.991252   
+    qszero[7,2]  OBJ       78.350157   
+ SC SCEN25    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     36.238591   
+    RHS       CON87     132.725539  
+    RHS       CON92     174.314846  
+    RHS       CON93     71.097347   
+    qszero[4,1]  OBJ       58.714045   
+    qszero[4,2]  OBJ       53.431827   
+    qszero[7,1]  OBJ       73.214299   
+    qszero[7,2]  OBJ       70.317208   
+ SC SCEN26    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     66.134614   
+    RHS       CON87     60.700896   
+    RHS       CON92     44.088341   
+    RHS       CON93     109.340579  
+    qszero[4,1]  OBJ       50.863776   
+    qszero[4,2]  OBJ       54.262996   
+    qszero[7,1]  OBJ       78.426736   
+    qszero[7,2]  OBJ       75.497361   
+ SC SCEN27    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     110.518020  
+    RHS       CON87     143.070513  
+    RHS       CON92     134.268195  
+    RHS       CON93     88.892877   
+    qszero[4,1]  OBJ       58.687655   
+    qszero[4,2]  OBJ       51.039530   
+    qszero[7,1]  OBJ       70.582293   
+    qszero[7,2]  OBJ       77.967306   
+ SC SCEN28    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     14.277839   
+    RHS       CON87     77.951300   
+    RHS       CON92     38.039930   
+    RHS       CON93     3.702718    
+    qszero[4,1]  OBJ       51.403662   
+    qszero[4,2]  OBJ       52.113353   
+    qszero[7,1]  OBJ       78.520946   
+    qszero[7,2]  OBJ       77.377944   
+ SC SCEN29    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     2.031050    
+    RHS       CON87     45.509822   
+    RHS       CON92     60.694133   
+    RHS       CON93     72.870897   
+    qszero[4,1]  OBJ       55.574856   
+    qszero[4,2]  OBJ       53.679601   
+    qszero[7,1]  OBJ       76.512140   
+    qszero[7,2]  OBJ       73.860708   
+ SC SCEN30    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     105.383570  
+    RHS       CON87     89.480551   
+    RHS       CON92     180.159387  
+    RHS       CON93     85.482535   
+    qszero[4,1]  OBJ       52.300455   
+    qszero[4,2]  OBJ       50.570856   
+    qszero[7,1]  OBJ       70.809845   
+    qszero[7,2]  OBJ       70.385619   
+ SC SCEN31    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     95.840226   
+    RHS       CON87     130.852117  
+    RHS       CON92     17.871488   
+    RHS       CON93     137.325142  
+    qszero[4,1]  OBJ       58.100043   
+    qszero[4,2]  OBJ       57.026911   
+    qszero[7,1]  OBJ       73.372986   
+    qszero[7,2]  OBJ       75.881838   
+ SC SCEN32    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     82.295272   
+    RHS       CON87     39.448805   
+    RHS       CON92     136.216868  
+    RHS       CON93     196.408198  
+    qszero[4,1]  OBJ       53.035442   
+    qszero[4,2]  OBJ       56.506587   
+    qszero[7,1]  OBJ       70.001181   
+    qszero[7,2]  OBJ       78.581954   
+ SC SCEN33    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     78.966503   
+    RHS       CON87     69.752898   
+    RHS       CON92     179.031291  
+    RHS       CON93     116.761081  
+    qszero[4,1]  OBJ       57.951355   
+    qszero[4,2]  OBJ       59.634050   
+    qszero[7,1]  OBJ       78.054964   
+    qszero[7,2]  OBJ       74.114318   
+ SC SCEN34    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     41.327900   
+    RHS       CON87     69.273389   
+    RHS       CON92     159.648171  
+    RHS       CON93     92.145804   
+    qszero[4,1]  OBJ       50.979295   
+    qszero[4,2]  OBJ       53.155369   
+    qszero[7,1]  OBJ       77.113365   
+    qszero[7,2]  OBJ       78.591077   
+ SC SCEN35    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.779209  
+    RHS       CON87     43.310599   
+    RHS       CON92     47.106134   
+    RHS       CON93     51.044021   
+    qszero[4,1]  OBJ       51.550617   
+    qszero[4,2]  OBJ       56.117589   
+    qszero[7,1]  OBJ       79.091031   
+    qszero[7,2]  OBJ       71.873028   
+ SC SCEN36    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     99.184823   
+    RHS       CON87     29.185171   
+    RHS       CON92     150.407976  
+    RHS       CON93     124.960768  
+    qszero[4,1]  OBJ       51.534874   
+    qszero[4,2]  OBJ       58.618096   
+    qszero[7,1]  OBJ       76.275345   
+    qszero[7,2]  OBJ       78.449406   
+ SC SCEN37    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     58.979025   
+    RHS       CON87     148.611098  
+    RHS       CON92     39.789094   
+    RHS       CON93     170.056258  
+    qszero[4,1]  OBJ       51.987825   
+    qszero[4,2]  OBJ       57.770281   
+    qszero[7,1]  OBJ       75.510952   
+    qszero[7,2]  OBJ       76.708439   
+ SC SCEN38    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     82.550132   
+    RHS       CON87     87.117245   
+    RHS       CON92     167.580643  
+    RHS       CON93     5.359599    
+    qszero[4,1]  OBJ       55.054679   
+    qszero[4,2]  OBJ       52.682205   
+    qszero[7,1]  OBJ       73.654944   
+    qszero[7,2]  OBJ       74.755290   
+ SC SCEN39    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     115.253794  
+    RHS       CON87     77.928699   
+    RHS       CON92     74.397096   
+    RHS       CON93     133.917592  
+    qszero[4,1]  OBJ       54.655939   
+    qszero[4,2]  OBJ       57.521898   
+    qszero[7,1]  OBJ       71.311510   
+    qszero[7,2]  OBJ       78.524985   
+ SC SCEN40    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     77.229446   
+    RHS       CON87     149.720409  
+    RHS       CON92     99.694493   
+    RHS       CON93     116.008360  
+    qszero[4,1]  OBJ       58.335459   
+    qszero[4,2]  OBJ       51.123280   
+    qszero[7,1]  OBJ       70.035477   
+    qszero[7,2]  OBJ       72.170788   
+ SC SCEN41    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     90.552253   
+    RHS       CON87     113.816220  
+    RHS       CON92     13.237849   
+    RHS       CON93     197.907213  
+    qszero[4,1]  OBJ       50.010927   
+    qszero[4,2]  OBJ       53.689612   
+    qszero[7,1]  OBJ       71.625048   
+    qszero[7,2]  OBJ       79.249082   
+ SC SCEN42    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     88.642974   
+    RHS       CON87     108.312841  
+    RHS       CON92     140.042967  
+    RHS       CON93     166.440858  
+    qszero[4,1]  OBJ       58.897153   
+    qszero[4,2]  OBJ       51.244521   
+    qszero[7,1]  OBJ       76.395244   
+    qszero[7,2]  OBJ       71.886761   
+ SC SCEN43    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.981056  
+    RHS       CON87     57.661704   
+    RHS       CON92     181.949670  
+    RHS       CON93     137.194823  
+    qszero[4,1]  OBJ       56.836358   
+    qszero[4,2]  OBJ       53.376518   
+    qszero[7,1]  OBJ       77.031815   
+    qszero[7,2]  OBJ       71.472463   
+ SC SCEN44    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     48.001675   
+    RHS       CON87     129.843722  
+    RHS       CON92     38.362812   
+    RHS       CON93     91.632712   
+    qszero[4,1]  OBJ       59.135867   
+    qszero[4,2]  OBJ       59.313065   
+    qszero[7,1]  OBJ       70.951134   
+    qszero[7,2]  OBJ       70.153158   
+ SC SCEN45    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     68.185466   
+    RHS       CON87     63.042976   
+    RHS       CON92     154.333284  
+    RHS       CON93     121.680366  
+    qszero[4,1]  OBJ       58.857568   
+    qszero[4,2]  OBJ       57.285307   
+    qszero[7,1]  OBJ       71.284156   
+    qszero[7,2]  OBJ       77.315259   
+ SC SCEN46    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     33.772656   
+    RHS       CON87     42.925371   
+    RHS       CON92     24.414168   
+    RHS       CON93     163.108053  
+    qszero[4,1]  OBJ       55.993362   
+    qszero[4,2]  OBJ       50.211830   
+    qszero[7,1]  OBJ       72.003866   
+    qszero[7,2]  OBJ       72.368646   
+ SC SCEN47    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     46.371594   
+    RHS       CON87     25.558623   
+    RHS       CON92     161.518717  
+    RHS       CON93     151.037488  
+    qszero[4,1]  OBJ       50.676887   
+    qszero[4,2]  OBJ       51.717650   
+    qszero[7,1]  OBJ       78.768193   
+    qszero[7,2]  OBJ       76.765864   
+ SC SCEN48    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     22.074285   
+    RHS       CON87     34.509423   
+    RHS       CON92     125.580092  
+    RHS       CON93     40.529167   
+    qszero[4,1]  OBJ       59.011761   
+    qszero[4,2]  OBJ       59.194701   
+    qszero[7,1]  OBJ       74.637927   
+    qszero[7,2]  OBJ       74.980938   
+ SC SCEN49    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     13.939386   
+    RHS       CON87     102.212204  
+    RHS       CON92     32.378261   
+    RHS       CON93     38.904778   
+    qszero[4,1]  OBJ       55.888992   
+    qszero[4,2]  OBJ       50.986059   
+    qszero[7,1]  OBJ       70.141740   
+    qszero[7,2]  OBJ       74.265342   
+ SC SCEN50    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     114.341469  
+    RHS       CON87     50.862185   
+    RHS       CON92     40.726617   
+    RHS       CON93     78.297562   
+    qszero[4,1]  OBJ       53.021867   
+    qszero[4,2]  OBJ       51.708771   
+    qszero[7,1]  OBJ       72.967731   
+    qszero[7,2]  OBJ       79.299298   
+ SC SCEN51    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     20.814453   
+    RHS       CON87     68.466922   
+    RHS       CON92     120.245057  
+    RHS       CON93     56.662362   
+    qszero[4,1]  OBJ       56.026861   
+    qszero[4,2]  OBJ       55.928116   
+    qszero[7,1]  OBJ       70.886083   
+    qszero[7,2]  OBJ       78.002071   
+ SC SCEN52    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     110.987726  
+    RHS       CON87     122.400571  
+    RHS       CON92     46.744885   
+    RHS       CON93     155.499293  
+    qszero[4,1]  OBJ       51.208853   
+    qszero[4,2]  OBJ       56.358223   
+    qszero[7,1]  OBJ       77.312250   
+    qszero[7,2]  OBJ       73.574807   
+ SC SCEN53    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     17.179277   
+    RHS       CON87     112.339173  
+    RHS       CON92     164.006435  
+    RHS       CON93     86.688209   
+    qszero[4,1]  OBJ       57.714543   
+    qszero[4,2]  OBJ       50.214652   
+    qszero[7,1]  OBJ       75.569408   
+    qszero[7,2]  OBJ       70.192066   
+ SC SCEN54    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     131.716232  
+    RHS       CON87     139.572159  
+    RHS       CON92     105.943201  
+    RHS       CON93     94.478799   
+    qszero[4,1]  OBJ       51.502439   
+    qszero[4,2]  OBJ       56.030451   
+    qszero[7,1]  OBJ       76.557802   
+    qszero[7,2]  OBJ       71.999551   
+ SC SCEN55    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     134.443611  
+    RHS       CON87     99.471745   
+    RHS       CON92     60.707486   
+    RHS       CON93     59.909555   
+    qszero[4,1]  OBJ       51.257860   
+    qszero[4,2]  OBJ       54.953092   
+    qszero[7,1]  OBJ       76.520352   
+    qszero[7,2]  OBJ       76.338573   
+ SC SCEN56    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     70.919833   
+    RHS       CON87     132.078784  
+    RHS       CON92     71.057788   
+    RHS       CON93     150.683884  
+    qszero[4,1]  OBJ       53.916382   
+    qszero[4,2]  OBJ       52.545707   
+    qszero[7,1]  OBJ       74.784920   
+    qszero[7,2]  OBJ       72.007334   
+ SC SCEN57    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     2.115495    
+    RHS       CON87     75.416078   
+    RHS       CON92     93.764093   
+    RHS       CON93     41.328235   
+    qszero[4,1]  OBJ       58.376128   
+    qszero[4,2]  OBJ       59.179623   
+    qszero[7,1]  OBJ       79.528165   
+    qszero[7,2]  OBJ       77.540662   
+ SC SCEN58    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     33.727615   
+    RHS       CON87     43.178629   
+    RHS       CON92     12.923733   
+    RHS       CON93     138.180151  
+    qszero[4,1]  OBJ       57.947171   
+    qszero[4,2]  OBJ       55.081428   
+    qszero[7,1]  OBJ       72.559260   
+    qszero[7,2]  OBJ       79.304910   
+ SC SCEN59    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     15.604898   
+    RHS       CON87     71.362319   
+    RHS       CON92     132.488364  
+    RHS       CON93     123.083901  
+    qszero[4,1]  OBJ       57.675718   
+    qszero[4,2]  OBJ       58.946211   
+    qszero[7,1]  OBJ       74.869324   
+    qszero[7,2]  OBJ       73.092455   
+ SC SCEN60    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     62.502111   
+    RHS       CON87     78.208107   
+    RHS       CON92     155.376541  
+    RHS       CON93     72.787534   
+    qszero[4,1]  OBJ       56.784686   
+    qszero[4,2]  OBJ       50.574343   
+    qszero[7,1]  OBJ       70.603426   
+    qszero[7,2]  OBJ       74.216734   
+ SC SCEN61    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     136.274792  
+    RHS       CON87     15.424737   
+    RHS       CON92     11.369388   
+    RHS       CON93     185.500040  
+    qszero[4,1]  OBJ       52.262101   
+    qszero[4,2]  OBJ       57.872633   
+    qszero[7,1]  OBJ       76.579368   
+    qszero[7,2]  OBJ       74.573065   
+ SC SCEN62    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     100.563087  
+    RHS       CON87     113.312284  
+    RHS       CON92     114.489769  
+    RHS       CON93     23.792655   
+    qszero[4,1]  OBJ       52.228937   
+    qszero[4,2]  OBJ       52.132474   
+    qszero[7,1]  OBJ       78.914920   
+    qszero[7,2]  OBJ       74.415242   
+ SC SCEN63    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     97.358440   
+    RHS       CON87     99.060049   
+    RHS       CON92     78.644122   
+    RHS       CON93     86.285015   
+    qszero[4,1]  OBJ       51.191743   
+    qszero[4,2]  OBJ       58.310753   
+    qszero[7,1]  OBJ       77.959208   
+    qszero[7,2]  OBJ       71.907049   
+ SC SCEN64    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     135.931597  
+    RHS       CON87     41.312347   
+    RHS       CON92     130.014057  
+    RHS       CON93     104.302672  
+    qszero[4,1]  OBJ       54.663834   
+    qszero[4,2]  OBJ       58.792806   
+    qszero[7,1]  OBJ       72.069739   
+    qszero[7,2]  OBJ       76.816445   
+ SC SCEN65    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     130.488845  
+    RHS       CON87     21.246613   
+    RHS       CON92     148.871934  
+    RHS       CON93     24.839975   
+    qszero[4,1]  OBJ       55.756114   
+    qszero[4,2]  OBJ       56.111697   
+    qszero[7,1]  OBJ       73.634489   
+    qszero[7,2]  OBJ       70.523020   
+ SC SCEN66    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     145.516054  
+    RHS       CON87     130.973503  
+    RHS       CON92     29.656278   
+    RHS       CON93     25.371069   
+    qszero[4,1]  OBJ       55.671411   
+    qszero[4,2]  OBJ       51.129750   
+    qszero[7,1]  OBJ       77.907943   
+    qszero[7,2]  OBJ       70.214685   
+ SC SCEN67    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     35.150645   
+    RHS       CON87     115.802275  
+    RHS       CON92     73.547711   
+    RHS       CON93     111.459184  
+    qszero[4,1]  OBJ       56.526653   
+    qszero[4,2]  OBJ       52.473501   
+    qszero[7,1]  OBJ       77.360705   
+    qszero[7,2]  OBJ       79.885472   
+ SC SCEN68    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     87.815126   
+    RHS       CON87     82.514660   
+    RHS       CON92     14.261544   
+    RHS       CON93     45.276041   
+    qszero[4,1]  OBJ       51.533447   
+    qszero[4,2]  OBJ       58.496939   
+    qszero[7,1]  OBJ       76.871069   
+    qszero[7,2]  OBJ       72.335050   
+ SC SCEN69    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     70.984540   
+    RHS       CON87     114.903758  
+    RHS       CON92     13.114579   
+    RHS       CON93     122.384596  
+    qszero[4,1]  OBJ       52.613867   
+    qszero[4,2]  OBJ       59.489792   
+    qszero[7,1]  OBJ       71.917342   
+    qszero[7,2]  OBJ       73.120174   
+ SC SCEN70    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     131.045696  
+    RHS       CON87     71.883262   
+    RHS       CON92     134.096167  
+    RHS       CON93     138.182946  
+    qszero[4,1]  OBJ       52.117894   
+    qszero[4,2]  OBJ       55.133494   
+    qszero[7,1]  OBJ       72.206676   
+    qszero[7,2]  OBJ       73.518121   
+ SC SCEN71    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     53.952327   
+    RHS       CON87     91.326082   
+    RHS       CON92     157.027317  
+    RHS       CON93     191.566871  
+    qszero[4,1]  OBJ       58.471126   
+    qszero[4,2]  OBJ       50.963357   
+    qszero[7,1]  OBJ       74.101264   
+    qszero[7,2]  OBJ       76.314498   
+ SC SCEN72    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     148.491387  
+    RHS       CON87     100.785988  
+    RHS       CON92     185.725003  
+    RHS       CON93     18.095716   
+    qszero[4,1]  OBJ       59.576539   
+    qszero[4,2]  OBJ       55.318241   
+    qszero[7,1]  OBJ       73.960045   
+    qszero[7,2]  OBJ       77.816858   
+ SC SCEN73    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     51.583447   
+    RHS       CON87     11.898816   
+    RHS       CON92     154.938836  
+    RHS       CON93     27.072964   
+    qszero[4,1]  OBJ       51.326044   
+    qszero[4,2]  OBJ       54.644903   
+    qszero[7,1]  OBJ       78.760430   
+    qszero[7,2]  OBJ       74.878017   
+ SC SCEN74    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     26.097246   
+    RHS       CON87     137.549141  
+    RHS       CON92     28.017760   
+    RHS       CON93     91.400572   
+    qszero[4,1]  OBJ       50.081704   
+    qszero[4,2]  OBJ       51.967141   
+    qszero[7,1]  OBJ       79.946694   
+    qszero[7,2]  OBJ       79.254198   
+ SC SCEN75    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     134.314376  
+    RHS       CON87     146.568343  
+    RHS       CON92     130.394481  
+    RHS       CON93     170.223674  
+    qszero[4,1]  OBJ       51.825619   
+    qszero[4,2]  OBJ       55.335285   
+    qszero[7,1]  OBJ       70.758125   
+    qszero[7,2]  OBJ       72.103213   
+ SC SCEN76    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     78.834503   
+    RHS       CON87     119.887349  
+    RHS       CON92     147.569871  
+    RHS       CON93     166.133768  
+    qszero[4,1]  OBJ       53.962148   
+    qszero[4,2]  OBJ       53.825676   
+    qszero[7,1]  OBJ       74.694412   
+    qszero[7,2]  OBJ       71.548295   
+ SC SCEN77    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     21.514017   
+    RHS       CON87     34.537511   
+    RHS       CON92     113.446029  
+    RHS       CON93     135.199040  
+    qszero[4,1]  OBJ       58.695132   
+    qszero[4,2]  OBJ       50.119048   
+    qszero[7,1]  OBJ       77.451991   
+    qszero[7,2]  OBJ       77.320212   
+ SC SCEN78    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     103.259418  
+    RHS       CON87     40.559320   
+    RHS       CON92     79.438422   
+    RHS       CON93     63.428802   
+    qszero[4,1]  OBJ       55.817504   
+    qszero[4,2]  OBJ       55.957958   
+    qszero[7,1]  OBJ       78.325032   
+    qszero[7,2]  OBJ       71.291978   
+ SC SCEN79    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     9.125938    
+    RHS       CON87     95.754386   
+    RHS       CON92     112.314082  
+    RHS       CON93     112.514827  
+    qszero[4,1]  OBJ       55.333652   
+    qszero[4,2]  OBJ       50.833965   
+    qszero[7,1]  OBJ       70.249816   
+    qszero[7,2]  OBJ       73.158871   
+ SC SCEN80    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     50.020032   
+    RHS       CON87     85.020231   
+    RHS       CON92     97.302040   
+    RHS       CON93     156.770408  
+    qszero[4,1]  OBJ       54.507428   
+    qszero[4,2]  OBJ       51.507174   
+    qszero[7,1]  OBJ       79.303058   
+    qszero[7,2]  OBJ       76.017190   
+ SC SCEN81    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     103.172768  
+    RHS       CON87     20.505367   
+    RHS       CON92     146.379982  
+    RHS       CON93     56.309064   
+    qszero[4,1]  OBJ       51.002020   
+    qszero[4,2]  OBJ       56.498622   
+    qszero[7,1]  OBJ       75.387636   
+    qszero[7,2]  OBJ       74.155633   
+ SC SCEN82    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     54.097378   
+    RHS       CON87     127.742439  
+    RHS       CON92     155.925204  
+    RHS       CON93     138.690750  
+    qszero[4,1]  OBJ       53.735761   
+    qszero[4,2]  OBJ       59.076581   
+    qszero[7,1]  OBJ       70.267108   
+    qszero[7,2]  OBJ       78.029052   
+ SC SCEN83    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     71.315845   
+    RHS       CON87     134.615051  
+    RHS       CON92     26.836568   
+    RHS       CON93     35.066211   
+    qszero[4,1]  OBJ       58.597223   
+    qszero[4,2]  OBJ       53.687449   
+    qszero[7,1]  OBJ       78.931684   
+    qszero[7,2]  OBJ       73.462815   
+ SC SCEN84    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     13.602619   
+    RHS       CON87     2.953655    
+    RHS       CON92     65.695727   
+    RHS       CON93     47.259598   
+    qszero[4,1]  OBJ       50.743899   
+    qszero[4,2]  OBJ       51.621754   
+    qszero[7,1]  OBJ       75.207247   
+    qszero[7,2]  OBJ       79.384352   
+ SC SCEN85    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     28.322381   
+    RHS       CON87     8.753496    
+    RHS       CON92     66.383138   
+    RHS       CON93     98.021848   
+    qszero[4,1]  OBJ       56.513870   
+    qszero[4,2]  OBJ       59.628415   
+    qszero[7,1]  OBJ       70.299932   
+    qszero[7,2]  OBJ       79.800307   
+ SC SCEN86    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     119.935139  
+    RHS       CON87     75.688733   
+    RHS       CON92     145.867435  
+    RHS       CON93     126.338350  
+    qszero[4,1]  OBJ       51.304022   
+    qszero[4,2]  OBJ       50.518368   
+    qszero[7,1]  OBJ       70.045007   
+    qszero[7,2]  OBJ       79.257755   
+ SC SCEN87    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     11.487020   
+    RHS       CON87     11.234050   
+    RHS       CON92     171.098134  
+    RHS       CON93     162.948053  
+    qszero[4,1]  OBJ       52.646494   
+    qszero[4,2]  OBJ       56.316229   
+    qszero[7,1]  OBJ       78.100841   
+    qszero[7,2]  OBJ       70.740113   
+ SC SCEN88    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     97.227846   
+    RHS       CON87     7.614478    
+    RHS       CON92     174.054003  
+    RHS       CON93     132.465361  
+    qszero[4,1]  OBJ       56.540729   
+    qszero[4,2]  OBJ       53.960408   
+    qszero[7,1]  OBJ       72.570116   
+    qszero[7,2]  OBJ       74.734087   
+ SC SCEN89    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     56.370761   
+    RHS       CON87     66.622610   
+    RHS       CON92     34.652403   
+    RHS       CON93     124.584173  
+    qszero[4,1]  OBJ       56.504706   
+    qszero[4,2]  OBJ       57.791251   
+    qszero[7,1]  OBJ       73.912386   
+    qszero[7,2]  OBJ       75.694782   
+ SC SCEN90    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     24.149285   
+    RHS       CON87     82.422976   
+    RHS       CON92     84.759097   
+    RHS       CON93     38.149345   
+    qszero[4,1]  OBJ       58.477588   
+    qszero[4,2]  OBJ       55.113192   
+    qszero[7,1]  OBJ       77.173342   
+    qszero[7,2]  OBJ       70.046791   
+ SC SCEN91    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     92.158016   
+    RHS       CON87     78.148653   
+    RHS       CON92     61.394395   
+    RHS       CON93     7.255755    
+    qszero[4,1]  OBJ       59.581761   
+    qszero[4,2]  OBJ       50.863311   
+    qszero[7,1]  OBJ       71.016842   
+    qszero[7,2]  OBJ       75.166114   
+ SC SCEN92    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     101.776802  
+    RHS       CON87     132.907204  
+    RHS       CON92     45.998541   
+    RHS       CON93     140.282735  
+    qszero[4,1]  OBJ       59.283332   
+    qszero[4,2]  OBJ       52.593914   
+    qszero[7,1]  OBJ       74.761067   
+    qszero[7,2]  OBJ       74.295042   
+ SC SCEN93    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     114.424434  
+    RHS       CON87     30.960323   
+    RHS       CON92     173.399946  
+    RHS       CON93     164.106726  
+    qszero[4,1]  OBJ       59.884276   
+    qszero[4,2]  OBJ       57.420970   
+    qszero[7,1]  OBJ       73.066451   
+    qszero[7,2]  OBJ       73.524774   
+ SC SCEN94    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     35.068893   
+    RHS       CON87     35.777383   
+    RHS       CON92     9.859971    
+    RHS       CON93     68.983556   
+    qszero[4,1]  OBJ       57.991669   
+    qszero[4,2]  OBJ       56.591120   
+    qszero[7,1]  OBJ       72.141742   
+    qszero[7,2]  OBJ       77.766862   
+ SC SCEN95    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     139.788655  
+    RHS       CON87     129.984784  
+    RHS       CON92     50.759411   
+    RHS       CON93     85.272883   
+    qszero[4,1]  OBJ       52.292594   
+    qszero[4,2]  OBJ       50.185442   
+    qszero[7,1]  OBJ       70.738505   
+    qszero[7,2]  OBJ       72.848285   
+ SC SCEN96    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     94.235129   
+    RHS       CON87     73.150024   
+    RHS       CON92     101.200425  
+    RHS       CON93     68.306135   
+    qszero[4,1]  OBJ       54.477909   
+    qszero[4,2]  OBJ       58.260995   
+    qszero[7,1]  OBJ       70.328381   
+    qszero[7,2]  OBJ       79.228366   
+ SC SCEN97    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     139.128144  
+    RHS       CON87     22.471844   
+    RHS       CON92     194.926703  
+    RHS       CON93     135.832815  
+    qszero[4,1]  OBJ       53.613113   
+    qszero[4,2]  OBJ       57.005535   
+    qszero[7,1]  OBJ       77.269352   
+    qszero[7,2]  OBJ       79.959558   
+ SC SCEN98    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     91.844431   
+    RHS       CON87     116.414159  
+    RHS       CON92     80.739953   
+    RHS       CON93     173.979787  
+    qszero[4,1]  OBJ       58.900137   
+    qszero[4,2]  OBJ       50.542412   
+    qszero[7,1]  OBJ       75.610132   
+    qszero[7,2]  OBJ       73.454364   
+ SC SCEN99    'ROOT'    0.002000  PERIOD2
+    RHS       CON86     54.600508   
+    RHS       CON87     43.096668   
+    RHS       CON92     126.272753  
+    RHS       CON93     76.417404   
+    qszero[4,1]  OBJ       54.964307   
+    qszero[4,2]  OBJ       52.668253   
+    qszero[7,1]  OBJ       72.883901   
+    qszero[7,2]  OBJ       75.083330   
+ SC SCEN100   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     38.799358   
+    RHS       CON87     79.559326   
+    RHS       CON92     176.359629  
+    RHS       CON93     32.675949   
+    qszero[4,1]  OBJ       57.552554   
+    qszero[4,2]  OBJ       58.927313   
+    qszero[7,1]  OBJ       77.344863   
+    qszero[7,2]  OBJ       73.585770   
+ SC SCEN101   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     71.578288   
+    RHS       CON87     95.635892   
+    RHS       CON92     123.387314  
+    RHS       CON93     97.443445   
+    qszero[4,1]  OBJ       57.281634   
+    qszero[4,2]  OBJ       57.419297   
+    qszero[7,1]  OBJ       77.934962   
+    qszero[7,2]  OBJ       76.834331   
+ SC SCEN102   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     110.576832  
+    RHS       CON87     82.785077   
+    RHS       CON92     44.099818   
+    RHS       CON93     144.897341  
+    qszero[4,1]  OBJ       58.761037   
+    qszero[4,2]  OBJ       52.116503   
+    qszero[7,1]  OBJ       72.969209   
+    qszero[7,2]  OBJ       70.791504   
+ SC SCEN103   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     138.524648  
+    RHS       CON87     121.928043  
+    RHS       CON92     190.024450  
+    RHS       CON93     183.113039  
+    qszero[4,1]  OBJ       51.050840   
+    qszero[4,2]  OBJ       55.383159   
+    qszero[7,1]  OBJ       77.311414   
+    qszero[7,2]  OBJ       76.393211   
+ SC SCEN104   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     27.813964   
+    RHS       CON87     30.808212   
+    RHS       CON92     93.752484   
+    RHS       CON93     104.865626  
+    qszero[4,1]  OBJ       55.338045   
+    qszero[4,2]  OBJ       54.584729   
+    qszero[7,1]  OBJ       77.008777   
+    qszero[7,2]  OBJ       72.178714   
+ SC SCEN105   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     13.221558   
+    RHS       CON87     101.168000  
+    RHS       CON92     33.530222   
+    RHS       CON93     85.157828   
+    qszero[4,1]  OBJ       58.144407   
+    qszero[4,2]  OBJ       50.545621   
+    qszero[7,1]  OBJ       73.988207   
+    qszero[7,2]  OBJ       77.437677   
+ SC SCEN106   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     50.691330   
+    RHS       CON87     132.028389  
+    RHS       CON92     123.054857  
+    RHS       CON93     111.712216  
+    qszero[4,1]  OBJ       59.070150   
+    qszero[4,2]  OBJ       58.842456   
+    qszero[7,1]  OBJ       71.285158   
+    qszero[7,2]  OBJ       72.829941   
+ SC SCEN107   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     64.718959   
+    RHS       CON87     139.763365  
+    RHS       CON92     4.300632    
+    RHS       CON93     156.552891  
+    qszero[4,1]  OBJ       56.811594   
+    qszero[4,2]  OBJ       50.542440   
+    qszero[7,1]  OBJ       71.089045   
+    qszero[7,2]  OBJ       76.695061   
+ SC SCEN108   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     134.609317  
+    RHS       CON87     82.973712   
+    RHS       CON92     42.629954   
+    RHS       CON93     88.354760   
+    qszero[4,1]  OBJ       58.189534   
+    qszero[4,2]  OBJ       56.803718   
+    qszero[7,1]  OBJ       74.467193   
+    qszero[7,2]  OBJ       76.559257   
+ SC SCEN109   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     148.678224  
+    RHS       CON87     33.052155   
+    RHS       CON92     10.767646   
+    RHS       CON93     143.203365  
+    qszero[4,1]  OBJ       57.819852   
+    qszero[4,2]  OBJ       54.831226   
+    qszero[7,1]  OBJ       76.725119   
+    qszero[7,2]  OBJ       72.747301   
+ SC SCEN110   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     132.901466  
+    RHS       CON87     142.755831  
+    RHS       CON92     191.839542  
+    RHS       CON93     198.896973  
+    qszero[4,1]  OBJ       57.329790   
+    qszero[4,2]  OBJ       54.247579   
+    qszero[7,1]  OBJ       76.189996   
+    qszero[7,2]  OBJ       71.601207   
+ SC SCEN111   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.607871  
+    RHS       CON87     54.642664   
+    RHS       CON92     95.415438   
+    RHS       CON93     193.450611  
+    qszero[4,1]  OBJ       50.600653   
+    qszero[4,2]  OBJ       54.661259   
+    qszero[7,1]  OBJ       74.447511   
+    qszero[7,2]  OBJ       75.056418   
+ SC SCEN112   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     75.453829   
+    RHS       CON87     45.197470   
+    RHS       CON92     59.086308   
+    RHS       CON93     185.251915  
+    qszero[4,1]  OBJ       51.266132   
+    qszero[4,2]  OBJ       58.593366   
+    qszero[7,1]  OBJ       73.090053   
+    qszero[7,2]  OBJ       74.717514   
+ SC SCEN113   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     27.714956   
+    RHS       CON87     19.298112   
+    RHS       CON92     176.986901  
+    RHS       CON93     191.027023  
+    qszero[4,1]  OBJ       50.074715   
+    qszero[4,2]  OBJ       58.622767   
+    qszero[7,1]  OBJ       76.960185   
+    qszero[7,2]  OBJ       77.884736   
+ SC SCEN114   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     109.559972  
+    RHS       CON87     89.968448   
+    RHS       CON92     2.571003    
+    RHS       CON93     140.193032  
+    qszero[4,1]  OBJ       58.651656   
+    qszero[4,2]  OBJ       53.469593   
+    qszero[7,1]  OBJ       75.369564   
+    qszero[7,2]  OBJ       79.508450   
+ SC SCEN115   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     84.617285   
+    RHS       CON87     70.510117   
+    RHS       CON92     51.165493   
+    RHS       CON93     32.558978   
+    qszero[4,1]  OBJ       57.333341   
+    qszero[4,2]  OBJ       51.431982   
+    qszero[7,1]  OBJ       70.679192   
+    qszero[7,2]  OBJ       72.729340   
+ SC SCEN116   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     39.311756   
+    RHS       CON87     91.022154   
+    RHS       CON92     91.512354   
+    RHS       CON93     145.394132  
+    qszero[4,1]  OBJ       52.070936   
+    qszero[4,2]  OBJ       55.826601   
+    qszero[7,1]  OBJ       79.296762   
+    qszero[7,2]  OBJ       76.085839   
+ SC SCEN117   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     33.545576   
+    RHS       CON87     37.341242   
+    RHS       CON92     175.481175  
+    RHS       CON93     163.715922  
+    qszero[4,1]  OBJ       51.327918   
+    qszero[4,2]  OBJ       59.198178   
+    qszero[7,1]  OBJ       78.724407   
+    qszero[7,2]  OBJ       73.891142   
+ SC SCEN118   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     131.062695  
+    RHS       CON87     77.816761   
+    RHS       CON92     126.063023  
+    RHS       CON93     68.376196   
+    qszero[4,1]  OBJ       53.144417   
+    qszero[4,2]  OBJ       56.327958   
+    qszero[7,1]  OBJ       73.631295   
+    qszero[7,2]  OBJ       74.742250   
+ SC SCEN119   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     101.379236  
+    RHS       CON87     100.816324  
+    RHS       CON92     173.011581  
+    RHS       CON93     99.214000   
+    qszero[4,1]  OBJ       54.481930   
+    qszero[4,2]  OBJ       57.805213   
+    qszero[7,1]  OBJ       77.832815   
+    qszero[7,2]  OBJ       77.409023   
+ SC SCEN120   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     62.135876   
+    RHS       CON87     134.129094  
+    RHS       CON92     88.510748   
+    RHS       CON93     164.741624  
+    qszero[4,1]  OBJ       59.084297   
+    qszero[4,2]  OBJ       53.338285   
+    qszero[7,1]  OBJ       73.377695   
+    qszero[7,2]  OBJ       70.706288   
+ SC SCEN121   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     140.450895  
+    RHS       CON87     40.239443   
+    RHS       CON92     76.923441   
+    RHS       CON93     170.539880  
+    qszero[4,1]  OBJ       54.025428   
+    qszero[4,2]  OBJ       52.113258   
+    qszero[7,1]  OBJ       74.407091   
+    qszero[7,2]  OBJ       74.290566   
+ SC SCEN122   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     87.451198   
+    RHS       CON87     84.686215   
+    RHS       CON92     125.912686  
+    RHS       CON93     39.421500   
+    qszero[4,1]  OBJ       50.536191   
+    qszero[4,2]  OBJ       56.046134   
+    qszero[7,1]  OBJ       77.950579   
+    qszero[7,2]  OBJ       78.236341   
+ SC SCEN123   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     61.937515   
+    RHS       CON87     70.453881   
+    RHS       CON92     93.819892   
+    RHS       CON93     58.147508   
+    qszero[4,1]  OBJ       52.973056   
+    qszero[4,2]  OBJ       53.141201   
+    qszero[7,1]  OBJ       74.788508   
+    qszero[7,2]  OBJ       74.447481   
+ SC SCEN124   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     120.380061  
+    RHS       CON87     104.970129  
+    RHS       CON92     176.590812  
+    RHS       CON93     165.009418  
+    qszero[4,1]  OBJ       54.920257   
+    qszero[4,2]  OBJ       59.442062   
+    qszero[7,1]  OBJ       71.828993   
+    qszero[7,2]  OBJ       75.037201   
+ SC SCEN125   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     14.892525   
+    RHS       CON87     56.912005   
+    RHS       CON92     175.224385  
+    RHS       CON93     71.797698   
+    qszero[4,1]  OBJ       51.505240   
+    qszero[4,2]  OBJ       57.867523   
+    qszero[7,1]  OBJ       73.579368   
+    qszero[7,2]  OBJ       72.104935   
+ SC SCEN126   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.905992  
+    RHS       CON87     34.413598   
+    RHS       CON92     45.399382   
+    RHS       CON93     26.961989   
+    qszero[4,1]  OBJ       50.345477   
+    qszero[4,2]  OBJ       51.507881   
+    qszero[7,1]  OBJ       73.651107   
+    qszero[7,2]  OBJ       71.626076   
+ SC SCEN127   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     46.362925   
+    RHS       CON87     50.358082   
+    RHS       CON92     3.346932    
+    RHS       CON93     70.798073   
+    qszero[4,1]  OBJ       59.828974   
+    qszero[4,2]  OBJ       59.909472   
+    qszero[7,1]  OBJ       78.333658   
+    qszero[7,2]  OBJ       77.791808   
+ SC SCEN128   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     25.242608   
+    RHS       CON87     118.390260  
+    RHS       CON92     199.528855  
+    RHS       CON93     140.850749  
+    qszero[4,1]  OBJ       55.734834   
+    qszero[4,2]  OBJ       52.213617   
+    qszero[7,1]  OBJ       76.045912   
+    qszero[7,2]  OBJ       71.851347   
+ SC SCEN129   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     91.484582   
+    RHS       CON87     7.122380    
+    RHS       CON92     144.926903  
+    RHS       CON93     85.641361   
+    qszero[4,1]  OBJ       58.446440   
+    qszero[4,2]  OBJ       58.801242   
+    qszero[7,1]  OBJ       73.179128   
+    qszero[7,2]  OBJ       77.477269   
+ SC SCEN130   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     28.868159   
+    RHS       CON87     8.570440    
+    RHS       CON92     84.078994   
+    RHS       CON93     31.812768   
+    qszero[4,1]  OBJ       56.636693   
+    qszero[4,2]  OBJ       54.609346   
+    qszero[7,1]  OBJ       77.738149   
+    qszero[7,2]  OBJ       75.456736   
+ SC SCEN131   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     18.490785   
+    RHS       CON87     75.492281   
+    RHS       CON92     35.915352   
+    RHS       CON93     111.527478  
+    qszero[4,1]  OBJ       58.397336   
+    qszero[4,2]  OBJ       58.969862   
+    qszero[7,1]  OBJ       79.684567   
+    qszero[7,2]  OBJ       72.855332   
+ SC SCEN132   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     60.462498   
+    RHS       CON87     82.020331   
+    RHS       CON92     159.772138  
+    RHS       CON93     119.219870  
+    qszero[4,1]  OBJ       50.413632   
+    qszero[4,2]  OBJ       56.495274   
+    qszero[7,1]  OBJ       75.617518   
+    qszero[7,2]  OBJ       72.208673   
+ SC SCEN133   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     149.195717  
+    RHS       CON87     65.238835   
+    RHS       CON92     43.903174   
+    RHS       CON93     48.633894   
+    qszero[4,1]  OBJ       52.658989   
+    qszero[4,2]  OBJ       50.044954   
+    qszero[7,1]  OBJ       71.657909   
+    qszero[7,2]  OBJ       74.792573   
+ SC SCEN134   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     60.252094   
+    RHS       CON87     109.216943  
+    RHS       CON92     49.765639   
+    RHS       CON93     41.294644   
+    qszero[4,1]  OBJ       51.129833   
+    qszero[4,2]  OBJ       51.703693   
+    qszero[7,1]  OBJ       71.326429   
+    qszero[7,2]  OBJ       74.730848   
+ SC SCEN135   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     27.735720   
+    RHS       CON87     28.943267   
+    RHS       CON92     40.973877   
+    RHS       CON93     126.025077  
+    qszero[4,1]  OBJ       51.633072   
+    qszero[4,2]  OBJ       56.748605   
+    qszero[7,1]  OBJ       77.247285   
+    qszero[7,2]  OBJ       73.698209   
+ SC SCEN136   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     42.627988   
+    RHS       CON87     34.925963   
+    RHS       CON92     39.790003   
+    RHS       CON93     24.847546   
+    qszero[4,1]  OBJ       55.814775   
+    qszero[4,2]  OBJ       57.662355   
+    qszero[7,1]  OBJ       78.614927   
+    qszero[7,2]  OBJ       78.249048   
+ SC SCEN137   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     130.458410  
+    RHS       CON87     116.015642  
+    RHS       CON92     19.435005   
+    RHS       CON93     118.253000  
+    qszero[4,1]  OBJ       57.333495   
+    qszero[4,2]  OBJ       54.034865   
+    qszero[7,1]  OBJ       75.936645   
+    qszero[7,2]  OBJ       73.693068   
+ SC SCEN138   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     56.150408   
+    RHS       CON87     136.014445  
+    RHS       CON92     198.022411  
+    RHS       CON93     131.342708  
+    qszero[4,1]  OBJ       56.198690   
+    qszero[4,2]  OBJ       57.777718   
+    qszero[7,1]  OBJ       75.019773   
+    qszero[7,2]  OBJ       77.107998   
+ SC SCEN139   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     104.068371  
+    RHS       CON87     115.128797  
+    RHS       CON92     166.347317  
+    RHS       CON93     67.143453   
+    qszero[4,1]  OBJ       59.433561   
+    qszero[4,2]  OBJ       55.061762   
+    qszero[7,1]  OBJ       75.884543   
+    qszero[7,2]  OBJ       72.388526   
+ SC SCEN140   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     1.785962    
+    RHS       CON87     1.517664    
+    RHS       CON92     27.071594   
+    RHS       CON93     25.839664   
+    qszero[4,1]  OBJ       57.608885   
+    qszero[4,2]  OBJ       51.475427   
+    qszero[7,1]  OBJ       78.040372   
+    qszero[7,2]  OBJ       76.386636   
+ SC SCEN141   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     120.815420  
+    RHS       CON87     91.095789   
+    RHS       CON92     125.766532  
+    RHS       CON93     23.715182   
+    qszero[4,1]  OBJ       54.956882   
+    qszero[4,2]  OBJ       52.556462   
+    qszero[7,1]  OBJ       71.721401   
+    qszero[7,2]  OBJ       72.772294   
+ SC SCEN142   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     36.062386   
+    RHS       CON87     35.024679   
+    RHS       CON92     178.155031  
+    RHS       CON93     154.484200  
+    qszero[4,1]  OBJ       59.753434   
+    qszero[4,2]  OBJ       56.801337   
+    qszero[7,1]  OBJ       71.671896   
+    qszero[7,2]  OBJ       74.687426   
+ SC SCEN143   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     76.317920   
+    RHS       CON87     27.116804   
+    RHS       CON92     156.357141  
+    RHS       CON93     24.015086   
+    qszero[4,1]  OBJ       57.847836   
+    qszero[4,2]  OBJ       57.594180   
+    qszero[7,1]  OBJ       78.404800   
+    qszero[7,2]  OBJ       79.601320   
+ SC SCEN144   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     128.956038  
+    RHS       CON87     53.427261   
+    RHS       CON92     80.946176   
+    RHS       CON93     151.582254  
+    qszero[4,1]  OBJ       52.765139   
+    qszero[4,2]  OBJ       51.113954   
+    qszero[7,1]  OBJ       74.304588   
+    qszero[7,2]  OBJ       74.467057   
+ SC SCEN145   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     31.992638   
+    RHS       CON87     19.500670   
+    RHS       CON92     134.911757  
+    RHS       CON93     185.261430  
+    qszero[4,1]  OBJ       53.885783   
+    qszero[4,2]  OBJ       55.965142   
+    qszero[7,1]  OBJ       70.221699   
+    qszero[7,2]  OBJ       75.851054   
+ SC SCEN146   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     134.386471  
+    RHS       CON87     148.547837  
+    RHS       CON92     5.185867    
+    RHS       CON93     106.762303  
+    qszero[4,1]  OBJ       59.288465   
+    qszero[4,2]  OBJ       53.149677   
+    qszero[7,1]  OBJ       70.178798   
+    qszero[7,2]  OBJ       70.995423   
+ SC SCEN147   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     40.533102   
+    RHS       CON87     61.641872   
+    RHS       CON92     144.844356  
+    RHS       CON93     65.692614   
+    qszero[4,1]  OBJ       50.541571   
+    qszero[4,2]  OBJ       50.521097   
+    qszero[7,1]  OBJ       70.265490   
+    qszero[7,2]  OBJ       70.985329   
+ SC SCEN148   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     4.466497    
+    RHS       CON87     18.966255   
+    RHS       CON92     20.786260   
+    RHS       CON93     196.803053  
+    qszero[4,1]  OBJ       57.495118   
+    qszero[4,2]  OBJ       56.885353   
+    qszero[7,1]  OBJ       76.292930   
+    qszero[7,2]  OBJ       74.169363   
+ SC SCEN149   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     55.723566   
+    RHS       CON87     15.553600   
+    RHS       CON92     98.276375   
+    RHS       CON93     186.360464  
+    qszero[4,1]  OBJ       53.826452   
+    qszero[4,2]  OBJ       51.077252   
+    qszero[7,1]  OBJ       73.719822   
+    qszero[7,2]  OBJ       76.078464   
+ SC SCEN150   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     17.189591   
+    RHS       CON87     43.427787   
+    RHS       CON92     152.332654  
+    RHS       CON93     20.177588   
+    qszero[4,1]  OBJ       59.361730   
+    qszero[4,2]  OBJ       59.587165   
+    qszero[7,1]  OBJ       71.737742   
+    qszero[7,2]  OBJ       78.017531   
+ SC SCEN151   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     111.710295  
+    RHS       CON87     23.633459   
+    RHS       CON92     109.679122  
+    RHS       CON93     125.175592  
+    qszero[4,1]  OBJ       59.642051   
+    qszero[4,2]  OBJ       53.454194   
+    qszero[7,1]  OBJ       78.965483   
+    qszero[7,2]  OBJ       76.244432   
+ SC SCEN152   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     92.748357   
+    RHS       CON87     85.918353   
+    RHS       CON92     66.421051   
+    RHS       CON93     168.329178  
+    qszero[4,1]  OBJ       56.106140   
+    qszero[4,2]  OBJ       51.907720   
+    qszero[7,1]  OBJ       78.468128   
+    qszero[7,2]  OBJ       73.018971   
+ SC SCEN153   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     136.763384  
+    RHS       CON87     144.553498  
+    RHS       CON92     162.265136  
+    RHS       CON93     71.434216   
+    qszero[4,1]  OBJ       54.957382   
+    qszero[4,2]  OBJ       56.256479   
+    qszero[7,1]  OBJ       79.493664   
+    qszero[7,2]  OBJ       78.708046   
+ SC SCEN154   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     148.944693  
+    RHS       CON87     22.083729   
+    RHS       CON92     160.825643  
+    RHS       CON93     177.744807  
+    qszero[4,1]  OBJ       51.000140   
+    qszero[4,2]  OBJ       53.528287   
+    qszero[7,1]  OBJ       78.749067   
+    qszero[7,2]  OBJ       70.919204   
+ SC SCEN155   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     57.920930   
+    RHS       CON87     108.117306  
+    RHS       CON92     18.617586   
+    RHS       CON93     117.282006  
+    qszero[4,1]  OBJ       58.507625   
+    qszero[4,2]  OBJ       52.935196   
+    qszero[7,1]  OBJ       78.740126   
+    qszero[7,2]  OBJ       74.490376   
+ SC SCEN156   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     57.406567   
+    RHS       CON87     73.810620   
+    RHS       CON92     110.140288  
+    RHS       CON93     99.735564   
+    qszero[4,1]  OBJ       55.594611   
+    qszero[4,2]  OBJ       57.528866   
+    qszero[7,1]  OBJ       72.238406   
+    qszero[7,2]  OBJ       75.967481   
+ SC SCEN157   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     131.670385  
+    RHS       CON87     119.200856  
+    RHS       CON92     21.062337   
+    RHS       CON93     125.497993  
+    qszero[4,1]  OBJ       52.280333   
+    qszero[4,2]  OBJ       54.448922   
+    qszero[7,1]  OBJ       77.611448   
+    qszero[7,2]  OBJ       72.991502   
+ SC SCEN158   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     149.399031  
+    RHS       CON87     146.269565  
+    RHS       CON92     108.895070  
+    RHS       CON93     195.839696  
+    qszero[4,1]  OBJ       53.131403   
+    qszero[4,2]  OBJ       57.359409   
+    qszero[7,1]  OBJ       72.137659   
+    qszero[7,2]  OBJ       75.896420   
+ SC SCEN159   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     136.320919  
+    RHS       CON87     54.097039   
+    RHS       CON92     49.742196   
+    RHS       CON93     49.462137   
+    qszero[4,1]  OBJ       50.458229   
+    qszero[4,2]  OBJ       51.488645   
+    qszero[7,1]  OBJ       71.409179   
+    qszero[7,2]  OBJ       75.398797   
+ SC SCEN160   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     18.671655   
+    RHS       CON87     144.564756  
+    RHS       CON92     46.154254   
+    RHS       CON93     27.616429   
+    qszero[4,1]  OBJ       57.510561   
+    qszero[4,2]  OBJ       56.569389   
+    qszero[7,1]  OBJ       75.850561   
+    qszero[7,2]  OBJ       78.175137   
+ SC SCEN161   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     93.472505   
+    RHS       CON87     35.363263   
+    RHS       CON92     135.662668  
+    RHS       CON93     123.114644  
+    qszero[4,1]  OBJ       50.559672   
+    qszero[4,2]  OBJ       56.639667   
+    qszero[7,1]  OBJ       77.631614   
+    qszero[7,2]  OBJ       72.056436   
+ SC SCEN162   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     135.456867  
+    RHS       CON87     112.762543  
+    RHS       CON92     114.293698  
+    RHS       CON93     102.721297  
+    qszero[4,1]  OBJ       59.782710   
+    qszero[4,2]  OBJ       57.610733   
+    qszero[7,1]  OBJ       70.765513   
+    qszero[7,2]  OBJ       75.840931   
+ SC SCEN163   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     46.719508   
+    RHS       CON87     12.155524   
+    RHS       CON92     143.422129  
+    RHS       CON93     21.416752   
+    qszero[4,1]  OBJ       55.050263   
+    qszero[4,2]  OBJ       59.610135   
+    qszero[7,1]  OBJ       77.172602   
+    qszero[7,2]  OBJ       78.062541   
+ SC SCEN164   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     130.558427  
+    RHS       CON87     147.305686  
+    RHS       CON92     162.134929  
+    RHS       CON93     70.775488   
+    qszero[4,1]  OBJ       54.800028   
+    qszero[4,2]  OBJ       57.733122   
+    qszero[7,1]  OBJ       78.379428   
+    qszero[7,2]  OBJ       72.501342   
+ SC SCEN165   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     75.104179   
+    RHS       CON87     73.455939   
+    RHS       CON92     1.874832    
+    RHS       CON93     99.686351   
+    qszero[4,1]  OBJ       59.035734   
+    qszero[4,2]  OBJ       58.383907   
+    qszero[7,1]  OBJ       71.933662   
+    qszero[7,2]  OBJ       75.755285   
+ SC SCEN166   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     111.230004  
+    RHS       CON87     149.413521  
+    RHS       CON92     121.435736  
+    RHS       CON93     86.899122   
+    qszero[4,1]  OBJ       57.466056   
+    qszero[4,2]  OBJ       57.465524   
+    qszero[7,1]  OBJ       70.980100   
+    qszero[7,2]  OBJ       70.306788   
+ SC SCEN167   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     52.733837   
+    RHS       CON87     140.326819  
+    RHS       CON92     183.371916  
+    RHS       CON93     101.614434  
+    qszero[4,1]  OBJ       51.151738   
+    qszero[4,2]  OBJ       58.846732   
+    qszero[7,1]  OBJ       79.024215   
+    qszero[7,2]  OBJ       70.323655   
+ SC SCEN168   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     136.106576  
+    RHS       CON87     25.342368   
+    RHS       CON92     8.207923    
+    RHS       CON93     172.841518  
+    qszero[4,1]  OBJ       56.740826   
+    qszero[4,2]  OBJ       59.159518   
+    qszero[7,1]  OBJ       75.694575   
+    qszero[7,2]  OBJ       73.502918   
+ SC SCEN169   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     110.657637  
+    RHS       CON87     120.488486  
+    RHS       CON92     103.627171  
+    RHS       CON93     182.168523  
+    qszero[4,1]  OBJ       52.685856   
+    qszero[4,2]  OBJ       55.520713   
+    qszero[7,1]  OBJ       72.185196   
+    qszero[7,2]  OBJ       77.374616   
+ SC SCEN170   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     61.529501   
+    RHS       CON87     46.031228   
+    RHS       CON92     183.227761  
+    RHS       CON93     152.565381  
+    qszero[4,1]  OBJ       56.323615   
+    qszero[4,2]  OBJ       55.906120   
+    qszero[7,1]  OBJ       72.312863   
+    qszero[7,2]  OBJ       77.097831   
+ SC SCEN171   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     114.111159  
+    RHS       CON87     149.241913  
+    RHS       CON92     142.284359  
+    RHS       CON93     14.223416   
+    qszero[4,1]  OBJ       53.169975   
+    qszero[4,2]  OBJ       55.459602   
+    qszero[7,1]  OBJ       75.417711   
+    qszero[7,2]  OBJ       76.858831   
+ SC SCEN172   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     49.125334   
+    RHS       CON87     112.381560  
+    RHS       CON92     147.652295  
+    RHS       CON93     113.427736  
+    qszero[4,1]  OBJ       59.288450   
+    qszero[4,2]  OBJ       57.334366   
+    qszero[7,1]  OBJ       71.494299   
+    qszero[7,2]  OBJ       70.396047   
+ SC SCEN173   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     0.799208    
+    RHS       CON87     56.475308   
+    RHS       CON92     16.312564   
+    RHS       CON93     185.434368  
+    qszero[4,1]  OBJ       58.521599   
+    qszero[4,2]  OBJ       50.629020   
+    qszero[7,1]  OBJ       79.900998   
+    qszero[7,2]  OBJ       76.974604   
+ SC SCEN174   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     90.896521   
+    RHS       CON87     114.023412  
+    RHS       CON92     194.985350  
+    RHS       CON93     12.418862   
+    qszero[4,1]  OBJ       52.725982   
+    qszero[4,2]  OBJ       50.113836   
+    qszero[7,1]  OBJ       72.734359   
+    qszero[7,2]  OBJ       76.224227   
+ SC SCEN175   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     49.732130   
+    RHS       CON87     123.634949  
+    RHS       CON92     14.781571   
+    RHS       CON93     183.657528  
+    qszero[4,1]  OBJ       59.938639   
+    qszero[4,2]  OBJ       57.216311   
+    qszero[7,1]  OBJ       75.450421   
+    qszero[7,2]  OBJ       76.114401   
+ SC SCEN176   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     138.804454  
+    RHS       CON87     28.856777   
+    RHS       CON92     130.313618  
+    RHS       CON93     11.917092   
+    qszero[4,1]  OBJ       50.498584   
+    qszero[4,2]  OBJ       56.269946   
+    qszero[7,1]  OBJ       74.879559   
+    qszero[7,2]  OBJ       71.149485   
+ SC SCEN177   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     83.066962   
+    RHS       CON87     31.973609   
+    RHS       CON92     193.432305  
+    RHS       CON93     53.321274   
+    qszero[4,1]  OBJ       53.927605   
+    qszero[4,2]  OBJ       56.212877   
+    qszero[7,1]  OBJ       75.091524   
+    qszero[7,2]  OBJ       76.899069   
+ SC SCEN178   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     92.939167   
+    RHS       CON87     21.875772   
+    RHS       CON92     136.867977  
+    RHS       CON93     106.953904  
+    qszero[4,1]  OBJ       58.309612   
+    qszero[4,2]  OBJ       59.917028   
+    qszero[7,1]  OBJ       79.297693   
+    qszero[7,2]  OBJ       73.612396   
+ SC SCEN179   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     132.539107  
+    RHS       CON87     77.188771   
+    RHS       CON92     28.864100   
+    RHS       CON93     10.252769   
+    qszero[4,1]  OBJ       50.095076   
+    qszero[4,2]  OBJ       50.210955   
+    qszero[7,1]  OBJ       70.167693   
+    qszero[7,2]  OBJ       71.132034   
+ SC SCEN180   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     100.455345  
+    RHS       CON87     141.937720  
+    RHS       CON92     106.925629  
+    RHS       CON93     74.181089   
+    qszero[4,1]  OBJ       56.932275   
+    qszero[4,2]  OBJ       50.583072   
+    qszero[7,1]  OBJ       79.646692   
+    qszero[7,2]  OBJ       72.765140   
+ SC SCEN181   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     10.542852   
+    RHS       CON87     82.869335   
+    RHS       CON92     122.252974  
+    RHS       CON93     60.865402   
+    qszero[4,1]  OBJ       50.927877   
+    qszero[4,2]  OBJ       55.046223   
+    qszero[7,1]  OBJ       72.670085   
+    qszero[7,2]  OBJ       74.829249   
+ SC SCEN182   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     57.947735   
+    RHS       CON87     60.792927   
+    RHS       CON92     187.734997  
+    RHS       CON93     65.032899   
+    qszero[4,1]  OBJ       55.835023   
+    qszero[4,2]  OBJ       59.890585   
+    qszero[7,1]  OBJ       75.724792   
+    qszero[7,2]  OBJ       71.610885   
+ SC SCEN183   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     107.282602  
+    RHS       CON87     21.773207   
+    RHS       CON92     38.627942   
+    RHS       CON93     93.666328   
+    qszero[4,1]  OBJ       52.284563   
+    qszero[4,2]  OBJ       59.066485   
+    qszero[7,1]  OBJ       70.817730   
+    qszero[7,2]  OBJ       76.763640   
+ SC SCEN184   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     2.830400    
+    RHS       CON87     51.534373   
+    RHS       CON92     94.010688   
+    RHS       CON93     9.779823    
+    qszero[4,1]  OBJ       58.878844   
+    qszero[4,2]  OBJ       54.669188   
+    qszero[7,1]  OBJ       79.388078   
+    qszero[7,2]  OBJ       76.053443   
+ SC SCEN185   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     6.695423    
+    RHS       CON87     35.469939   
+    RHS       CON92     166.064029  
+    RHS       CON93     184.537748  
+    qszero[4,1]  OBJ       57.332933   
+    qszero[4,2]  OBJ       54.950332   
+    qszero[7,1]  OBJ       78.163692   
+    qszero[7,2]  OBJ       78.033956   
+ SC SCEN186   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     56.802127   
+    RHS       CON87     139.114498  
+    RHS       CON92     167.732562  
+    RHS       CON93     157.344795  
+    qszero[4,1]  OBJ       54.295536   
+    qszero[4,2]  OBJ       57.002714   
+    qszero[7,1]  OBJ       75.887365   
+    qszero[7,2]  OBJ       76.731512   
+ SC SCEN187   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     22.335229   
+    RHS       CON87     116.434538  
+    RHS       CON92     26.615993   
+    RHS       CON93     102.015904  
+    qszero[4,1]  OBJ       56.385297   
+    qszero[4,2]  OBJ       58.124047   
+    qszero[7,1]  OBJ       71.553995   
+    qszero[7,2]  OBJ       72.339826   
+ SC SCEN188   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     25.160277   
+    RHS       CON87     0.320720    
+    RHS       CON92     196.401846  
+    RHS       CON93     114.938457  
+    qszero[4,1]  OBJ       50.510975   
+    qszero[4,2]  OBJ       56.641429   
+    qszero[7,1]  OBJ       73.679182   
+    qszero[7,2]  OBJ       73.543978   
+ SC SCEN189   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     70.107515   
+    RHS       CON87     4.865493    
+    RHS       CON92     1.848404    
+    RHS       CON93     13.079920   
+    qszero[4,1]  OBJ       50.372833   
+    qszero[4,2]  OBJ       54.093295   
+    qszero[7,1]  OBJ       78.441889   
+    qszero[7,2]  OBJ       77.190282   
+ SC SCEN190   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     55.406759   
+    RHS       CON87     112.907147  
+    RHS       CON92     186.034915  
+    RHS       CON93     73.638822   
+    qszero[4,1]  OBJ       52.547973   
+    qszero[4,2]  OBJ       57.408808   
+    qszero[7,1]  OBJ       78.987536   
+    qszero[7,2]  OBJ       73.324629   
+ SC SCEN191   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     64.540496   
+    RHS       CON87     106.939317  
+    RHS       CON92     123.334742  
+    RHS       CON93     58.640814   
+    qszero[4,1]  OBJ       56.150010   
+    qszero[4,2]  OBJ       53.918444   
+    qszero[7,1]  OBJ       71.858572   
+    qszero[7,2]  OBJ       71.928646   
+ SC SCEN192   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     55.787918   
+    RHS       CON87     30.499353   
+    RHS       CON92     92.861989   
+    RHS       CON93     132.685256  
+    qszero[4,1]  OBJ       55.172278   
+    qszero[4,2]  OBJ       59.260845   
+    qszero[7,1]  OBJ       71.545288   
+    qszero[7,2]  OBJ       72.766026   
+ SC SCEN193   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     32.996305   
+    RHS       CON87     63.735218   
+    RHS       CON92     136.260998  
+    RHS       CON93     14.797737   
+    qszero[4,1]  OBJ       58.103069   
+    qszero[4,2]  OBJ       57.234138   
+    qszero[7,1]  OBJ       73.245483   
+    qszero[7,2]  OBJ       75.257469   
+ SC SCEN194   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     146.447083  
+    RHS       CON87     66.760846   
+    RHS       CON92     156.047616  
+    RHS       CON93     85.477846   
+    qszero[4,1]  OBJ       50.268191   
+    qszero[4,2]  OBJ       57.335915   
+    qszero[7,1]  OBJ       70.842027   
+    qszero[7,2]  OBJ       72.567480   
+ SC SCEN195   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     78.118755   
+    RHS       CON87     116.161775  
+    RHS       CON92     11.132210   
+    RHS       CON93     177.524074  
+    qszero[4,1]  OBJ       55.326189   
+    qszero[4,2]  OBJ       55.929851   
+    qszero[7,1]  OBJ       70.016559   
+    qszero[7,2]  OBJ       79.144919   
+ SC SCEN196   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     120.257160  
+    RHS       CON87     10.180682   
+    RHS       CON92     40.521461   
+    RHS       CON93     114.091574  
+    qszero[4,1]  OBJ       53.563047   
+    qszero[4,2]  OBJ       55.230652   
+    qszero[7,1]  OBJ       70.941070   
+    qszero[7,2]  OBJ       79.984773   
+ SC SCEN197   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     93.389409   
+    RHS       CON87     23.517714   
+    RHS       CON92     103.848425  
+    RHS       CON93     151.319158  
+    qszero[4,1]  OBJ       56.698527   
+    qszero[4,2]  OBJ       58.269964   
+    qszero[7,1]  OBJ       76.361730   
+    qszero[7,2]  OBJ       71.653537   
+ SC SCEN198   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     102.077624  
+    RHS       CON87     42.211059   
+    RHS       CON92     46.574044   
+    RHS       CON93     31.556598   
+    qszero[4,1]  OBJ       59.968265   
+    qszero[4,2]  OBJ       50.102973   
+    qszero[7,1]  OBJ       71.920583   
+    qszero[7,2]  OBJ       72.374610   
+ SC SCEN199   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     129.341316  
+    RHS       CON87     141.361033  
+    RHS       CON92     54.118148   
+    RHS       CON93     166.996800  
+    qszero[4,1]  OBJ       58.753470   
+    qszero[4,2]  OBJ       50.631778   
+    qszero[7,1]  OBJ       72.680461   
+    qszero[7,2]  OBJ       72.279308   
+ SC SCEN200   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     49.352982   
+    RHS       CON87     116.827991  
+    RHS       CON92     141.892084  
+    RHS       CON93     29.130341   
+    qszero[4,1]  OBJ       57.610606   
+    qszero[4,2]  OBJ       59.541765   
+    qszero[7,1]  OBJ       77.012788   
+    qszero[7,2]  OBJ       73.252004   
+ SC SCEN201   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     16.870889   
+    RHS       CON87     141.528272  
+    RHS       CON92     4.572064    
+    RHS       CON93     88.138935   
+    qszero[4,1]  OBJ       57.482370   
+    qszero[4,2]  OBJ       57.590050   
+    qszero[7,1]  OBJ       76.529047   
+    qszero[7,2]  OBJ       75.446327   
+ SC SCEN202   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     139.519838  
+    RHS       CON87     82.598675   
+    RHS       CON92     72.061024   
+    RHS       CON93     93.397962   
+    qszero[4,1]  OBJ       58.774140   
+    qszero[4,2]  OBJ       50.110547   
+    qszero[7,1]  OBJ       72.793139   
+    qszero[7,2]  OBJ       78.075741   
+ SC SCEN203   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     0.992630    
+    RHS       CON87     10.119689   
+    RHS       CON92     70.984023   
+    RHS       CON93     139.562488  
+    qszero[4,1]  OBJ       51.140197   
+    qszero[4,2]  OBJ       51.612367   
+    qszero[7,1]  OBJ       76.764227   
+    qszero[7,2]  OBJ       78.057626   
+ SC SCEN204   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     144.571090  
+    RHS       CON87     30.679384   
+    RHS       CON92     68.103627   
+    RHS       CON93     28.453809   
+    qszero[4,1]  OBJ       59.758178   
+    qszero[4,2]  OBJ       51.465999   
+    qszero[7,1]  OBJ       71.805084   
+    qszero[7,2]  OBJ       78.620058   
+ SC SCEN205   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     12.068455   
+    RHS       CON87     74.924866   
+    RHS       CON92     84.835656   
+    RHS       CON93     19.343076   
+    qszero[4,1]  OBJ       56.382494   
+    qszero[4,2]  OBJ       50.634230   
+    qszero[7,1]  OBJ       76.737795   
+    qszero[7,2]  OBJ       76.382204   
+ SC SCEN206   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     133.945950  
+    RHS       CON87     46.017115   
+    RHS       CON92     69.403295   
+    RHS       CON93     56.681944   
+    qszero[4,1]  OBJ       57.169202   
+    qszero[4,2]  OBJ       56.977253   
+    qszero[7,1]  OBJ       79.484235   
+    qszero[7,2]  OBJ       79.071895   
+ SC SCEN207   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     123.421929  
+    RHS       CON87     14.881670   
+    RHS       CON92     48.637814   
+    RHS       CON93     102.381133  
+    qszero[4,1]  OBJ       57.921766   
+    qszero[4,2]  OBJ       50.614096   
+    qszero[7,1]  OBJ       78.375639   
+    qszero[7,2]  OBJ       70.961862   
+ SC SCEN208   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     139.552919  
+    RHS       CON87     17.261485   
+    RHS       CON92     150.828172  
+    RHS       CON93     84.348663   
+    qszero[4,1]  OBJ       55.197222   
+    qszero[4,2]  OBJ       59.559249   
+    qszero[7,1]  OBJ       70.121201   
+    qszero[7,2]  OBJ       76.137574   
+ SC SCEN209   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     65.698489   
+    RHS       CON87     88.481995   
+    RHS       CON92     163.110748  
+    RHS       CON93     126.438973  
+    qszero[4,1]  OBJ       58.240765   
+    qszero[4,2]  OBJ       50.026289   
+    qszero[7,1]  OBJ       77.157492   
+    qszero[7,2]  OBJ       70.405865   
+ SC SCEN210   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     133.052059  
+    RHS       CON87     3.331625    
+    RHS       CON92     77.823340   
+    RHS       CON93     190.785331  
+    qszero[4,1]  OBJ       53.324491   
+    qszero[4,2]  OBJ       51.205952   
+    qszero[7,1]  OBJ       76.179406   
+    qszero[7,2]  OBJ       70.988271   
+ SC SCEN211   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     90.055295   
+    RHS       CON87     23.015927   
+    RHS       CON92     119.529064  
+    RHS       CON93     189.717633  
+    qszero[4,1]  OBJ       59.495848   
+    qszero[4,2]  OBJ       56.156836   
+    qszero[7,1]  OBJ       74.984099   
+    qszero[7,2]  OBJ       74.377080   
+ SC SCEN212   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     24.885890   
+    RHS       CON87     8.018177    
+    RHS       CON92     26.718248   
+    RHS       CON93     6.805567    
+    qszero[4,1]  OBJ       59.528081   
+    qszero[4,2]  OBJ       55.974282   
+    qszero[7,1]  OBJ       73.973268   
+    qszero[7,2]  OBJ       73.309474   
+ SC SCEN213   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     21.053692   
+    RHS       CON87     5.726330    
+    RHS       CON92     26.891873   
+    RHS       CON93     45.890643   
+    qszero[4,1]  OBJ       53.235399   
+    qszero[4,2]  OBJ       52.385113   
+    qszero[7,1]  OBJ       79.370752   
+    qszero[7,2]  OBJ       74.413921   
+ SC SCEN214   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     137.713048  
+    RHS       CON87     124.687211  
+    RHS       CON92     169.896471  
+    RHS       CON93     178.628778  
+    qszero[4,1]  OBJ       52.975467   
+    qszero[4,2]  OBJ       59.095082   
+    qszero[7,1]  OBJ       75.992383   
+    qszero[7,2]  OBJ       78.469216   
+ SC SCEN215   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     68.046132   
+    RHS       CON87     14.847991   
+    RHS       CON92     33.027047   
+    RHS       CON93     91.100257   
+    qszero[4,1]  OBJ       51.236485   
+    qszero[4,2]  OBJ       50.094009   
+    qszero[7,1]  OBJ       76.037490   
+    qszero[7,2]  OBJ       74.553182   
+ SC SCEN216   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     124.021318  
+    RHS       CON87     38.121057   
+    RHS       CON92     61.374458   
+    RHS       CON93     149.093761  
+    qszero[4,1]  OBJ       56.350569   
+    qszero[4,2]  OBJ       53.270230   
+    qszero[7,1]  OBJ       76.295879   
+    qszero[7,2]  OBJ       77.134002   
+ SC SCEN217   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     7.740430    
+    RHS       CON87     43.830608   
+    RHS       CON92     107.294679  
+    RHS       CON93     61.168347   
+    qszero[4,1]  OBJ       50.105184   
+    qszero[4,2]  OBJ       58.196687   
+    qszero[7,1]  OBJ       74.999128   
+    qszero[7,2]  OBJ       71.635510   
+ SC SCEN218   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     72.256936   
+    RHS       CON87     41.454164   
+    RHS       CON92     130.967360  
+    RHS       CON93     63.175434   
+    qszero[4,1]  OBJ       53.627477   
+    qszero[4,2]  OBJ       57.712405   
+    qszero[7,1]  OBJ       77.044126   
+    qszero[7,2]  OBJ       73.818286   
+ SC SCEN219   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     61.885016   
+    RHS       CON87     18.778269   
+    RHS       CON92     195.174333  
+    RHS       CON93     13.044372   
+    qszero[4,1]  OBJ       57.587949   
+    qszero[4,2]  OBJ       54.647890   
+    qszero[7,1]  OBJ       75.589858   
+    qszero[7,2]  OBJ       76.396543   
+ SC SCEN220   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     124.913089  
+    RHS       CON87     148.252700  
+    RHS       CON92     69.330290   
+    RHS       CON93     194.481107  
+    qszero[4,1]  OBJ       54.251254   
+    qszero[4,2]  OBJ       54.506391   
+    qszero[7,1]  OBJ       72.849259   
+    qszero[7,2]  OBJ       79.294022   
+ SC SCEN221   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     148.989628  
+    RHS       CON87     14.552500   
+    RHS       CON92     100.462413  
+    RHS       CON93     164.183006  
+    qszero[4,1]  OBJ       53.989492   
+    qszero[4,2]  OBJ       56.951654   
+    qszero[7,1]  OBJ       76.848794   
+    qszero[7,2]  OBJ       72.606636   
+ SC SCEN222   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     6.965004    
+    RHS       CON87     25.725137   
+    RHS       CON92     84.061477   
+    RHS       CON93     88.954061   
+    qszero[4,1]  OBJ       56.686574   
+    qszero[4,2]  OBJ       51.855439   
+    qszero[7,1]  OBJ       72.172017   
+    qszero[7,2]  OBJ       70.366582   
+ SC SCEN223   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     78.505505   
+    RHS       CON87     89.880959   
+    RHS       CON92     12.830116   
+    RHS       CON93     192.294627  
+    qszero[4,1]  OBJ       52.170451   
+    qszero[4,2]  OBJ       54.363141   
+    qszero[7,1]  OBJ       73.330763   
+    qszero[7,2]  OBJ       76.606705   
+ SC SCEN224   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     46.674593   
+    RHS       CON87     51.862051   
+    RHS       CON92     171.513897  
+    RHS       CON93     112.379126  
+    qszero[4,1]  OBJ       56.412327   
+    qszero[4,2]  OBJ       51.339749   
+    qszero[7,1]  OBJ       71.092704   
+    qszero[7,2]  OBJ       74.789187   
+ SC SCEN225   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     22.400768   
+    RHS       CON87     91.401687   
+    RHS       CON92     65.453758   
+    RHS       CON93     131.921745  
+    qszero[4,1]  OBJ       53.609421   
+    qszero[4,2]  OBJ       50.946950   
+    qszero[7,1]  OBJ       77.286773   
+    qszero[7,2]  OBJ       76.026994   
+ SC SCEN226   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     129.808560  
+    RHS       CON87     110.415294  
+    RHS       CON92     88.240169   
+    RHS       CON93     95.637963   
+    qszero[4,1]  OBJ       51.191493   
+    qszero[4,2]  OBJ       59.419019   
+    qszero[7,1]  OBJ       73.191316   
+    qszero[7,2]  OBJ       74.691319   
+ SC SCEN227   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     47.135927   
+    RHS       CON87     30.223500   
+    RHS       CON92     86.025657   
+    RHS       CON93     127.043076  
+    qszero[4,1]  OBJ       51.979853   
+    qszero[4,2]  OBJ       54.385417   
+    qszero[7,1]  OBJ       77.138938   
+    qszero[7,2]  OBJ       79.072745   
+ SC SCEN228   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     25.116105   
+    RHS       CON87     99.318960   
+    RHS       CON92     11.737507   
+    RHS       CON93     50.857915   
+    qszero[4,1]  OBJ       51.656598   
+    qszero[4,2]  OBJ       58.905763   
+    qszero[7,1]  OBJ       70.689093   
+    qszero[7,2]  OBJ       72.345301   
+ SC SCEN229   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     146.350123  
+    RHS       CON87     70.208457   
+    RHS       CON92     8.770226    
+    RHS       CON93     138.896561  
+    qszero[4,1]  OBJ       56.138710   
+    qszero[4,2]  OBJ       58.642815   
+    qszero[7,1]  OBJ       72.484217   
+    qszero[7,2]  OBJ       71.190358   
+ SC SCEN230   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     75.791658   
+    RHS       CON87     55.729922   
+    RHS       CON92     150.486115  
+    RHS       CON93     37.141919   
+    qszero[4,1]  OBJ       51.857898   
+    qszero[4,2]  OBJ       59.106331   
+    qszero[7,1]  OBJ       78.355329   
+    qszero[7,2]  OBJ       76.395220   
+ SC SCEN231   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     71.698857   
+    RHS       CON87     125.502037  
+    RHS       CON92     129.918628  
+    RHS       CON93     43.176208   
+    qszero[4,1]  OBJ       52.774169   
+    qszero[4,2]  OBJ       59.830805   
+    qszero[7,1]  OBJ       70.674760   
+    qszero[7,2]  OBJ       70.912801   
+ SC SCEN232   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     48.423214   
+    RHS       CON87     146.024075  
+    RHS       CON92     6.134720    
+    RHS       CON93     125.972802  
+    qszero[4,1]  OBJ       54.938684   
+    qszero[4,2]  OBJ       55.598871   
+    qszero[7,1]  OBJ       70.703844   
+    qszero[7,2]  OBJ       74.988621   
+ SC SCEN233   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     139.693509  
+    RHS       CON87     132.005076  
+    RHS       CON92     140.694355  
+    RHS       CON93     86.929004   
+    qszero[4,1]  OBJ       54.555927   
+    qszero[4,2]  OBJ       58.234837   
+    qszero[7,1]  OBJ       77.768473   
+    qszero[7,2]  OBJ       73.577796   
+ SC SCEN234   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     80.046436   
+    RHS       CON87     81.348170   
+    RHS       CON92     85.437465   
+    RHS       CON93     164.514505  
+    qszero[4,1]  OBJ       50.335392   
+    qszero[4,2]  OBJ       58.911425   
+    qszero[7,1]  OBJ       70.029531   
+    qszero[7,2]  OBJ       74.750403   
+ SC SCEN235   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     135.232246  
+    RHS       CON87     146.055972  
+    RHS       CON92     140.026062  
+    RHS       CON93     61.007348   
+    qszero[4,1]  OBJ       55.814473   
+    qszero[4,2]  OBJ       52.207910   
+    qszero[7,1]  OBJ       70.838923   
+    qszero[7,2]  OBJ       70.804988   
+ SC SCEN236   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     44.705263   
+    RHS       CON87     55.230513   
+    RHS       CON92     155.952954  
+    RHS       CON93     152.182143  
+    qszero[4,1]  OBJ       58.060639   
+    qszero[4,2]  OBJ       59.336368   
+    qszero[7,1]  OBJ       79.113345   
+    qszero[7,2]  OBJ       78.598944   
+ SC SCEN237   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     96.676359   
+    RHS       CON87     41.581417   
+    RHS       CON92     96.045241   
+    RHS       CON93     182.084449  
+    qszero[4,1]  OBJ       52.630750   
+    qszero[4,2]  OBJ       50.704199   
+    qszero[7,1]  OBJ       75.069306   
+    qszero[7,2]  OBJ       71.043102   
+ SC SCEN238   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     41.330610   
+    RHS       CON87     82.599466   
+    RHS       CON92     123.916906  
+    RHS       CON93     161.160333  
+    qszero[4,1]  OBJ       56.728974   
+    qszero[4,2]  OBJ       55.815494   
+    qszero[7,1]  OBJ       73.405382   
+    qszero[7,2]  OBJ       77.484972   
+ SC SCEN239   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     62.157951   
+    RHS       CON87     3.703636    
+    RHS       CON92     53.219039   
+    RHS       CON93     98.600430   
+    qszero[4,1]  OBJ       57.719539   
+    qszero[4,2]  OBJ       54.988051   
+    qszero[7,1]  OBJ       76.003028   
+    qszero[7,2]  OBJ       75.934242   
+ SC SCEN240   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     92.017011   
+    RHS       CON87     81.924012   
+    RHS       CON92     121.257116  
+    RHS       CON93     138.996656  
+    qszero[4,1]  OBJ       56.597458   
+    qszero[4,2]  OBJ       50.715701   
+    qszero[7,1]  OBJ       73.605802   
+    qszero[7,2]  OBJ       77.427805   
+ SC SCEN241   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     76.335751   
+    RHS       CON87     119.153028  
+    RHS       CON92     93.695684   
+    RHS       CON93     95.366844   
+    qszero[4,1]  OBJ       57.468436   
+    qszero[4,2]  OBJ       52.139931   
+    qszero[7,1]  OBJ       71.105638   
+    qszero[7,2]  OBJ       78.675579   
+ SC SCEN242   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     31.574490   
+    RHS       CON87     58.633169   
+    RHS       CON92     183.699659  
+    RHS       CON93     160.228129  
+    qszero[4,1]  OBJ       57.342057   
+    qszero[4,2]  OBJ       51.250120   
+    qszero[7,1]  OBJ       71.306663   
+    qszero[7,2]  OBJ       71.807969   
+ SC SCEN243   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.008109  
+    RHS       CON87     126.804122  
+    RHS       CON92     161.266490  
+    RHS       CON93     144.393426  
+    qszero[4,1]  OBJ       52.296131   
+    qszero[4,2]  OBJ       54.456767   
+    qszero[7,1]  OBJ       70.230511   
+    qszero[7,2]  OBJ       74.876501   
+ SC SCEN244   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     123.878992  
+    RHS       CON87     91.583508   
+    RHS       CON92     24.766582   
+    RHS       CON93     153.037245  
+    qszero[4,1]  OBJ       57.367587   
+    qszero[4,2]  OBJ       56.773647   
+    qszero[7,1]  OBJ       79.625389   
+    qszero[7,2]  OBJ       72.627884   
+ SC SCEN245   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     75.075457   
+    RHS       CON87     101.016989  
+    RHS       CON92     111.873320  
+    RHS       CON93     105.442971  
+    qszero[4,1]  OBJ       57.143995   
+    qszero[4,2]  OBJ       58.116462   
+    qszero[7,1]  OBJ       77.329815   
+    qszero[7,2]  OBJ       74.804198   
+ SC SCEN246   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     4.711013    
+    RHS       CON87     90.846181   
+    RHS       CON92     75.667819   
+    RHS       CON93     141.772361  
+    qszero[4,1]  OBJ       54.236330   
+    qszero[4,2]  OBJ       59.422100   
+    qszero[7,1]  OBJ       77.487809   
+    qszero[7,2]  OBJ       75.653670   
+ SC SCEN247   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     133.043641  
+    RHS       CON87     146.295818  
+    RHS       CON92     154.626279  
+    RHS       CON93     155.937012  
+    qszero[4,1]  OBJ       55.558990   
+    qszero[4,2]  OBJ       59.442817   
+    qszero[7,1]  OBJ       78.340395   
+    qszero[7,2]  OBJ       75.653932   
+ SC SCEN248   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     77.474002   
+    RHS       CON87     101.083684  
+    RHS       CON92     185.263565  
+    RHS       CON93     174.222225  
+    qszero[4,1]  OBJ       52.403003   
+    qszero[4,2]  OBJ       56.579666   
+    qszero[7,1]  OBJ       75.856165   
+    qszero[7,2]  OBJ       73.045250   
+ SC SCEN249   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     1.258569    
+    RHS       CON87     114.405651  
+    RHS       CON92     92.289892   
+    RHS       CON93     52.450888   
+    qszero[4,1]  OBJ       58.342290   
+    qszero[4,2]  OBJ       50.483431   
+    qszero[7,1]  OBJ       73.358862   
+    qszero[7,2]  OBJ       74.493206   
+ SC SCEN250   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     90.864344   
+    RHS       CON87     141.069333  
+    RHS       CON92     11.566737   
+    RHS       CON93     90.749872   
+    qszero[4,1]  OBJ       56.436850   
+    qszero[4,2]  OBJ       51.100302   
+    qszero[7,1]  OBJ       73.226248   
+    qszero[7,2]  OBJ       74.106158   
+ SC SCEN251   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     69.055028   
+    RHS       CON87     19.023314   
+    RHS       CON92     57.815214   
+    RHS       CON93     167.534680  
+    qszero[4,1]  OBJ       53.410517   
+    qszero[4,2]  OBJ       50.421874   
+    qszero[7,1]  OBJ       71.716724   
+    qszero[7,2]  OBJ       74.047112   
+ SC SCEN252   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     128.514270  
+    RHS       CON87     80.692505   
+    RHS       CON92     175.328376  
+    RHS       CON93     100.359323  
+    qszero[4,1]  OBJ       56.689609   
+    qszero[4,2]  OBJ       57.024271   
+    qszero[7,1]  OBJ       79.667045   
+    qszero[7,2]  OBJ       75.596159   
+ SC SCEN253   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     113.703066  
+    RHS       CON87     129.274585  
+    RHS       CON92     148.053575  
+    RHS       CON93     123.252230  
+    qszero[4,1]  OBJ       51.627427   
+    qszero[4,2]  OBJ       50.983616   
+    qszero[7,1]  OBJ       73.159628   
+    qszero[7,2]  OBJ       78.799556   
+ SC SCEN254   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     134.250347  
+    RHS       CON87     116.380468  
+    RHS       CON92     79.056381   
+    RHS       CON93     72.894817   
+    qszero[4,1]  OBJ       50.949830   
+    qszero[4,2]  OBJ       53.785663   
+    qszero[7,1]  OBJ       72.451809   
+    qszero[7,2]  OBJ       75.355731   
+ SC SCEN255   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     45.308521   
+    RHS       CON87     15.070992   
+    RHS       CON92     149.187677  
+    RHS       CON93     184.713142  
+    qszero[4,1]  OBJ       51.778676   
+    qszero[4,2]  OBJ       52.360974   
+    qszero[7,1]  OBJ       79.331187   
+    qszero[7,2]  OBJ       72.026183   
+ SC SCEN256   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     71.908827   
+    RHS       CON87     118.608965  
+    RHS       CON92     28.002491   
+    RHS       CON93     2.331003    
+    qszero[4,1]  OBJ       54.244803   
+    qszero[4,2]  OBJ       56.632143   
+    qszero[7,1]  OBJ       70.902099   
+    qszero[7,2]  OBJ       76.962402   
+ SC SCEN257   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     139.117668  
+    RHS       CON87     27.164730   
+    RHS       CON92     195.326441  
+    RHS       CON93     76.978357   
+    qszero[4,1]  OBJ       58.579095   
+    qszero[4,2]  OBJ       51.417536   
+    qszero[7,1]  OBJ       75.044980   
+    qszero[7,2]  OBJ       73.218175   
+ SC SCEN258   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     109.765860  
+    RHS       CON87     88.357139   
+    RHS       CON92     196.839608  
+    RHS       CON93     40.672309   
+    qszero[4,1]  OBJ       51.745945   
+    qszero[4,2]  OBJ       57.165632   
+    qszero[7,1]  OBJ       74.027916   
+    qszero[7,2]  OBJ       77.566400   
+ SC SCEN259   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     134.521954  
+    RHS       CON87     74.193628   
+    RHS       CON92     65.892528   
+    RHS       CON93     87.008369   
+    qszero[4,1]  OBJ       50.995594   
+    qszero[4,2]  OBJ       59.999434   
+    qszero[7,1]  OBJ       77.355790   
+    qszero[7,2]  OBJ       71.610608   
+ SC SCEN260   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     13.947572   
+    RHS       CON87     54.340509   
+    RHS       CON92     44.408846   
+    RHS       CON93     47.246391   
+    qszero[4,1]  OBJ       53.515029   
+    qszero[4,2]  OBJ       55.566839   
+    qszero[7,1]  OBJ       75.643542   
+    qszero[7,2]  OBJ       78.484080   
+ SC SCEN261   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     122.356530  
+    RHS       CON87     78.072746   
+    RHS       CON92     122.538859  
+    RHS       CON93     160.247429  
+    qszero[4,1]  OBJ       52.449151   
+    qszero[4,2]  OBJ       59.549966   
+    qszero[7,1]  OBJ       73.982863   
+    qszero[7,2]  OBJ       76.640601   
+ SC SCEN262   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     43.918809   
+    RHS       CON87     47.210227   
+    RHS       CON92     71.688814   
+    RHS       CON93     22.159613   
+    qszero[4,1]  OBJ       55.785444   
+    qszero[4,2]  OBJ       50.574434   
+    qszero[7,1]  OBJ       78.513512   
+    qszero[7,2]  OBJ       78.088176   
+ SC SCEN263   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     85.132089   
+    RHS       CON87     59.222055   
+    RHS       CON92     156.056736  
+    RHS       CON93     171.508336  
+    qszero[4,1]  OBJ       57.245233   
+    qszero[4,2]  OBJ       57.849140   
+    qszero[7,1]  OBJ       74.152473   
+    qszero[7,2]  OBJ       76.310057   
+ SC SCEN264   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     80.740432   
+    RHS       CON87     8.617876    
+    RHS       CON92     195.673686  
+    RHS       CON93     162.403009  
+    qszero[4,1]  OBJ       59.245422   
+    qszero[4,2]  OBJ       57.140690   
+    qszero[7,1]  OBJ       76.936536   
+    qszero[7,2]  OBJ       77.596714   
+ SC SCEN265   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     31.907217   
+    RHS       CON87     25.591522   
+    RHS       CON92     161.602704  
+    RHS       CON93     11.225939   
+    qszero[4,1]  OBJ       59.694482   
+    qszero[4,2]  OBJ       54.362182   
+    qszero[7,1]  OBJ       76.102989   
+    qszero[7,2]  OBJ       76.624472   
+ SC SCEN266   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     26.185363   
+    RHS       CON87     42.424477   
+    RHS       CON92     22.775977   
+    RHS       CON93     72.852286   
+    qszero[4,1]  OBJ       57.488743   
+    qszero[4,2]  OBJ       59.697269   
+    qszero[7,1]  OBJ       72.037800   
+    qszero[7,2]  OBJ       76.024365   
+ SC SCEN267   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     69.440213   
+    RHS       CON87     20.351710   
+    RHS       CON92     198.590303  
+    RHS       CON93     43.146634   
+    qszero[4,1]  OBJ       56.397082   
+    qszero[4,2]  OBJ       56.188354   
+    qszero[7,1]  OBJ       70.356246   
+    qszero[7,2]  OBJ       74.966977   
+ SC SCEN268   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     126.076171  
+    RHS       CON87     21.079750   
+    RHS       CON92     47.503025   
+    RHS       CON93     12.708803   
+    qszero[4,1]  OBJ       59.256145   
+    qszero[4,2]  OBJ       55.567044   
+    qszero[7,1]  OBJ       70.867062   
+    qszero[7,2]  OBJ       74.353411   
+ SC SCEN269   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     31.858819   
+    RHS       CON87     76.573478   
+    RHS       CON92     17.911576   
+    RHS       CON93     139.710998  
+    qszero[4,1]  OBJ       51.304679   
+    qszero[4,2]  OBJ       56.702827   
+    qszero[7,1]  OBJ       70.291271   
+    qszero[7,2]  OBJ       74.436822   
+ SC SCEN270   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     102.931370  
+    RHS       CON87     99.480270   
+    RHS       CON92     109.714877  
+    RHS       CON93     94.369621   
+    qszero[4,1]  OBJ       50.702972   
+    qszero[4,2]  OBJ       53.473982   
+    qszero[7,1]  OBJ       70.079595   
+    qszero[7,2]  OBJ       78.610009   
+ SC SCEN271   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     118.557254  
+    RHS       CON87     52.227936   
+    RHS       CON92     179.062074  
+    RHS       CON93     47.330090   
+    qszero[4,1]  OBJ       54.038217   
+    qszero[4,2]  OBJ       51.971675   
+    qszero[7,1]  OBJ       74.887540   
+    qszero[7,2]  OBJ       72.481164   
+ SC SCEN272   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     127.926110  
+    RHS       CON87     71.306327   
+    RHS       CON92     34.530567   
+    RHS       CON93     170.207780  
+    qszero[4,1]  OBJ       57.010249   
+    qszero[4,2]  OBJ       56.916948   
+    qszero[7,1]  OBJ       77.157726   
+    qszero[7,2]  OBJ       72.866960   
+ SC SCEN273   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     98.230082   
+    RHS       CON87     96.709809   
+    RHS       CON92     35.625811   
+    RHS       CON93     12.423527   
+    qszero[4,1]  OBJ       53.370647   
+    qszero[4,2]  OBJ       53.080378   
+    qszero[7,1]  OBJ       75.720360   
+    qszero[7,2]  OBJ       78.764156   
+ SC SCEN274   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     0.696603    
+    RHS       CON87     67.727885   
+    RHS       CON92     71.127460   
+    RHS       CON93     138.974679  
+    qszero[4,1]  OBJ       59.512478   
+    qszero[4,2]  OBJ       50.315882   
+    qszero[7,1]  OBJ       76.431662   
+    qszero[7,2]  OBJ       75.101429   
+ SC SCEN275   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     60.145248   
+    RHS       CON87     121.238800  
+    RHS       CON92     20.919385   
+    RHS       CON93     14.483729   
+    qszero[4,1]  OBJ       58.990801   
+    qszero[4,2]  OBJ       56.259481   
+    qszero[7,1]  OBJ       76.112718   
+    qszero[7,2]  OBJ       71.866901   
+ SC SCEN276   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     21.411286   
+    RHS       CON87     48.512362   
+    RHS       CON92     160.661637  
+    RHS       CON93     86.060784   
+    qszero[4,1]  OBJ       58.389569   
+    qszero[4,2]  OBJ       55.974271   
+    qszero[7,1]  OBJ       76.738220   
+    qszero[7,2]  OBJ       75.102587   
+ SC SCEN277   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     92.127333   
+    RHS       CON87     36.844559   
+    RHS       CON92     174.779553  
+    RHS       CON93     41.112027   
+    qszero[4,1]  OBJ       59.284600   
+    qszero[4,2]  OBJ       55.876330   
+    qszero[7,1]  OBJ       78.935068   
+    qszero[7,2]  OBJ       74.293735   
+ SC SCEN278   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     22.728204   
+    RHS       CON87     4.127749    
+    RHS       CON92     37.916974   
+    RHS       CON93     182.220599  
+    qszero[4,1]  OBJ       54.685958   
+    qszero[4,2]  OBJ       56.554510   
+    qszero[7,1]  OBJ       77.447109   
+    qszero[7,2]  OBJ       71.943391   
+ SC SCEN279   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     54.996673   
+    RHS       CON87     51.453253   
+    RHS       CON92     94.364816   
+    RHS       CON93     58.663010   
+    qszero[4,1]  OBJ       52.356756   
+    qszero[4,2]  OBJ       58.080312   
+    qszero[7,1]  OBJ       75.773327   
+    qszero[7,2]  OBJ       74.822727   
+ SC SCEN280   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     17.241670   
+    RHS       CON87     20.837658   
+    RHS       CON92     10.685802   
+    RHS       CON93     154.550136  
+    qszero[4,1]  OBJ       55.848711   
+    qszero[4,2]  OBJ       56.473253   
+    qszero[7,1]  OBJ       78.652491   
+    qszero[7,2]  OBJ       71.264027   
+ SC SCEN281   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     122.857100  
+    RHS       CON87     24.568559   
+    RHS       CON92     188.490558  
+    RHS       CON93     124.770699  
+    qszero[4,1]  OBJ       56.647528   
+    qszero[4,2]  OBJ       58.487216   
+    qszero[7,1]  OBJ       70.941652   
+    qszero[7,2]  OBJ       79.814501   
+ SC SCEN282   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     48.611924   
+    RHS       CON87     95.644676   
+    RHS       CON92     156.935109  
+    RHS       CON93     45.399387   
+    qszero[4,1]  OBJ       56.972379   
+    qszero[4,2]  OBJ       58.834610   
+    qszero[7,1]  OBJ       75.494445   
+    qszero[7,2]  OBJ       75.319850   
+ SC SCEN283   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     126.957926  
+    RHS       CON87     79.909242   
+    RHS       CON92     30.167446   
+    RHS       CON93     195.909180  
+    qszero[4,1]  OBJ       52.539664   
+    qszero[4,2]  OBJ       57.379816   
+    qszero[7,1]  OBJ       74.599869   
+    qszero[7,2]  OBJ       78.662754   
+ SC SCEN284   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     16.770678   
+    RHS       CON87     130.774525  
+    RHS       CON92     107.730698  
+    RHS       CON93     106.440738  
+    qszero[4,1]  OBJ       57.521110   
+    qszero[4,2]  OBJ       55.088554   
+    qszero[7,1]  OBJ       75.157990   
+    qszero[7,2]  OBJ       72.084945   
+ SC SCEN285   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     92.068380   
+    RHS       CON87     12.135963   
+    RHS       CON92     198.110133  
+    RHS       CON93     183.951684  
+    qszero[4,1]  OBJ       57.255225   
+    qszero[4,2]  OBJ       55.175034   
+    qszero[7,1]  OBJ       71.518171   
+    qszero[7,2]  OBJ       73.105252   
+ SC SCEN286   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     72.513810   
+    RHS       CON87     61.354806   
+    RHS       CON92     84.229650   
+    RHS       CON93     103.569156  
+    qszero[4,1]  OBJ       54.904192   
+    qszero[4,2]  OBJ       57.111468   
+    qszero[7,1]  OBJ       70.137669   
+    qszero[7,2]  OBJ       77.681783   
+ SC SCEN287   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     36.906647   
+    RHS       CON87     82.042637   
+    RHS       CON92     1.313921    
+    RHS       CON93     10.295340   
+    qszero[4,1]  OBJ       54.005383   
+    qszero[4,2]  OBJ       50.037126   
+    qszero[7,1]  OBJ       71.125948   
+    qszero[7,2]  OBJ       71.695163   
+ SC SCEN288   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     141.229420  
+    RHS       CON87     19.687593   
+    RHS       CON92     20.508757   
+    RHS       CON93     97.389193   
+    qszero[4,1]  OBJ       59.960108   
+    qszero[4,2]  OBJ       58.557689   
+    qszero[7,1]  OBJ       73.846796   
+    qszero[7,2]  OBJ       75.438689   
+ SC SCEN289   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     66.093297   
+    RHS       CON87     29.424296   
+    RHS       CON92     139.359695  
+    RHS       CON93     117.493435  
+    qszero[4,1]  OBJ       58.259921   
+    qszero[4,2]  OBJ       58.042019   
+    qszero[7,1]  OBJ       79.498561   
+    qszero[7,2]  OBJ       75.638279   
+ SC SCEN290   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     106.540396  
+    RHS       CON87     5.700186    
+    RHS       CON92     33.417445   
+    RHS       CON93     162.872725  
+    qszero[4,1]  OBJ       54.991408   
+    qszero[4,2]  OBJ       58.711392   
+    qszero[7,1]  OBJ       74.510629   
+    qszero[7,2]  OBJ       70.490943   
+ SC SCEN291   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     86.559293   
+    RHS       CON87     92.118256   
+    RHS       CON92     110.431478  
+    RHS       CON93     194.881839  
+    qszero[4,1]  OBJ       57.480445   
+    qszero[4,2]  OBJ       59.809594   
+    qszero[7,1]  OBJ       77.199161   
+    qszero[7,2]  OBJ       76.207169   
+ SC SCEN292   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     86.579722   
+    RHS       CON87     77.834114   
+    RHS       CON92     168.361501  
+    RHS       CON93     175.864519  
+    qszero[4,1]  OBJ       51.802148   
+    qszero[4,2]  OBJ       53.040223   
+    qszero[7,1]  OBJ       79.855627   
+    qszero[7,2]  OBJ       75.615759   
+ SC SCEN293   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     103.784903  
+    RHS       CON87     15.536349   
+    RHS       CON92     179.652266  
+    RHS       CON93     102.224203  
+    qszero[4,1]  OBJ       54.343910   
+    qszero[4,2]  OBJ       57.737473   
+    qszero[7,1]  OBJ       72.172766   
+    qszero[7,2]  OBJ       73.943148   
+ SC SCEN294   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     116.162975  
+    RHS       CON87     77.939409   
+    RHS       CON92     70.478475   
+    RHS       CON93     86.694666   
+    qszero[4,1]  OBJ       52.842456   
+    qszero[4,2]  OBJ       59.410082   
+    qszero[7,1]  OBJ       76.732645   
+    qszero[7,2]  OBJ       71.566163   
+ SC SCEN295   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     36.307424   
+    RHS       CON87     0.113900    
+    RHS       CON92     181.242682  
+    RHS       CON93     146.732340  
+    qszero[4,1]  OBJ       57.338783   
+    qszero[4,2]  OBJ       56.985142   
+    qszero[7,1]  OBJ       78.330572   
+    qszero[7,2]  OBJ       77.871898   
+ SC SCEN296   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     124.023424  
+    RHS       CON87     22.976149   
+    RHS       CON92     132.306112  
+    RHS       CON93     69.404553   
+    qszero[4,1]  OBJ       51.959876   
+    qszero[4,2]  OBJ       56.517584   
+    qszero[7,1]  OBJ       75.904381   
+    qszero[7,2]  OBJ       76.198500   
+ SC SCEN297   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     50.200685   
+    RHS       CON87     43.685352   
+    RHS       CON92     72.504807   
+    RHS       CON93     156.201921  
+    qszero[4,1]  OBJ       51.473802   
+    qszero[4,2]  OBJ       55.860589   
+    qszero[7,1]  OBJ       75.114951   
+    qszero[7,2]  OBJ       78.581306   
+ SC SCEN298   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     57.538654   
+    RHS       CON87     21.824860   
+    RHS       CON92     182.491449  
+    RHS       CON93     81.179919   
+    qszero[4,1]  OBJ       55.734628   
+    qszero[4,2]  OBJ       51.562588   
+    qszero[7,1]  OBJ       72.949137   
+    qszero[7,2]  OBJ       74.502250   
+ SC SCEN299   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     1.046355    
+    RHS       CON87     2.185283    
+    RHS       CON92     155.863853  
+    RHS       CON93     143.525785  
+    qszero[4,1]  OBJ       50.743151   
+    qszero[4,2]  OBJ       58.963253   
+    qszero[7,1]  OBJ       79.347719   
+    qszero[7,2]  OBJ       70.574923   
+ SC SCEN300   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     4.341079    
+    RHS       CON87     111.888958  
+    RHS       CON92     190.515655  
+    RHS       CON93     151.644150  
+    qszero[4,1]  OBJ       54.228262   
+    qszero[4,2]  OBJ       53.137169   
+    qszero[7,1]  OBJ       73.645380   
+    qszero[7,2]  OBJ       78.324277   
+ SC SCEN301   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     144.586639  
+    RHS       CON87     13.825031   
+    RHS       CON92     198.404826  
+    RHS       CON93     28.778910   
+    qszero[4,1]  OBJ       51.429978   
+    qszero[4,2]  OBJ       53.185309   
+    qszero[7,1]  OBJ       77.310171   
+    qszero[7,2]  OBJ       76.226449   
+ SC SCEN302   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     87.830377   
+    RHS       CON87     69.589304   
+    RHS       CON92     59.927397   
+    RHS       CON93     99.023673   
+    qszero[4,1]  OBJ       58.246648   
+    qszero[4,2]  OBJ       51.173188   
+    qszero[7,1]  OBJ       71.575906   
+    qszero[7,2]  OBJ       70.419080   
+ SC SCEN303   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     37.537495   
+    RHS       CON87     81.869297   
+    RHS       CON92     29.522425   
+    RHS       CON93     146.738926  
+    qszero[4,1]  OBJ       56.619682   
+    qszero[4,2]  OBJ       53.284279   
+    qszero[7,1]  OBJ       73.160511   
+    qszero[7,2]  OBJ       79.488021   
+ SC SCEN304   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     141.390971  
+    RHS       CON87     64.900738   
+    RHS       CON92     81.884693   
+    RHS       CON93     62.329444   
+    qszero[4,1]  OBJ       56.236492   
+    qszero[4,2]  OBJ       50.272857   
+    qszero[7,1]  OBJ       72.266533   
+    qszero[7,2]  OBJ       73.558432   
+ SC SCEN305   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     89.847896   
+    RHS       CON87     126.223700  
+    RHS       CON92     171.953892  
+    RHS       CON93     75.054774   
+    qszero[4,1]  OBJ       56.347429   
+    qszero[4,2]  OBJ       50.465966   
+    qszero[7,1]  OBJ       75.473411   
+    qszero[7,2]  OBJ       77.839513   
+ SC SCEN306   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     101.690819  
+    RHS       CON87     81.204879   
+    RHS       CON92     46.716374   
+    RHS       CON93     169.215709  
+    qszero[4,1]  OBJ       55.518042   
+    qszero[4,2]  OBJ       50.864762   
+    qszero[7,1]  OBJ       70.561051   
+    qszero[7,2]  OBJ       75.745234   
+ SC SCEN307   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     16.818043   
+    RHS       CON87     48.165516   
+    RHS       CON92     122.111574  
+    RHS       CON93     187.951978  
+    qszero[4,1]  OBJ       58.292188   
+    qszero[4,2]  OBJ       54.957462   
+    qszero[7,1]  OBJ       72.025512   
+    qszero[7,2]  OBJ       70.729996   
+ SC SCEN308   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     25.343557   
+    RHS       CON87     43.870145   
+    RHS       CON92     135.509965  
+    RHS       CON93     121.053578  
+    qszero[4,1]  OBJ       50.262976   
+    qszero[4,2]  OBJ       50.998123   
+    qszero[7,1]  OBJ       75.147412   
+    qszero[7,2]  OBJ       77.423152   
+ SC SCEN309   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     106.224048  
+    RHS       CON87     36.282080   
+    RHS       CON92     8.603164    
+    RHS       CON93     141.230518  
+    qszero[4,1]  OBJ       54.654723   
+    qszero[4,2]  OBJ       57.096536   
+    qszero[7,1]  OBJ       74.047618   
+    qszero[7,2]  OBJ       70.132445   
+ SC SCEN310   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     144.902819  
+    RHS       CON87     0.086405    
+    RHS       CON92     34.265331   
+    RHS       CON93     72.978125   
+    qszero[4,1]  OBJ       50.779446   
+    qszero[4,2]  OBJ       56.130979   
+    qszero[7,1]  OBJ       79.257566   
+    qszero[7,2]  OBJ       78.671600   
+ SC SCEN311   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     133.788528  
+    RHS       CON87     95.190869   
+    RHS       CON92     128.427813  
+    RHS       CON93     131.469125  
+    qszero[4,1]  OBJ       51.169910   
+    qszero[4,2]  OBJ       56.709187   
+    qszero[7,1]  OBJ       76.979690   
+    qszero[7,2]  OBJ       70.118829   
+ SC SCEN312   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     32.444349   
+    RHS       CON87     77.097545   
+    RHS       CON92     69.983195   
+    RHS       CON93     35.557969   
+    qszero[4,1]  OBJ       58.675613   
+    qszero[4,2]  OBJ       57.439193   
+    qszero[7,1]  OBJ       77.159337   
+    qszero[7,2]  OBJ       76.440691   
+ SC SCEN313   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     69.379152   
+    RHS       CON87     104.446219  
+    RHS       CON92     188.324593  
+    RHS       CON93     186.158393  
+    qszero[4,1]  OBJ       55.466222   
+    qszero[4,2]  OBJ       55.726975   
+    qszero[7,1]  OBJ       72.820463   
+    qszero[7,2]  OBJ       71.474576   
+ SC SCEN314   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     53.377035   
+    RHS       CON87     42.977549   
+    RHS       CON92     136.528656  
+    RHS       CON93     98.379009   
+    qszero[4,1]  OBJ       57.997887   
+    qszero[4,2]  OBJ       55.879613   
+    qszero[7,1]  OBJ       76.653908   
+    qszero[7,2]  OBJ       74.894241   
+ SC SCEN315   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     85.981265   
+    RHS       CON87     63.955343   
+    RHS       CON92     19.483213   
+    RHS       CON93     127.649805  
+    qszero[4,1]  OBJ       54.357360   
+    qszero[4,2]  OBJ       52.870126   
+    qszero[7,1]  OBJ       73.990867   
+    qszero[7,2]  OBJ       77.216660   
+ SC SCEN316   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     34.995690   
+    RHS       CON87     4.517337    
+    RHS       CON92     121.526773  
+    RHS       CON93     27.055259   
+    qszero[4,1]  OBJ       55.828542   
+    qszero[4,2]  OBJ       52.236411   
+    qszero[7,1]  OBJ       73.066835   
+    qszero[7,2]  OBJ       79.301303   
+ SC SCEN317   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     30.221554   
+    RHS       CON87     14.471718   
+    RHS       CON92     44.267405   
+    RHS       CON93     110.623756  
+    qszero[4,1]  OBJ       59.005010   
+    qszero[4,2]  OBJ       50.518226   
+    qszero[7,1]  OBJ       71.177629   
+    qszero[7,2]  OBJ       73.260867   
+ SC SCEN318   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     1.600533    
+    RHS       CON87     105.365994  
+    RHS       CON92     102.292544  
+    RHS       CON93     62.211658   
+    qszero[4,1]  OBJ       57.979968   
+    qszero[4,2]  OBJ       52.356909   
+    qszero[7,1]  OBJ       70.956368   
+    qszero[7,2]  OBJ       72.349856   
+ SC SCEN319   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     9.237688    
+    RHS       CON87     0.943456    
+    RHS       CON92     70.987766   
+    RHS       CON93     65.848739   
+    qszero[4,1]  OBJ       56.861870   
+    qszero[4,2]  OBJ       55.699312   
+    qszero[7,1]  OBJ       77.362119   
+    qszero[7,2]  OBJ       79.452487   
+ SC SCEN320   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     108.803612  
+    RHS       CON87     132.211670  
+    RHS       CON92     15.176633   
+    RHS       CON93     127.359782  
+    qszero[4,1]  OBJ       54.023428   
+    qszero[4,2]  OBJ       50.887064   
+    qszero[7,1]  OBJ       77.567348   
+    qszero[7,2]  OBJ       76.772121   
+ SC SCEN321   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     66.125029   
+    RHS       CON87     62.789842   
+    RHS       CON92     140.681362  
+    RHS       CON93     68.283718   
+    qszero[4,1]  OBJ       59.352956   
+    qszero[4,2]  OBJ       51.752684   
+    qszero[7,1]  OBJ       74.830853   
+    qszero[7,2]  OBJ       76.442359   
+ SC SCEN322   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     5.897331    
+    RHS       CON87     117.774412  
+    RHS       CON92     145.489628  
+    RHS       CON93     99.539327   
+    qszero[4,1]  OBJ       57.034718   
+    qszero[4,2]  OBJ       55.817013   
+    qszero[7,1]  OBJ       79.156790   
+    qszero[7,2]  OBJ       72.853496   
+ SC SCEN323   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     149.993050  
+    RHS       CON87     18.768930   
+    RHS       CON92     42.958602   
+    RHS       CON93     80.758060   
+    qszero[4,1]  OBJ       54.572497   
+    qszero[4,2]  OBJ       55.809858   
+    qszero[7,1]  OBJ       76.498256   
+    qszero[7,2]  OBJ       72.139931   
+ SC SCEN324   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.609610  
+    RHS       CON87     100.858563  
+    RHS       CON92     78.686791   
+    RHS       CON93     123.723268  
+    qszero[4,1]  OBJ       54.253938   
+    qszero[4,2]  OBJ       55.014376   
+    qszero[7,1]  OBJ       76.591025   
+    qszero[7,2]  OBJ       73.947917   
+ SC SCEN325   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     2.983956    
+    RHS       CON87     145.336294  
+    RHS       CON92     67.942793   
+    RHS       CON93     98.055741   
+    qszero[4,1]  OBJ       59.760336   
+    qszero[4,2]  OBJ       57.924874   
+    qszero[7,1]  OBJ       73.255647   
+    qszero[7,2]  OBJ       76.928548   
+ SC SCEN326   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     59.572074   
+    RHS       CON87     56.639650   
+    RHS       CON92     185.800458  
+    RHS       CON93     183.134691  
+    qszero[4,1]  OBJ       52.718542   
+    qszero[4,2]  OBJ       54.578592   
+    qszero[7,1]  OBJ       79.229676   
+    qszero[7,2]  OBJ       73.192171   
+ SC SCEN327   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     93.089548   
+    RHS       CON87     6.210857    
+    RHS       CON92     95.168873   
+    RHS       CON93     74.295493   
+    qszero[4,1]  OBJ       56.374995   
+    qszero[4,2]  OBJ       58.550531   
+    qszero[7,1]  OBJ       74.933006   
+    qszero[7,2]  OBJ       77.853330   
+ SC SCEN328   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     127.750678  
+    RHS       CON87     32.667953   
+    RHS       CON92     174.899820  
+    RHS       CON93     105.331463  
+    qszero[4,1]  OBJ       52.222924   
+    qszero[4,2]  OBJ       52.960932   
+    qszero[7,1]  OBJ       77.881558   
+    qszero[7,2]  OBJ       72.526911   
+ SC SCEN329   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     129.534151  
+    RHS       CON87     1.524772    
+    RHS       CON92     169.416565  
+    RHS       CON93     118.005666  
+    qszero[4,1]  OBJ       59.862911   
+    qszero[4,2]  OBJ       51.104917   
+    qszero[7,1]  OBJ       73.101165   
+    qszero[7,2]  OBJ       76.925414   
+ SC SCEN330   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     78.225117   
+    RHS       CON87     67.436604   
+    RHS       CON92     185.632118  
+    RHS       CON93     145.375086  
+    qszero[4,1]  OBJ       56.343962   
+    qszero[4,2]  OBJ       54.514256   
+    qszero[7,1]  OBJ       72.055303   
+    qszero[7,2]  OBJ       79.560679   
+ SC SCEN331   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     91.860111   
+    RHS       CON87     72.385422   
+    RHS       CON92     124.512980  
+    RHS       CON93     155.800271  
+    qszero[4,1]  OBJ       50.494944   
+    qszero[4,2]  OBJ       59.315010   
+    qszero[7,1]  OBJ       79.283410   
+    qszero[7,2]  OBJ       79.917126   
+ SC SCEN332   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     51.544419   
+    RHS       CON87     105.626011  
+    RHS       CON92     15.319541   
+    RHS       CON93     66.440215   
+    qszero[4,1]  OBJ       51.781912   
+    qszero[4,2]  OBJ       58.374378   
+    qszero[7,1]  OBJ       70.627988   
+    qszero[7,2]  OBJ       74.930690   
+ SC SCEN333   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     125.981919  
+    RHS       CON87     42.982970   
+    RHS       CON92     199.586225  
+    RHS       CON93     188.997546  
+    qszero[4,1]  OBJ       54.881730   
+    qszero[4,2]  OBJ       55.420267   
+    qszero[7,1]  OBJ       72.503895   
+    qszero[7,2]  OBJ       76.270159   
+ SC SCEN334   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     121.828334  
+    RHS       CON87     102.298185  
+    RHS       CON92     177.596508  
+    RHS       CON93     44.367422   
+    qszero[4,1]  OBJ       59.962399   
+    qszero[4,2]  OBJ       51.593608   
+    qszero[7,1]  OBJ       73.493064   
+    qszero[7,2]  OBJ       73.191887   
+ SC SCEN335   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     75.095798   
+    RHS       CON87     140.816890  
+    RHS       CON92     44.796109   
+    RHS       CON93     68.902486   
+    qszero[4,1]  OBJ       52.282341   
+    qszero[4,2]  OBJ       50.109897   
+    qszero[7,1]  OBJ       77.764783   
+    qszero[7,2]  OBJ       78.051921   
+ SC SCEN336   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     39.492698   
+    RHS       CON87     130.430463  
+    RHS       CON92     106.214040  
+    RHS       CON93     8.478265    
+    qszero[4,1]  OBJ       57.528017   
+    qszero[4,2]  OBJ       56.277887   
+    qszero[7,1]  OBJ       73.252455   
+    qszero[7,2]  OBJ       77.225509   
+ SC SCEN337   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     98.837439   
+    RHS       CON87     146.404149  
+    RHS       CON92     69.840310   
+    RHS       CON93     186.304167  
+    qszero[4,1]  OBJ       57.009584   
+    qszero[4,2]  OBJ       57.538797   
+    qszero[7,1]  OBJ       70.652935   
+    qszero[7,2]  OBJ       74.537084   
+ SC SCEN338   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     67.794164   
+    RHS       CON87     129.404256  
+    RHS       CON92     71.528212   
+    RHS       CON93     102.918687  
+    qszero[4,1]  OBJ       54.643822   
+    qszero[4,2]  OBJ       53.083437   
+    qszero[7,1]  OBJ       75.694363   
+    qszero[7,2]  OBJ       77.044482   
+ SC SCEN339   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     42.902899   
+    RHS       CON87     144.169341  
+    RHS       CON92     78.641286   
+    RHS       CON93     69.835766   
+    qszero[4,1]  OBJ       51.764549   
+    qszero[4,2]  OBJ       55.375076   
+    qszero[7,1]  OBJ       75.376155   
+    qszero[7,2]  OBJ       72.719119   
+ SC SCEN340   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     128.292039  
+    RHS       CON87     64.277071   
+    RHS       CON92     59.345929   
+    RHS       CON93     143.497375  
+    qszero[4,1]  OBJ       54.703148   
+    qszero[4,2]  OBJ       54.083326   
+    qszero[7,1]  OBJ       71.937956   
+    qszero[7,2]  OBJ       73.389109   
+ SC SCEN341   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     123.706531  
+    RHS       CON87     130.946903  
+    RHS       CON92     63.383647   
+    RHS       CON93     59.976800   
+    qszero[4,1]  OBJ       59.167633   
+    qszero[4,2]  OBJ       53.807487   
+    qszero[7,1]  OBJ       75.453078   
+    qszero[7,2]  OBJ       71.106698   
+ SC SCEN342   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     7.003034    
+    RHS       CON87     129.871201  
+    RHS       CON92     106.890496  
+    RHS       CON93     107.886769  
+    qszero[4,1]  OBJ       52.604885   
+    qszero[4,2]  OBJ       54.726372   
+    qszero[7,1]  OBJ       70.694083   
+    qszero[7,2]  OBJ       75.955888   
+ SC SCEN343   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     91.640023   
+    RHS       CON87     72.691330   
+    RHS       CON92     56.865768   
+    RHS       CON93     132.115958  
+    qszero[4,1]  OBJ       51.742075   
+    qszero[4,2]  OBJ       53.277554   
+    qszero[7,1]  OBJ       79.202258   
+    qszero[7,2]  OBJ       72.729767   
+ SC SCEN344   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     19.140582   
+    RHS       CON87     129.166446  
+    RHS       CON92     34.960715   
+    RHS       CON93     66.201468   
+    qszero[4,1]  OBJ       56.382880   
+    qszero[4,2]  OBJ       50.815759   
+    qszero[7,1]  OBJ       79.641941   
+    qszero[7,2]  OBJ       79.804812   
+ SC SCEN345   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     12.427316   
+    RHS       CON87     125.717296  
+    RHS       CON92     78.168918   
+    RHS       CON93     147.194834  
+    qszero[4,1]  OBJ       59.497347   
+    qszero[4,2]  OBJ       57.996992   
+    qszero[7,1]  OBJ       75.866502   
+    qszero[7,2]  OBJ       78.231500   
+ SC SCEN346   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     74.834237   
+    RHS       CON87     34.185417   
+    RHS       CON92     85.070848   
+    RHS       CON93     182.775607  
+    qszero[4,1]  OBJ       56.252461   
+    qszero[4,2]  OBJ       53.235504   
+    qszero[7,1]  OBJ       70.929468   
+    qszero[7,2]  OBJ       75.326201   
+ SC SCEN347   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     104.061802  
+    RHS       CON87     99.053362   
+    RHS       CON92     32.256784   
+    RHS       CON93     165.262165  
+    qszero[4,1]  OBJ       54.233855   
+    qszero[4,2]  OBJ       59.767380   
+    qszero[7,1]  OBJ       70.030140   
+    qszero[7,2]  OBJ       77.055180   
+ SC SCEN348   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     66.568398   
+    RHS       CON87     131.543610  
+    RHS       CON92     53.479364   
+    RHS       CON93     49.218381   
+    qszero[4,1]  OBJ       57.232884   
+    qszero[4,2]  OBJ       58.153729   
+    qszero[7,1]  OBJ       79.960378   
+    qszero[7,2]  OBJ       75.680649   
+ SC SCEN349   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     33.839666   
+    RHS       CON87     43.430579   
+    RHS       CON92     97.295680   
+    RHS       CON93     52.190786   
+    qszero[4,1]  OBJ       58.597422   
+    qszero[4,2]  OBJ       55.500852   
+    qszero[7,1]  OBJ       79.260310   
+    qszero[7,2]  OBJ       71.409613   
+ SC SCEN350   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     20.741176   
+    RHS       CON87     91.980477   
+    RHS       CON92     17.598958   
+    RHS       CON93     178.233178  
+    qszero[4,1]  OBJ       59.831400   
+    qszero[4,2]  OBJ       50.156582   
+    qszero[7,1]  OBJ       71.297258   
+    qszero[7,2]  OBJ       70.296506   
+ SC SCEN351   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     104.881594  
+    RHS       CON87     13.161862   
+    RHS       CON92     81.578164   
+    RHS       CON93     132.952759  
+    qszero[4,1]  OBJ       57.384961   
+    qszero[4,2]  OBJ       53.264056   
+    qszero[7,1]  OBJ       75.979593   
+    qszero[7,2]  OBJ       79.353696   
+ SC SCEN352   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     58.808966   
+    RHS       CON87     17.029983   
+    RHS       CON92     153.038998  
+    RHS       CON93     39.066424   
+    qszero[4,1]  OBJ       55.890478   
+    qszero[4,2]  OBJ       54.092174   
+    qszero[7,1]  OBJ       70.124880   
+    qszero[7,2]  OBJ       76.568123   
+ SC SCEN353   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     2.058857    
+    RHS       CON87     146.277732  
+    RHS       CON92     63.370361   
+    RHS       CON93     36.478084   
+    qszero[4,1]  OBJ       58.580923   
+    qszero[4,2]  OBJ       55.925704   
+    qszero[7,1]  OBJ       79.640572   
+    qszero[7,2]  OBJ       74.466268   
+ SC SCEN354   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     65.720193   
+    RHS       CON87     62.374537   
+    RHS       CON92     131.921195  
+    RHS       CON93     153.969588  
+    qszero[4,1]  OBJ       51.054793   
+    qszero[4,2]  OBJ       50.964019   
+    qszero[7,1]  OBJ       75.552922   
+    qszero[7,2]  OBJ       78.185803   
+ SC SCEN355   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     39.760521   
+    RHS       CON87     44.022127   
+    RHS       CON92     97.442967   
+    RHS       CON93     167.894882  
+    qszero[4,1]  OBJ       52.074227   
+    qszero[4,2]  OBJ       56.096276   
+    qszero[7,1]  OBJ       79.358465   
+    qszero[7,2]  OBJ       74.603882   
+ SC SCEN356   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     0.130645    
+    RHS       CON87     47.132201   
+    RHS       CON92     187.352482  
+    RHS       CON93     197.271229  
+    qszero[4,1]  OBJ       53.502262   
+    qszero[4,2]  OBJ       52.841797   
+    qszero[7,1]  OBJ       79.074672   
+    qszero[7,2]  OBJ       77.713403   
+ SC SCEN357   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     64.108417   
+    RHS       CON87     16.406795   
+    RHS       CON92     9.348211    
+    RHS       CON93     10.834769   
+    qszero[4,1]  OBJ       54.866959   
+    qszero[4,2]  OBJ       59.672460   
+    qszero[7,1]  OBJ       75.340934   
+    qszero[7,2]  OBJ       76.761751   
+ SC SCEN358   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     141.223995  
+    RHS       CON87     143.296113  
+    RHS       CON92     42.180546   
+    RHS       CON93     127.545986  
+    qszero[4,1]  OBJ       58.684094   
+    qszero[4,2]  OBJ       55.264825   
+    qszero[7,1]  OBJ       74.852922   
+    qszero[7,2]  OBJ       76.877319   
+ SC SCEN359   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     93.661456   
+    RHS       CON87     41.577588   
+    RHS       CON92     175.285749  
+    RHS       CON93     161.791418  
+    qszero[4,1]  OBJ       53.635887   
+    qszero[4,2]  OBJ       53.526034   
+    qszero[7,1]  OBJ       75.570906   
+    qszero[7,2]  OBJ       77.831566   
+ SC SCEN360   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     127.492037  
+    RHS       CON87     3.999616    
+    RHS       CON92     149.962222  
+    RHS       CON93     184.788395  
+    qszero[4,1]  OBJ       59.961576   
+    qszero[4,2]  OBJ       54.313312   
+    qszero[7,1]  OBJ       75.226820   
+    qszero[7,2]  OBJ       76.875140   
+ SC SCEN361   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     47.646318   
+    RHS       CON87     35.752779   
+    RHS       CON92     75.837976   
+    RHS       CON93     39.274671   
+    qszero[4,1]  OBJ       59.141265   
+    qszero[4,2]  OBJ       53.664644   
+    qszero[7,1]  OBJ       71.249136   
+    qszero[7,2]  OBJ       71.135769   
+ SC SCEN362   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     148.412043  
+    RHS       CON87     65.988995   
+    RHS       CON92     58.133913   
+    RHS       CON93     18.413903   
+    qszero[4,1]  OBJ       53.406323   
+    qszero[4,2]  OBJ       59.239312   
+    qszero[7,1]  OBJ       73.545658   
+    qszero[7,2]  OBJ       72.553325   
+ SC SCEN363   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     108.877292  
+    RHS       CON87     66.267637   
+    RHS       CON92     135.264803  
+    RHS       CON93     97.188626   
+    qszero[4,1]  OBJ       50.533032   
+    qszero[4,2]  OBJ       52.770542   
+    qszero[7,1]  OBJ       77.723966   
+    qszero[7,2]  OBJ       70.025995   
+ SC SCEN364   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     78.692293   
+    RHS       CON87     0.945546    
+    RHS       CON92     153.451697  
+    RHS       CON93     139.197646  
+    qszero[4,1]  OBJ       53.346839   
+    qszero[4,2]  OBJ       59.498853   
+    qszero[7,1]  OBJ       70.908788   
+    qszero[7,2]  OBJ       73.677640   
+ SC SCEN365   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     29.536014   
+    RHS       CON87     61.194320   
+    RHS       CON92     104.944170  
+    RHS       CON93     85.414914   
+    qszero[4,1]  OBJ       57.584510   
+    qszero[4,2]  OBJ       50.087265   
+    qszero[7,1]  OBJ       72.154406   
+    qszero[7,2]  OBJ       71.764843   
+ SC SCEN366   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     142.503195  
+    RHS       CON87     118.711955  
+    RHS       CON92     129.421214  
+    RHS       CON93     39.678371   
+    qszero[4,1]  OBJ       51.727713   
+    qszero[4,2]  OBJ       50.642915   
+    qszero[7,1]  OBJ       74.968930   
+    qszero[7,2]  OBJ       79.353877   
+ SC SCEN367   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     102.593235  
+    RHS       CON87     113.291655  
+    RHS       CON92     67.741451   
+    RHS       CON93     67.324803   
+    qszero[4,1]  OBJ       56.259879   
+    qszero[4,2]  OBJ       56.025844   
+    qszero[7,1]  OBJ       70.056962   
+    qszero[7,2]  OBJ       77.873431   
+ SC SCEN368   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     93.043443   
+    RHS       CON87     121.442394  
+    RHS       CON92     170.215254  
+    RHS       CON93     54.146787   
+    qszero[4,1]  OBJ       58.456993   
+    qszero[4,2]  OBJ       59.344951   
+    qszero[7,1]  OBJ       74.556017   
+    qszero[7,2]  OBJ       74.891007   
+ SC SCEN369   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     29.336822   
+    RHS       CON87     108.584211  
+    RHS       CON92     15.429075   
+    RHS       CON93     124.887954  
+    qszero[4,1]  OBJ       59.653743   
+    qszero[4,2]  OBJ       54.343371   
+    qszero[7,1]  OBJ       79.591198   
+    qszero[7,2]  OBJ       70.193863   
+ SC SCEN370   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     21.124206   
+    RHS       CON87     78.892179   
+    RHS       CON92     187.121249  
+    RHS       CON93     185.566715  
+    qszero[4,1]  OBJ       59.983265   
+    qszero[4,2]  OBJ       56.349052   
+    qszero[7,1]  OBJ       73.672046   
+    qszero[7,2]  OBJ       76.293941   
+ SC SCEN371   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     56.125911   
+    RHS       CON87     116.081802  
+    RHS       CON92     85.106849   
+    RHS       CON93     63.072683   
+    qszero[4,1]  OBJ       51.977667   
+    qszero[4,2]  OBJ       53.997392   
+    qszero[7,1]  OBJ       73.957248   
+    qszero[7,2]  OBJ       74.885503   
+ SC SCEN372   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     147.351988  
+    RHS       CON87     123.231624  
+    RHS       CON92     163.110434  
+    RHS       CON93     46.286362   
+    qszero[4,1]  OBJ       54.777287   
+    qszero[4,2]  OBJ       50.829950   
+    qszero[7,1]  OBJ       79.332978   
+    qszero[7,2]  OBJ       76.230434   
+ SC SCEN373   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     61.344794   
+    RHS       CON87     73.182001   
+    RHS       CON92     140.930150  
+    RHS       CON93     65.623512   
+    qszero[4,1]  OBJ       56.426421   
+    qszero[4,2]  OBJ       56.287833   
+    qszero[7,1]  OBJ       79.954441   
+    qszero[7,2]  OBJ       70.964665   
+ SC SCEN374   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     97.471114   
+    RHS       CON87     72.024648   
+    RHS       CON92     7.324889    
+    RHS       CON93     173.553300  
+    qszero[4,1]  OBJ       54.649851   
+    qszero[4,2]  OBJ       54.587071   
+    qszero[7,1]  OBJ       76.125308   
+    qszero[7,2]  OBJ       73.722942   
+ SC SCEN375   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     65.367812   
+    RHS       CON87     61.489700   
+    RHS       CON92     119.714152  
+    RHS       CON93     92.174212   
+    qszero[4,1]  OBJ       53.968099   
+    qszero[4,2]  OBJ       51.049005   
+    qszero[7,1]  OBJ       77.815249   
+    qszero[7,2]  OBJ       70.355012   
+ SC SCEN376   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     107.333155  
+    RHS       CON87     91.017375   
+    RHS       CON92     14.365357   
+    RHS       CON93     73.744006   
+    qszero[4,1]  OBJ       55.153596   
+    qszero[4,2]  OBJ       51.940459   
+    qszero[7,1]  OBJ       73.916911   
+    qszero[7,2]  OBJ       76.302043   
+ SC SCEN377   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     120.521895  
+    RHS       CON87     49.068416   
+    RHS       CON92     15.281719   
+    RHS       CON93     45.095130   
+    qszero[4,1]  OBJ       53.412682   
+    qszero[4,2]  OBJ       59.435077   
+    qszero[7,1]  OBJ       79.358391   
+    qszero[7,2]  OBJ       74.836015   
+ SC SCEN378   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     89.518247   
+    RHS       CON87     35.657926   
+    RHS       CON92     93.108276   
+    RHS       CON93     42.833729   
+    qszero[4,1]  OBJ       55.385461   
+    qszero[4,2]  OBJ       59.650951   
+    qszero[7,1]  OBJ       76.224231   
+    qszero[7,2]  OBJ       77.215085   
+ SC SCEN379   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     62.445973   
+    RHS       CON87     52.562356   
+    RHS       CON92     119.441507  
+    RHS       CON93     174.164134  
+    qszero[4,1]  OBJ       57.116598   
+    qszero[4,2]  OBJ       54.780694   
+    qszero[7,1]  OBJ       71.618044   
+    qszero[7,2]  OBJ       79.604076   
+ SC SCEN380   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     87.701664   
+    RHS       CON87     143.060847  
+    RHS       CON92     74.776490   
+    RHS       CON93     138.150107  
+    qszero[4,1]  OBJ       59.738436   
+    qszero[4,2]  OBJ       51.531956   
+    qszero[7,1]  OBJ       71.886207   
+    qszero[7,2]  OBJ       76.492160   
+ SC SCEN381   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     27.690805   
+    RHS       CON87     21.369817   
+    RHS       CON92     153.928256  
+    RHS       CON93     50.270863   
+    qszero[4,1]  OBJ       57.071056   
+    qszero[4,2]  OBJ       53.154706   
+    qszero[7,1]  OBJ       73.410504   
+    qszero[7,2]  OBJ       73.179708   
+ SC SCEN382   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     90.251989   
+    RHS       CON87     109.060538  
+    RHS       CON92     101.828705  
+    RHS       CON93     72.919219   
+    qszero[4,1]  OBJ       56.137268   
+    qszero[4,2]  OBJ       50.109990   
+    qszero[7,1]  OBJ       73.658907   
+    qszero[7,2]  OBJ       75.349791   
+ SC SCEN383   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     109.758226  
+    RHS       CON87     52.915823   
+    RHS       CON92     138.377528  
+    RHS       CON93     130.964437  
+    qszero[4,1]  OBJ       50.374037   
+    qszero[4,2]  OBJ       57.790548   
+    qszero[7,1]  OBJ       70.983131   
+    qszero[7,2]  OBJ       70.234224   
+ SC SCEN384   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     112.986629  
+    RHS       CON87     51.528536   
+    RHS       CON92     87.695355   
+    RHS       CON93     144.659180  
+    qszero[4,1]  OBJ       52.275778   
+    qszero[4,2]  OBJ       53.659364   
+    qszero[7,1]  OBJ       79.060762   
+    qszero[7,2]  OBJ       78.953662   
+ SC SCEN385   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     127.543423  
+    RHS       CON87     37.681616   
+    RHS       CON92     88.758673   
+    RHS       CON93     55.971010   
+    qszero[4,1]  OBJ       53.273110   
+    qszero[4,2]  OBJ       53.328391   
+    qszero[7,1]  OBJ       70.329197   
+    qszero[7,2]  OBJ       79.050700   
+ SC SCEN386   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     32.952728   
+    RHS       CON87     121.962813  
+    RHS       CON92     79.853305   
+    RHS       CON93     136.983336  
+    qszero[4,1]  OBJ       55.665760   
+    qszero[4,2]  OBJ       54.231801   
+    qszero[7,1]  OBJ       73.312985   
+    qszero[7,2]  OBJ       72.676275   
+ SC SCEN387   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     53.582586   
+    RHS       CON87     51.703959   
+    RHS       CON92     49.069487   
+    RHS       CON93     22.112492   
+    qszero[4,1]  OBJ       53.239285   
+    qszero[4,2]  OBJ       57.579615   
+    qszero[7,1]  OBJ       74.131411   
+    qszero[7,2]  OBJ       74.602851   
+ SC SCEN388   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     65.950680   
+    RHS       CON87     133.826403  
+    RHS       CON92     184.283869  
+    RHS       CON93     161.593803  
+    qszero[4,1]  OBJ       51.233363   
+    qszero[4,2]  OBJ       59.895364   
+    qszero[7,1]  OBJ       77.752347   
+    qszero[7,2]  OBJ       74.596796   
+ SC SCEN389   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     101.040746  
+    RHS       CON87     18.524194   
+    RHS       CON92     110.518248  
+    RHS       CON93     145.249169  
+    qszero[4,1]  OBJ       57.579051   
+    qszero[4,2]  OBJ       51.700354   
+    qszero[7,1]  OBJ       75.406388   
+    qszero[7,2]  OBJ       73.660519   
+ SC SCEN390   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     107.399438  
+    RHS       CON87     52.234473   
+    RHS       CON92     128.365838  
+    RHS       CON93     153.473553  
+    qszero[4,1]  OBJ       59.139651   
+    qszero[4,2]  OBJ       50.375407   
+    qszero[7,1]  OBJ       73.942378   
+    qszero[7,2]  OBJ       79.278967   
+ SC SCEN391   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     148.006583  
+    RHS       CON87     32.725658   
+    RHS       CON92     21.554130   
+    RHS       CON93     68.202728   
+    qszero[4,1]  OBJ       55.294524   
+    qszero[4,2]  OBJ       53.531925   
+    qszero[7,1]  OBJ       76.047667   
+    qszero[7,2]  OBJ       75.885742   
+ SC SCEN392   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     81.233873   
+    RHS       CON87     50.635928   
+    RHS       CON92     161.233874  
+    RHS       CON93     144.972607  
+    qszero[4,1]  OBJ       50.775563   
+    qszero[4,2]  OBJ       56.576503   
+    qszero[7,1]  OBJ       72.953241   
+    qszero[7,2]  OBJ       71.672512   
+ SC SCEN393   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     18.981539   
+    RHS       CON87     120.742571  
+    RHS       CON92     20.327439   
+    RHS       CON93     101.019060  
+    qszero[4,1]  OBJ       57.570556   
+    qszero[4,2]  OBJ       53.505148   
+    qszero[7,1]  OBJ       74.812888   
+    qszero[7,2]  OBJ       76.993349   
+ SC SCEN394   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     15.656227   
+    RHS       CON87     121.004600  
+    RHS       CON92     144.677525  
+    RHS       CON93     18.114405   
+    qszero[4,1]  OBJ       51.381346   
+    qszero[4,2]  OBJ       56.793749   
+    qszero[7,1]  OBJ       72.341940   
+    qszero[7,2]  OBJ       70.394016   
+ SC SCEN395   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     19.014226   
+    RHS       CON87     65.346454   
+    RHS       CON92     154.590196  
+    RHS       CON93     85.186560   
+    qszero[4,1]  OBJ       55.205032   
+    qszero[4,2]  OBJ       58.411876   
+    qszero[7,1]  OBJ       71.003231   
+    qszero[7,2]  OBJ       71.848544   
+ SC SCEN396   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     109.379528  
+    RHS       CON87     39.359330   
+    RHS       CON92     3.546659    
+    RHS       CON93     122.215232  
+    qszero[4,1]  OBJ       51.759003   
+    qszero[4,2]  OBJ       57.155294   
+    qszero[7,1]  OBJ       76.371835   
+    qszero[7,2]  OBJ       79.320608   
+ SC SCEN397   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     100.644427  
+    RHS       CON87     125.775659  
+    RHS       CON92     177.595215  
+    RHS       CON93     28.018422   
+    qszero[4,1]  OBJ       55.321244   
+    qszero[4,2]  OBJ       57.071661   
+    qszero[7,1]  OBJ       75.680995   
+    qszero[7,2]  OBJ       74.888973   
+ SC SCEN398   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     30.469857   
+    RHS       CON87     149.335222  
+    RHS       CON92     71.751121   
+    RHS       CON93     15.637910   
+    qszero[4,1]  OBJ       50.262349   
+    qszero[4,2]  OBJ       50.036728   
+    qszero[7,1]  OBJ       75.765491   
+    qszero[7,2]  OBJ       70.868760   
+ SC SCEN399   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     35.764329   
+    RHS       CON87     6.122652    
+    RHS       CON92     171.145823  
+    RHS       CON93     146.415520  
+    qszero[4,1]  OBJ       50.659876   
+    qszero[4,2]  OBJ       57.380521   
+    qszero[7,1]  OBJ       71.870164   
+    qszero[7,2]  OBJ       73.251223   
+ SC SCEN400   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     92.306765   
+    RHS       CON87     111.034299  
+    RHS       CON92     143.995240  
+    RHS       CON93     121.658098  
+    qszero[4,1]  OBJ       55.313296   
+    qszero[4,2]  OBJ       58.502532   
+    qszero[7,1]  OBJ       70.506782   
+    qszero[7,2]  OBJ       71.238578   
+ SC SCEN401   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     43.960626   
+    RHS       CON87     122.329735  
+    RHS       CON92     90.110429   
+    RHS       CON93     118.170392  
+    qszero[4,1]  OBJ       57.854241   
+    qszero[4,2]  OBJ       54.014072   
+    qszero[7,1]  OBJ       77.983482   
+    qszero[7,2]  OBJ       71.880642   
+ SC SCEN402   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     81.547409   
+    RHS       CON87     29.124752   
+    RHS       CON92     40.665257   
+    RHS       CON93     70.439878   
+    qszero[4,1]  OBJ       56.121946   
+    qszero[4,2]  OBJ       55.692007   
+    qszero[7,1]  OBJ       71.131735   
+    qszero[7,2]  OBJ       73.603230   
+ SC SCEN403   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     75.745633   
+    RHS       CON87     18.274714   
+    RHS       CON92     3.668381    
+    RHS       CON93     117.321790  
+    qszero[4,1]  OBJ       54.432740   
+    qszero[4,2]  OBJ       55.848205   
+    qszero[7,1]  OBJ       73.739551   
+    qszero[7,2]  OBJ       77.015655   
+ SC SCEN404   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     93.766554   
+    RHS       CON87     52.191996   
+    RHS       CON92     18.784340   
+    RHS       CON93     194.311803  
+    qszero[4,1]  OBJ       51.719988   
+    qszero[4,2]  OBJ       56.370331   
+    qszero[7,1]  OBJ       75.792327   
+    qszero[7,2]  OBJ       73.187198   
+ SC SCEN405   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     46.391554   
+    RHS       CON87     8.912874    
+    RHS       CON92     174.444922  
+    RHS       CON93     145.457789  
+    qszero[4,1]  OBJ       58.634757   
+    qszero[4,2]  OBJ       57.596652   
+    qszero[7,1]  OBJ       73.350669   
+    qszero[7,2]  OBJ       76.165038   
+ SC SCEN406   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     141.271240  
+    RHS       CON87     13.692212   
+    RHS       CON92     182.923221  
+    RHS       CON93     27.741002   
+    qszero[4,1]  OBJ       50.207211   
+    qszero[4,2]  OBJ       57.861172   
+    qszero[7,1]  OBJ       73.047318   
+    qszero[7,2]  OBJ       72.896870   
+ SC SCEN407   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     58.628120   
+    RHS       CON87     66.883745   
+    RHS       CON92     93.056724   
+    RHS       CON93     174.697920  
+    qszero[4,1]  OBJ       58.403087   
+    qszero[4,2]  OBJ       55.241823   
+    qszero[7,1]  OBJ       76.349843   
+    qszero[7,2]  OBJ       75.192752   
+ SC SCEN408   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     32.909524   
+    RHS       CON87     60.275189   
+    RHS       CON92     125.049079  
+    RHS       CON93     82.851908   
+    qszero[4,1]  OBJ       53.707798   
+    qszero[4,2]  OBJ       50.667588   
+    qszero[7,1]  OBJ       79.519220   
+    qszero[7,2]  OBJ       74.074854   
+ SC SCEN409   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     20.193930   
+    RHS       CON87     25.175280   
+    RHS       CON92     13.799516   
+    RHS       CON93     165.303732  
+    qszero[4,1]  OBJ       52.400779   
+    qszero[4,2]  OBJ       57.308926   
+    qszero[7,1]  OBJ       72.387942   
+    qszero[7,2]  OBJ       70.886245   
+ SC SCEN410   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     88.862014   
+    RHS       CON87     146.104564  
+    RHS       CON92     46.569516   
+    RHS       CON93     160.169628  
+    qszero[4,1]  OBJ       51.615486   
+    qszero[4,2]  OBJ       51.999409   
+    qszero[7,1]  OBJ       72.389360   
+    qszero[7,2]  OBJ       77.792308   
+ SC SCEN411   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     78.963536   
+    RHS       CON87     68.067858   
+    RHS       CON92     2.430404    
+    RHS       CON93     171.130411  
+    qszero[4,1]  OBJ       56.823940   
+    qszero[4,2]  OBJ       56.550665   
+    qszero[7,1]  OBJ       73.298148   
+    qszero[7,2]  OBJ       70.315346   
+ SC SCEN412   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     26.023284   
+    RHS       CON87     144.530022  
+    RHS       CON92     111.307676  
+    RHS       CON93     145.785198  
+    qszero[4,1]  OBJ       58.191062   
+    qszero[4,2]  OBJ       59.548403   
+    qszero[7,1]  OBJ       75.661092   
+    qszero[7,2]  OBJ       73.250598   
+ SC SCEN413   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     29.665255   
+    RHS       CON87     59.343506   
+    RHS       CON92     75.075185   
+    RHS       CON93     9.124401    
+    qszero[4,1]  OBJ       59.777661   
+    qszero[4,2]  OBJ       58.287876   
+    qszero[7,1]  OBJ       70.932385   
+    qszero[7,2]  OBJ       79.627036   
+ SC SCEN414   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     116.870114  
+    RHS       CON87     93.990813   
+    RHS       CON92     90.956406   
+    RHS       CON93     113.765787  
+    qszero[4,1]  OBJ       51.706478   
+    qszero[4,2]  OBJ       58.017749   
+    qszero[7,1]  OBJ       79.312216   
+    qszero[7,2]  OBJ       79.932311   
+ SC SCEN415   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     137.463163  
+    RHS       CON87     58.190695   
+    RHS       CON92     104.320827  
+    RHS       CON93     52.788998   
+    qszero[4,1]  OBJ       50.469820   
+    qszero[4,2]  OBJ       55.157004   
+    qszero[7,1]  OBJ       71.919892   
+    qszero[7,2]  OBJ       72.245364   
+ SC SCEN416   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     9.252497    
+    RHS       CON87     64.093116   
+    RHS       CON92     139.409061  
+    RHS       CON93     55.190438   
+    qszero[4,1]  OBJ       53.966837   
+    qszero[4,2]  OBJ       55.782767   
+    qszero[7,1]  OBJ       71.587541   
+    qszero[7,2]  OBJ       79.688658   
+ SC SCEN417   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     116.469835  
+    RHS       CON87     28.778714   
+    RHS       CON92     76.509011   
+    RHS       CON93     88.061362   
+    qszero[4,1]  OBJ       51.986275   
+    qszero[4,2]  OBJ       52.060305   
+    qszero[7,1]  OBJ       75.601162   
+    qszero[7,2]  OBJ       78.848639   
+ SC SCEN418   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     98.347490   
+    RHS       CON87     99.610091   
+    RHS       CON92     134.400360  
+    RHS       CON93     151.446558  
+    qszero[4,1]  OBJ       54.232538   
+    qszero[4,2]  OBJ       53.032670   
+    qszero[7,1]  OBJ       77.842841   
+    qszero[7,2]  OBJ       73.386902   
+ SC SCEN419   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     35.417204   
+    RHS       CON87     23.941250   
+    RHS       CON92     170.231283  
+    RHS       CON93     116.598357  
+    qszero[4,1]  OBJ       52.597447   
+    qszero[4,2]  OBJ       59.597079   
+    qszero[7,1]  OBJ       75.220605   
+    qszero[7,2]  OBJ       74.118641   
+ SC SCEN420   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     83.071320   
+    RHS       CON87     31.823717   
+    RHS       CON92     109.312274  
+    RHS       CON93     198.893298  
+    qszero[4,1]  OBJ       58.893626   
+    qszero[4,2]  OBJ       58.575509   
+    qszero[7,1]  OBJ       74.644566   
+    qszero[7,2]  OBJ       70.374523   
+ SC SCEN421   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     62.776282   
+    RHS       CON87     96.487627   
+    RHS       CON92     28.779360   
+    RHS       CON93     191.921529  
+    qszero[4,1]  OBJ       57.976221   
+    qszero[4,2]  OBJ       55.598431   
+    qszero[7,1]  OBJ       71.294886   
+    qszero[7,2]  OBJ       74.197369   
+ SC SCEN422   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     17.693167   
+    RHS       CON87     80.945053   
+    RHS       CON92     41.731124   
+    RHS       CON93     81.630004   
+    qszero[4,1]  OBJ       58.153207   
+    qszero[4,2]  OBJ       52.056107   
+    qszero[7,1]  OBJ       73.796021   
+    qszero[7,2]  OBJ       72.173529   
+ SC SCEN423   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     82.434145   
+    RHS       CON87     48.409496   
+    RHS       CON92     172.951350  
+    RHS       CON93     185.178128  
+    qszero[4,1]  OBJ       53.117766   
+    qszero[4,2]  OBJ       54.859675   
+    qszero[7,1]  OBJ       76.233360   
+    qszero[7,2]  OBJ       79.033776   
+ SC SCEN424   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     61.349062   
+    RHS       CON87     109.021438  
+    RHS       CON92     133.299303  
+    RHS       CON93     180.554073  
+    qszero[4,1]  OBJ       52.492594   
+    qszero[4,2]  OBJ       51.918190   
+    qszero[7,1]  OBJ       79.900775   
+    qszero[7,2]  OBJ       76.972581   
+ SC SCEN425   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     136.835336  
+    RHS       CON87     27.546363   
+    RHS       CON92     88.180334   
+    RHS       CON93     140.041701  
+    qszero[4,1]  OBJ       51.798042   
+    qszero[4,2]  OBJ       57.670318   
+    qszero[7,1]  OBJ       79.401196   
+    qszero[7,2]  OBJ       73.186974   
+ SC SCEN426   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     39.097448   
+    RHS       CON87     64.357026   
+    RHS       CON92     29.263428   
+    RHS       CON93     106.760311  
+    qszero[4,1]  OBJ       50.888415   
+    qszero[4,2]  OBJ       56.444209   
+    qszero[7,1]  OBJ       73.582284   
+    qszero[7,2]  OBJ       77.216306   
+ SC SCEN427   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     8.454005    
+    RHS       CON87     103.560096  
+    RHS       CON92     35.329700   
+    RHS       CON93     48.223034   
+    qszero[4,1]  OBJ       53.261718   
+    qszero[4,2]  OBJ       55.789392   
+    qszero[7,1]  OBJ       78.216820   
+    qszero[7,2]  OBJ       79.480261   
+ SC SCEN428   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     73.781853   
+    RHS       CON87     92.144171   
+    RHS       CON92     62.108399   
+    RHS       CON93     98.083272   
+    qszero[4,1]  OBJ       50.764084   
+    qszero[4,2]  OBJ       51.626743   
+    qszero[7,1]  OBJ       79.704383   
+    qszero[7,2]  OBJ       74.741365   
+ SC SCEN429   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     15.763010   
+    RHS       CON87     130.829339  
+    RHS       CON92     196.243755  
+    RHS       CON93     139.896930  
+    qszero[4,1]  OBJ       53.144812   
+    qszero[4,2]  OBJ       57.424461   
+    qszero[7,1]  OBJ       73.745978   
+    qszero[7,2]  OBJ       70.162339   
+ SC SCEN430   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     64.204236   
+    RHS       CON87     31.648441   
+    RHS       CON92     136.596895  
+    RHS       CON93     12.437549   
+    qszero[4,1]  OBJ       56.050168   
+    qszero[4,2]  OBJ       50.473236   
+    qszero[7,1]  OBJ       79.735491   
+    qszero[7,2]  OBJ       78.978588   
+ SC SCEN431   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     40.145890   
+    RHS       CON87     44.053913   
+    RHS       CON92     88.144654   
+    RHS       CON93     79.752160   
+    qszero[4,1]  OBJ       55.872572   
+    qszero[4,2]  OBJ       50.115410   
+    qszero[7,1]  OBJ       70.010849   
+    qszero[7,2]  OBJ       78.514707   
+ SC SCEN432   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     72.222140   
+    RHS       CON87     14.441984   
+    RHS       CON92     150.360469  
+    RHS       CON93     172.357369  
+    qszero[4,1]  OBJ       53.442161   
+    qszero[4,2]  OBJ       53.841587   
+    qszero[7,1]  OBJ       73.027682   
+    qszero[7,2]  OBJ       74.792838   
+ SC SCEN433   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     24.384946   
+    RHS       CON87     114.258603  
+    RHS       CON92     169.130305  
+    RHS       CON93     197.027214  
+    qszero[4,1]  OBJ       52.129982   
+    qszero[4,2]  OBJ       50.521361   
+    qszero[7,1]  OBJ       77.059545   
+    qszero[7,2]  OBJ       78.547063   
+ SC SCEN434   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     61.411897   
+    RHS       CON87     15.906599   
+    RHS       CON92     118.172424  
+    RHS       CON93     159.062716  
+    qszero[4,1]  OBJ       58.653884   
+    qszero[4,2]  OBJ       59.907654   
+    qszero[7,1]  OBJ       77.098398   
+    qszero[7,2]  OBJ       72.727407   
+ SC SCEN435   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     6.379655    
+    RHS       CON87     40.461808   
+    RHS       CON92     168.045595  
+    RHS       CON93     121.632866  
+    qszero[4,1]  OBJ       55.494228   
+    qszero[4,2]  OBJ       50.878886   
+    qszero[7,1]  OBJ       76.127451   
+    qszero[7,2]  OBJ       70.008538   
+ SC SCEN436   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     8.003317    
+    RHS       CON87     17.704245   
+    RHS       CON92     102.798074  
+    RHS       CON93     54.787859   
+    qszero[4,1]  OBJ       50.264266   
+    qszero[4,2]  OBJ       57.486509   
+    qszero[7,1]  OBJ       71.566420   
+    qszero[7,2]  OBJ       75.199145   
+ SC SCEN437   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     18.850106   
+    RHS       CON87     108.421355  
+    RHS       CON92     92.115237   
+    RHS       CON93     186.705281  
+    qszero[4,1]  OBJ       51.005354   
+    qszero[4,2]  OBJ       55.492075   
+    qszero[7,1]  OBJ       77.415796   
+    qszero[7,2]  OBJ       73.864161   
+ SC SCEN438   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     148.066635  
+    RHS       CON87     56.004968   
+    RHS       CON92     1.285400    
+    RHS       CON93     131.009505  
+    qszero[4,1]  OBJ       51.751865   
+    qszero[4,2]  OBJ       52.677235   
+    qszero[7,1]  OBJ       79.502741   
+    qszero[7,2]  OBJ       72.964660   
+ SC SCEN439   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     103.018781  
+    RHS       CON87     19.762762   
+    RHS       CON92     81.216256   
+    RHS       CON93     48.193518   
+    qszero[4,1]  OBJ       51.120541   
+    qszero[4,2]  OBJ       50.829858   
+    qszero[7,1]  OBJ       72.388996   
+    qszero[7,2]  OBJ       70.641670   
+ SC SCEN440   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     62.751929   
+    RHS       CON87     46.845394   
+    RHS       CON92     175.083569  
+    RHS       CON93     84.864113   
+    qszero[4,1]  OBJ       57.090945   
+    qszero[4,2]  OBJ       50.142532   
+    qszero[7,1]  OBJ       79.144696   
+    qszero[7,2]  OBJ       73.865018   
+ SC SCEN441   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     111.785961  
+    RHS       CON87     49.337678   
+    RHS       CON92     49.506758   
+    RHS       CON93     153.759292  
+    qszero[4,1]  OBJ       56.460793   
+    qszero[4,2]  OBJ       54.177509   
+    qszero[7,1]  OBJ       76.891254   
+    qszero[7,2]  OBJ       76.220570   
+ SC SCEN442   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     138.283410  
+    RHS       CON87     23.550449   
+    RHS       CON92     149.083279  
+    RHS       CON93     31.842683   
+    qszero[4,1]  OBJ       58.463203   
+    qszero[4,2]  OBJ       53.973053   
+    qszero[7,1]  OBJ       79.227498   
+    qszero[7,2]  OBJ       79.735361   
+ SC SCEN443   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     113.330512  
+    RHS       CON87     24.535016   
+    RHS       CON92     20.017692   
+    RHS       CON93     138.648627  
+    qszero[4,1]  OBJ       53.555952   
+    qszero[4,2]  OBJ       54.739122   
+    qszero[7,1]  OBJ       79.842247   
+    qszero[7,2]  OBJ       70.293517   
+ SC SCEN444   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     10.517742   
+    RHS       CON87     14.301413   
+    RHS       CON92     144.320479  
+    RHS       CON93     182.336992  
+    qszero[4,1]  OBJ       59.642054   
+    qszero[4,2]  OBJ       50.418057   
+    qszero[7,1]  OBJ       70.765342   
+    qszero[7,2]  OBJ       77.647066   
+ SC SCEN445   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     42.637948   
+    RHS       CON87     76.250431   
+    RHS       CON92     22.931964   
+    RHS       CON93     166.692609  
+    qszero[4,1]  OBJ       59.661082   
+    qszero[4,2]  OBJ       56.670227   
+    qszero[7,1]  OBJ       77.422668   
+    qszero[7,2]  OBJ       72.623330   
+ SC SCEN446   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     63.795329   
+    RHS       CON87     7.109135    
+    RHS       CON92     120.017817  
+    RHS       CON93     38.182822   
+    qszero[4,1]  OBJ       58.548488   
+    qszero[4,2]  OBJ       52.798282   
+    qszero[7,1]  OBJ       70.073382   
+    qszero[7,2]  OBJ       79.007818   
+ SC SCEN447   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     133.567106  
+    RHS       CON87     72.142002   
+    RHS       CON92     150.374372  
+    RHS       CON93     4.346995    
+    qszero[4,1]  OBJ       59.532869   
+    qszero[4,2]  OBJ       59.414450   
+    qszero[7,1]  OBJ       78.702076   
+    qszero[7,2]  OBJ       76.150711   
+ SC SCEN448   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     21.914623   
+    RHS       CON87     20.149351   
+    RHS       CON92     29.324124   
+    RHS       CON93     142.671992  
+    qszero[4,1]  OBJ       53.358079   
+    qszero[4,2]  OBJ       52.470011   
+    qszero[7,1]  OBJ       79.485200   
+    qszero[7,2]  OBJ       73.321354   
+ SC SCEN449   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     104.293325  
+    RHS       CON87     19.337624   
+    RHS       CON92     178.549635  
+    RHS       CON93     94.214641   
+    qszero[4,1]  OBJ       58.999573   
+    qszero[4,2]  OBJ       55.610327   
+    qszero[7,1]  OBJ       79.501264   
+    qszero[7,2]  OBJ       77.651764   
+ SC SCEN450   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     65.157064   
+    RHS       CON87     62.624755   
+    RHS       CON92     11.935554   
+    RHS       CON93     192.421427  
+    qszero[4,1]  OBJ       54.745108   
+    qszero[4,2]  OBJ       56.778347   
+    qszero[7,1]  OBJ       71.586964   
+    qszero[7,2]  OBJ       71.024371   
+ SC SCEN451   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     121.982553  
+    RHS       CON87     108.432862  
+    RHS       CON92     71.453723   
+    RHS       CON93     136.482810  
+    qszero[4,1]  OBJ       54.883800   
+    qszero[4,2]  OBJ       58.885342   
+    qszero[7,1]  OBJ       78.648304   
+    qszero[7,2]  OBJ       75.242667   
+ SC SCEN452   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     39.285082   
+    RHS       CON87     88.324299   
+    RHS       CON92     120.609654  
+    RHS       CON93     91.797397   
+    qszero[4,1]  OBJ       55.400579   
+    qszero[4,2]  OBJ       52.976970   
+    qszero[7,1]  OBJ       76.727241   
+    qszero[7,2]  OBJ       74.982447   
+ SC SCEN453   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     119.991460  
+    RHS       CON87     109.451716  
+    RHS       CON92     21.805776   
+    RHS       CON93     195.534460  
+    qszero[4,1]  OBJ       57.006267   
+    qszero[4,2]  OBJ       56.787697   
+    qszero[7,1]  OBJ       73.563208   
+    qszero[7,2]  OBJ       76.823964   
+ SC SCEN454   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     22.654444   
+    RHS       CON87     98.521514   
+    RHS       CON92     174.010851  
+    RHS       CON93     10.511362   
+    qszero[4,1]  OBJ       50.581629   
+    qszero[4,2]  OBJ       53.577786   
+    qszero[7,1]  OBJ       74.879956   
+    qszero[7,2]  OBJ       75.936178   
+ SC SCEN455   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     99.022206   
+    RHS       CON87     91.885099   
+    RHS       CON92     148.183301  
+    RHS       CON93     197.496784  
+    qszero[4,1]  OBJ       57.347688   
+    qszero[4,2]  OBJ       59.016502   
+    qszero[7,1]  OBJ       73.009135   
+    qszero[7,2]  OBJ       72.859248   
+ SC SCEN456   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     34.753297   
+    RHS       CON87     47.542917   
+    RHS       CON92     85.150377   
+    RHS       CON93     152.453760  
+    qszero[4,1]  OBJ       56.588809   
+    qszero[4,2]  OBJ       54.022542   
+    qszero[7,1]  OBJ       74.010876   
+    qszero[7,2]  OBJ       71.175053   
+ SC SCEN457   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     79.626775   
+    RHS       CON87     45.306287   
+    RHS       CON92     156.863465  
+    RHS       CON93     132.182442  
+    qszero[4,1]  OBJ       52.500816   
+    qszero[4,2]  OBJ       52.116410   
+    qszero[7,1]  OBJ       76.720062   
+    qszero[7,2]  OBJ       76.486851   
+ SC SCEN458   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     95.979914   
+    RHS       CON87     31.824726   
+    RHS       CON92     62.527772   
+    RHS       CON93     193.390746  
+    qszero[4,1]  OBJ       56.289101   
+    qszero[4,2]  OBJ       52.862044   
+    qszero[7,1]  OBJ       75.813220   
+    qszero[7,2]  OBJ       76.069160   
+ SC SCEN459   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     51.711207   
+    RHS       CON87     148.817828  
+    RHS       CON92     144.369585  
+    RHS       CON93     98.696800   
+    qszero[4,1]  OBJ       50.332925   
+    qszero[4,2]  OBJ       52.787391   
+    qszero[7,1]  OBJ       78.393335   
+    qszero[7,2]  OBJ       72.135607   
+ SC SCEN460   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     66.757098   
+    RHS       CON87     30.556765   
+    RHS       CON92     135.184204  
+    RHS       CON93     164.598834  
+    qszero[4,1]  OBJ       56.795245   
+    qszero[4,2]  OBJ       54.878158   
+    qszero[7,1]  OBJ       71.160638   
+    qszero[7,2]  OBJ       72.670733   
+ SC SCEN461   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     91.937629   
+    RHS       CON87     141.011021  
+    RHS       CON92     94.406194   
+    RHS       CON93     89.700999   
+    qszero[4,1]  OBJ       56.058297   
+    qszero[4,2]  OBJ       54.749649   
+    qszero[7,1]  OBJ       73.146105   
+    qszero[7,2]  OBJ       75.330469   
+ SC SCEN462   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     137.488661  
+    RHS       CON87     87.717798   
+    RHS       CON92     10.662842   
+    RHS       CON93     19.199502   
+    qszero[4,1]  OBJ       51.864873   
+    qszero[4,2]  OBJ       54.515603   
+    qszero[7,1]  OBJ       72.809667   
+    qszero[7,2]  OBJ       74.875005   
+ SC SCEN463   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     32.160314   
+    RHS       CON87     142.936033  
+    RHS       CON92     119.538111  
+    RHS       CON93     170.619367  
+    qszero[4,1]  OBJ       51.543024   
+    qszero[4,2]  OBJ       56.278489   
+    qszero[7,1]  OBJ       79.480460   
+    qszero[7,2]  OBJ       73.921911   
+ SC SCEN464   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     54.570758   
+    RHS       CON87     61.459161   
+    RHS       CON92     104.115576  
+    RHS       CON93     163.209831  
+    qszero[4,1]  OBJ       56.413188   
+    qszero[4,2]  OBJ       52.451421   
+    qszero[7,1]  OBJ       71.784937   
+    qszero[7,2]  OBJ       78.810816   
+ SC SCEN465   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     44.412369   
+    RHS       CON87     10.700913   
+    RHS       CON92     19.275668   
+    RHS       CON93     187.150317  
+    qszero[4,1]  OBJ       51.665051   
+    qszero[4,2]  OBJ       59.912911   
+    qszero[7,1]  OBJ       72.846975   
+    qszero[7,2]  OBJ       70.121881   
+ SC SCEN466   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     21.416818   
+    RHS       CON87     122.288039  
+    RHS       CON92     62.705027   
+    RHS       CON93     173.850502  
+    qszero[4,1]  OBJ       57.591161   
+    qszero[4,2]  OBJ       53.908535   
+    qszero[7,1]  OBJ       70.027855   
+    qszero[7,2]  OBJ       74.129420   
+ SC SCEN467   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     111.682587  
+    RHS       CON87     92.290889   
+    RHS       CON92     124.065734  
+    RHS       CON93     60.565336   
+    qszero[4,1]  OBJ       55.963960   
+    qszero[4,2]  OBJ       54.428695   
+    qszero[7,1]  OBJ       71.976925   
+    qszero[7,2]  OBJ       78.420854   
+ SC SCEN468   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     4.469708    
+    RHS       CON87     126.904660  
+    RHS       CON92     155.518336  
+    RHS       CON93     106.376080  
+    qszero[4,1]  OBJ       53.804910   
+    qszero[4,2]  OBJ       53.244182   
+    qszero[7,1]  OBJ       77.099244   
+    qszero[7,2]  OBJ       78.993212   
+ SC SCEN469   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     11.153913   
+    RHS       CON87     13.756734   
+    RHS       CON92     14.798776   
+    RHS       CON93     194.100763  
+    qszero[4,1]  OBJ       58.050608   
+    qszero[4,2]  OBJ       51.003509   
+    qszero[7,1]  OBJ       77.942972   
+    qszero[7,2]  OBJ       72.801924   
+ SC SCEN470   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     2.498161    
+    RHS       CON87     37.157477   
+    RHS       CON92     144.584281  
+    RHS       CON93     22.768652   
+    qszero[4,1]  OBJ       56.054471   
+    qszero[4,2]  OBJ       54.445206   
+    qszero[7,1]  OBJ       76.479085   
+    qszero[7,2]  OBJ       77.432458   
+ SC SCEN471   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     94.365077   
+    RHS       CON87     69.267434   
+    RHS       CON92     94.607404   
+    RHS       CON93     3.053582    
+    qszero[4,1]  OBJ       57.133594   
+    qszero[4,2]  OBJ       55.605798   
+    qszero[7,1]  OBJ       76.911339   
+    qszero[7,2]  OBJ       70.516384   
+ SC SCEN472   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     67.513843   
+    RHS       CON87     109.939825  
+    RHS       CON92     58.726549   
+    RHS       CON93     118.493703  
+    qszero[4,1]  OBJ       59.119812   
+    qszero[4,2]  OBJ       52.567285   
+    qszero[7,1]  OBJ       74.786980   
+    qszero[7,2]  OBJ       71.112088   
+ SC SCEN473   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     135.214093  
+    RHS       CON87     33.039906   
+    RHS       CON92     118.076652  
+    RHS       CON93     0.576979    
+    qszero[4,1]  OBJ       56.414733   
+    qszero[4,2]  OBJ       53.688394   
+    qszero[7,1]  OBJ       72.637023   
+    qszero[7,2]  OBJ       74.280947   
+ SC SCEN474   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     5.032655    
+    RHS       CON87     122.828834  
+    RHS       CON92     186.354199  
+    RHS       CON93     6.109576    
+    qszero[4,1]  OBJ       58.878768   
+    qszero[4,2]  OBJ       59.965881   
+    qszero[7,1]  OBJ       79.889373   
+    qszero[7,2]  OBJ       79.139208   
+ SC SCEN475   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     73.032383   
+    RHS       CON87     149.978845  
+    RHS       CON92     96.535182   
+    RHS       CON93     165.187262  
+    qszero[4,1]  OBJ       52.418742   
+    qszero[4,2]  OBJ       53.794841   
+    qszero[7,1]  OBJ       73.910916   
+    qszero[7,2]  OBJ       70.451673   
+ SC SCEN476   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     31.708166   
+    RHS       CON87     74.289364   
+    RHS       CON92     172.124409  
+    RHS       CON93     37.012483   
+    qszero[4,1]  OBJ       56.327161   
+    qszero[4,2]  OBJ       58.550497   
+    qszero[7,1]  OBJ       75.972925   
+    qszero[7,2]  OBJ       72.592349   
+ SC SCEN477   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     1.970186    
+    RHS       CON87     46.587329   
+    RHS       CON92     115.928726  
+    RHS       CON93     118.435365  
+    qszero[4,1]  OBJ       53.043806   
+    qszero[4,2]  OBJ       50.668809   
+    qszero[7,1]  OBJ       79.774086   
+    qszero[7,2]  OBJ       76.062485   
+ SC SCEN478   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     1.757380    
+    RHS       CON87     136.006236  
+    RHS       CON92     37.442666   
+    RHS       CON93     165.447418  
+    qszero[4,1]  OBJ       50.516942   
+    qszero[4,2]  OBJ       52.705435   
+    qszero[7,1]  OBJ       71.894772   
+    qszero[7,2]  OBJ       79.697059   
+ SC SCEN479   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     144.423165  
+    RHS       CON87     147.701951  
+    RHS       CON92     94.236050   
+    RHS       CON93     109.937858  
+    qszero[4,1]  OBJ       58.472682   
+    qszero[4,2]  OBJ       56.183239   
+    qszero[7,1]  OBJ       73.773651   
+    qszero[7,2]  OBJ       77.552431   
+ SC SCEN480   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     144.688373  
+    RHS       CON87     101.686974  
+    RHS       CON92     192.949557  
+    RHS       CON93     72.411456   
+    qszero[4,1]  OBJ       52.028791   
+    qszero[4,2]  OBJ       57.876399   
+    qszero[7,1]  OBJ       72.645788   
+    qszero[7,2]  OBJ       77.249498   
+ SC SCEN481   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     116.802507  
+    RHS       CON87     125.568459  
+    RHS       CON92     127.417732  
+    RHS       CON93     61.260351   
+    qszero[4,1]  OBJ       58.480028   
+    qszero[4,2]  OBJ       57.332140   
+    qszero[7,1]  OBJ       71.281912   
+    qszero[7,2]  OBJ       79.432341   
+ SC SCEN482   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     28.686660   
+    RHS       CON87     16.344598   
+    RHS       CON92     47.991960   
+    RHS       CON93     75.379090   
+    qszero[4,1]  OBJ       55.376464   
+    qszero[4,2]  OBJ       57.245831   
+    qszero[7,1]  OBJ       74.747120   
+    qszero[7,2]  OBJ       74.410542   
+ SC SCEN483   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     57.998769   
+    RHS       CON87     99.991352   
+    RHS       CON92     45.267657   
+    RHS       CON93     84.851030   
+    qszero[4,1]  OBJ       57.956842   
+    qszero[4,2]  OBJ       54.060620   
+    qszero[7,1]  OBJ       75.973980   
+    qszero[7,2]  OBJ       78.393802   
+ SC SCEN484   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     2.520728    
+    RHS       CON87     108.889375  
+    RHS       CON92     8.930518    
+    RHS       CON93     72.589689   
+    qszero[4,1]  OBJ       50.281353   
+    qszero[4,2]  OBJ       55.854168   
+    qszero[7,1]  OBJ       75.467322   
+    qszero[7,2]  OBJ       79.430327   
+ SC SCEN485   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     7.340781    
+    RHS       CON87     88.488112   
+    RHS       CON92     18.729347   
+    RHS       CON93     119.993789  
+    qszero[4,1]  OBJ       58.338270   
+    qszero[4,2]  OBJ       56.015660   
+    qszero[7,1]  OBJ       75.463363   
+    qszero[7,2]  OBJ       70.795099   
+ SC SCEN486   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     33.310857   
+    RHS       CON87     144.481953  
+    RHS       CON92     162.309218  
+    RHS       CON93     39.664075   
+    qszero[4,1]  OBJ       58.211108   
+    qszero[4,2]  OBJ       57.270654   
+    qszero[7,1]  OBJ       75.012360   
+    qszero[7,2]  OBJ       79.628275   
+ SC SCEN487   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     132.674607  
+    RHS       CON87     116.683083  
+    RHS       CON92     128.485606  
+    RHS       CON93     142.721596  
+    qszero[4,1]  OBJ       52.185051   
+    qszero[4,2]  OBJ       51.328346   
+    qszero[7,1]  OBJ       79.604382   
+    qszero[7,2]  OBJ       74.866859   
+ SC SCEN488   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     50.513647   
+    RHS       CON87     7.952876    
+    RHS       CON92     11.280876   
+    RHS       CON93     167.005049  
+    qszero[4,1]  OBJ       51.637785   
+    qszero[4,2]  OBJ       55.467543   
+    qszero[7,1]  OBJ       72.923276   
+    qszero[7,2]  OBJ       76.747108   
+ SC SCEN489   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     134.475001  
+    RHS       CON87     54.934934   
+    RHS       CON92     157.269306  
+    RHS       CON93     141.631407  
+    qszero[4,1]  OBJ       57.541503   
+    qszero[4,2]  OBJ       54.738473   
+    qszero[7,1]  OBJ       75.495298   
+    qszero[7,2]  OBJ       78.166125   
+ SC SCEN490   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     105.680986  
+    RHS       CON87     115.323493  
+    RHS       CON92     34.765300   
+    RHS       CON93     119.568199  
+    qszero[4,1]  OBJ       52.882002   
+    qszero[4,2]  OBJ       52.431363   
+    qszero[7,1]  OBJ       79.705898   
+    qszero[7,2]  OBJ       73.298732   
+ SC SCEN491   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     11.410718   
+    RHS       CON87     80.371900   
+    RHS       CON92     147.566343  
+    RHS       CON93     80.459318   
+    qszero[4,1]  OBJ       54.143054   
+    qszero[4,2]  OBJ       53.143389   
+    qszero[7,1]  OBJ       76.835613   
+    qszero[7,2]  OBJ       77.306110   
+ SC SCEN492   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     126.695342  
+    RHS       CON87     8.988470    
+    RHS       CON92     131.934221  
+    RHS       CON93     50.708657   
+    qszero[4,1]  OBJ       59.214267   
+    qszero[4,2]  OBJ       51.990526   
+    qszero[7,1]  OBJ       71.653665   
+    qszero[7,2]  OBJ       78.454687   
+ SC SCEN493   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     127.876261  
+    RHS       CON87     42.201329   
+    RHS       CON92     117.353800  
+    RHS       CON93     10.584850   
+    qszero[4,1]  OBJ       55.040136   
+    qszero[4,2]  OBJ       55.471358   
+    qszero[7,1]  OBJ       72.872788   
+    qszero[7,2]  OBJ       74.263100   
+ SC SCEN494   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     36.265848   
+    RHS       CON87     91.341714   
+    RHS       CON92     167.100592  
+    RHS       CON93     12.993904   
+    qszero[4,1]  OBJ       59.571276   
+    qszero[4,2]  OBJ       51.542326   
+    qszero[7,1]  OBJ       74.044493   
+    qszero[7,2]  OBJ       79.345817   
+ SC SCEN495   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     91.617426   
+    RHS       CON87     78.019759   
+    RHS       CON92     61.506836   
+    RHS       CON93     139.340779  
+    qszero[4,1]  OBJ       56.187644   
+    qszero[4,2]  OBJ       51.093597   
+    qszero[7,1]  OBJ       72.952856   
+    qszero[7,2]  OBJ       71.907230   
+ SC SCEN496   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     58.734095   
+    RHS       CON87     12.971372   
+    RHS       CON92     19.094522   
+    RHS       CON93     145.420265  
+    qszero[4,1]  OBJ       59.871166   
+    qszero[4,2]  OBJ       58.150991   
+    qszero[7,1]  OBJ       71.743131   
+    qszero[7,2]  OBJ       78.073553   
+ SC SCEN497   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     37.071003   
+    RHS       CON87     133.020941  
+    RHS       CON92     21.551648   
+    RHS       CON93     186.466220  
+    qszero[4,1]  OBJ       58.221001   
+    qszero[4,2]  OBJ       51.491451   
+    qszero[7,1]  OBJ       74.217071   
+    qszero[7,2]  OBJ       77.606909   
+ SC SCEN498   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     43.785764   
+    RHS       CON87     77.993753   
+    RHS       CON92     5.692865    
+    RHS       CON93     93.233188   
+    qszero[4,1]  OBJ       52.125439   
+    qszero[4,2]  OBJ       53.928352   
+    qszero[7,1]  OBJ       72.993995   
+    qszero[7,2]  OBJ       75.964083   
+ SC SCEN499   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     25.190121   
+    RHS       CON87     96.201665   
+    RHS       CON92     93.656388   
+    RHS       CON93     137.019052  
+    qszero[4,1]  OBJ       56.391708   
+    qszero[4,2]  OBJ       51.093145   
+    qszero[7,1]  OBJ       73.650321   
+    qszero[7,2]  OBJ       76.806603   
+ SC SCEN500   'ROOT'    0.002000  PERIOD2
+    RHS       CON86     88.805856   
+    RHS       CON87     109.579128  
+    RHS       CON92     141.454759  
+    RHS       CON93     162.619713  
+    qszero[4,1]  OBJ       58.606889   
+    qszero[4,2]  OBJ       56.369534   
+    qszero[7,1]  OBJ       77.450796   
+    qszero[7,2]  OBJ       71.504658   
+ENDATA
