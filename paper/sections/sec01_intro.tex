@@ -1,37 +1,35 @@
 %(What SIP is and our restriction) 
 Stochastic (mixed) integer programming (SIP) is the mathematical programming that accounts for 
 both continuous and discrete decision variables with uncertain parameters~\cite{book:BL2011}. 
-Modeling and algorithms for SIP have been advanced for the last few decades. Applications of SIP include but not limited to power systems \cite{journal:PO2013,journal:KYZC2017}, telecommunications \cite{journal:SDC1994}, manufacturing systems \cite{journal:SPR1994,journal:AG2004}, and transportation \cite{journal:MW1969,journal:PGM2017,journal:TPP2017,journal:MPT2014}. With the advances, a number of solution methods have been developed and shown to be computationally effective for stochastic problems. Moreover, many of the algorithms have been implemented as software packages either specific for certain problems or for generic problems \cite{SCIP,journal:WWH2012,journal:KZ2015}.
+Modeling and algorithms for SIP have been advanced for the last few decades. Applications of SIP include but not limited to power systems \cite{journal:PO2013,journal:KYZC2017}, telecommunications \cite{journal:SDC1994}, manufacturing systems \cite{journal:SPR1994,journal:AG2004}, and transportations \cite{journal:MW1969,journal:PGM2017,journal:TPP2017,journal:MPT2014}. With the advances, a number of solution methods have been developed and shown to be computationally effective for stochastic problems. Moreover, many of the algorithms have been implemented as software packages either specific for certain problems or for generic problems \cite{SCIP,journal:WWH2012,journal:KZ2015}.
 
-Throughout this research study, we focus on two-stage SIP with 
-linear objective function and constraints, where the first-stage decision finds a solution before the 
-random parameters are realized, and the second-stage decision takes a recourse action to the 
-uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters (i.e., scenarios) are discrete and finite with known probabilities.
+Although generalized SIP can cover the decision making regarding multiple stages, we focus on two-stage SIP throughout this research study. Two-stage SIP is a representative uncertainty modeling framework which comprises linear objective function and constraints, where the first-stage decision finds a solution before the 
+random parameters are realized, and the second-stage decision takes a recourse action to the uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters (i.e., scenarios) are discrete and finite with known probabilities.
 A key challenge in SIP is that the size of
 the problem increases with the number of scenarios. Moreover, the 
 second-stage value function is not necessarily convex in SIP. Thus, the standard decomposition 
-approaches that work nicely for stochastic non-integer programs, break down when the problem contains integer variables \cite{journal:AG2004}. Hereinafter, we use the 
-term SIP to indicate two-stage SIP. 
+approaches that work nicely for stochastic non-integer programs, break down when the problem includes integer variables \cite{journal:AG2004}. Hereinafter, we use the 
+term SIP to indicate the two-stage SIP. 
 
 Numerical tests and benchmarks are necessary for developing and improving algorithms. However,
-these have been challenging for the stochastic programming community, because of the limited source of test problem instances. 
+these have been challenging for the stochastic programming community, because of the limited source of test problem instances. To supply testing sources, Shabbir Ahmed has created a website called \siplib: A Stochastic Integer Programming Test Problem Library.
 \siplib\ is the first SIP-dedicated set of test problem instances available in \url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where instances of nine different problems are available in SMPS format \cite{smps} with additional information such as instance size, best known objective value or bounds, optimality gap, and solution time. There are a few more available stochastic programming test libraries which are not dedicated to SIP.
 A portable stochastic programming test set (POSTS) \cite{POSTS} is a small test set for 
-stochastic linear programming that provides fifteen problems in \smps\ format. The test set is available by a website \url{http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html}. Ariyawansa and Felt \cite{journal:AF2004} also provide a test problem collection for stochastic programming, which comprises of nine different problems. They are available in \url{https://www4.uwsp.edu/math/afelt/slptestset/download.html}. 
+stochastic linear programming that provides instances of fifteen problems in \smps\ format. The test set is available in \url{http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html}. Ariyawansa and Felt \cite{journal:AF2004} also provide a test problem collection for stochastic programming, which consists of nine different problems including four SIPs. These are available in \url{https://www4.uwsp.edu/math/afelt/slptestset/download.html}. 
 
-The existing collection has a few limitations. 
-First, it provides instances with only a few variations of the number of first- and second-stage variables and the number of scenarios, which could have been easily parameterized in 
+The existing \siplib\ has a few limitations. 
+First, it provides instances with only a few variations of the first- and second-stage variables and the number of scenarios, which could have been easily parameterized in 
 modeling languages. Moreover, the precise information of the problem instances is 
-not easily accessible. Second, only a limited number of problem types are available in 
+not easily accessible. Second, not enough number of problem types are available in 
 the existing collection. Note that, with three variable types (i.e., continuous, 
-binary, integer) in two stages, the possible number of combinations is $\left[\sum_{k=1}
+binary, integer) and two stages, the possible number of combinations is $\left[\sum_{k=1}
 ^3\binom{3}{k}\right]^2=49$ in total. 
-The existing collection provides only five such combinations 
+The existing \siplib\ provides only five such combinations 
 regarding the problems that can be fully implementable based on the open information.
-Third, \siplib\ needs to be polished systematically in terms of both pre-analysis on the 
+Third, it needs to provide more information such as pre-analysis on the 
 instances and post-analysis on the benchmark results. Currently, there is no predefined 
 contribution rule for \siplib\ so different problem provides different information. 
-Therefore, interpretation on the new results can be inconsistent.
+Therefore, interpretation on the new results can be incompatible with the former results.
 
 
 %
@@ -70,13 +68,12 @@ Therefore, interpretation on the new results can be inconsistent.
 %they want.
 
 %(SMPS, Julia)
-We provide \siplibtwo\ in two ways: \smps\ files (*.cor, *.tim, *.sto) \cite{smps} and an open-source \julia\ package. \smps\ is a file format widely used to describe stochastic program 
+We provide the second version of \siplib, say \siplibtwo\ in two ways: \smps\ files (*.cor, *.tim, *.sto) \cite{smps} and an open-source \julia\ package. \smps\ is a column-oriented standard format widely used to describe stochastic program 
 instances. Once \smps\ files are given, we can directly solve it using solvers like \dsp\ 
 \cite{web:DSP}, \textsf{SMI} \cite{web:SMI}, and \scip\ \cite{SCIP}. A drawback of \smps\ is the low 
-readability by human, which we decided to provide \julia\ scripts to let users be able to 
-easily catch up the problems and tailor the instances if needed. 
+readability by human, which we decided to provide \julia\ scripts to let users be able to easily catch up and tailor the problems as they want.
 
-The \julia\ package contains all the \julia\ scripts to construct the problem instances and also provides various functionalities that can be used to support SIP computational study. The representative such functionality is to write \smps\ format files from a \julia\ object of an SIP problem instance which is also constructed by the function of the package. This will allow users to create new problem instances and modify the instances (e.g., increasing the number of scenarios). In addition, the package provides functions to analyze SIP instances, for example, it reports instance size, sparsity pattern, and some known lower/upper bounds.
+The \julia\ package contains all the \julia\ scripts to construct the problem instances and also provides various functionalities that can be used to support SIP computational study. The representative such functionality is to write \smps\ files from a \julia\ object of an instance which is also constructed by the function defined in the package. This will allow users to obtain new \smps\ files of different instances (e.g., increased number of scenarios). In addition, the package provides functions to analyze SIP instances, for example, it reports instance size, sparsity pattern, and some known lower/upper bounds.
 %%(Convenience of Julia) 
 %\julia\ is an open-source high-level, high-performance dynamic programming language for 
 %numerical computing. It is also known as good performance, approaching that of statically
@@ -96,7 +93,7 @@ The contributions of this work can be summarized as follows.
 	\item We provide SIP-dedicated testing resources that are richer than the former \siplib.
 	\item We collect, implement, summarize, and open all the problem-specific details: 
 	mathematical formulation, random data generation, \julia\ scripts.
-	\item We implement and release an open-source \julia\ package for SIP research study.
+	\item We implement and release an open-source \julia\ package for SIP computational research study.
 	\item We provide both analytical and computational information on the accompanied 
 	instances.
 \end{itemize}
@@ -116,12 +113,12 @@ packages. In Section \ref{sec:summary}, we provide summary and discussion of the
 problems. This consists of origin of the problems with brief description, instance naming 
 rule, problem type, the number of components, and sparsity information. We also discuss why 
 they are important in each subsection. Together with the problem-specific description given 
-in Section\ref{sec:prob_desc}, we believe that users can quickly catch up what they need 
+in Section \ref{sec:prob_desc}, we believe that users can quickly catch up what they need 
 without investigating every detail. In Section \ref{sec:package}, we introduce our 
 implementation of the \julia\ package with a tutorial in Section 
 \ref{sec:tutorial}. In Section \ref{sec:instance_catalog}, we report analytical and 
 computational results of the accompanied \smps\ instances. We conclude this study with the 
-emphasis on our spirit for further improvement in SIP in Section \ref{sec:conclusion}. 
+emphasis on our spirit for further advances in SIP in Section \ref{sec:conclusion}. 
 
 
 

@@ -228,7 +228,7 @@ function EEV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; out
 end
 
 # (needs any MIP solver, e.g., using CPLEX)
-function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false)
+function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false, std::Bool=true)
     efrp = getExtensiveFormModel(model, genericnames, splice)
 
     if !output
@@ -256,7 +256,11 @@ function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
         MathProgBase.setparameters!(solver,TimeLimit=Inf)
     end
 
-    return RP
+    if !std
+        return RP
+    else
+        return (RP, )
+    end
 end
 
 function STD()

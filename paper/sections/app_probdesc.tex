@@ -3,7 +3,7 @@ In this section, we explain the meaning of the problems in \texttt{SIPLIB 2.0}. 
 \subsection{\airlift: Airlift operations scheduling} \label{AIRLIFT}
 \airlift\ is a scheduling problem that allocates flight routes and flying number for different types of aircraft to meet uncertain cargo demands from all routes. Each aircraft type has limited number of available flying hours and different flight hours/costs. In the first stage, the number of flights and corresponding routes are initially assigned to each aircraft type. The second stage recourse action includes reallocation of flight time/route and purchase of commercial transportation. Switching aircraft from one route to another causes increased hours/costs than it is supposed to be. Moreover, it sometimes gives rise to cancellation of initially assigned flights due to the different flying ability for each type.    
 
-Fig. \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
+Figure \ref{fig:airlift_sparsity} shows the sparsity pattern presents in extensive form \airlift\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\linewidth]{AIRLIFT_1}
@@ -90,7 +90,7 @@ d_2^s&=Lognormal(\mu=7.2936,\ \sigma=0.198),\quad\forall s\in\mathcal{S}.
 \subsection{\cargo: Cargo network scheduling} \label{CARGO}
 \cargo\ is a two-stage cargo network scheduling problem. The problem is to plan flights over the possible routes in a network in order to ship cargo from some nodes to other nodes. The cargo amounts to be shipped between two nodes are uncertain. The first-stage decision is to determine the number of flights on each route by a certain type of aircraft. We allow cargo to be moved either by direct delivery by a single route, or by transshipment, i.e., by more than one route. Then, the second-stage decision must satisfy the maximum capacity constraints towards minimizing total costs by considering both direct delivery and transshipment.
 
-Fig. \ref{fig:cargo_sparsity} shows the sparsity pattern presents in extensive form \cargo\ (single scenario).
+Figure \ref{fig:cargo_sparsity} shows the sparsity pattern presents in extensive form \cargo\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\linewidth]{CARGO_1}
@@ -230,7 +230,7 @@ b_{mn}^s\sim Unif(3,12),\quad\forall m\in N,\ \forall n\in N,\ \forall s\in\math
 \subsection{\chem: Design of batch chemical plants} \label{CHEM}
 \chem\ considers scheduling of batch chemical plants under market uncertainty. The decision factors include how many plants (or equipments) to build, when to build, how to operate them, and how much amount of resources to store, buy, and sell. The market uncertainty is realized as the value of resources to be sold and their maximum selling amount.
 
-Fig. \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive form \chem\ (single scenario).
+Figure \ref{fig:chem_sparsity} shows the sparsity pattern presents in extensive form \chem\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\linewidth]{CHEM_1}
@@ -412,7 +412,7 @@ v_{7t\sigma}^{\textrm{s}}=Unif(70,80),\quad\forall t\in T,\ \forall\sigma\in\mat
 \subsection{\dcap: Dynamic capacity planning with stochastic demand} \label{DCAP}
 \dcap\ is the problem of determining a capacity expansion schedule for a set of resources, and the assignment of resource capacity to task with stochastic requirement over a multi-period planning horizon. We refer to the main reference \cite{journal:AG2004}.
 
-Fig. \ref{fig:dcap_sparsity} shows the sparsity pattern presents in extensive form \dcap\ (single scenario).
+Figure \ref{fig:dcap_sparsity} shows the sparsity pattern presents in extensive form \dcap\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{DCAP_3_3_3_1}
@@ -482,7 +482,7 @@ There are four factors that define the instance of \dcap: $|R|$, $|N|$, $|T|$, a
 
 In \siplib, only limited data (e.g., number of nodes, coordinates of nodes, generated travel times) are provided and no \smps\ file is available. We mainly refer to \cite{journal:PGM2017} for deriving the mathematical formulation. Due to the malfunction of subtour breaking constraints in the reference model, we refer to another paper \cite{journal:LSD1990} to contain working subtour-breaking constraint.
 
-Fig. \ref{fig:mptsps_sparsity} shows the sparsity pattern presents in extensive form \mptsps\ (single scenario).
+Figure \ref{fig:mptsps_sparsity} shows the sparsity pattern presents in extensive form \mptsps\ (single scenario).
 \begin{figure}[]
 	\centering
 	\includegraphics[width=\linewidth]{MPTSPs_D0_4_1}
@@ -583,7 +583,7 @@ Given $d,|N|$ and $|\mathcal{S}|$, the next procedure can be summarized as follo
 \subsection{\phone: Telecommunication network planning} \label{PHONE}
 \phone\ is a planning problem associated with networks for private line services. A manager of a network decides where and how much to expand the network capacity under the demand uncertainty between any two nodes. The manager has a limited budget with which the expansion is not penalized. Usually networks are very interconnected so that there is often more than one route that can satisfy a demand.
 
-Fig. \ref{fig:phone_sparsity} shows the sparsity pattern presents in extensive form \phone\ (single scenario).
+Figure \ref{fig:phone_sparsity} shows the sparsity pattern presents in extensive form \phone\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{PHONE_1}
@@ -655,7 +655,7 @@ We adopt the numerical example provided in \cite{journal:AF2004}. The budget par
 \subsection{\sdcp: Stochastic data center placement} \label{SDCP}
 The stochastic data center placement (SDCP) problem is to find the optimal placement of data centers (as dispatchable loads) that minimizes the expected total electricity dispatch cost over stochastic wind power generation scenarios. We refer to \cite{journal:KYZC2017} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{web:wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
 
-Fig. \ref{fig:sdcp_sparsity} shows the sparsity pattern presents in extensive form \sdcp\ (single scenario).
+Figure \ref{fig:sdcp_sparsity} shows the sparsity pattern presents in extensive form \sdcp\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{SDCP_5_10_FallWD_1}
@@ -791,7 +791,7 @@ Unlike other problems where stochastic data is generated while \julia\ script is
 \sizes\ is a simplified version of the cutting-stock problem with multi-period stochastic demand. We only consider the two-periods model to follow \cite{journal:JSW1999}. The first period demand is deterministic and the demand for the second period is stochastic. We refer to the mathematical formulation in \cite{journal:JSW1999} to construct \jumpmodel. Due to some unclear explanations (or typo), we slightly modify the formulation and use it for \siplibtwo.
 
 
-Fig. \ref{fig:sizes_sparsity} shows the sparsity pattern presents in extensive form \sizes\ (single scenario).
+Figure \ref{fig:sizes_sparsity} shows the sparsity pattern presents in extensive form \sizes\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{SIZES_1}
@@ -924,7 +924,7 @@ In \siplibtwo\, the multiplier vector is defined by the equally split set of sub
 \siplib\ provides 30 instances of \smkp\ in total. The first-stage problems contain 240 binary variables and 50 knapsack constraints. The second-stage problems have 120 binary variables and 5 knapsack constraints. Each instance has 20 scenarios. 
 We mainly refer to \cite{journal:AAD2014}.% for writing \texttt{Julia} script for \siplibtwo\ and explain the model throughout the following subsections.
 
-Fig. \ref{fig:smkp_sparsity} shows the sparsity pattern presents in extensive form \smkp\ (single scenario).
+Figure \ref{fig:smkp_sparsity} shows the sparsity pattern presents in extensive form \smkp\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{SMKP_50_1}
@@ -1000,7 +1000,7 @@ h_k		&=	\frac{3}{4}\sum_{i\in I}\left(t_{ji}+w_{ji}\right),\quad\forall k\in K.
 \subsection{\sslp: Stochastic server location problem} \label{SSLP}
 \sslp\ is a class of problem that finds the optimal location of servers and the optimal allocation of clients to servers which maximizes the expected net income under uncertain presents of clients. \sslp\ finds applications in a variety of domains such as network design for electric power, internet services, telecommunications, and water distribution. \siplib\ provides 12 instances with varying number of clients, server locations, and scenarios in \smps\ format. The largest instance includes 10 server locations, 50 clients, and 2,000 scenarios which corresponds to 120,001 constraints, 1,000,010 binary variables, and 20,000 continuous variables. We refer to \cite{journal:NS2005} for mathematical formulation and data generation forthcoming through the following subsections.
 
-Fig. \ref{fig:sslp_sparsity} shows the sparsity pattern presents in extensive form \sslp\ (single scenario).
+Figure \ref{fig:sslp_sparsity} shows the sparsity pattern presents in extensive form \sslp\ (single scenario).
 \begin{figure}[]
 	\centering
 	\includegraphics[width=\linewidth]{SSLP_4_4_1}
@@ -1077,7 +1077,7 @@ Note that the zonal data is omitted due to the lack of available information. He
 \subsection{\suc: Stochastic unit commitment problem} \label{SUC}
 The unit commitment (UC) problem is a production cost model (PCM) that plans power system operations over an extended time horizon. \suc\ is a stochastic version of UC for studying the impact of incorporating highly uncertain power generation of large-scale wind turbines with transmission constraints and system component failures. We refer to \cite{journal:PO2013} for mathematical models. For model parameters, we use Western Electricity Coordinating Council data set (WECC \cite{web:wecc}) interconnected with California ISO Open Access Same-Time Information System (CAISO) as in the reference. 
 
-Fig. \ref{fig:suc_sparsity} shows the sparsity pattern presents in extensive form \suc\ (single scenario).
+Figure \ref{fig:suc_sparsity} shows the sparsity pattern presents in extensive form \suc\ (single scenario).
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{SUC_FallWD_1}

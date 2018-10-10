@@ -62,13 +62,13 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 
 \subsubsection{How we deal with missing links and errors}
 %\yoc{This subsection is newely added to discuss the issues on implementaion.}
-During implementation, we often faced some missing links and errors. The missing links are largely from the two parts: data generation procedure and instance parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the relevant references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
+During implementation, we often faced some missing links and errors. The missing links are largely from the deterministic and random parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the relevant references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
 
-We also found some errors. The errors are not critical so the accompanied instances are still solvable somehow. The result, however, might be different from the originally intended. For example, we found from \smps\ files of \dcap\ that the big-M constant in the logical constraint (\ref{dcap:b}) in \dcap\ is set to be 1 rather than suitably large value. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
+We also found some errors. The errors are not critical so the instances provided by the former collections are still solvable somehow. The result, however, might be different from the originally intended. For example, we found from \smps\ files of \dcap\ that the big-M constant in the logical constraint (\ref{dcap:b}) is set to be 1 instead of a suitably large value. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
 
 We set the following rule to address such issues described above.
 \begin{enumerate}
-	\item Follow the original implementation including the errors whenever we are able to reproduce it.
+	\item Follow the original implementation including the errors whenever we are able to reproduce them.
 	\item Develop our own way as long as it does not harm the endemic characteristic of the problem.
 \end{enumerate}
 
@@ -88,11 +88,11 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 				\dcap   & We go with the error in constraint (\ref{dcap:b}).                                              \\
 				\mptsps & We adopt formulation from another reference \cite{journal:LSD1990}. We develop data generation procedure \ref{mptsps:datagen}. \\
 				\phone & We use the same numerical example created in \cite{journal:AF2004}. \\
-				\sdcp & We generate and provide up to 1,000 scenarios.\\
+				\sdcp & We generate and provide up to 1,000 wind scenarios.\\
 				\sizes  &  We modify the formulation to polish (\ref{sizes:obj})-(\ref{sizes:h}). We develop data generation procedure.                                                 \\
 				\smkp   & -                                                                         \\
 				\sslp   & We keep the zonal components empty and let the redundant constraint (\ref{sslp:b}) present.                                     \\
-				\suc    & We generate and provide up to 1,000 scenarios.                              \\ \bottomrule
+				\suc    & We generate and provide up to 1,000 wind scenarios.                              \\ \bottomrule
 			\end{tabular}
 			\begin{tablenotes}
 				\small
@@ -103,16 +103,16 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 \end{table}
 
 \subsection{Instance naming rule}
-Table \ref{table:naming_rule} shows how we name the instances. We change the original naming convention for consistency and future extension. Some legacy naming rules do not consider the case when the set cardinality becomes larger than 1 digit number. Moreover, since some \siplibtwo\ instances can be generated using more sets other than used in \siplib, we needed to define a new naming convention. For example, we change the instance names of \dcap\ and \smkp\ as below.
+Table \ref{table:naming_rule} shows how we name the instances. We change the original naming convention for consistency and future extension. Some legacy naming rules do not consider the case where the set cardinality becomes larger than 1 digit number. Moreover, since some \siplibtwo\ instances can be generated using more sets than used in \siplib, we needed to define a new naming convention. For example, we change the instance names of \dcap\ and \smkp\ as below.
 \begin{quote}
 	\centering dcap$RNT$\_$\mathcal{S}$ $\longrightarrow$ DCAP$\_R\_N\_T\_\mathcal{S}$\\
 	smkp$\_\mathcal{S}$ $\longrightarrow$ SMKP$\_I\_\mathcal{S}$
 \end{quote}
 For \dcap, we just add underbars ``\_'' to delimit set cardinalities. Without such a delimiter, the instance name causes confusion when set cardinality is greater than or equal to 10. For \smkp, we add new set cardinality $I$ since the fixed number $|I|=120$ can be changed by user if desired.
 
-The capital Roman letters mean the sets defining the instances. In particular, the calligraphic letter $\mathcal{S}$ always denotes the scenario set. For notational convenience, we sometimes skip the cardinality sign $|\cdot|$ for sets, i.e., for a set $S$, $S$ itself denotes the number of elements $|S|$ in Table \ref{table:naming_rule} and \ref{table:num_components}. Note that not all sets are used to define an instance. The sets that do not appear in the instance name are fixed by some pre-determined value by the original references so we follow them. For example, in \smkp\ there are four sets in total, $I,J,K,\mathcal{S}$, but the numbers of knapsacks $|J|$ and $|K|$ are fixed by 50 and 5 so do not appear in the instance name.
+The capital letters mean the sets defining the instances. In particular, the calligraphic letter $\mathcal{S}$ always denotes the scenario set. For notational convenience, we sometimes skip the cardinality sign $|\cdot|$ for sets, i.e., for a set $S$, $S$ itself denotes the number of elements $|S|$ in Table \ref{table:naming_rule} and \ref{table:num_components}. Note that not all sets are used to define an instance. The sets that do not appear in the instance name are fixed by some constant values. For example, in \smkp\ there are four sets in total, $I,J,K,\mathcal{S}$, but the numbers of knapsacks $|J|$ and $|K|$ are fixed by 50 and 5 so do not appear in the instance name.
 
-The lowercase letters in the instance names denote the non-set parameters defining the instances. Some of them are numbers and some are strings. For SDCP\_$k$\_$p$\_$d$\_$\mathcal{S}$, for example, $k$ is a positive integer, $p$ is a real number between 0.0 and 100.0, and $d$ is a string that would be chosen as one of the \{FallWD, FallWE, WinterWD, WinterWE, SpringWD, SpringWE, SummerWD, SummerWE\}. 
+The lowercase letters in the instance names denote the non-set parameters defining the instances. Some of them are numbers and some are strings. For SDCP\_$k$\_$p$\_$d$\_$\mathcal{S}$, for example, $k$ is a positive integer, $p$ is a real number between 0.0 and 100.0, and $d$ is a string that would be chosen as one of the \{``FallWD'', ``FallWE'', ``WinterWD'', ``WinterWE'', ``SpringWD'', ``SpringWE'', ``SummerWD'', ``SummerWE''\}. 
 \begin{table}[H]
 	\centering
 	\caption{Instance naming rules}
@@ -138,9 +138,9 @@ The lowercase letters in the instance names denote the non-set parameters defini
 \end{table}
 
 \subsection{Type of the problems}
-In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. Many decomposition-based solution methods in SIP require specific type of variables to be presented in each stage, e.g., \cite{journal:LL1993,journal:SSV1998,journal:CT1998,journal:CS1999,journal:SF2002}. They oftentimes exploit the characteristics of the variables to extend the existing decomposition methods. Therefore, the stage-wise variable type is one of the most important factor that classifies SIP problems.
+In \siplibtwo\, we mainly classify each problem by its stage-wise variable types. Many decomposition-based solution methods in SIP require specific type of variables to be presented in each stage, e.g., \cite{journal:LL1993,journal:SSV1998,journal:CT1998,journal:CS1999,journal:SF2002}. They oftentimes exploit the characteristics of the variables to extend the existing decomposition methods. Therefore, the stage-wise variable type is one of the most important factor that defines SIP problems.
 
-We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation in the constraint column, we refer to \miplib\ \cite{MIPLIB}. Although the constraint type is possibly one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, i.e., different problem contains different constraints, which we cannot easily capture the insight from the problem type classification. 
+We consider three types of variable: continuous, binary, and integer. Considering two stages, the possible number of combination is $\left[\sum_{k=1}^3\binom{3}{k}\right]^2=49$ in total. We try to include problems with non-overlapping such combination. As a result, we provide nine different types of problems out of eleven problems in total. Table \ref{table:prob_class} shows the stage-wise components (variable and constraints) of each problem. For the abbreviated notation in the constraint column, we refer to \miplib\ \cite{MIPLIB}. Although the constraint type might be one of the important factors that define the problem characteristic, we decided not to consider it for classification since it can cause too much variety, i.e., different problem contains different constraints, which we cannot easily capture the insight from the problem type classification. 
 \begin{table}[H]
 	\centering
 	\caption{Components of the problems}
@@ -172,7 +172,7 @@ We consider three types of variable: continuous, binary, and integer. Considerin
 \end{table}
 
 \subsection{Number of components}
-Although an universally effective way to measure the difficulty of MIP has not been discovered yet, the number of components is definitely one of the closely related factor. For example, instances tend to be more difficult as the number of discrete variables increases. The continuous variables, which hardly are problematic when solely present by themselves, can also let the instance burdensome when they are mixed with integer variables. 
+Although an universally effective way to measure the difficulty of MIP has not been discovered yet, the number of components is definitely one of the closely related factors. For example, instances tend to be more challenging as the number of discrete variables increases. The continuous variables, which hardly are problematic when solely present by themselves, can also let the instance burdensome when they are mixed with integer variables. 
 
 The increase in the number of constraint, although not always, is an important factor that difficultizes the instance. Specifically, this affects every iteration from the LP relaxation given the requirement of inverting a matrix for every basic feasible solution visited in the solution process. 
 
@@ -232,14 +232,14 @@ Table \ref{table:num_components} summarizes the number of components in each pro
 \end{table}
 
 \subsection{Sparsity} \label{subsec:sparsity}
-As can be seen in Fig \ref{fig:stagewise_sparsity}, there are three differently structured blocks in EF. Besides the first-stage block A, every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T, called \textit{technology} matrix, is related with both stages hence it usually complicates SIP. In section \ref{sec:sparsity} in the appendix, we report tables providing block-wise sparsity that is derived solely based on the set cardinality.
+As can be seen in Figure \ref{fig:stagewise_sparsity}, there are three differently structured blocks in EF. Besides the first-stage block A, every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T, called \textit{technology} matrix, is related with both stages hence it usually complicates SIP. In Section \ref{sec:sparsity}, we report tables providing block-wise sparsity that is derived solely based on the set cardinality.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{drawings/stagewise_sparsity}
 	\caption{Three (structurally) independent blocks in SIP}
 	\label{fig:stagewise_sparsity}
 \end{figure}
-Associated with the blocks, every SIP in EF has a block-diagonal structure in its coefficient matrix (Fig \ref{fig:de_structure}). This characteristic differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of coefficient matrix in EF.
+Associated with the blocks, every SIP in EF has a block-diagonal structure in its coefficient matrix (Figure \ref{fig:de_structure}). This structure mainly differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of coefficient matrix in EF.
 \begin{figure}[]
 	\centering
 	\subfloat[][AIRLIFT\_3]
@@ -315,7 +315,7 @@ Associated with the blocks, every SIP in EF has a block-diagonal structure in it
 	\label{fig:de_structure}
 \end{figure}
 
-As many decomposition-based methods in SIP make use of solution methods developed for MIP to solve the descendant master/sub problems, exploiting the sparsity pattern in each independent block might be one of the key aspects that will help improving performance of the algorithms. For example, we would like to generate valid inequalities that preserve the sparse structure when the sparsity pattern is known, intuitively. In that spirit, recent studies showed how well polytopes are approximated by using only sparse valid cuts \cite{journal:DMW2015,journal:DIM2015}.
+As many decomposition-based methods in SIP make use of solution methods developed for MIP to solve the descendant master/sub problems, exploiting the sparsity pattern in each independent block might be one of the key factors that will help improving performance of the algorithms. For example, we would like to generate valid inequalities that preserve the sparse structure, intuitively. In that spirit, recent studies showed how well polytopes are approximated by using only sparse valid cuts \cite{journal:DMW2015,journal:DIM2015}.
 
 %Low sparsity in matrices T and usually causes slowdown in decomposition algorithms. For example, the Dual Decomposition based solver \dsp\ shows much slower convergence speed than the centralized solver \cplex\ in problems like \smkp\ which always have low sparsity (nonzero ratio: 50\%-100\%, refer to Table \ref{table:sparsity_SMKP}).
 

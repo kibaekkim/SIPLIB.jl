@@ -9,7 +9,7 @@
 %- preliminary results using CPLEX
 
 %\kk{Please describe what you present in this section. Subsectioning would also help.} \yoc{This section is newely written. Need more justification.} 
-\siplibtwo\ provides some pregenerated \smps\ instances. Throughout this section, we report detailed information for each instance. This includes size, sparsity, and computational results. In particular, the purpose of reporting the computational results is largely divided into two folds: computational benchmarking and characterizing the instances. For example, the LP2-Relax gap, which is defined by the objective gap between the original recourse problem and the problem with LP-relaxed second-stage, quantifies the tightness of the formulation. Refering the report in this section, we hope the users to find instances that fit for their own purpose.
+\siplibtwo\ is accompanied with some pre-generated instances written in \smps\ format. Throughout this section, we report detailed information for each instance. This includes size, sparsity, and computational results. In particular, the purpose of reporting the computational results is largely divided into two folds: computational benchmarking and characterizing the instances. For example, the LP2-relax gap, which is defined by the objective gap between the original recourse problem and the problem with LP-relaxed second-stage, quantifies the tightness of the formulation. Refering the report in this section, we hope the users to find instances that fit for their own purpose.
 
 %\begin{itemize}
 %	\item Commercial MIP solver (CPLEX) result: optimality gap, integrality gap (LP relaxation gap, tightness), solution time, obj value
@@ -17,10 +17,10 @@
 %\end{itemize}
 
 \subsection{Size and sparsity information}
-Table \ref{table:instance_size_info_dcap}-\ref{table:instance_size_info_suc} in Section \ref{sec:instance_size_sparsity} report size and sparsity information for each instance. The information is reported both block-wisely and totally (i.e., based on EF). For example, the second-stage size information reports the number of variables in a single-scenario block (block W in Fig. \ref{fig:stagewise_sparsity}). Sparsity is reported in percentage (\%) and the file size is reported in kilobytes (KB).
+Tables \ref{table:instance_size_info_airlift}-\ref{table:instance_sparsity_info_suc} in Section \ref{sec:instance_size} and Section \ref{sec:instance_sparsity} report size and sparsity information for each instance. The information is reported both block-wisely and totally (i.e., based on EF). For example, the second-stage size information reports the number of variables in a single-scenario block (block W in Figure \ref{fig:stagewise_sparsity}). Sparsity is reported in percentage (\%). 
 
 \subsection{Computational results}
-In Table \ref{table:computation_report}, we report computational information investigated from experiments. Unlike the size and sparsity, this should be obtained in highly computational way, which implies that the result is strongly affected depending on the computing environment in which experiments are performed. Throughout the following subsections, we explain about our computational experiments.
+In Table \ref{table:computation_report}, we report computational results investigated from experiments. Unlike the size and sparsity, this should be obtained in highly computational way, which implies that the result strongly depends on the computing environment in which experiments are performed. Throughout the following subsections, we explain about the computational experiments.
 
 \subsubsection{Experimental setting}
 %Table \ref{table:experimental_setting} summarizes the experimental setting. 
@@ -125,9 +125,9 @@ Noticeably, the inequality $z^*_{WS}\le z^*\le z^*_{EEV}$ is known to always hol
 
 Finally, we define the following \textit{standard deviation of the recourse problem}:
 \begin{align} 
-\sigma_{RP}&:=\sqrt{\frac{1}{|\mathcal{S}|-1}\sum_{s=1}^{|\mathcal{S}|}\left[z^*(x^*,y_s)-z^*\right]^2}, \label{sd}
+\sigma_{RP}&:=\sqrt{\frac{1}{|\mathcal{S}|-1}\sum_{s=1}^{|\mathcal{S}|}\left[z^*-z^*(x^*,y_s)\right]^2}, \label{sd}
 \end{align}
-where $z^*(x^*,y_s)$ is the optimal objective value of a \textit{single scenario problem with a fixed first-stage solution $x^*$ of RP-EF} and a given scenario $s$. That is,
+where $z^*$ is the optimal objective value of the RP-EF and $z^*(x^*,y_s)$ is the optimal objective value of a \textit{single scenario problem with a fixed first-stage solution $x^*$ of RP-EF} and a given scenario $s$. That is,
 \begin{subequations}
 	\begin{align}
 	z^*(x^*,y_s):=\min_{y_s}\ & c^\top x^*+q_s^\top y_s \label{ssp_ffs:obj}\\
@@ -168,7 +168,7 @@ where $z^*(x^*,y_s)$ is the optimal objective value of a \textit{single scenario
 	}
 \end{table}
 %\subsubsection {Basic results from the two solvers: \cplex\ and \dsp}
-In Table \ref{table:computation_report}, we report objective value, standard deviation, and several gaps. Each gap is useful to characterize the instances. There is no guarantee that we can always obtain the optimal solution for each instance, we report the best results discovered within the limited processing time (3 hours). Table \ref{table:gap} summarizes the definition of each gap using the notation defined in Table \ref{table:objective-notation}.
+In Table \ref{table:computation_report}, we report objective value, standard deviation, and various gaps. Each gap is useful to characterize the instances. Since there is no guarantee that we can always obtain the true optimal solution for all instances, we report the best results discovered within the limited processing time (3 hours). Table \ref{table:gap} summarizes the definition of each gap using the notation defined in Table \ref{table:objective-notation}.
 %\begin{table}[H]
 %	\centering
 %	\caption{Gap definition}

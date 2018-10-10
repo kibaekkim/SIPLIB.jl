@@ -557,7 +557,7 @@ All the functions above take up to three input arguments:
 \begin{quote}
 	\noindent\underline{\texttt{DIR\_NAME}} (optional, positional) The \texttt{String}-type argument to indicate a directory where the files are stored. The .pdf file is stored in the default folder ``\texttt{$\sim$/Siplib/plot/}'' unless the argument \texttt{DIR\_NAME} is specified.
 \end{quote}
-The function \texttt{plotConstrMatrix} plots the whole constraint matrix of extensive form. For example, the following command lines plot Fig. \ref{fig:plotall_b}.
+The function \texttt{plotConstrMatrix} plots the whole constraint matrix of extensive form. For example, the following command lines plot Figure \ref{fig:plotall_b}.
 \begin{lstlisting}[frame=single,language=julia]
 params_arr = [2,2,2,2]	                        # declare parameters
 problem = :DCAP	                                # declare problem
@@ -568,7 +568,7 @@ plotConstrMatrix(model, INSTANCE_NAME)               # plot extensive form const
 
 The functions \texttt{plotFirstStageBlock()}, \texttt{plotSecondStageBlock()}, and
 
-\noindent\texttt{plotTechnologyBlock()} all take \jumpmodel-type object and plots each block. For example, the following command lines plot Fig. \ref{fig:plotall_a}, \ref{fig:plotall_c}, and \ref{fig:plotall_d}.
+\noindent\texttt{plotTechnologyBlock()} all take \jumpmodel-type object and plots each block. For example, the following command lines plot Figure \ref{fig:plotall_a}, \ref{fig:plotall_c}, and \ref{fig:plotall_d}.
 \begin{lstlisting}[frame=single,language=julia]
 params_arr = [2,2,2,2]	                        # declare parameters
 problem = :DCAP	                                # declare problem
@@ -615,7 +615,7 @@ plotAll(model, INSTANCE_NAME)               # plot all the plots above: EF const
 	%	\end{minipage}
 	\label{fig:plotall}
 \end{figure}
-By executing \texttt{plotAll()}, one can obtain all the plots in Fig. \ref{fig:plotall}.
+By executing \texttt{plotAll()}, one can obtain all the plots in Figure \ref{fig:plotall}.
 
 %\kk{This subsection can probably be removed from the paper and should go to a manual or a repository. Otherwise, please describe why/how this can be used for research.}
 %\yoc{I move this to appendix. We can remove this.}
