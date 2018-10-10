@@ -8,6 +8,16 @@ We are interested in finding the optimal solution for the two-stage SIP which is
 \end{align}
 where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ \phi\left( h(\pmb{\xi})-T(\pmb{\xi})x \right) \right]$ is the expected recourse function associated with the random element $\pmb{\xi}$ defined on a probability triple $(\Xi, \mathcal{F},\PP)$.
 
+where $\mathcal{Q}(x):=\EE_{\pmb{\xi}}\left[ Q(x,\pmb{\xi}) \right]$
+
+\begin{align}
+  Q(x,\xi_s) := \min_{y_s\in Y} \;
+  & q(\xi_s)^T y_s \\
+  \text{s.t.} \;
+  & W(\xi_s) y_s \geq h(\xi_s) - T(\xi_s) x
+\end{align}
+
+
 We assume that $\pmb{\xi}$ follows a known probability distribution with the finite countable outcomes $\xi_1,\ldots,\xi_r$, called \textit{scenarios},  and respective probability of occurence $\PP(1),\ldots,\PP(r)$, i.e., $\PP(s):=\PP[\pmb{\xi}=\xi_s]$ for each $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is known to be continuous, we assume that we can reasonably approximate it by a suitably discretized distribution. 
 
 The real-valued map $\phi:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of the second-stage recourse problem that is defined by
@@ -15,7 +25,7 @@ The real-valued map $\phi:\mathbb{R}^{m_2}\to\mathbb{R}$ is the optimal value of
 \phi(t;{\xi_s}):=\min_{y_s\in Y}\left\{ q(\xi_s)^\top y_s:\ W(\xi_s)y_s \ge t \right\},\ \forall t\in\mathbb{R}^{m_2},
 \end{align}
 where $\xi_s$ is given by an arbitrarily realized scenario.
-The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
+The sets $X\subseteq \mathbb{R}^{n_1-p_1} \times \mathbb{Z}^{p_1}$ and $Y\subseteq\mathbb{R}^{n_2-p_2} \times \mathbb{Z}^{p_2}$ represent restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
 The first-stage data comprises $A$, $b$, and $c$. The second-stage data is given by scenario-dependent values $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notation $(T_s,W_s,h_s,q_s)$ for the second-stage data. 
 
 The RP (\ref{eq:SIP_1}) can be then rewritten in the \textit{extensive form} (EF)
