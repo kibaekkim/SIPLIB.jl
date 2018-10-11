@@ -11,6 +11,8 @@ Q(x,\xi_s):=\min_{y\in Y}\left\{q(\xi_s)^\top y : W(\xi_s)y\ge h-T(\xi_s)x\right
 \end{align}
 where $Y\subseteq\mathbb{R}^{n_2-k_2}\times\mathbb{Z}^{k_2}$ and $q(\xi_s)\in\mathbb{R}^{n_2}$, $W(\xi_s)\in\mathbb{R}^{m_2\times n_2}$, and $T(\xi_s)\in\mathbb{R}^{m_2\times n_1}$ are scenario-dependent values in the second-stage. Hereinafter, we use the simplified notation $(T_s,W_s,h_s,q_s)$ for the second-stage data. We summarize the dimensional information in Table \ref{notation:SIP}.
 
+We assume that $\pmb{\xi}$ follows a known probability distribution with the finite countable outcomes $\xi_1,\ldots,\xi_r$, called \textit{scenarios}, and respective probability of occurence $\PP(1),\ldots,\PP(r)$, i.e., $\PP(s):=\PP[\pmb{\xi}=\xi_s]$ for each $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is known to be continuous, we assume that we can reasonably approximate it by a suitably discretized distribution. 
+
 %We assume that $\pmb{\xi}$ follows a known probability distribution with the finite countable outcomes $\xi_1,\ldots,\xi_r$, called \textit{scenarios},  and respective probability of occurence $\PP(1),\ldots,\PP(r)$, i.e., $\PP(s):=\PP[\pmb{\xi}=\xi_s]$ for each $s\in\mathcal{S}:=\{1,\ldots,r\}$. When the distribution is known to be continuous, we assume that we can reasonably approximate it by a suitably discretized distribution. 
 
 
@@ -30,7 +32,7 @@ where $Y\subseteq\mathbb{R}^{n_2-k_2}\times\mathbb{Z}^{k_2}$ and $q(\xi_s)\in\ma
 %The sets $X\subseteq \mathbb{R}^{n_1}$ and $Y\subseteq\mathbb{R}^{n_2}$ represent restrictions on a subset of the decision variables $x$ and $y_s$, respectively. 
 %The first-stage data comprises $A$, $b$, and $c$. The second-stage data is given by scenario-dependent values $T(\xi_s)$, $W(\xi_s)$, $h(\xi_s)$, and $q(\xi_s)$ (for dimensional information refer to Table \ref{notation:SIP}). Hereinafter, we use the simplified notation $(T_s,W_s,h_s,q_s)$ for the second-stage data. 
 
-The RP (\ref{eq:SIP_1}) can be rewritten in the \textit{extensive form} (EF)
+The RP (\ref{eq:SIP_1}) can be then rewritten in the \textit{extensive form} (EF)
 \begin{subequations}\label{sip:ef}
 \begin{align}
 \textrm{(RP-EF) }\min_{x,\mathrm{y}}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s), \label{ef:obj}\\ 

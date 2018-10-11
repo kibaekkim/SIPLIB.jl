@@ -68,7 +68,8 @@ First, recall the extensive form RP in Section \ref{sec:sip}:
 
 We use the vanilla $z$ to denote the value of the objective function in RHS of (\ref{ef:obj}) such that constraints (\ref{ef:b})-(\ref{ef:e}) are satisfied throughout this section and the report. We use the superscripted notation $z^*$ to denote the true optimal objective value, $\tilde{z}$ for the best lower bound discovered for $z^*$, and $\hat{z}$ for the incumbent (best known integer solution) objective value. Hence, the relationship $\tilde{z}\le z^*\le\hat{z}$ always holds.
 
-$z_{LP2}$ is defined by the objective value of the following partly LP-relaxed problem:
+
+Let $Y_R$ be the continuous relaxation of $Y$. $z_{LP2}$ is defined by the objective value of the following partly LP-relaxed problem:
 \begin{subequations}\label{ef-lp2}
 	\begin{align}
 	\textrm{(RP-LP2) }\min_{x,\mathrm{y}}\ z_{LP2}(x,\mathrm{y}):=&\ c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \tag{\ref{ef:obj}}\\ 
@@ -99,9 +100,15 @@ $z_{EV}$ is the objective value of the \textit{expected value problem}, which si
 	\end{align}
 \end{subequations}
 $z_{EEV}$ is then defined by the \textit{expected result of using the first-stage solution of EV}, say $\bar{x}$: 
+
+\begin{align}
+  z_{EEV} := c^T \bar{x} + \mathcal{Q}(\bar{x})
+\end{align}
+
+
 \begin{subequations}\label{eev}
 	\begin{align}
-	\min_{\mathrm{y}}\ z_{EEV}(\mathrm{y}):=&\ c^{\top}\bar{x} + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \label{eev:obj}\\ 
+	\mathcal{Q}(\bar{x}) = \min_{\mathrm{y}}\ z_{EEV}(\mathrm{y}):=&\ c^{\top}\bar{x} + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \label{eev:obj}\\ 
 	\mathrm{s.t.}\ &W_s y_s\ge h_s-T_s \bar{x},\quad\forall s\in\{1,\ldots,r\}, \label{eev:b}\\
 	&y_s \in Y,\quad\forall s\in\{1,\ldots,r\}. \label{eev:c}
 	\end{align}
@@ -112,9 +119,14 @@ $z_{WS}$ is called the \textit{wait-and-see solution value} defined by
 	z_{WS}:=\sum_{s=1}^r \PP(s)z^*(x,y_s),
 \end{align}
 where $z^*(x,y_s)$ is the optimal objective value of a \textit{single scenario problem} given a scenario $s$: 
+
+	\begin{align}
+	z_{SS(s)}:= \min_x\ &\ \left\{ c^T x + Q(x,\xi_s) : Ax \ge b, \; x\in X \right\}
+	\end{align}
+	
 \begin{subequations}
 	\begin{align}
-	\min_{x,y_s}\ z_{SS(s)}(x,y_s):=&\ c^\top x+q_s^\top y_s \label{ssp:obj}\\
+	z_{SS(s)}:= \min_{x,y_s}\ &\ c^\top x+q_s^\top y_s \label{ssp:obj}\\
 	\mathrm{s.t.}\ &Ax \ge b, \label{ssp:b}\\
 	&T_s x + W_s y_s\ge h_s,  \label{ssp:c}\\
 	&x\in X,  \label{ssp:d}\\
@@ -135,6 +147,15 @@ where $z^*$ is the optimal objective value of the RP-EF and $z^*(x^*,y_s)$ is th
 	&y_s \in Y. \label{ssp_ffs:c}
 	\end{align}
 \end{subequations}
+
+\begin{align}
+  z_s^* := c^T x^* + Q(x^*,\xi_s)
+\end{align}
+
+\begin{align} 
+\sigma_{RP}&:=\sqrt{\sum_{s=1}^r \mathbb{P}(s) \left[z^*-z_s^*\right]^2}, \label{sd}
+\end{align}
+
 
 %\begin{tabular}{@{}lp{3in}}
 
