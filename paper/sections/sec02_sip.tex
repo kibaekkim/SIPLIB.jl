@@ -136,15 +136,20 @@ A brief steps of the PH procedure can be summarized as follows \cite{book:pyomo}
 	\item Go to step 2. with $k=k+1$ if the convergence criterion is yet to be satisfied. 
 \end{enumerate}
 A notable limitation of PH algorithm is that it does not always guarantee the convergence. However, PH is advantageous in the sense that it often provides high quality solution within a reasonable number of iterations. 
-\subsection{Software libraries}
-SIP with finite number of scenarios can be represented by any algebraic modeling languages and then solved by standard MIP solvers such as \cplex. However, such manual implementation without exploiting structural characteristics in SIP requires wasteful memory allocation and results in inefficient computation. In this subsection, we introduce some software libraries dedicated to SIP.
+
+\subsection{Software Packages}
+
+Despite of the long history of stochastic programming, not many software packages have been developed. In this section we discuss existing modeling languages and solves for SIP.
 
 \subsubsection{Modeling language}
-We introduce two relatively new algebraic modeling languages for SIP which are compatible with general purpose high-level programming languages \julia\ and \python, respectively. Both modeling libraries are designed to allow non-specialists to easily write mathematical model on the computing environment.
 
-\structjump\ is a \julia\ package that provides a parallel algebraic modeling framework for block-structured optimization models \cite{web:StructJuMP}. \structjump\ is an extension of \jump\ modeling package (\julia\ for Mathematical Optimization \cite{journal:JuMP}), which is faster than any other modeling tools. \structjump\ enables \jump\ to express the structure of problems and efficiently interface with structure-exploiting solvers. It also works in parallel using distributed memory, and thus allows the specification of much larger problems than \jump\ can handle. Most noticeable benefit of using \structjump\ is its straightforward modeling syntax that almost feels like moving the paper-written SIP model directly into computer.
+As a deterministic optimization problem, DEF can be written by any algebraic modeling languages (e.g., AMPL~\cite{ampl}, GAMS~\cite{gams}) \kk{please add refs}. Exploiting the block-angular structure embedded in stochastic programs, the problem can be written much more memory-efficiently in SMPS format. However, writing a problem in SMPS files can be cumbersome. Algebraic modeling languages provide a capability of modeling stochastic programming problems, including SIP.
 
-\pysp\ is a stochastic programming extension of a \python-based algebraic modeling package \pyomo\ \cite{book:pyomo} that supports variants of mathematical optimization. In \pysp, users can express stochastic programming problems by extending deterministic models which must be constructed first. To be specific, users specify the deterministic base model with associated scenario tree presenting uncertain parameters in order to model an SIP by \pysp. One advantage of using \pysp\ is its modeler-solver integration that enables users to easily get the optimization result.
+We introduce two algebraic modeling languages for stochastic programming. Both modeling languages are designed to write stochastic programming problems in algebraic form, which allows modelers to write the problems more intuitively than in SMPS format.
+
+\structjump\ is a \julia\ package that implements a parallel algebraic modeling framework for block-structured optimization models \cite{web:StructJuMP}. \structjump\ is an extension of \jump\ modeling package~\cite{journal:JuMP}, which has been recently paid much attention in the optimization community. A key design idea in \structjump\ is to use \jump\ model objects to effectively represent the block-angular structure of stochastic programming problem. In particular, the structure-exploit design of \structjump\ can efficiently distribute a large-scale problem data to multiple compute nodes in distributed computing settings (e.g., high-performance computing clusters).
+
+\pysp\ is a stochastic programming extension of a \python-based algebraic modeling package \pyomo\ \cite{book:pyomo} that supports variants of mathematical optimization. In \pysp, users can express stochastic programming problems by directly extending deterministic models with specification of random parameters. A key advantage of \pysp\ is the capability of directly extending an existing deterministic model to a stochastic counterpart by specifying random parameters. \kk{What about distributed memory? Need more}
 
 \subsubsection{Solver}
 Several commercial or noncommercial solvers are available for SIP. In this subsection, we mainly introduce some noncommercial solvers: \pipssbb, \scip, \dsp, and \pysp.
