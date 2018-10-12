@@ -3,33 +3,28 @@ Stochastic (mixed) integer programming (SIP) is the mathematical programming tha
 both continuous and discrete decision variables with uncertain parameters~\cite{book:BL2011}. 
 Modeling and algorithms for SIP have been advanced for the last few decades. Applications of SIP include but not limited to power systems \cite{journal:PO2013,journal:KYZC2017}, telecommunications \cite{journal:SDC1994}, manufacturing systems \cite{journal:SPR1994,journal:AG2004}, and transportations \cite{journal:MW1969,journal:PGM2017,journal:TPP2017,journal:MPT2014}. With the advances, a number of solution methods have been developed and shown to be computationally effective for stochastic problems. Moreover, many of the algorithms have been implemented as software packages either specific for certain problems or for generic problems \cite{SCIP,journal:WWH2012,journal:KZ2015}.
 
-Although generalized SIP can cover the decision making regarding multiple stages, we focus on two-stage SIP throughout this research study. Two-stage SIP is a representative uncertainty modeling framework which comprises linear objective function and constraints, where the first-stage decision finds a solution before the 
-random parameters are realized, and the second-stage decision takes a recourse action to the uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters (i.e., scenarios) are discrete and finite with known probabilities.
+In this paper, we focus on two-stage SIP throughout this research study. Note, however, that multi-stage SIP can be reformulated to a two-stage counterpart. Two-stage SIP is a representative uncertainty modeling framework which comprises linear objective function and constraints, where the first-stage decision finds a solution before the 
+random parameters are realized, and the second-stage decision takes a recourse action to the uncertainty realization for a given first-stage decision. We assume that the random realization of problem parameters are discrete and finite with known probabilities.
 A key challenge in SIP is that the size of
-the problem increases with the number of scenarios. Moreover, the 
-second-stage value function is not necessarily convex in SIP. Thus, the standard decomposition 
-approaches that work nicely for stochastic non-integer programs, break down when the problem includes integer variables \cite{journal:AG2004}. Hereinafter, we use the 
-term SIP to indicate the two-stage SIP. 
+the problem increases with the number of scenarios. In particular, the number of integer variables increases in the number of scenarios. Moreover, the problem is nonconvex in variables. A number of solution techniques have been developed in order to address the challenges.
 
 Numerical tests and benchmarks are necessary for developing and improving algorithms. However,
-these have been challenging for the stochastic programming community, because of the limited source of test problem instances. To supply testing sources, Shabbir Ahmed has created a website called \siplib: A Stochastic Integer Programming Test Problem Library.
-\siplib\ is the first SIP-dedicated set of test problem instances available in \url{https://www2.isye.gatech.edu/~sahmed/siplib/}, where instances of nine different problems are available in SMPS format \cite{smps} with additional information such as instance size, best known objective value or bounds, optimality gap, and solution time. There are a few more available stochastic programming test libraries which are not dedicated to SIP.
-A portable stochastic programming test set (POSTS) \cite{POSTS} is a small test set for 
-stochastic linear programming that provides instances of fifteen problems in \smps\ format. The test set is available in \url{http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html}. Ariyawansa and Felt \cite{journal:AF2004} also provide a test problem collection for stochastic programming, which consists of nine different problems including four SIPs. These are available in \url{https://www4.uwsp.edu/math/afelt/slptestset/download.html}. 
+these have been challenging for the stochastic programming community, because of the limited number of test problem instances. To the best of our knowledge, only a few test libraries are available for stochastic programming. A portable stochastic programming test set (POSTS) \cite{POSTS} is a set of fifteen problem instances for 
+stochastic linear programming in \smps\ format\footnote{\url{http://users.iems.northwestern.edu/~jrbirge/html/dholmes/post.html}}. Ariyawansa and Felt \cite{journal:AF2004} also provide nine problem instances for stochastic programming, including four SIP instances\footnote{\url{https://www4.uwsp.edu/math/afelt/slptestset/download.html}}. However, these libraries are not dedicated to SIP. 
 
-The existing \siplib\ has a few limitations. 
-First, it provides instances with only a few variations of the first- and second-stage variables and the number of scenarios, which could have been easily parameterized in 
-modeling languages. Moreover, the precise information of the problem instances is 
-not easily accessible. Second, not enough number of problem types are available in 
+Shabbir Ahmed has collected a set of nine SIP problem instances in his personal website\footnote{\url{https://www2.isye.gatech.edu/~sahmed/siplib/}}, called \siplib: A Stochastic Integer Programming Test Problem Library. The problem instances are provided in SMPS format \cite{smps} with additional information such as instance size, best known objective value or bounds, optimality gap, and solution time. \siplib\ has the following limitations. 
+First, it provides instances with only a few variations of the first- and second-stage variables and a fixed number of scenarios, which can be easily parameterized in 
+modeling languages. Moreover, the precise parameter information for the problem instances is 
+not easily accessible. Second, the number of problem types is limited in 
 the existing collection. Note that, with three variable types (i.e., continuous, 
-binary, integer) and two stages, the possible number of combinations is $\left[\sum_{k=1}
-^3\binom{3}{k}\right]^2=49$ in total. 
-The existing \siplib\ provides only five such combinations 
-regarding the problems that can be fully implementable based on the open information.
+binary, integer) for each of the two stages, the possible number of combinations for problem type is $\left[\sum_{k=1}
+^3\binom{3}{k}\right]^2=49$ in total \kk{Not true, we do not consider binary-integer programs.}. 
+The existing instances in \siplib\ covers only five of the combinations 
+regarding the problems that can be fully implementable based on the open information. \kk{Please rewrite this. Not clear what you try to say.}
 Third, it needs to provide more information such as pre-analysis on the 
 instances and post-analysis on the benchmark results. Currently, there is no predefined 
 contribution rule for \siplib\ so different problem provides different information. 
-Therefore, interpretation on the new results can be incompatible with the former results.
+Therefore, interpretation on the new results can be incompatible with the former results. \kk{I cannot understand the last three sentences.}
 
 
 %
@@ -68,12 +63,9 @@ Therefore, interpretation on the new results can be incompatible with the former
 %they want.
 
 %(SMPS, Julia)
-We provide the second version of \siplib, say \siplibtwo\ in two ways: \smps\ files (*.cor, *.tim, *.sto) \cite{smps} and an open-source \julia\ package. \smps\ is a column-oriented standard format widely used to describe stochastic program 
-instances. Once \smps\ files are given, we can directly solve it using solvers like \dsp\ 
-\cite{web:DSP}, \textsf{SMI} \cite{web:SMI}, and \scip\ \cite{SCIP}. A drawback of \smps\ is the low 
-readability by human, which we decided to provide \julia\ scripts to let users be able to easily catch up and tailor the problems as they want.
+In this work, we introduce \siplibtwo\, the second version of \siplib, in \smps\ file formats \cite{smps} as well as the algebraic models written in {\julia}. \smps\ is an extension of \mps\, a standard format widely used to describe a class of optimization problems, for stochastic programming. The \smps\ format consists of three files: a core file, a time file, and a stochastic file. \kk{SMPS is one of the main outcomes. We need to explain this for more details.} \smps\ format has been well accepted to the stochastic programming community and supported by existing software packages (e.g., {\dsp}~\cite{web:DSP}, \textsf{SMI}~\cite{web:SMI}, {\scip}~\cite{SCIP}). However, a key drawback of \smps\ is the lack of flexibility for reading and modifying the existing instances. 
 
-The \julia\ package contains all the \julia\ scripts to construct the problem instances and also provides various functionalities that can be used to support SIP computational study. The representative such functionality is to write \smps\ files from a \julia\ object of an instance which is also constructed by the function defined in the package. This will allow users to obtain new \smps\ files of different instances (e.g., increased number of scenarios). In addition, the package provides functions to analyze SIP instances, for example, it reports instance size, sparsity pattern, and some known lower/upper bounds.
+To overcome the drawback of solely providing the test instances in \smps\ format, we also develop a \julia\ package that writes algebraic SIP models in \smps\ files. Specifically, the \julia\ package is capable of creating and modifying SIP problem instances and writing them in \smps\ files. This will allow users to obtain new \smps\ files of different instances (e.g., increased number of scenarios). The package also provides various functionalities for numerical study and analysis. For example, the package can query instance size, sparsity pattern, and some known lower/upper bounds. \kk{Note that the modeling is not really our capability, but from StructJuMP (need to cite and acknowledge the work). Hence, we may focus more on the flexibility that was not possible with SMPS only.}
 %%(Convenience of Julia) 
 %\julia\ is an open-source high-level, high-performance dynamic programming language for 
 %numerical computing. It is also known as good performance, approaching that of statically
