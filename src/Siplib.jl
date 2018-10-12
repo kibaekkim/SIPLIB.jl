@@ -65,7 +65,7 @@ model = getModel(:PHONE, [100])
 model = getModel(:SDCP,[5,10,"FallWD",1])
 model = getModel(:SIZES,[3])
 model = getModel(:SMKP,[10,2])
-model = getModel(:SSLP,[4,4,2])
+model = getModel(:SSLP,[4,4,5])
 model = getModel(:SUC,["FallWD",1])
 
 LP(model, CplexSolver(),level=2)
@@ -83,7 +83,7 @@ generateSMPS(:PHONE, [10], smpsfile=true)
 generateSMPS(:SDCP, [5,10,"FallWD",1], smpsfile=true)
 generateSMPS(:SIZES, [10], smpsfile=true)
 generateSMPS(:SMKP, [10,10], smpsfile=true)
-generateSMPS(:SSLP, [4,4,10], smpsfile=true)
+generateSMPS(:SSLP, [4,4,5], smpsfile=true)
 generateSMPS(:SUC, ["FallWD",1], smpsfile=true)
 
 # save the number of scenarios

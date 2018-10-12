@@ -1,0 +1,86 @@
+NAME          SSLP_4_4_5
+ROWS
+ N  OBJ
+ L  CON1
+ L  CON2
+ L  CON3
+ L  CON4
+ L  CON5
+ E  CON6
+ E  CON7
+ E  CON8
+ E  CON9
+COLUMNS
+    MARKER    'MARKER'                'INTORG'
+    VAR1      OBJ       69.000000     CON1      1.000000    
+    VAR1      CON2      -341.625000 
+    VAR2      OBJ       42.000000     CON1      1.000000    
+    VAR2      CON3      -341.625000 
+    VAR3      OBJ       44.000000     CON1      1.000000    
+    VAR3      CON4      -341.625000 
+    VAR4      OBJ       69.000000     CON1      1.000000    
+    VAR4      CON5      -341.625000 
+    VAR5      OBJ       -21.000000    CON2      21.000000   
+    VAR5      CON6      1.000000    
+    VAR6      OBJ       -24.000000    CON3      24.000000   
+    VAR6      CON6      1.000000    
+    VAR7      OBJ       -6.000000     CON4      6.000000    
+    VAR7      CON6      1.000000    
+    VAR8      OBJ       -8.000000     CON5      8.000000    
+    VAR8      CON6      1.000000    
+    VAR9      OBJ       -6.000000     CON2      6.000000    
+    VAR9      CON7      1.000000    
+    VAR10     OBJ       -11.000000    CON3      11.000000   
+    VAR10     CON7      1.000000    
+    VAR11     OBJ       -2.000000     CON4      2.000000    
+    VAR11     CON7      1.000000    
+    VAR12     OBJ       -19.000000    CON5      19.000000   
+    VAR12     CON7      1.000000    
+    VAR13     OBJ       -18.000000    CON2      18.000000   
+    VAR13     CON8      1.000000    
+    VAR14     OBJ       -4.000000     CON3      4.000000    
+    VAR14     CON8      1.000000    
+    VAR15     OBJ       1.000000      CON8      1.000000    
+    VAR16     OBJ       -15.000000    CON5      15.000000   
+    VAR16     CON8      1.000000    
+    VAR17     OBJ       -19.000000    CON2      19.000000   
+    VAR17     CON9      1.000000    
+    VAR18     OBJ       -8.000000     CON3      8.000000    
+    VAR18     CON9      1.000000    
+    VAR19     OBJ       -3.000000     CON4      3.000000    
+    VAR19     CON9      1.000000    
+    VAR20     OBJ       -11.000000    CON5      11.000000   
+    VAR20     CON9      1.000000    
+    MARKER    'MARKER'                 'INTEND'
+    VAR21     OBJ       1000.000000   CON2      -1.000000   
+    VAR22     OBJ       1000.000000   CON3      -1.000000   
+    VAR23     OBJ       1000.000000   CON4      -1.000000   
+    VAR24     OBJ       1000.000000   CON5      -1.000000   
+RHS
+    RHS       CON1      4.000000      CON2      -0.000000   
+    RHS       CON3      -0.000000     CON4      -0.000000   
+    RHS       CON5      -0.000000     CON6      -0.000000   
+    RHS       CON7      1.000000      CON8      1.000000    
+    RHS       CON9      1.000000    
+BOUNDS
+ BV BOUND     VAR1    
+ BV BOUND     VAR2    
+ BV BOUND     VAR3    
+ BV BOUND     VAR4    
+ BV BOUND     VAR5    
+ BV BOUND     VAR6    
+ BV BOUND     VAR7    
+ BV BOUND     VAR8    
+ BV BOUND     VAR9    
+ BV BOUND     VAR10   
+ BV BOUND     VAR11   
+ BV BOUND     VAR12   
+ BV BOUND     VAR13   
+ BV BOUND     VAR14   
+ BV BOUND     VAR15   
+ BV BOUND     VAR16   
+ BV BOUND     VAR17   
+ BV BOUND     VAR18   
+ BV BOUND     VAR19   
+ BV BOUND     VAR20   
+ENDATA

@@ -396,7 +396,6 @@ function generateBasicInstances(DIR::String="")
     end
 end
 
-
 #=
 mdata = getModelData(getchildren(m)[s], genericnames, splice)
 push!(mdata_all, mdata)
