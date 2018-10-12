@@ -80,14 +80,12 @@ To overcome the drawback of solely providing the test instances in \smps\ format
 %for constructing \texttt{JuMP.Model}-type object, it is easy to modify the original model. 
 
 %(Contribution of SIPLIP2.0) 
-The contributions of this work can be summarized as follows.
+The contributions of this work are summarized as follows.
 \begin{itemize}
-	\item We provide SIP-dedicated testing resources that are richer than the former \siplib.
-	\item We collect, implement, summarize, and open all the problem-specific details: 
-	mathematical formulation, random data generation, \julia\ scripts.
-	\item We implement and release an open-source \julia\ package for SIP computational research study.
-	\item We provide both analytical and computational information on the accompanied 
-	instances.
+	\item We develop \siplibtwo\ with a set of new SIP problem instances, in addition to the instances in \siplib.
+	\item We provide the SIP problem instances in \julia\, as well as SMPS format, which enables to modify the instance-specific parameters (e.g., number of scenarios).
+	\item We develop an open-source \julia\ package that implements a set of SIP instances in \julia\ with the capabilities of writing the \julia\ models in SMPS format and numerical analysis.
+	\item We report the benchmark results for the problem instances by using the existing software packages.
 \end{itemize}
 
 %By \siplibtwo, we provide 1) richer collection of test instances for computational 
@@ -100,17 +98,12 @@ The contributions of this work can be summarized as follows.
 
 %(Contents)
 This paper is organized as follows. In Section \ref{sec:sip}, we briefly review SIP. This 
-includes the mathematical formulation with notation, solution methods, and available software 
-packages. In Section \ref{sec:summary}, we provide summary and discussion of the test 
-problems. This consists of origin of the problems with brief description, instance naming 
-rule, problem type, the number of components, and sparsity information. We also discuss why 
-they are important in each subsection. Together with the problem-specific description given 
-in Section \ref{sec:prob_desc}, we believe that users can quickly catch up what they need 
-without investigating every detail. In Section \ref{sec:package}, we introduce our 
-implementation of the \julia\ package with a tutorial in Section 
-\ref{sec:tutorial}. In Section \ref{sec:instance_catalog}, we report analytical and 
-computational results of the accompanied \smps\ instances. We conclude this study with the 
-emphasis on our spirit for further advances in SIP in Section \ref{sec:conclusion}. 
+includes the mathematical formulations, solution methods, and existing software 
+packages. In Section \ref{sec:summary}, we describe the test 
+problems. This describe the source for each problem, instance naming 
+rule, problem type, number of components, and sparsity information. Section \ref{sec:package} presents the \julia\ package that implements the problem instances and other functions for numerical analysis. In Section \ref{sec:instance_catalog}, we report analytical and 
+benchmark results of the \smps\ instances. We conclude this study with the 
+emphasis on our spirit for further advances in SIP in Section \ref{sec:conclusion}. \kk{Needs to revisit.}
 
 
 
