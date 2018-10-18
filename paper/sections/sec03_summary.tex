@@ -232,14 +232,14 @@ Table \ref{table:num_components} summarizes the number of components in each pro
 \end{table}
 
 \subsection{Sparsity} \label{subsec:sparsity}
-As can be seen in Figure \ref{fig:stagewise_sparsity}, there are three differently structured blocks in EF. Besides the first-stage block A, every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T, called \textit{technology} matrix, is related with both stages hence it usually complicates SIP. In Section \ref{sec:sparsity}, we report tables providing block-wise sparsity that is derived solely based on the set cardinality.
+As can be seen in Figure \ref{fig:stagewise_sparsity}, there are three differently structured blocks in DEF. Besides the first-stage block A, every other block is the duplication of block T or W hence the same sparsity pattern repeats as many as the number of scenarios considered. Block A and W are only related with their own stage while block T, called \textit{technology} matrix, is related with both stages hence it usually complicates SIP. In Section \ref{sec:sparsity}, we report tables providing block-wise sparsity that is derived solely based on the set cardinality.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\linewidth]{drawings/stagewise_sparsity}
 	\caption{Three (structurally) independent blocks in SIP}
 	\label{fig:stagewise_sparsity}
 \end{figure}
-Associated with the blocks, every SIP in EF has a block-diagonal structure in its coefficient matrix (Figure \ref{fig:de_structure}). This structure mainly differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of coefficient matrix in EF.
+Associated with the blocks, every SIP in DEF has a block-diagonal structure in its coefficient matrix (Figure \ref{fig:de_structure}). This structure mainly differentiates SIP from the general MIP. In particular, the block-diagonal structure results always in high sparsity as scenario increases. Hence, it does not seem to be meaningful to just report the sparsity of coefficient matrix in DEF.
 \begin{figure}[]
 	\centering
 	\subfloat[][AIRLIFT\_3]

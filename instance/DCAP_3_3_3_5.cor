@@ -1,0 +1,188 @@
+NAME          DCAP_3_3_3_5
+ROWS
+ N  OBJ
+ L  CON1
+ L  CON2
+ L  CON3
+ L  CON4
+ L  CON5
+ L  CON6
+ L  CON7
+ L  CON8
+ L  CON9
+ L  CON10
+ L  CON11
+ L  CON12
+ L  CON13
+ L  CON14
+ L  CON15
+ L  CON16
+ L  CON17
+ L  CON18
+ E  CON19
+ E  CON20
+ E  CON21
+ E  CON22
+ E  CON23
+ E  CON24
+ E  CON25
+ E  CON26
+ E  CON27
+COLUMNS
+    VAR1      OBJ       6.180167      CON1      1.000000    
+    VAR1      CON10     -1.000000     CON11     -1.000000   
+    VAR1      CON12     -1.000000   
+    VAR2      OBJ       5.039546      CON2      1.000000    
+    VAR2      CON11     -1.000000     CON12     -1.000000   
+    VAR3      OBJ       9.759582      CON3      1.000000    
+    VAR3      CON12     -1.000000   
+    VAR4      OBJ       6.732585      CON4      1.000000    
+    VAR4      CON13     -1.000000     CON14     -1.000000   
+    VAR4      CON15     -1.000000   
+    VAR5      OBJ       7.443064      CON5      1.000000    
+    VAR5      CON14     -1.000000     CON15     -1.000000   
+    VAR6      OBJ       9.999523      CON6      1.000000    
+    VAR6      CON15     -1.000000   
+    VAR7      OBJ       6.563535      CON7      1.000000    
+    VAR7      CON16     -1.000000     CON17     -1.000000   
+    VAR7      CON18     -1.000000   
+    VAR8      OBJ       6.054841      CON8      1.000000    
+    VAR8      CON17     -1.000000     CON18     -1.000000   
+    VAR9      OBJ       6.258311      CON9      1.000000    
+    VAR9      CON18     -1.000000   
+    MARKER    'MARKER'                'INTORG'
+    VAR10     OBJ       49.466655     CON1      -1.000000   
+    VAR11     OBJ       26.988714     CON2      -1.000000   
+    VAR12     OBJ       18.378895     CON3      -1.000000   
+    VAR13     OBJ       32.230043     CON4      -1.000000   
+    VAR14     OBJ       40.928922     CON5      -1.000000   
+    VAR15     OBJ       20.055168     CON6      -1.000000   
+    VAR16     OBJ       27.484319     CON7      -1.000000   
+    VAR17     OBJ       21.247609     CON8      -1.000000   
+    VAR18     OBJ       10.814995     CON9      -1.000000   
+    VAR19     OBJ       6.438508      CON10     0.758662    
+    VAR19     CON19     1.000000    
+    VAR20     OBJ       9.240927      CON11     1.137573    
+    VAR20     CON20     1.000000    
+    VAR21     OBJ       7.278460      CON12     1.423498    
+    VAR21     CON21     1.000000    
+    VAR22     OBJ       8.201981      CON10     1.030396    
+    VAR22     CON22     1.000000    
+    VAR23     OBJ       7.316751      CON11     1.237179    
+    VAR23     CON23     1.000000    
+    VAR24     OBJ       7.744914      CON12     1.312854    
+    VAR24     CON24     1.000000    
+    VAR25     OBJ       8.756563      CON10     0.977189    
+    VAR25     CON25     1.000000    
+    VAR26     OBJ       9.881559      CON11     1.051901    
+    VAR26     CON26     1.000000    
+    VAR27     OBJ       8.240269      CON12     0.685426    
+    VAR27     CON27     1.000000    
+    VAR28     OBJ       9.297561      CON13     0.758662    
+    VAR28     CON19     1.000000    
+    VAR29     OBJ       5.428176      CON14     1.137573    
+    VAR29     CON20     1.000000    
+    VAR30     OBJ       6.396976      CON15     1.423498    
+    VAR30     CON21     1.000000    
+    VAR31     OBJ       9.367721      CON13     1.030396    
+    VAR31     CON22     1.000000    
+    VAR32     OBJ       5.929107      CON14     1.237179    
+    VAR32     CON23     1.000000    
+    VAR33     OBJ       6.854853      CON15     1.312854    
+    VAR33     CON24     1.000000    
+    VAR34     OBJ       8.224417      CON13     0.977189    
+    VAR34     CON25     1.000000    
+    VAR35     OBJ       5.258073      CON14     1.051901    
+    VAR35     CON26     1.000000    
+    VAR36     OBJ       7.085197      CON15     0.685426    
+    VAR36     CON27     1.000000    
+    VAR37     OBJ       5.384754      CON16     0.758662    
+    VAR37     CON19     1.000000    
+    VAR38     OBJ       7.766028      CON17     1.137573    
+    VAR38     CON20     1.000000    
+    VAR39     OBJ       5.891231      CON18     1.423498    
+    VAR39     CON21     1.000000    
+    VAR40     OBJ       6.392912      CON16     1.030396    
+    VAR40     CON22     1.000000    
+    VAR41     OBJ       5.559904      CON17     1.237179    
+    VAR41     CON23     1.000000    
+    VAR42     OBJ       9.470830      CON18     1.312854    
+    VAR42     CON24     1.000000    
+    VAR43     OBJ       5.389132      CON16     0.977189    
+    VAR43     CON25     1.000000    
+    VAR44     OBJ       7.690148      CON17     1.051901    
+    VAR44     CON26     1.000000    
+    VAR45     OBJ       5.722828      CON18     0.685426    
+    VAR45     CON27     1.000000    
+    VAR46     OBJ       615.125038    CON19     1.000000    
+    VAR47     OBJ       530.419794    CON20     1.000000    
+    VAR48     OBJ       783.400772    CON21     1.000000    
+    VAR49     OBJ       844.198059    CON22     1.000000    
+    VAR50     OBJ       819.181286    CON23     1.000000    
+    VAR51     OBJ       843.909226    CON24     1.000000    
+    VAR52     OBJ       635.197735    CON25     1.000000    
+    VAR53     OBJ       666.733440    CON26     1.000000    
+    VAR54     OBJ       568.351223    CON27     1.000000    
+    MARKER    'MARKER'                 'INTEND'
+RHS
+    RHS       CON1      -0.000000     CON2      -0.000000   
+    RHS       CON3      -0.000000     CON4      -0.000000   
+    RHS       CON5      -0.000000     CON6      -0.000000   
+    RHS       CON7      -0.000000     CON8      -0.000000   
+    RHS       CON9      -0.000000     CON10     -0.000000   
+    RHS       CON11     -0.000000     CON12     -0.000000   
+    RHS       CON13     -0.000000     CON14     -0.000000   
+    RHS       CON15     -0.000000     CON16     -0.000000   
+    RHS       CON17     -0.000000     CON18     -0.000000   
+    RHS       CON19     1.000000      CON20     1.000000    
+    RHS       CON21     1.000000      CON22     1.000000    
+    RHS       CON23     1.000000      CON24     1.000000    
+    RHS       CON25     1.000000      CON26     1.000000    
+    RHS       CON27     1.000000    
+BOUNDS
+ BV BOUND     VAR10   
+ BV BOUND     VAR11   
+ BV BOUND     VAR12   
+ BV BOUND     VAR13   
+ BV BOUND     VAR14   
+ BV BOUND     VAR15   
+ BV BOUND     VAR16   
+ BV BOUND     VAR17   
+ BV BOUND     VAR18   
+ BV BOUND     VAR19   
+ BV BOUND     VAR20   
+ BV BOUND     VAR21   
+ BV BOUND     VAR22   
+ BV BOUND     VAR23   
+ BV BOUND     VAR24   
+ BV BOUND     VAR25   
+ BV BOUND     VAR26   
+ BV BOUND     VAR27   
+ BV BOUND     VAR28   
+ BV BOUND     VAR29   
+ BV BOUND     VAR30   
+ BV BOUND     VAR31   
+ BV BOUND     VAR32   
+ BV BOUND     VAR33   
+ BV BOUND     VAR34   
+ BV BOUND     VAR35   
+ BV BOUND     VAR36   
+ BV BOUND     VAR37   
+ BV BOUND     VAR38   
+ BV BOUND     VAR39   
+ BV BOUND     VAR40   
+ BV BOUND     VAR41   
+ BV BOUND     VAR42   
+ BV BOUND     VAR43   
+ BV BOUND     VAR44   
+ BV BOUND     VAR45   
+ BV BOUND     VAR46   
+ BV BOUND     VAR47   
+ BV BOUND     VAR48   
+ BV BOUND     VAR49   
+ BV BOUND     VAR50   
+ BV BOUND     VAR51   
+ BV BOUND     VAR52   
+ BV BOUND     VAR53   
+ BV BOUND     VAR54   
+ENDATA
