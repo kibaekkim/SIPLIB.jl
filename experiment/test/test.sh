@@ -21,3 +21,18 @@ for prob in AIRLIFT CARGO CHEM DCAP MPTSPs PHONE SDCP SIZES SMKP SSLP SUC; do
   echo ${base%.*}
  done
 done
+
+
+
+
+#for prob in AIRLIFT CARGO CHEM DCAP MPTSPs PHONE SDCP SIZES SMKP SSLP SUC; do
+for prob in AIRLIFT; do
+ base_set="/home/yongkyu/GitRepositories/siplib/experiment/FULL_INSTANCE/$prob/RP/*.cor"
+ for base in $base_set; do
+  echo ${base%.*}
+  fname=`basename ${base%.*}`
+  echo $fname
+  #srun -A NEXTGENOPT -p bdwall -N 1 --ntasks-per-node=36 -t 00:05:00 runDsp --algo de --smps ${base%.*} --param $parameter_file --soln "$solution_dir/$prob/RP_CPLEX/${base%.*}_RP_CPLEX_sol" > "$log_dir/$prob/RP_CPLEX/${base%.*}_RP_CPLEX_log.txt"
+ done
+done
+

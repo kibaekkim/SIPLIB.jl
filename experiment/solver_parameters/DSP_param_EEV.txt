@@ -27,12 +27,12 @@ int  SOLVER/QP   0 # 0: CPLEX, 1: OOQP
 int     NODE_LIM        1000000  # Branch-and-cut node limit
 int     BD/DD/ITER_LIM  10       # Iteration limit
 int     DD/ITER_LIM     1000000  # Iteration limit
-double  DE/WALL_LIM     3600  # Wall clock limit
+double  DE/WALL_LIM     1000000  # Wall clock limit
 double  BD/WALL_LIM     1000000  # Wall clock limit
 double  DD/WALL_LIM     300  # Wall clock limit
 double  DD/STOP_TOL     0.00001  # Stopping tolerance
 double  MIP/GAP_TOL     0.00001  # Duality gap tolerance
-double  MIP/TIME_LIM    3600      # Time limit
+double  MIP/TIME_LIM    300      # Time limit
 
 # Benders lower bound method
 #   0 = solve separate LP relaxation problems
@@ -68,7 +68,7 @@ double  DD/ASYNC/MIN_WAIT_TIME  5        # minimum waiting time for the master t
 # Parameters UNLIKELY changed by users
 #
 
-int     NUM_CORES          32        # Number of cores used by OpenMP
+int     NUM_CORES          36        # Number of cores used by OpenMP
 int     BD/CUT_PRIORITY    -200000  # Parameater CONSHDLR_SEPAPRIORITY for SCIP
 bool    DD/TR              true     # Use trust region?
 bool    DD/TR/DECREASE     true     # Decrease trust-region size?
