@@ -3,14 +3,14 @@ function LP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; leve
     m = deepcopy(model)
     lprelaxModel!(m, level)
     efrp = getExtensiveFormModel(m, genericnames, splice)
-
+#=
     if !output
         MathProgBase.setparameters!(solver,Silent=true)
     end
     if timelimit != Inf
         MathProgBase.setparameters!(solver,TimeLimit=timelimit)
     end
-
+=#
     setsolver(efrp, solver)
     print("Solving Level $level LP-relaxed recourse problem (RP-LP$level) in the extensive form ... ")
     st = time()
@@ -21,14 +21,14 @@ function LP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; leve
     gap = getobjgap(efrp)
     efrp = Model()
     println("RP-LP$level = $(round(RPLP,3)) (gap: $(round(gap,3))%, elapsed time: $(round(rp_time,2))s)")
-
+#=
     if !output
         MathProgBase.setparameters!(solver,Silent=false)
     end
     if timelimit != Inf
         MathProgBase.setparameters!(solver,TimeLimit=Inf)
     end
-
+=#
     return RPLP
 end
 
@@ -71,14 +71,15 @@ function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_
     push!(mdata_all_evp, m1)
     push!(mdata_all_evp, ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,avg_clbd,avg_cubd,m2.ctype,m2.cname))
     evp, x = getExtensiveFormModel(mdata_all_evp, return_x=true)
-
+#=
     if !output
         MathProgBase.setparameters!(solver, Silent=true)
     end
+
     if timelimit != Inf
         MathProgBase.setparameters!(solver, TimeLimit=timelimit)
     end
-
+=#
     setsolver(evp, solver)
     print("  Solving the expected value problem (EV) ... ")
     st = time()
@@ -138,14 +139,14 @@ function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
     num_notoptimal = 0 # counts the number of single scenario model that is not solved to optimality
     sum = 0.0
     println("  Solving $(model.ext[:Stochastic].num_scen) single scenario problems")
-
+#=
     if !output
         MathProgBase.setparameters!(solver,Silent=true)
     end
     if ss_timelimit != Inf
         MathProgBase.setparameters!(solver,TimeLimit=ss_timelimit)
     end
-
+=#
     for s in 1:model.ext[:Stochastic].num_scen
 #        tic()
         st = time()
@@ -167,14 +168,14 @@ function WS(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
 
     WS = sum/model.ext[:Stochastic].num_scen
     println("WS = $(round(WS,3)) (# of nonoptimal single scenario problems: $num_notoptimal)")
-
+#=
     if !output
         MathProgBase.setparameters!(solver,Silent=false)
     end
     if ss_timelimit != Inf
         MathProgBase.setparameters!(solver,TimeLimit=Inf)
     end
-
+=#
     return sum/model.ext[:Stochastic].num_scen
 end
 
@@ -230,14 +231,15 @@ end
 # (needs any MIP solver, e.g., using CPLEX)
 function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; output::Bool=false, timelimit::Float64=Inf, genericnames::Bool=true, splice::Bool=false, std::Bool=true)
     efrp = getExtensiveFormModel(model, genericnames, splice)
-
+#=
     if !output
         MathProgBase.setparameters!(solver,Silent=true)
     end
+
     if timelimit != Inf
         MathProgBase.setparameters!(solver,TimeLimit=timelimit)
     end
-
+=#
     setsolver(efrp, solver)
     print("Solving recourse problem in the extensive form (RP) ... ")
     st = time()
@@ -248,18 +250,19 @@ function RP(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; outp
     gap = getobjgap(efrp)
     efrp = Model()
     println("RP = $(round(RP,3)) (gap: $(round(gap,3))%, elapsed time: $(round(rp_time,2))s)")
-
+#=
     if !output
         MathProgBase.setparameters!(solver,Silent=false)
     end
+
     if timelimit != Inf
         MathProgBase.setparameters!(solver,TimeLimit=Inf)
     end
-
+=#
     if !std
         return RP
-    else
-        return (RP, )
+#    else
+#        return (RP, )
     end
 end
 

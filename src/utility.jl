@@ -13,6 +13,152 @@ function setGlobalVariables()
     end
 end
 
+function setParamSet()
+    # AIRLIFT
+    param = [[]]
+    nS = [200, 300, 500, 1000]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:AIRLIFT] = param_array
+
+    # CARGO
+    param = [[]]
+    nS = [10, 50, 100]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:CARGO] = param_array
+
+    # CHEM
+    param = [[]]
+    nS = [200, 300, 500, 1000]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:CHEM] = param_array
+
+    # DCAP
+    param = [[2,3,3], [2,4,3], [3,3,2], [3,4,2]]
+    nS = [200,300,500]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:DCAP] = param_array
+
+    # MPTSPs
+    param = [["D0",50], ["D1",50], ["D2",50], ["D3",50]]
+    nS = [100]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:MPTSPs] = param_array
+
+    # PHONE
+    param = [[]]
+    nS = [200, 300, 500, 1000]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:PHONE] = param_array
+
+    # SDCP
+    param = [[5,10,"FallWD"], [5,10,"FallWE"], [5,10,"SpringWD"], [5,10,"SpringWE"], [5,10,"SummerWD"], [5,10,"SummerWE"], [5,10,"WinterWD"], [5,10,"WinterWE"]]
+    nS = [10]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:SDCP] = param_array
+
+    # SMKP
+    param = [[120]]
+    nS = [20, 40, 60, 80, 100]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:SMKP] = param_array
+
+    # SIZES
+    param = [[]]
+    nS = [3, 5, 10, 100]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    param_set[:SIZES] = param_array
+
+
+    # SSLP
+#    param = [[5,25], [5,50], [10,50], [15,45]]
+    param = [[5,25], [5,50]]
+    nS = [50, 100]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            push!(param_array, copy(p))
+            push!(param_array[end], n)
+        end
+    end
+    push!(param_array, [10,50,50])
+    push!(param_array, [10,50,100])
+    push!(param_array, [10,50,500])
+    push!(param_array, [10,50,1000])
+    push!(param_array, [10,50,2000])
+    push!(param_array, [10,45,5])
+    push!(param_array, [10,45,10])
+    push!(param_array, [10,45,15])
+    param_set[:SSLP] = param_array
+
+    # SUC
+    param = ["FallWD", "FallWE", "SpringWD", "SpringWE", "SummerWD", "SummerWE", "WinterWD", "WinterWE"]
+    nS = [10]
+    param_array = Any[]
+    for p in param
+        for n in nS
+            temp_array = Any[]
+            push!(temp_array, p)
+            push!(temp_array, n)
+            push!(param_array, temp_array)
+        end
+    end
+    param_set[:SUC] = param_array
+end
+
 function getInstanceName(problem::Symbol, params_arr::Any)::String
     INSTANCE_NAME = String(problem)
     for p in 1:numParams[problem]
@@ -197,6 +343,75 @@ function getSingleScenarioModel(model::JuMP.Model, s::Int, genericnames::Bool=tr
 end
 
 
+#function EV(model::JuMP.Model, solver::MathProgBase.AbstractMathProgSolver; for_eev::Bool=false, output::Bool=false, timelimit::Float64=Inf, splice::Bool=false, genericnames::Bool=true)
+function getExpectedValueModel(model::JuMP.Model, genericnames::Bool=true, splice::Bool=true, roundRHS::Bool=false)::JuMP.Model
+    # check if model is stochastic (or structured) model
+    if in(:Stochastic, model.ext.keys) == false
+        warn("Not a stochastic model.")
+        return
+    end
+
+    # save the number of scenarios
+    nS = model.ext[:Stochastic].num_scen
+
+    if !roundRHS
+        mdata_all = getStructModelData(model, genericnames, false)
+        m1 = mdata_all[1]
+        m2 = mdata_all[2]
+        avg_mat = m2.mat
+        avg_rhs = m2.rhs
+        avg_obj = m2.obj
+        avg_clbd = m2.clbd
+        avg_cubd = m2.cubd
+        for s in 2:nS
+            avg_mat += mdata_all[s+1].mat
+            avg_rhs += mdata_all[s+1].rhs
+            avg_obj += mdata_all[s+1].obj
+            avg_clbd += mdata_all[s+1].clbd
+            avg_cubd += mdata_all[s+1].cubd
+        end
+        avg_mat = avg_mat/nS
+        avg_obj = avg_obj/nS
+        avg_rhs = avg_rhs/nS
+        avg_clbd = avg_clbd/nS
+        avg_cubd = avg_cubd/nS
+
+        mdata_all_evp = ModelData[]
+        push!(mdata_all_evp, m1)
+        push!(mdata_all_evp, ModelData(avg_mat,avg_rhs,m2.sense,avg_obj,m2.objsense,avg_clbd,avg_cubd,m2.ctype,m2.cname))
+
+        return getExtensiveFormModel(mdata_all_evp)
+    else
+        mdata_all = getStructModelData(model, genericnames, false)
+        m1 = mdata_all[1]
+        m2 = mdata_all[2]
+        avg_mat = m2.mat
+        avg_rhs = m2.rhs
+        avg_obj = m2.obj
+        avg_clbd = m2.clbd
+        avg_cubd = m2.cubd
+        for s in 2:nS
+            avg_mat += mdata_all[s+1].mat
+            avg_rhs += mdata_all[s+1].rhs
+            avg_obj += mdata_all[s+1].obj
+            avg_clbd += mdata_all[s+1].clbd
+            avg_cubd += mdata_all[s+1].cubd
+        end
+        avg_mat = avg_mat/nS
+        avg_obj = avg_obj/nS
+        avg_rhs = avg_rhs/nS
+        avg_clbd = avg_clbd/nS
+        avg_cubd = avg_cubd/nS
+
+        mdata_all_evp = ModelData[]
+        push!(mdata_all_evp, m1)
+        push!(mdata_all_evp, ModelData(avg_mat,round.(avg_rhs),m2.sense,avg_obj,m2.objsense,avg_clbd,avg_cubd,m2.ctype,m2.cname))
+
+        return getExtensiveFormModel(mdata_all_evp)
+    end
+end
+
+
 function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dirname(@__FILE__))/../plot", close::Bool=false)
     PyPlot.@pyimport matplotlib.patches as pcs
     fig, ax = PyPlot.subplots()
@@ -374,7 +589,6 @@ function generateBasicInstances(DIR::String="")
         THIS_FILE_PATH = dirname(@__FILE__)
         mkdir("$THIS_FILE_PATH/../instance/SMPS")
         SMPS_PATH = "$THIS_FILE_PATH/../instance/SMPS"
-        param_set = arrayParams()
         for prob in problem
             cd("$SMPS_PATH")
             mkdir("$prob")
@@ -385,7 +599,6 @@ function generateBasicInstances(DIR::String="")
     else
         mkdir("$DIR/SMPS")
         SMPS_PATH = "$DIR/SMPS"
-        param_set = arrayParams()
         for prob in problem
             cd("$SMPS_PATH")
             mkdir("$prob")
@@ -395,6 +608,37 @@ function generateBasicInstances(DIR::String="")
         end
     end
 end
+
+
+function generateFullInstances(DIR::String="")
+    if DIR == ""
+        THIS_FILE_PATH = dirname(@__FILE__)
+        mkdir("$THIS_FILE_PATH/../instance/SMPS")
+        SMPS_PATH = "$THIS_FILE_PATH/../instance/SMPS"
+        for prob in problem
+            cd("$SMPS_PATH")
+            mkdir("$prob")
+            for param in param_set[prob]
+                generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false)
+                generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, lprelax=2) # LP2
+                generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, eev=true)
+                generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, ss=true)
+            end
+        end
+    else
+        mkdir("$DIR/SMPS")
+        SMPS_PATH = "$DIR/SMPS"
+        for prob in problem
+            cd("$SMPS_PATH")
+            mkdir("$prob")
+            for param in param_set[prob]
+                generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false)
+                generateSMPS(prob, param, SMPS_PATH*"/$(String(prob))", genericnames=false, lprelax=2) # LP2
+            end
+        end
+    end
+end
+
 
 #=
 mdata = getModelData(getchildren(m)[s], genericnames, splice)

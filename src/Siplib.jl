@@ -5,6 +5,8 @@ module Siplib
     using Distributions
     using PyPlot
     using Combinatorics
+#    using SparseArrays
+#    using Printf
 
     # include Siplib utility sources
     include("./writer.jl")
@@ -14,11 +16,13 @@ module Siplib
     include("./solver.jl")
 
     global problem = Symbol[]
+    global param_set = Dict{Symbol, Array{Array{Any}}}()
     global numParams = Dict{Symbol,Int}()
     global noteParams = Dict{Symbol,String}()
 
     setGlobalVariables()
     includeModelingScripts()
+    setParamSet()
 
     export getInstanceName,                 # returns Instance name using problem & parameters
            getModel,                        # only returns JuMP.Model object
@@ -41,6 +45,7 @@ module Siplib
            problem,
            numParams,
            noteParams,
+           param_set,
            arrayParams,
            WS,                              # Solve to obtain the wait-and-see solution
            EEV,                             # Solve to obtain the EEV solution
@@ -53,6 +58,18 @@ end # end module Siplib
 #=
 using Siplib
 using CPLEX
+
+generateSMPS(:DCAP,[3,3,3,10],lprelax=2,genericnames=false)
+generateMPS(:DCAP,[3,3,3,10],ev=true,genericnames=false)
+generateMPS(:DCAP,[3,3,3,10],ss=true,genericnames=false)
+
+model = getModel(:DCAP,[3,3,3,10])
+RP(model, CplexSolver())
+EV(model, CplexSolver())
+LP(model,CplexSolver(),level=2)
+
+
+param_set
 
 generateBasicInstances()
 
