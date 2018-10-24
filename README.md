@@ -1,9 +1,4 @@
-# SIPLIB 2.0 #
+# Siplib
+Stochastic Integer Programming Test Problem Library 2.0
 
-This project is to collect families of SMIP instances in Julia files and SMPS format.
-
-Julia model instances will be collected in instances/Julia/.
-
-# Example
-
-Please see ./instances/Julia/example.jl
+Tutorial for adding a new problem is available at: [TUTORIAL.md](TUTORIAL.md)

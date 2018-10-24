@@ -1,0 +1,226 @@
+In this section, we provide block-wise size information as well as the sparsity. Block A is only related with the 1st stage, Block W is only related with the 2nd stage, and Block T is related with both stages. For graphical representation, please refer to Figure \ref{fig:stagewise_sparsity}. Based on this information, one can easily derive the sparsity of the coefficient matrix in extensive form as well.
+
+% AIRLIFT
+\begin{table}[H]
+	\centering
+	\caption{\airlift: Block-wise sparsity information}
+	\label{table:sparsity_AIRLIFT}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero           & Sparsity                   \\ \midrule
+		A (1st-stage)             & $A$     & $AR$    & $AR$               & $\frac{1}{A}$             \\
+		W (2nd-stage)             & $R(1+A)$ & $2R+AR(R-1)$ & $3AR(R-1)+2R$       & $\frac{3A(R-1)+2}{R(1+A)(2+A(R-1))}$ \\
+		T (technology)            & $R(1+A)$ & $AR$    & $2AR$ & $\frac{2}{R(1+A)}$      \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+% CARGO
+\begin{table}[H]
+	\centering
+	\caption{\cargo: Block-wise sparsity information}
+	\label{table:sparsity_CARGO}
+	\begin{threeparttable}
+		\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}lccc@{}}
+			\toprule
+			\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero                           \\ \midrule
+			A (1st-stage)             & $N^2+(1+A)N+2A$     & $AP$    & $\sum_{m\in N}\sum_{n\in N}+\sum_{n\in N}AW_n+\sum_{n\in N}A(V_{1n}+V_{ln})+2AP$                 \\
+			W (2nd-stage)             & $2N^2-P+\sum_{\pi\in P}l_\pi$ & $2PN^2+PN^3+N^2-P+\sum_{\pi\in P}l_\pi$ & $P(N+1)^2+2(N+1)^2\left(\sum_{\pi\in P}l_\pi-2P\right)+(2+N)\left(N^2P-\sum_{m\in N}\sum_{n\in N}U_{mn}\right)$     \\
+			T (technology)            &$2N^2-P+\sum_{\pi\in P}l_\pi$ & $AP$    & $AP$     \\ \bottomrule
+		\end{tabular}
+		}
+		\begin{tablenotes}
+			\small
+			\item *We skip sparsity equations.
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table}
+
+% CHEM
+\begin{table}[H]
+	\centering
+	\caption{\chem: Block-wise sparsity information}
+	\label{table:sparsity_CHEM}
+	\begin{threeparttable}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{@{}lccc@{}}
+				\toprule
+				\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero                      \\ \midrule
+				A (1st-stage)             & $T(J+IJ+3R)$     &  $T(R+J+2IJ)$   & $\sum_{t\in T}\sum_{j\in J}(I_j^{tasks}+t)+T\sum_{r\in R}\left(4+\sum_{i\in I_r^{task,p}}I_i^{equip}+\sum_{i\in I_r^{task,c}}I_i^{equip}\right)+2RT+2IJT$                       \\
+				W (2nd-stage)             & $2RT$ & $(1+R)T$ & $3RT$       \\
+				T (technology)            & $2RT$ & $(R+J+2IJ)T$    & $RT$      \\ \bottomrule
+			\end{tabular}
+		}
+		\begin{tablenotes}
+			\small
+			\item *We skip sparsity equations.
+			\item *We skip constraint (\ref{chem:c}), (\ref{chem:j})-(\ref{chem:l})
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table}
+% DCAP
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[H]
+	\centering
+	\caption{\dcap: Block-wise sparsity information}
+	\label{table:sparsity_DCAP}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero           & Sparsity                   \\ \midrule
+		A (1st-stage)             & $RT$     & $2RT$    & $2RT$               & $\frac{1}{RT}$             \\
+		W (2nd-stage)             & $(R+N)T$ & $(1+R)T$ & $NRT+(R+1)NT$       & $\frac{1+2R}{T(R+N)(1+R)}$ \\
+		T (technology)          & $(R+N)T$ & $2RT$    & $\frac{1}{2}T(T+1)$ & $\frac{1+T}{4T(R+N)}$      \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+
+% MPTSPs
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[H]
+	\centering
+	\caption{\mptsps: Block-wise sparsity information}
+	\label{table:sparsity_MPTSPs}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row    & \#col     & \#nonzero      & Sparsity                \\ \midrule
+		A (1st-stage)             & $N(N+1)$ & $2N(N-1)$ & $2(3N-2)(N-1)$ & $\frac{3N-2}{(N+1)N^2}$ \\
+		W (2nd-stage)             & $N(N-1)$ & $KN(N-1)$ & $N(N-1)$       & $\frac{1}{KN(N-1)}$     \\
+		T (technology)          & $N(N-1)$ & $2N(N-1)$ & $3N(N-1)$      & $\frac{3}{2N(N-1)}$     \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+% PHONE
+\begin{table}[H]
+	\centering
+	\caption{\phone: Block-wise sparsity information}
+	\label{table:sparsity_PHONE}
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{@{}lcccc@{}}
+			\toprule
+			\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero           & Sparsity                   \\ \midrule
+			A (1st-stage)             & $1$     & $E$    & $E$               & $1$             \\
+			W (2nd-stage)             & $E+P$ & $P+\sum_{i\in P}R(i)$ & $(1+E)\sum_{i\in P}R(i)+P$       & $\frac{P+(1+E)\sum_{i\in P}R(i)}{(E+P)(P+\sum_{i\in P}R(i))}$ \\
+			T (technology)            & $E+P$ & $E$    & $E$ & $\frac{1}{E+P}$      \\ \bottomrule
+		\end{tabular}
+	}
+\end{table}
+
+% SDCP
+\begin{table}[H]
+	\centering
+	\caption{\sdcp: Block-wise sparsity information}
+	\label{table:sparsity_SDCP}
+	\begin{threeparttable}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{@{}lccc@{}}
+				\toprule
+				\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero           \\ \midrule
+				A (1st-stage)             & $1$     & $N$    & $N$               \\
+				W (2nd-stage)             & $T(2N+L+2G)$ & $G+T(2N+L+G+\mathcal{I}+\mathcal{W}+\mathcal{R}+\mathcal{L})$ & $T\left(2N+3L+4G+\sum_{n\in N}\left(L_n^+ + L_n^- + G_n+IG_n^\mathcal{I}+IG_n^\mathcal{W}+IG_n^\mathcal{R}+IG_n^\mathcal{L}\right)\right)$       \\
+				T (technology)          & $T(2N+L+2G)$ & $N$    & $NT$ \\ \bottomrule
+			\end{tabular}
+		}
+		\begin{tablenotes}
+			\small
+			\item *We skip sparsity equations.
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table}
+
+% SIZES
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[H]
+	\centering
+	\caption{\sizes: Block-wise sparsity information}
+	\label{table:sparsity_SIZES}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row    & \#col    & \#nonzero                 & Sparsity             \\ \midrule
+		A (1st-stage)             & $T(N+1)$ & $2NT$    & $3NT$                     & $\frac{3}{2T(N+1)}$ \\
+		W (2nd-stage)             & $2NT$    & $N(N+1)$ & $\frac{1}{2}NT(T+1)(N+1)$ & $\frac{T+1}{4N}$    \\
+		T (technology)          & $2NT$    & $2NT$    & $\frac{1}{2}NT(T+1)$      & $\frac{T+1}{8NT}$   \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+
+% SMKP
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[H]
+	\centering
+	\caption{\smkp: Block-wise sparsity information}
+	\label{table:sparsity_SMKP}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row & \#col & \#nonzero & Sparsity \\ \midrule
+		A (1st-stage)             & $J$   & $2I$  & $2IJ$     & $1$     \\
+		W (2nd-stage)             & $K$   & $I$   & $IK$      & $1$     \\
+		T (technology)          & $K$   & $2I$  & $IK$      & $0.5$   \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+% SSLP
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[H]
+	\centering
+	\caption{\sslp: Block-wise sparsity information}
+	\label{table:sparsity_SSLP}
+	\begin{tabular}{@{}lcccc@{}}
+		\toprule
+		\multicolumn{1}{c}{Block} & \#row & \#col    & \#nonzero & Sparsity                   \\ \midrule
+		A (1st-stage)             & $1$   & $J$      & $J$       & $1$                       \\
+		W (2nd-stage)             & $I+J$ & $(1+I)J$ & $(1+2I)J$ & $\frac{1+2I}{(I+J)(1+I)}$ \\
+		T (technology)          & $I+J$ & $J$      & $J$       & $\frac{1}{1+J}$           \\ \bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{table}[H]
+	\centering
+	\caption{\suc: Block-wise sparsity information}
+	\label{table:sparsity_SUC}
+	\begin{threeparttable}
+		\resizebox{\textwidth}{!}{%
+			\begin{tabular}{@{}lccc@{}}
+				\toprule
+				\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                  \\ \midrule
+				A (1st-stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^{|T|} \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                           \\
+				W (2nd-stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^{|T|} \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}                  \\
+				& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+L+\mathcal{L}+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$          \\
+				&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                                       \\
+				T (technology)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                                     \\ \bottomrule
+			\end{tabular}%
+		}
+		\begin{tablenotes}
+			\small
+			\item *We skip sparsity equations.
+		\end{tablenotes}
+	\end{threeparttable}
+\end{table}
+
+%
+%\begin{table}[H]
+%	\centering
+%	\caption{\suc: Block-wise sparsity information}
+%	\label{table:sparsity_SUC}
+%	\begin{threeparttable}
+%		\resizebox{\textwidth}{!}{%
+%			\begin{tabular}{@{}lcccc@{}}
+%				\toprule
+%				\multicolumn{1}{c}{Block} & \#row                                                                & \#col                                                 & \#nonzero                                                                                                                                                 & Sparsity \\ \midrule
+%				A (1st stage)             & $\sum_{g\in G_s}\left( 3T-UT_g -DT_g +1\right)$                      & $G_s (2T+1)$                                          & $3G_s T + \sum_{g\in G_s} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$                      & -        \\
+%				W (2nd stage)             & \multicolumn{1}{l}{$2G+(N+L+4G)T$}                                   & \multicolumn{1}{l}{$G_f +G+(2G_f +G+N+L+\mathcal{L}$} & \multicolumn{1}{l}{$\sum_{g\in G_f} \left(   \sum_{t=UT_g}^|T| \left(1+UT_g \right)   + \sum_{t=1}^{|T|-DT_g} \left(1+DT_g \right)    \right)$}           & -        \\
+%				& \multicolumn{1}{r}{$+\sum_{g\in G_f}\left( 3T-UT_g -DT_g +1\right)$} & $+\mathcal{I}+\mathcal{R}+\mathcal{W})T$              & $+ T\sum_{n\in N}\left(      L_n^- + L_n^ + G_n + IG_n^\mathcal{L} + IG_n^\mathcal{I} + IG_n^\mathcal{I} + IG_n^\mathcal{R} + IG_n^\mathcal{W}   \right)$ &          \\
+%				&                                                                      &                                                       & $+T(6G+5G_f +3L) + 2(G+G_f)$                                                                                                                              &          \\
+%				T (complicating)          & $2G_s (T+1)$                                                         & $G_s (2T+1)$                                          & $2G_s (T+1)$                                                                                                                                              & -        \\ \bottomrule
+%			\end{tabular}%
+%		}
+%		\begin{tablenotes}
+%			\small
+%			\item *We skip sparsity equations due to the lack of space.
+%		\end{tablenotes}
+%	\end{threeparttable}
+%\end{table}

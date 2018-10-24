@@ -1,0 +1,12 @@
+problem_name,number_of_parameters,parameter_description
+AIRLIFT,1,"[S], S is integer."
+CARGO,1,"[S], S is integer."
+CHEM,1,"[S], S is integer."
+DCAP,4,"[R, N, T, S], All integers."
+MPTSPs,3,"[d, N, S], d is string, one of (“D0”, “D1”, “D2”, “D3”). N and S are integers"
+PHONE,1,"[S], S is integer."
+SDCP,4,"[k, p, d, S], k is integer, 0.0 <= p <= 100.0, d is string, one of (“FallWD”, “FallWE”, “WinterWD”, “WinterWE”, “SpringWD”, “SpringWE”, “SummerWD”, “SummerWE”), and S is integer."
+SIZES,1,"[S], S is integer."
+SMKP,2,"[I, S], All integers."
+SSLP,3,"[I, J, S], All integers."
+SUC,2,"[d, S], d is string, one of (“FallWD”, “FallWE”, “WinterWD”, “WinterWE”, “SpringWD”, “SpringWE”, “SummerWD”, “SummerWE”), and S is integer."
