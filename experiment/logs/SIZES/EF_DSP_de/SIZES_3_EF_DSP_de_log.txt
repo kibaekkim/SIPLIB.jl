@@ -1,0 +1,103 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SIZES/EF/SIZES_3
+Coin0001I At line 1 NAME          SIZES_3
+Coin0001I At line 2 ROWS
+Coin0001I At line 66 COLUMNS
+Coin0001I At line 394 RHS
+Coin0001I At line 426 BOUNDS
+Coin0001I At line 577 ENDATA
+Coin0002I Problem SIZES_3 has 62 rows, 150 columns and 420 elements
+Coin0001I At line 1 TIME          SIZES_3
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         SIZES_3
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 26 ENDATA
+Read SMPS files: 0.001047 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 24 rows and 91 columns.
+CPX0000  MIP Presolve modified 37 coefficients.
+CPX0000  Reduced MIP has 118 rows, 279 columns, and 825 nonzeros.
+CPX0000  Reduced MIP has 19 binaries, 260 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.00 sec. (0.70 ticks)
+CPX0000  Found incumbent of value 326233.594345 after 0.01 sec. (1.47 ticks)
+CPX0000  Probing time = 0.00 sec. (0.06 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 118 rows, 279 columns, and 825 nonzeros.
+CPX0000  Reduced MIP has 19 binaries, 260 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.00 sec. (0.46 ticks)
+CPX0000  Probing time = 0.00 sec. (0.05 ticks)
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.00 sec. (0.46 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                       326233.5943     4661.0000            98.57%
+CPX0000  *     0+    0                       318532.5090     4661.0000            98.54%
+CPX0000        0     0   134451.9350    18   318532.5090   134451.9350       67   57.79%
+CPX0000  *     0+    0                       142232.3744   134451.9350             5.47%
+CPX0000        0     0   136400.8794    62   142232.3744      Cuts: 46      150    4.10%
+CPX0000  *     0+    0                       139414.6621   136400.8794             2.16%
+CPX0000        0     0   136789.7872    78   139414.6621      Cuts: 33      172    1.88%
+CPX0000        0     0   136798.3942    78   139414.6621      Cuts: 13      182    1.88%
+CPX0000  *     0+    0                       139050.0274   136798.3942             1.62%
+CPX0000        0     0   136798.3942    78   139050.0274   Flowcuts: 1      183    1.62%
+CPX0000  *     0+    0                       139049.1884   136798.3942             1.62%
+CPX0000  *     0+    0                       137399.3518   136798.3942             0.44%
+CPX0000  *     0+    0                       137037.3961   136798.3942             0.17%
+CPX0000  *     0+    0                       136932.0580   136798.3942             0.10%
+CPX0000
+CPX0000  Repeating presolve.
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 35 rows and 73 columns.
+CPX0000  MIP Presolve modified 17 coefficients.
+CPX0000  Reduced MIP has 83 rows, 206 columns, and 599 nonzeros.
+CPX0000  Reduced MIP has 17 binaries, 189 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.00 sec. (0.45 ticks)
+CPX0000  Probing time = 0.00 sec. (0.03 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 83 rows, 206 columns, and 599 nonzeros.
+CPX0000  Reduced MIP has 17 binaries, 189 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.00 sec. (0.30 ticks)
+CPX0000  Represolve time = 0.00 sec. (1.26 ticks)
+CPX0000  Probing time = 0.00 sec. (0.03 ticks)
+CPX0000  Clique table members: 3.
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.00 sec. (0.73 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                       136932.0580   136798.6461             0.10%
+CPX0000        0     0   136806.0102    52   136932.0580   136806.0102      286    0.09%
+CPX0000        0     0   136822.0640    28   136932.0580       Cuts: 2      294    0.08%
+CPX0000        0     0        cutoff         136932.0580                    301    0.00%
+CPX0000  Elapsed time = 0.44 sec. (21.73 ticks, tree = 0.01 MB
+CPX0000
+CPX0000  Implied bound cuts applied:  3
+CPX0000  Flow cuts applied:  12
+CPX0000  Mixed integer rounding cuts applied:  21
+CPX0000  Gomory fractional cuts applied:  2
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    0.44 sec. (21.77 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    0.00 sec. (0.00 ticks)
+CPX0000    Sync time (average)   =    0.00 sec.
+CPX0000    Wait time (average)   =    0.00 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =    0.44 sec. (21.77 ticks)
+Status: 3000
+Primal Bound: 136932
+Dual Bound  : 136932

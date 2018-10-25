@@ -1,0 +1,48 @@
+STOCH         SIZES_5
+SCENARIOS     DISCRETE
+ SC SCEN1     'ROOT'    0.200000  PERIOD2
+ SC SCEN2     'ROOT'    0.200000  PERIOD2
+    RHS       CON24     1587.219402 
+    RHS       CON26     4761.658205 
+    RHS       CON28     7936.097008 
+    RHS       CON30     6348.877606 
+    RHS       CON32     22221.071623
+    RHS       CON34     15872.194016
+    RHS       CON36     9523.316410 
+    RHS       CON38     7936.097008 
+    RHS       CON40     7936.097008 
+    RHS       CON42     3174.438803 
+ SC SCEN3     'ROOT'    0.200000  PERIOD2
+    RHS       CON24     2031.767421 
+    RHS       CON26     6095.302263 
+    RHS       CON28     10158.837104
+    RHS       CON30     8127.069683 
+    RHS       CON32     28444.743892
+    RHS       CON34     20317.674208
+    RHS       CON36     12190.604525
+    RHS       CON38     10158.837104
+    RHS       CON40     10158.837104
+    RHS       CON42     4063.534842 
+ SC SCEN4     'ROOT'    0.200000  PERIOD2
+    RHS       CON24     1587.216511 
+    RHS       CON26     4761.649532 
+    RHS       CON28     7936.082553 
+    RHS       CON30     6348.866042 
+    RHS       CON32     22221.031148
+    RHS       CON34     15872.165106
+    RHS       CON36     9523.299064 
+    RHS       CON38     7936.082553 
+    RHS       CON40     7936.082553 
+    RHS       CON42     3174.433021 
+ SC SCEN5     'ROOT'    0.200000  PERIOD2
+    RHS       CON24     3707.298113 
+    RHS       CON26     11121.894338
+    RHS       CON28     18536.490564
+    RHS       CON30     14829.192451
+    RHS       CON32     51902.173579
+    RHS       CON34     37072.981128
+    RHS       CON36     22243.788677
+    RHS       CON38     18536.490564
+    RHS       CON40     18536.490564
+    RHS       CON42     7414.596226 
+ENDATA

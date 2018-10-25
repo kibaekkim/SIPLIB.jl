@@ -1,0 +1,71 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SSLP/LP2/SSLP_10_50_1000_LP2
+Coin0001I At line 1 NAME          SSLP_10_50_1000_LP2
+Coin0001I At line 2 ROWS
+Coin0001I At line 65 COLUMNS
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000_LP2 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1 TIME          SSLP_10_50_1000_LP2
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         SSLP_10_50_1000_LP2
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 506716 ENDATA
+Read SMPS files: 0.200812 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_LP2_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 200689.518000 after 0.05 sec. (32.30 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 24840 rows and 250272 columns.
+CPX0000  MIP Presolve modified 20000 coefficients.
+CPX0000  Reduced MIP has 35161 rows, 259738 columns, and 511607 nonzeros.
+CPX0000  Reduced MIP has 10 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.37 sec. (325.64 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 35161 rows, 259738 columns, and 511607 nonzeros.
+CPX0000  Reduced MIP has 10 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.43 sec. (271.17 ticks)
+CPX0000  Probing time = 0.05 sec. (6.08 ticks)
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 3.17 sec. (2058.81 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                       200689.5180    -3132.1090           101.56%
+CPX0000  *     0+    0                        52950.8950    -3132.1090           105.92%
+CPX0000        0     0     -513.0349    10    52950.8950     -513.0349       33  100.97%
+CPX0000  *     0+    0                           80.5060     -513.0349           737.26%
+CPX0000        0     0     -482.7474    10       80.5060    Cuts: 8890    25141  699.64%
+CPX0000        0     0     -470.6491    10       80.5060    Cuts: 8890    43292  684.61%
+CPX0000  *     0+    0                         -306.1280     -470.6491            53.74%
+CPX0000        0     0     -456.7126    10     -306.1280    Cuts: 8890    67084   49.19%
+CPX0000  *     0+    0                         -350.8160     -456.7126            30.19%
+CPX0000        0     0     -440.9252    10     -350.8160    Cuts: 8890    95972   25.69%
+CPX0000        0     0     -427.7132    10     -350.8160    Cuts: 8890   124024   21.92%
+CPX0000        0     0     -416.4948    10     -350.8160    Cuts: 8890   151196   18.72%
+CPX0000        0     0        cutoff           -350.8160     -350.8160   177632    0.00%
+CPX0000  Elapsed time = 482.89 sec. (399718.23 ticks, tree = 0.01 MB
+CPX0000
+CPX0000  Flow cuts applied:  16157
+CPX0000  Mixed integer rounding cuts applied:  30597
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =  482.94 sec. (399752.75 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    0.00 sec. (0.00 ticks)
+CPX0000    Sync time (average)   =    0.00 sec.
+CPX0000    Wait time (average)   =    0.00 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =  482.94 sec. (399752.75 ticks)
+Status: 3000
+Primal Bound: -350.816
+Dual Bound  : -350.816

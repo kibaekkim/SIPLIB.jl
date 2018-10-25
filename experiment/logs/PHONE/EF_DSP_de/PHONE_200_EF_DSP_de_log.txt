@@ -1,0 +1,56 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/PHONE/EF/PHONE_200
+Coin0001I At line 1 NAME          PHONE_200
+Coin0001I At line 2 ROWS
+Coin0001I At line 28 COLUMNS
+Coin0001I At line 212 RHS
+Coin0001I At line 225 BOUNDS
+Coin0001I At line 304 ENDATA
+Coin0002I Problem PHONE_200 has 24 rows, 93 columns and 309 elements
+Coin0001I At line 1 TIME          PHONE_200
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         PHONE_200
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 2929 ENDATA
+Read SMPS files: 0.00429 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 149.820000 after 0.00 sec. (1.17 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 200 rows and 200 columns.
+CPX0000  Reduced MIP has 4401 rows, 16808 columns, and 59808 nonzeros.
+CPX0000  Reduced MIP has 0 binaries, 14008 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.03 sec. (22.72 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 4401 rows, 16808 columns, and 59808 nonzeros.
+CPX0000  Reduced MIP has 0 binaries, 16808 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.03 sec. (26.99 ticks)
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.22 sec. (128.13 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                          149.8200        5.8450            96.10%
+CPX0000  *     0+    0                          137.0850        5.8450            95.74%
+CPX0000  *     0     0      integral     0      124.8200      124.8200     7190    0.00%
+CPX0000  Elapsed time = 0.31 sec. (196.99 ticks, tree = 0.00 MB
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    0.31 sec. (197.81 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    0.00 sec. (0.00 ticks)
+CPX0000    Sync time (average)   =    0.00 sec.
+CPX0000    Wait time (average)   =    0.00 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =    0.31 sec. (197.81 ticks)
+Status: 3000
+Primal Bound: 124.82
+Dual Bound  : 124.82

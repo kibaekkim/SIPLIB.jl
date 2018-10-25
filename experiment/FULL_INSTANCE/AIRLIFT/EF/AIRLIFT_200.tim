@@ -1,0 +1,5 @@
+TIME          AIRLIFT_200
+PERIODS       IMPLICIT
+    x[1,1]    CON1      PERIOD1
+    chi[1,1,2]  CON3      PERIOD2
+ENDATA

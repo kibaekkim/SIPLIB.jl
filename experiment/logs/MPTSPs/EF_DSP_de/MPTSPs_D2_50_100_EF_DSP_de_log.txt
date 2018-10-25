@@ -1,0 +1,93 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/MPTSPs/EF/MPTSPs_D2_50_100
+Coin0001I At line 1 NAME          MPTSPs_D2_50_100
+Coin0001I At line 2 ROWS
+Coin0001I At line 5004 COLUMNS
+Coin0001I At line 24460 RHS
+Coin0001I At line 26961 BOUNDS
+Coin0001I At line 36762 ENDATA
+Coin0002I Problem MPTSPs_D2_50_100 has 5000 rows, 12250 columns and 24255 elements
+Coin0001I At line 1 TIME          MPTSPs_D2_50_100
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         MPTSPs_D2_50_100
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 727753 ENDATA
+Read SMPS files: 0.32738 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Tried aggregator 2 times.
+CPX0000  MIP Presolve eliminated 242550 rows and 490049 columns.
+CPX0000  Aggregator did 2450 substitutions.
+CPX0000  Reduced MIP has 2550 rows, 4851 columns, and 14455 nonzeros.
+CPX0000  Reduced MIP has 2450 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.63 sec. (424.02 ticks)
+CPX0000  Found incumbent of value 9932.084994 after 0.72 sec. (479.02 ticks)
+CPX0000  Probing time = 0.02 sec. (4.89 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 2550 rows, 4851 columns, and 14455 nonzeros.
+CPX0000  Reduced MIP has 2450 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (9.16 ticks)
+CPX0000  Probing time = 0.02 sec. (4.40 ticks)
+CPX0000  Clique table members: 100.
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.13 sec. (143.44 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                         9932.0850        0.0000           100.00%
+CPX0000        0     0     2571.2692   104     9932.0850     2571.2692       16   74.11%
+CPX0000        0     0     2819.8555   107     9932.0850      Cuts: 96     1158   71.61%
+CPX0000        0     0     2897.7466   124     9932.0850     Cuts: 186     2418   70.82%
+CPX0000        0     0     2910.2023   117     9932.0850     Cuts: 105     3363   70.70%
+CPX0000  *     0+    0                         6753.7955     2910.2023            56.91%
+CPX0000  *     0+    0                         3245.0539     2910.2023            10.32%
+CPX0000  *     0+    0                         3238.5323     2910.2023            10.14%
+CPX0000        0     0     2915.3287   113     3238.5323      Cuts: 71     3654    9.98%
+CPX0000        0     0     2918.0726   103     3238.5323      Cuts: 54     4182    9.90%
+CPX0000        0     0     2923.7340   114     3238.5323      Cuts: 59     4575    9.72%
+CPX0000        0     0     2923.8019   111     3238.5323      Cuts: 31     4715    9.72%
+CPX0000        0     0     2923.8019   100     3238.5323      Cuts: 13     4783    9.72%
+CPX0000        0     0     2923.8019   101     3238.5323      Cuts: 26     5074    9.72%
+CPX0000        0     2     2923.8019    99     3238.5323     2923.9493     5074    9.71%
+CPX0000  Elapsed time = 4.51 sec. (2884.35 ticks, tree = 0.01 MB
+CPX0000       58    45     2962.9921    60     3238.5323     2924.9277    17997    9.68%
+CPX0000  *   129+   34                         3028.5552     2924.9277             3.42%
+CPX0000  *   153+   91                         3005.1608     2926.0601             2.63%
+CPX0000      186   142     2980.5408    27     3005.1608     2926.0601    88748    2.63%
+CPX0000      329   178     3004.4935    58     3005.1608     2926.0601   144985    2.63%
+CPX0000  *   340   189      integral     0     2969.7190     2926.0601   155507    1.47%
+CPX0000      585   245     2973.3272    48     2969.7190     2926.0601   182720    1.47%
+CPX0000      720    67  -1.00000e+75     0     2969.7190     2926.0601   200994    1.47%
+CPX0000      720    65     2972.3318     0     2969.7190     2926.0601   200994    1.47%
+CPX0000  *   730    63      integral     0     2968.0473     2926.0601   202639    1.41%
+CPX0000      744    39        cutoff           2968.0473     2926.0601   207379    1.41%
+CPX0000      852    38    infeasible           2968.0473     2926.0601   214348    1.41%
+CPX0000      871    11        cutoff           2968.0473     2936.2447   226767    1.07%
+CPX0000
+CPX0000  Cover cuts applied:  15
+CPX0000  Implied bound cuts applied:  109
+CPX0000  Flow cuts applied:  170
+CPX0000  Mixed integer rounding cuts applied:  7
+CPX0000  Zero-half cuts applied:  1
+CPX0000  Lift and project cuts applied:  1
+CPX0000  Gomory fractional cuts applied:  2
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    4.04 sec. (2921.01 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    4.66 sec. (2851.60 ticks)
+CPX0000    Sync time (average)   =    3.30 sec.
+CPX0000    Wait time (average)   =    0.28 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =    8.70 sec. (5772.62 ticks)
+Status: 3000
+Primal Bound: 2968.05
+Dual Bound  : 2968.05

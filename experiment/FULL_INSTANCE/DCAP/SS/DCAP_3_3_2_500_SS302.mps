@@ -1,0 +1,126 @@
+NAME          DCAP_3_3_2_500_SS302
+ROWS
+ N  OBJ
+ L  CON1
+ L  CON2
+ L  CON3
+ L  CON4
+ L  CON5
+ L  CON6
+ L  CON7
+ L  CON8
+ L  CON9
+ L  CON10
+ L  CON11
+ L  CON12
+ E  CON13
+ E  CON14
+ E  CON15
+ E  CON16
+ E  CON17
+ E  CON18
+COLUMNS
+    x[1,1]    OBJ       6.180167      CON1      1.000000    
+    x[1,1]    CON7      -1.000000     CON8      -1.000000   
+    x[1,2]    OBJ       5.039546      CON2      1.000000    
+    x[1,2]    CON8      -1.000000   
+    x[2,1]    OBJ       6.732585      CON3      1.000000    
+    x[2,1]    CON9      -1.000000     CON10     -1.000000   
+    x[2,2]    OBJ       7.443064      CON4      1.000000    
+    x[2,2]    CON10     -1.000000   
+    x[3,1]    OBJ       6.563535      CON5      1.000000    
+    x[3,1]    CON11     -1.000000     CON12     -1.000000   
+    x[3,2]    OBJ       6.054841      CON6      1.000000    
+    x[3,2]    CON12     -1.000000   
+    MARKER    'MARKER'                'INTORG'
+    u[1,1]    OBJ       48.076654     CON1      -1.000000   
+    u[1,2]    OBJ       49.466655     CON2      -1.000000   
+    u[2,1]    OBJ       49.996186     CON3      -1.000000   
+    u[2,2]    OBJ       32.230043     CON4      -1.000000   
+    u[3,1]    OBJ       20.066487     CON5      -1.000000   
+    u[3,2]    OBJ       27.484319     CON6      -1.000000   
+    y[1,1,1]  OBJ       6.243665      CON7      1.133226    
+    y[1,1,1]  CON13     1.000000    
+    y[1,1,2]  OBJ       9.045231      CON8      0.978153    
+    y[1,1,2]  CON14     1.000000    
+    y[1,2,1]  OBJ       8.927731      CON7      0.605474    
+    y[1,2,1]  CON15     1.000000    
+    y[1,2,2]  OBJ       8.220178      CON8      0.634049    
+    y[1,2,2]  CON16     1.000000    
+    y[1,3,1]  OBJ       9.266538      CON7      0.548235    
+    y[1,3,1]  CON17     1.000000    
+    y[1,3,2]  OBJ       8.231982      CON8      0.767702    
+    y[1,3,2]  CON18     1.000000    
+    y[2,1,1]  OBJ       9.498096      CON9      1.133226    
+    y[2,1,1]  CON13     1.000000    
+    y[2,1,2]  OBJ       9.205354      CON10     0.978153    
+    y[2,1,2]  CON14     1.000000    
+    y[2,2,1]  OBJ       5.218231      CON9      0.605474    
+    y[2,2,1]  CON15     1.000000    
+    y[2,2,2]  OBJ       9.921235      CON10     0.634049    
+    y[2,2,2]  CON16     1.000000    
+    y[2,3,1]  OBJ       8.040568      CON9      0.548235    
+    y[2,3,1]  CON17     1.000000    
+    y[2,3,2]  OBJ       8.876606      CON10     0.767702    
+    y[2,3,2]  CON18     1.000000    
+    y[3,1,1]  OBJ       6.185967      CON11     1.133226    
+    y[3,1,1]  CON13     1.000000    
+    y[3,1,2]  OBJ       7.240752      CON12     0.978153    
+    y[3,1,2]  CON14     1.000000    
+    y[3,2,1]  OBJ       6.367011      CON11     0.605474    
+    y[3,2,1]  CON15     1.000000    
+    y[3,2,2]  OBJ       9.769277      CON12     0.634049    
+    y[3,2,2]  CON16     1.000000    
+    y[3,3,1]  OBJ       9.358592      CON11     0.548235    
+    y[3,3,1]  CON17     1.000000    
+    y[3,3,2]  OBJ       7.729128      CON12     0.767702    
+    y[3,3,2]  CON18     1.000000    
+    z[1,1]    OBJ       925.068067    CON13     1.000000    
+    z[1,2]    OBJ       777.288672    CON14     1.000000    
+    z[2,1]    OBJ       664.821107    CON15     1.000000    
+    z[2,2]    OBJ       729.709195    CON16     1.000000    
+    z[3,1]    OBJ       787.940459    CON17     1.000000    
+    z[3,2]    OBJ       682.119280    CON18     1.000000    
+    MARKER    'MARKER'                 'INTEND'
+RHS
+    RHS       CON1      -0.000000     CON2      -0.000000   
+    RHS       CON3      -0.000000     CON4      -0.000000   
+    RHS       CON5      -0.000000     CON6      -0.000000   
+    RHS       CON7      -0.000000     CON8      -0.000000   
+    RHS       CON9      -0.000000     CON10     -0.000000   
+    RHS       CON11     -0.000000     CON12     -0.000000   
+    RHS       CON13     1.000000      CON14     1.000000    
+    RHS       CON15     1.000000      CON16     1.000000    
+    RHS       CON17     1.000000      CON18     1.000000    
+BOUNDS
+ BV BOUND     u[1,1]  
+ BV BOUND     u[1,2]  
+ BV BOUND     u[2,1]  
+ BV BOUND     u[2,2]  
+ BV BOUND     u[3,1]  
+ BV BOUND     u[3,2]  
+ BV BOUND     y[1,1,1]
+ BV BOUND     y[1,1,2]
+ BV BOUND     y[1,2,1]
+ BV BOUND     y[1,2,2]
+ BV BOUND     y[1,3,1]
+ BV BOUND     y[1,3,2]
+ BV BOUND     y[2,1,1]
+ BV BOUND     y[2,1,2]
+ BV BOUND     y[2,2,1]
+ BV BOUND     y[2,2,2]
+ BV BOUND     y[2,3,1]
+ BV BOUND     y[2,3,2]
+ BV BOUND     y[3,1,1]
+ BV BOUND     y[3,1,2]
+ BV BOUND     y[3,2,1]
+ BV BOUND     y[3,2,2]
+ BV BOUND     y[3,3,1]
+ BV BOUND     y[3,3,2]
+ BV BOUND     z[1,1]  
+ BV BOUND     z[1,2]  
+ BV BOUND     z[2,1]  
+ BV BOUND     z[2,2]  
+ BV BOUND     z[3,1]  
+ BV BOUND     z[3,2]  
+ENDATA

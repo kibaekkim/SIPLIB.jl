@@ -1,0 +1,91 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/CARGO/LP2/CARGO_10_LP2
+Coin0001I At line 1 NAME          CARGO_10_LP2
+Coin0001I At line 2 ROWS
+Coin0001I At line 2148 COLUMNS
+Coin0001I At line 7243 RHS
+Coin0001I At line 8316 BOUNDS
+Coin0001I At line 8369 ENDATA
+Coin0002I Problem CARGO_10_LP2 has 2144 rows, 2616 columns and 8510 elements
+Coin0001I At line 1 TIME          CARGO_10_LP2
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         CARGO_10_LP2
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 1717 ENDATA
+Read SMPS files: 0.018 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_LP2_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 158055.708460 after 0.00 sec. (1.93 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 20298 rows and 20540 columns.
+CPX0000  MIP Presolve modified 113 coefficients.
+CPX0000  Reduced MIP has 854 rows, 5152 columns, and 15454 nonzeros.
+CPX0000  Reduced MIP has 0 binaries, 52 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.02 sec. (22.89 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 854 rows, 5152 columns, and 15454 nonzeros.
+CPX0000  Reduced MIP has 0 binaries, 52 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (5.16 ticks)
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.12 sec. (96.66 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                       158055.7085        0.0000           100.00%
+CPX0000        0     0      749.2347    23   158055.7085      749.2347     1838   99.53%
+CPX0000  *     0+    0                        21841.9250      749.2347            96.57%
+CPX0000        0     0      752.5983    25    21841.9250     Cuts: 256     2415   96.55%
+CPX0000  *     0+    0                        18860.5330      752.5983            96.01%
+CPX0000        0     0      754.1616    26    18860.5330     Cuts: 229     2748   96.00%
+CPX0000  *     0+    0                         4032.9715      754.1616            81.30%
+CPX0000        0     0      754.4226    21     4032.9715  MIRcuts: 133     2922   81.29%
+CPX0000        0     0      754.5507    24     4032.9715  MIRcuts: 106     3092   81.29%
+CPX0000        0     0      754.5904    25     4032.9715  MIRcuts: 100     3200   81.29%
+CPX0000        0     0      754.6241    24     4032.9715     Cuts: 107     3303   81.29%
+CPX0000        0     0      754.6386    24     4032.9715   MIRcuts: 49     3378   81.29%
+CPX0000  *     0+    0                         2718.2881      754.6386            72.24%
+CPX0000  *     0+    0                          778.2108      754.6386             3.03%
+CPX0000        0     2      754.6386    24      778.2108      754.6386     3378    3.03%
+CPX0000  Elapsed time = 1.60 sec. (1183.13 ticks, tree = 0.01 MB
+CPX0000       25    25      761.3557     7      778.2108      754.8021     9973    3.01%
+CPX0000  *    42+   25                          775.5196      754.8021             2.67%
+CPX0000  *    43+   14                          773.6633      754.8021             2.44%
+CPX0000      343   103        cutoff            773.6633      755.6037    47645    2.33%
+CPX0000     1057   475      759.5476    15      773.6633      755.6037   196501    2.33%
+CPX0000     1764   818        cutoff            773.6633      757.1858   304110    2.13%
+CPX0000     2412  1069        cutoff            773.6633      757.1858   407796    2.13%
+CPX0000     3094  1300      766.1379     5      773.6633      757.1858   517343    2.13%
+CPX0000     3579  1636      771.2377    10      773.6633      758.7812   658292    1.92%
+CPX0000     4285  1682      769.6205    15      773.6633      759.4294   678418    1.84%
+CPX0000     5039  2172      773.4364     7      773.6633      760.1072   882964    1.75%
+CPX0000     8480  2942      769.1523    10      773.6633      764.0545  1366762    1.24%
+CPX0000  Elapsed time = 5.82 sec. (4286.55 ticks, tree = 4.99 MB
+CPX0000     8536  3126      754.9508    25      773.6633      764.6863  1551609    1.16%
+CPX0000     9864   653      765.1691    14      773.6633      764.6863  1738781    1.16%
+CPX0000    13846  1978      766.5632    11      773.6633      764.6863  2340154    1.16%
+CPX0000    18354  2788        cutoff            773.6633      765.6546  2995245    1.04%
+CPX0000    23328  2272        cutoff            773.6633      768.4450  3657479    0.67%
+CPX0000
+CPX0000  Mixed integer rounding cuts applied:  244
+CPX0000  Lift and project cuts applied:  7
+CPX0000  Gomory fractional cuts applied:  6
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    1.53 sec. (1183.21 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =   13.75 sec. (9526.12 ticks)
+CPX0000    Sync time (average)   =    3.01 sec.
+CPX0000    Wait time (average)   =    0.05 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =   15.28 sec. (10709.33 ticks)
+Status: 3000
+Primal Bound: 773.663
+Dual Bound  : 773.663

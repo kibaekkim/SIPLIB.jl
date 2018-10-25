@@ -112,7 +112,7 @@ function setParamSet()
 
     # SIZES
     param = [[]]
-    nS = [3, 5, 10, 100]
+    nS = [3, 5, 10]
     param_array = Any[]
     for p in param
         for n in nS

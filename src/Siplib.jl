@@ -59,6 +59,8 @@ end # end module Siplib
 using Siplib
 using CPLEX
 
+generateSMPS(:CHEM,[100])
+
 generateSMPS(:DCAP,[3,3,3,10],lprelax=2,genericnames=false)
 generateMPS(:DCAP,[3,3,3,10],ev=true,genericnames=false)
 generateMPS(:DCAP,[3,3,3,10],ss=true,genericnames=false)
