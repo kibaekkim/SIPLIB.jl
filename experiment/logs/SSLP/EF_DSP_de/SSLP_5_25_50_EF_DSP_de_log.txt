@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         SSLP_5_25_50
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 6579 ENDATA
-Read SMPS files: 0.004 sec.
+Read SMPS files: 0.007096 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -49,7 +49,7 @@ CPX0000  *     0+    0                          -97.0400     -702.0400          
 CPX0000        0     0     -192.1735   404      -97.0400     -192.1735      698   98.04%
 CPX0000  *     0+    0                         -127.7000     -192.1735            50.49%
 CPX0000        0     0        cutoff           -127.7000     -127.7000     1350    0.00%
-CPX0000  Elapsed time = 0.24 sec. (101.86 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 0.23 sec. (101.86 ticks, tree = 0.01 MB
 CPX0000
 CPX0000  Clique cuts applied:  102
 CPX0000  Mixed integer rounding cuts applied:  100

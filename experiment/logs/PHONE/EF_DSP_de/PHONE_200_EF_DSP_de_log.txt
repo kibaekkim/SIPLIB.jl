@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         PHONE_200
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 2929 ENDATA
-Read SMPS files: 0.00429 sec.
+Read SMPS files: 0.004 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -33,7 +33,7 @@ CPX0000  Presolve time = 0.03 sec. (26.99 ticks)
 CPX0000  MIP emphasis: balance optimality and feasibility.
 CPX0000  MIP search method: dynamic search.
 CPX0000  Parallel mode: deterministic, using up to 36 threads.
-CPX0000  Root relaxation solution time = 0.22 sec. (128.13 ticks)
+CPX0000  Root relaxation solution time = 0.21 sec. (128.13 ticks)
 CPX0000
 CPX0000          Nodes                                         Cuts/
 CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap

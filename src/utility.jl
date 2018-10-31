@@ -217,7 +217,7 @@ function lprelaxModel!(m::JuMP.Model, level::Int)
         lprelaxModel(m, 2)
         return m
     else
-        warn("Please use one of the (0: no relax, 1: 1st-stage only, 2: 2nd-stage only, 3: full relax) for the LP-relaxation level argument.")
+        @warn("Please use one of the (0: no relax, 1: 1st-stage only, 2: 2nd-stage only, 3: full relax) for the LP-relaxation level argument.")
         return
     end
 end
@@ -332,7 +332,7 @@ end
 function getSingleScenarioModel(model::JuMP.Model, s::Int, genericnames::Bool=true, splice::Bool=true)::JuMP.Model
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
-        warn("Not a stochastic model.")
+        @warn("Not a stochastic model.")
         return
     end
     mdata_all = ModelData[]
@@ -347,7 +347,7 @@ end
 function getExpectedValueModel(model::JuMP.Model, genericnames::Bool=true, splice::Bool=true, roundRHS::Bool=false)::JuMP.Model
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
-        warn("Not a stochastic model.")
+        @warn("Not a stochastic model.")
         return
     end
 
@@ -411,7 +411,7 @@ function getExpectedValueModel(model::JuMP.Model, genericnames::Bool=true, splic
     end
 end
 
-
+#=
 function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dirname(@__FILE__))/../plot", close::Bool=false)
     PyPlot.@pyimport matplotlib.patches as pcs
     fig, ax = PyPlot.subplots()
@@ -433,7 +433,7 @@ function plotMatrix(mat, INSTANCE_NAME::String="matrix", DIR_NAME::String="$(dir
         PyPlot.close()
     end
 end
-
+=#
 function arrayParams()
     param_set = Dict{Symbol, Array{Array{Any}}}()
 
@@ -535,7 +535,7 @@ function arrayParams()
 
     # SIZES
     param = [[]]
-    nS = [3, 5, 10, 100]
+    nS = [3, 5, 10]
     param_array = Any[]
     for p in param
         for n in nS

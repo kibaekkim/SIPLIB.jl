@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         SSLP_10_50_1000
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.195798 sec.
+Read SMPS files: 0.201754 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -26,19 +26,19 @@ CPX0000  MIP Presolve eliminated 25898 rows and 285503 columns.
 CPX0000  MIP Presolve modified 20000 coefficients.
 CPX0000  Reduced MIP has 34103 rows, 224507 columns, and 441952 nonzeros.
 CPX0000  Reduced MIP has 214507 binaries, 0 generals, 0 SOSs, and 0 indicators.
-CPX0000  Presolve time = 0.58 sec. (426.56 ticks)
+CPX0000  Presolve time = 0.65 sec. (426.56 ticks)
 CPX0000  Tried aggregator 2 times.
 CPX0000  MIP Presolve modified 8618 coefficients.
 CPX0000  Aggregator did 771 substitutions.
 CPX0000  Reduced MIP has 33332 rows, 223736 columns, and 440410 nonzeros.
 CPX0000  Reduced MIP has 213736 binaries, 10000 generals, 0 SOSs, and 0 indicators.
-CPX0000  Presolve time = 0.64 sec. (402.36 ticks)
+CPX0000  Presolve time = 0.63 sec. (402.36 ticks)
 CPX0000  Probing time = 0.25 sec. (14.05 ticks)
 CPX0000  Clique table members: 23332.
 CPX0000  MIP emphasis: balance optimality and feasibility.
 CPX0000  MIP search method: dynamic search.
 CPX0000  Parallel mode: deterministic, using up to 36 threads.
-CPX0000  Root relaxation solution time = 3.48 sec. (2174.79 ticks)
+CPX0000  Root relaxation solution time = 3.19 sec. (2174.79 ticks)
 CPX0000
 CPX0000          Nodes                                         Cuts/
 CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
@@ -54,20 +54,20 @@ CPX0000  *     0+    0                         -350.8160     -436.0272          
 CPX0000        0     0     -421.3485 56636     -350.8160    Cuts: 8433   134299   20.11%
 CPX0000        0     0     -408.6150 63454     -350.8160    Cuts: 8433   173445   16.48%
 CPX0000        0     0        cutoff           -350.8160     -350.8160   215170    0.00%
-CPX0000  Elapsed time = 584.47 sec. (448529.34 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 574.40 sec. (448529.34 ticks, tree = 0.01 MB
 CPX0000
 CPX0000  Flow cuts applied:  8714
 CPX0000  Mixed integer rounding cuts applied:  33152
 CPX0000  Zero-half cuts applied:  2037
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =  584.54 sec. (448563.06 ticks)
+CPX0000    Real time             =  574.47 sec. (448563.06 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =  584.54 sec. (448563.06 ticks)
+CPX0000  Total (root+branch&cut) =  574.47 sec. (448563.06 ticks)
 Status: 3000
 Primal Bound: -350.816
 Dual Bound  : -350.816

@@ -14,13 +14,13 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         DCAP_2_4_3_500
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 30443 ENDATA
-Read SMPS files: 0.013 sec.
+Read SMPS files: 0.015434 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
 CPX0000  CPXPARAM_Threads                                 36
 CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
-CPX0000  Found incumbent of value 9031.313116 after 0.01 sec. (1.02 ticks)
+CPX0000  Found incumbent of value 9031.313116 after 0.00 sec. (1.02 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  MIP Presolve eliminated 1082 rows and 3072 columns.
 CPX0000  Reduced MIP has 7924 rows, 14940 columns, and 30834 nonzeros.
@@ -75,7 +75,7 @@ CPX0000        0     0     2573.9468   543     2575.8790     Cuts: 317     8015 
 CPX0000  *     0+    0                         2574.8010     2573.9468             0.03%
 CPX0000  *     0+    0                         2574.6514     2573.9468             0.03%
 CPX0000        0     2     2573.9468   543     2574.6514     2573.9468     8015    0.03%
-CPX0000  Elapsed time = 3.48 sec. (2171.42 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 3.47 sec. (2171.42 ticks, tree = 0.01 MB
 CPX0000  *    17+    1                         2574.6494     2573.9468             0.03%
 CPX0000  *    40+    2                         2574.6464     2573.9472             0.03%
 CPX0000  *    91+   13                         2574.6439     2573.9487             0.03%
@@ -106,10 +106,10 @@ CPX0000  Lift and project cuts applied:  19
 CPX0000  Gomory fractional cuts applied:  373
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    3.31 sec. (2142.51 ticks)
+CPX0000    Real time             =    3.28 sec. (2142.51 ticks)
 CPX0000  Parallel b&c, 36 threads:
-CPX0000    Real time             =    4.64 sec. (2765.91 ticks)
-CPX0000    Sync time (average)   =    1.24 sec.
+CPX0000    Real time             =    4.66 sec. (2765.91 ticks)
+CPX0000    Sync time (average)   =    1.19 sec.
 CPX0000    Wait time (average)   =    0.08 sec.
 CPX0000                            ------------
 CPX0000  Total (root+branch&cut) =    7.94 sec. (4908.42 ticks)

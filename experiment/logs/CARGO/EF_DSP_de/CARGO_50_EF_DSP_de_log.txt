@@ -14,19 +14,19 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         CARGO_50
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 8637 ENDATA
-Read SMPS files: 0.055695 sec.
+Read SMPS files: 0.053175 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
 CPX0000  CPXPARAM_Threads                                 36
 CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
-CPX0000  Found incumbent of value 155412.154638 after 0.03 sec. (9.62 ticks)
+CPX0000  Found incumbent of value 155412.154638 after 0.01 sec. (9.62 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  MIP Presolve eliminated 101418 rows and 102700 columns.
 CPX0000  MIP Presolve modified 113 coefficients.
 CPX0000  Reduced MIP has 4214 rows, 25552 columns, and 76414 nonzeros.
 CPX0000  Reduced MIP has 0 binaries, 52 generals, 0 SOSs, and 0 indicators.
-CPX0000  Presolve time = 0.11 sec. (113.80 ticks)
+CPX0000  Presolve time = 0.10 sec. (113.80 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  Reduced MIP has 4214 rows, 25552 columns, and 76414 nonzeros.
 CPX0000  Reduced MIP has 0 binaries, 52 generals, 0 SOSs, and 0 indicators.
@@ -34,7 +34,7 @@ CPX0000  Presolve time = 0.03 sec. (25.52 ticks)
 CPX0000  MIP emphasis: balance optimality and feasibility.
 CPX0000  MIP search method: dynamic search.
 CPX0000  Parallel mode: deterministic, using up to 36 threads.
-CPX0000  Root relaxation solution time = 1.00 sec. (594.92 ticks)
+CPX0000  Root relaxation solution time = 1.12 sec. (594.92 ticks)
 CPX0000
 CPX0000          Nodes                                         Cuts/
 CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
@@ -55,7 +55,7 @@ CPX0000  *     0+    0                          806.1042      766.8658          
 CPX0000        0     0      766.8697    21      806.1042  MIRcuts: 211    10063    4.87%
 CPX0000  *     0+    0                          799.6557      766.8697             4.10%
 CPX0000        0     2      766.8697    21      799.6557      766.8697    10063    4.10%
-CPX0000  Elapsed time = 11.30 sec. (8610.99 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 10.93 sec. (8610.99 ticks, tree = 0.01 MB
 CPX0000        1     3      767.2935    20      799.6557      766.8787    13015    4.10%
 CPX0000        3     3      767.3681    20      799.6557      766.8787    13945    4.10%
 CPX0000        5     5      769.8924    18      799.6557      766.8787    19131    4.10%
@@ -67,7 +67,7 @@ CPX0000  *    34+   13                          799.5807      767.6651          
 CPX0000       52    21      771.2988    14      799.5807      767.6651    50593    3.99%
 CPX0000       94    16      778.1588    10      799.5807      768.0646    43995    3.94%
 CPX0000      303   202      783.8759     3      799.5807      768.4867   392290    3.89%
-CPX0000  Elapsed time = 16.48 sec. (12184.25 ticks, tree = 0.49 MB
+CPX0000  Elapsed time = 15.95 sec. (12184.25 ticks, tree = 0.49 MB
 CPX0000      657   353      771.2714    12      799.5807      768.4867   662647    3.89%
 CPX0000  *   696+  349                          799.4585      768.4867             3.87%
 CPX0000      996   508      787.4774     2      799.4585      768.4867   941685    3.87%
@@ -81,7 +81,7 @@ CPX0000     3035  1738      776.9560     8      798.9933      770.1697  2783766 
 CPX0000     3398  1826      779.8283     9      798.9933      770.1697  2921493    3.61%
 CPX0000     3831  2242      778.4820     8      798.9933      770.1930  3499679    3.60%
 CPX0000     4207  2447      777.9656     5      798.9933      770.1930  3822736    3.60%
-CPX0000  Elapsed time = 32.55 sec. (21742.37 ticks, tree = 11.65 MB
+CPX0000  Elapsed time = 32.20 sec. (21742.37 ticks, tree = 11.58 MB
 CPX0000     4533  2597      779.9282     5      798.9933      771.0572  4060200    3.50%
 CPX0000     4825  2701      791.9286     6      798.9933      771.2381  4209075    3.47%
 CPX0000     4985  2862      784.3754     8      798.9933      771.5534  4428088    3.43%
@@ -92,7 +92,7 @@ CPX0000     5865  3203      779.0188     9      798.9933      772.6938  4936622 
 CPX0000     6305  3373      780.1080    14      798.9933      772.7110  5238677    3.29%
 CPX0000     6751  3434      785.1583     9      798.9933      774.3406  5372368    3.09%
 CPX0000     7247  3686      778.6301    11      798.9933      774.4126  5788424    3.08%
-CPX0000  Elapsed time = 47.91 sec. (31329.23 ticks, tree = 21.57 MB
+CPX0000  Elapsed time = 47.46 sec. (31329.23 ticks, tree = 21.57 MB
 CPX0000     7818  4148      783.0908    11      798.9933      774.5415  6597499    3.06%
 CPX0000     8326  4214      791.0326     7      798.9933      774.8987  6713911    3.02%
 CPX0000     8565  4348      794.3231     3      798.9933      774.8987  6934100    3.02%
@@ -103,7 +103,7 @@ CPX0000     8591   230      770.4927    17      798.9933      775.0661  7646214 
 CPX0000     8625    42      772.8546    10      798.9933      775.0661  7704462    2.99%
 CPX0000     8802    19      770.6678    17      798.9933      775.0661  7658940    2.99%
 CPX0000     9040    69      782.5113    13      798.9933      775.0661  7766127    2.99%
-CPX0000  Elapsed time = 84.70 sec. (60373.60 ticks, tree = 1.16 MB
+CPX0000  Elapsed time = 84.15 sec. (60373.60 ticks, tree = 1.17 MB
 CPX0000     9391   543      774.5369    16      798.9933      775.0661  8405572    2.99%
 CPX0000     9864   749      773.8499     7      798.9933      775.0661  8690528    2.99%
 CPX0000    10383  1120      795.6317     6      798.9933      775.0661  9098151    2.99%
@@ -114,7 +114,7 @@ CPX0000    12404  1941      781.9827     8      798.9933      775.0661 10207052 
 CPX0000    12893  2221      781.0280    10      798.9933      775.0661 10613494    2.99%
 CPX0000    13396  2485      779.2579     5      798.9933      775.0661 11085060    2.99%
 CPX0000    13926  2712      779.2133     7      798.9933      775.0661 11459356    2.99%
-CPX0000  Elapsed time = 99.32 sec. (69927.86 ticks, tree = 13.37 MB
+CPX0000  Elapsed time = 98.70 sec. (69927.86 ticks, tree = 13.37 MB
 CPX0000    14519  3033    infeasible            798.9933      775.0661 11983624    2.99%
 CPX0000    15179  3169      784.1287     7      798.9933      775.3242 12241843    2.96%
 CPX0000    15784  3263      781.1816    10      798.9933      775.4762 12401936    2.94%
@@ -125,7 +125,7 @@ CPX0000    18358  4107      784.3552     9      798.9933      776.8440 13957704 
 CPX0000    18962  4363      782.0972    12      798.9933      776.9958 14494802    2.75%
 CPX0000    19640  4455      795.1738    12      798.9933      777.2611 14725766    2.72%
 CPX0000    20241  4698      780.3018    12      798.9933      777.8400 15452835    2.65%
-CPX0000  Elapsed time = 114.00 sec. (79479.42 ticks, tree = 25.89 MB
+CPX0000  Elapsed time = 113.32 sec. (79479.42 ticks, tree = 25.89 MB
 CPX0000    20891  4735        cutoff            798.9933      777.9974 15624374    2.63%
 CPX0000    21495  4964      798.1112    12      798.9933      778.3281 16311990    2.59%
 CPX0000    22170  5036      784.2892    14      798.9933      778.6458 16461609    2.55%
@@ -136,7 +136,7 @@ CPX0000    25080  5472        cutoff            798.9933      779.7336 18193713 
 CPX0000    25797  5619      789.8638     4      798.9933      780.0014 18925820    2.38%
 CPX0000    26506  5703      790.6374    10      798.9933      780.2351 19167997    2.35%
 CPX0000    27210  5809      783.1603     6      798.9933      780.5676 19571658    2.31%
-CPX0000  Elapsed time = 129.00 sec. (89028.63 ticks, tree = 32.90 MB
+CPX0000  Elapsed time = 128.29 sec. (89028.63 ticks, tree = 32.90 MB
 CPX0000    27940  5864      789.1652     6      798.9933      780.8504 19954839    2.27%
 CPX0000    28691  5946      785.0124     6      798.9933      781.1455 20389288    2.23%
 CPX0000    29382  6009      786.3128    13      798.9933      781.3622 20784345    2.21%
@@ -147,7 +147,7 @@ CPX0000    32256  6081      785.3477     7      798.9933      782.5123 22675475 
 CPX0000    32966  6080        cutoff            798.9933      782.7662 22844751    2.03%
 CPX0000    33654  6041      790.8625     8      798.9933      783.1784 23674977    1.98%
 CPX0000    34301  6014      789.3637     6      798.9933      783.3805 23998818    1.95%
-CPX0000  Elapsed time = 144.29 sec. (98581.74 ticks, tree = 32.97 MB
+CPX0000  Elapsed time = 143.42 sec. (98581.74 ticks, tree = 32.97 MB
 CPX0000    34981  5968      791.6472     6      798.9933      783.7075 24513821    1.91%
 CPX0000    35709  5968      787.1344    10      798.9933      784.0656 24565494    1.87%
 CPX0000    36406  5833      785.0000    10      798.9933      784.4140 25488717    1.82%
@@ -158,7 +158,7 @@ CPX0000    39270  5429        cutoff            798.9933      785.9432 27037398 
 CPX0000    39949  5299      793.1247    14      798.9933      786.2424 27499487    1.60%
 CPX0000    40617  4924      798.8706     9      798.9933      786.9716 28275169    1.50%
 CPX0000    41307  4883      794.6786     9      798.9933      787.4133 28398725    1.45%
-CPX0000  Elapsed time = 160.39 sec. (108128.57 ticks, tree = 23.39 MB
+CPX0000  Elapsed time = 159.55 sec. (108128.57 ticks, tree = 23.39 MB
 CPX0000    41987  4584        cutoff            798.9933      787.7261 28955647    1.41%
 CPX0000    42644  4295        cutoff            798.9933      788.5697 29439403    1.30%
 CPX0000    43382  4053      798.5240     8      798.9933      789.3250 29833857    1.21%
@@ -174,13 +174,13 @@ CPX0000  Lift and project cuts applied:  12
 CPX0000  Gomory fractional cuts applied:  5
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =   10.33 sec. (8614.13 ticks)
+CPX0000    Real time             =   10.17 sec. (8614.13 ticks)
 CPX0000  Parallel b&c, 36 threads:
-CPX0000    Real time             =  169.02 sec. (108259.76 ticks)
-CPX0000    Sync time (average)   =   28.08 sec.
+CPX0000    Real time             =  168.07 sec. (108259.76 ticks)
+CPX0000    Sync time (average)   =   27.65 sec.
 CPX0000    Wait time (average)   =    0.28 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =  179.34 sec. (116873.90 ticks)
+CPX0000  Total (root+branch&cut) =  178.24 sec. (116873.90 ticks)
 Status: 3000
 Primal Bound: 798.993
 Dual Bound  : 798.993

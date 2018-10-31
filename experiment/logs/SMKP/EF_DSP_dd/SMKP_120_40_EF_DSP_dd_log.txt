@@ -2,24 +2,6 @@ Creating DSP environment
 Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SMKP/EF/SMKP_120_40
 Coin0001I At line 1 NAME          SMKP_120_40
 Coin0001I At line 2 ROWS
-Coin0001I At line 59 COLUMNS
-Coin0001I At line 1 NAME          SMKP_120_40
-Coin0001I At line 2 ROWS
-Coin0001I At line 59 COLUMNS
-Coin0001I At line 1 NAME          SMKP_120_40
-Coin0001I At line 2 ROWS
-Coin0001I At line 59 COLUMNS
-Coin0001I At line 1 NAME          SMKP_120_40
-Coin0001I At line 2 ROWS
-Coin0001I At line 59 COLUMNS
-Coin0001I At line 1 NAME          SMKP_120_40
-Coin0001I At line 2 ROWS
-Coin0001I At line 1 NAME          SMKP_120_40
-Coin0001I At line 2 ROWS
-Coin0001I At line 59 COLUMNS
-Coin0001I At line 1 NAME          SMKP_120_40
-Coin0001I At line 2 ROWS
-Coin0001I At line 59 COLUMNS
 Coin0001I At line 1 NAME          SMKP_120_40
 Coin0001I At line 2 ROWS
 Coin0001I At line 59 COLUMNS
@@ -53,6 +35,12 @@ Coin0001I At line 2 ROWS
 Coin0001I At line 59 COLUMNS
 Coin0001I At line 1 NAME          SMKP_120_40
 Coin0001I At line 2 ROWS
+Coin0001I At line 59 COLUMNS
+Coin0001I At line 1 NAME          SMKP_120_40
+Coin0001I At line 2 ROWS
+Coin0001I At line 1 NAME          SMKP_120_40
+Coin0001I At line 2 ROWS
+Coin0001I At line 59 COLUMNS
 Coin0001I At line 1 NAME          SMKP_120_40
 Coin0001I At line 2 ROWS
 Coin0001I At line 59 COLUMNS
@@ -95,9 +83,6 @@ Coin0001I At line 2 ROWS
 Coin0001I At line 59 COLUMNS
 Coin0001I At line 1 NAME          SMKP_120_40
 Coin0001I At line 2 ROWS
-Coin0001I At line 1 NAME          SMKP_120_40
-Coin0001I At line 2 ROWS
-Coin0001I At line 59 COLUMNS
 Coin0001I At line 59 COLUMNS
 Coin0001I At line 1 NAME          SMKP_120_40
 Coin0001I At line 2 ROWS
@@ -108,53 +93,269 @@ Coin0001I At line 59 COLUMNS
 Coin0001I At line 1 NAME          SMKP_120_40
 Coin0001I At line 2 ROWS
 Coin0001I At line 59 COLUMNS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 7292 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 NAME          SMKP_120_40
+Coin0001I At line 2 ROWS
+Coin0001I At line 59 COLUMNS
+Coin0001I At line 1 NAME          SMKP_120_40
+Coin0001I At line 2 ROWS
+Coin0001I At line 59 COLUMNS
+Coin0001I At line 1 NAME          SMKP_120_40
+Coin0001I At line 2 ROWS
+Coin0001I At line 59 COLUMNS
+Coin0001I At line 1 NAME          SMKP_120_40
+Coin0001I At line 2 ROWS
+Coin0001I At line 59 COLUMNS
+Coin0001I At line 1 NAME          SMKP_120_40
+Coin0001I At line 2 ROWS
+Coin0001I At line 59 COLUMNS
 Coin0001I At line 6902 RHS
 Coin0001I At line 6931 BOUNDS
 Coin0001I At line 7292 ENDATA
 Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
 Coin0001I At line 6902 RHS
 Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
 Coin0001I At line 7292 ENDATA
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
 Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 6902 RHS
 Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
 Coin0001I At line 5 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 7292 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+
+
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
+
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 7292 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
 Coin0001I At line 6902 RHS
 Coin0001I At line 6931 BOUNDS
+
 Coin0001I At line 7292 ENDATA
+
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 7292 ENDATA
+
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 5 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+
+
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 7292 ENDATA
+
+Coin0001I At line 7292 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 6902 RHS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 5 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+
+
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 7292 ENDATA
+
+Coin0001I At line 5 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 7292 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+
+Coin0001I At line 6931 BOUNDS
+
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 7292 ENDATA
+
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+
 Coin0001I At line 7292 ENDATA
 Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
 Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
 Coin0001I At line 7292 ENDATA
+Coin0001I At line 7292 ENDATA
 Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 6902 RHS
+Coin0001I At line 6931 BOUNDS
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 5 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 7292 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 5 ENDATA
+Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
@@ -164,236 +365,35 @@ Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
-
-
-
-
-Coin0001I At line 5 ENDATA
-
-
-
-Coin0001I At line 6902 RHS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 7292 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
 Coin0001I At line 5 ENDATA
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
 
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-
-Coin0001I At line 6931 BOUNDS
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 5 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 5 ENDATA
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-Coin0001I At line 7292 ENDATA
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 5 ENDATA
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
 
 Coin0001I At line 5 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 6902 RHS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 5 ENDATA
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 5 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 5 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 7292 ENDATA
-
-Coin0001I At line 5 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-
-
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-
-
-Coin0001I At line 6902 RHS
-Coin0001I At line 5 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-Coin0001I At line 7292 ENDATA
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 6902 RHS
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 7292 ENDATA
-Coin0001I At line 7292 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 7292 ENDATA
-
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
-Coin0001I At line 6902 RHS
-Coin0001I At line 6931 BOUNDS
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SMKP_120_40
-Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
 Coin0001I At line 5 ENDATA
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
 
-Coin0001I At line 5 ENDATA
-Coin0001I At line 7292 ENDATA
-Coin0002I Problem SMKP_120_40 has 55 rows, 360 columns and 13200 elements
-
-
-
 Coin0001I At line 1 TIME          SMKP_120_40
 Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SMKP_120_40
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
 
 Coin0001I At line 5 ENDATA
+
+
+
+
+
+
 
 
 Coin0001I At line 1 STOCH         SMKP_120_40
@@ -469,78 +469,78 @@ Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 1 STOCH         SMKP_120_40
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.010712 sec.
+Read SMPS files: Coin0001I At line 4684 ENDATA
+0.014179 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009324 sec.
+Read SMPS files: 0.011653 sec.
+Read SMPS files: 0.012293 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.01013 sec.
+Read SMPS files: 0.009403 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.008046 sec.
+Read SMPS files: 0.010816 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.010431 sec.
+Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.005426 sec.
+Read SMPS files: 0.008235 sec.
+Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+Read SMPS files: Coin0001I At line 4684 ENDATA
+0.010308 sec.
+Read SMPS files: 0.011689 sec.
+Read SMPS files: 0.007327 sec.
+Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.005328 sec.
+Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.008139 sec.
+Read SMPS files: 0.00811 sec.
+Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+Read SMPS files: Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.005082 sec.
+0.013717 sec.
+Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.007499 sec.
+Read SMPS files: Coin0001I At line 4684 ENDATA
+0.010058 sec.
+Read SMPS files: 0.009101 sec.
+Read SMPS files: 0.011685 sec.
+Read SMPS files: Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+0.012502 sec.
+Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+Read SMPS files: Read SMPS files: 0.009359 sec.
+Coin0001I At line 4684 ENDATA
+0.008 sec.
+Read SMPS files: 0.01364 sec.Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.012295 sec.
+
+Read SMPS files: Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.007301 sec.
+0.009474 sec.
+Read SMPS files: 0.009531 sec.
+Coin0001I At line 4684 ENDATA
+Coin0001I At line 4684 ENDATA
+Read SMPS files: 0.008161 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_dd.txt
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.006275 sec.
+Read SMPS files: 0.011359 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.008236 sec.
+Read SMPS files: 0.010875 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.006217 sec.
+Read SMPS files: 0.008478 sec.
+Read SMPS files: 0.010559 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009522 sec.
+Read SMPS files: 0.011358 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.013464 sec.
+Read SMPS files: 0.010295 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.013958 sec.
+Read SMPS files: 0.012212 sec.
 Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.01 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.010289 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009658 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.00513 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.008387 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.011292 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.006244 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.005202 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009301 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.011391 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.008088 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.006226 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.008131 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.007329 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009625 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009148 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.008439 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.012284 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009375 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.0084 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.010433 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.010442 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009384 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.009239 sec.
-Coin0001I At line 4684 ENDATA
-Read SMPS files: 0.010124 sec.
+Read SMPS files: 0.008295 sec.
 
 DUAL DECOMPOSITION ITERATION INFORMATION:
 * master   = objective function value of the master problem.
@@ -552,15 +552,14 @@ DUAL DECOMPOSITION ITERATION INFORMATION:
 
   iter         master        primobj        dualobj  a.gap(%)  d.gap(%)    time
  B   0  +9.916550e+03  +9.666700e+03  +9.660550e+03      2.58      0.06   613.2
-     1  +9.724550e+03  +9.666700e+03  +9.660550e+03      0.66      0.06  1232.3
-     2  +9.724550e+03  +9.666700e+03  +9.660550e+03      0.66      0.06  1850.9
-     3  +9.718504e+03  +9.666700e+03  +9.660550e+03      0.60      0.06  2360.8
-     4  +9.708606e+03  +9.666700e+03  +9.660550e+03      0.49      0.06  2975.8
-     5  +9.703274e+03  +9.666700e+03  +9.660550e+03      0.44      0.06  3590.8
+     1  +9.724550e+03  +9.666700e+03  +9.660550e+03      0.66      0.06  1232.5
+     2  +9.724531e+03  +9.666700e+03  +9.660550e+03      0.66      0.06  1851.6
+     3  +9.711738e+03  +9.666700e+03  +9.660550e+03      0.53      0.06  2468.3
+     4  +9.701369e+03  +9.666700e+03  +9.660550e+03      0.42      0.06  3082.3
 The time limit (3600.00) is reached.
- D   6  +9.703274e+03  +9.666700e+03  +1.075666e+04     10.86     11.28  3600.7
-Master timing results: total 3600.76, solve 0.45, idle 3501.50
+     5  +9.701369e+03  +9.666700e+03  +9.660550e+03      0.42      0.06  3600.7
+Master timing results: total 3600.71, solve 0.28, idle 3518.34
 Status: 3004
 Primal Bound: 9666.7
-Dual Bound  : 10756.7
+Dual Bound  : 9660.55
 Deleting DSP environment

@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         SSLP_10_45_5
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 1874 ENDATA
-Read SMPS files: 0.000994 sec.
+Read SMPS files: 0.002092 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -53,7 +53,7 @@ CPX0000        0     0     -325.9911   294     -265.0000     Cuts: 138      549 
 CPX0000        0     0     -307.5740   375     -265.0000     Cuts: 138      800   16.07%
 CPX0000  *     0+    0                         -271.2000     -307.5740            13.41%
 CPX0000        0     0        cutoff           -271.2000     -271.2000     1041    0.00%
-CPX0000  Elapsed time = 0.43 sec. (101.66 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 0.64 sec. (101.66 ticks, tree = 0.01 MB
 CPX0000
 CPX0000  Clique cuts applied:  223
 CPX0000  Cover cuts applied:  129
@@ -63,13 +63,13 @@ CPX0000  Lift and project cuts applied:  2
 CPX0000  Gomory fractional cuts applied:  2
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    0.43 sec. (101.80 ticks)
+CPX0000    Real time             =    0.64 sec. (101.80 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    0.43 sec. (101.80 ticks)
+CPX0000  Total (root+branch&cut) =    0.64 sec. (101.80 ticks)
 Status: 3000
 Primal Bound: -271.2
 Dual Bound  : -271.2

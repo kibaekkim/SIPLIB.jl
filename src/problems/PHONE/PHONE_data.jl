@@ -55,7 +55,7 @@ function PHONEData(nS::Int, seed::Int=1)::PHONEData
         return dict
     end
 
-    srand(seed)
+    Random.seed!(seed)
     data = PHONEData()
 
     # ---------------------------------------------

@@ -212,7 +212,7 @@ function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd
     nrows, ncols = size(mat)
     if objsense == :Max
         obj *= -1
-        warn("The problem is converted to minimization problem.")
+        @warn("The problem is converted to minimization problem.")
     end
 
     # .mps file
@@ -262,7 +262,7 @@ function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd
                 end
                 @printf(fp, "\n")
             else # abs(obj[j]) == 0 && length(nzrange(mat,j)) == 0
-                println("Warning: The JuMP model contains unused variable. Remove this to reduce file size.")
+                println("@warning: The JuMP model contains unused variable. Remove this to reduce file size.")
     #                @printf(fp, "    %-8s", "VAR"*string(j))
                 @printf(fp, "    %-8s", cname[j])
                 @printf(fp, "  %-8s", "OBJ")
@@ -384,7 +384,7 @@ function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd
                 end
                 @printf(fp, "\n")
             else # abs(obj[j]) == 0 && length(nzrange(mat,j)) == 0
-                println("Warning: The JuMP model contains unused variable. Remove this to reduce file size.")
+                println("@warning: The JuMP model contains unused variable. Remove this to reduce file size.")
                 @printf(fp, "    %-8s", "VAR"*string(j))
                 @printf(fp, "  %-8s", "OBJ")
                 @printf(fp, "  %-12f", 0)
@@ -648,7 +648,7 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
 
     # check if model is stochastic (or structured) model
     if in(:Stochastic, m.ext.keys) == false
-        warn("Not a stochastic model.")
+        @warn("Not a stochastic model.")
         return
     end
 
@@ -673,7 +673,7 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
     end
 
     if splice == true
-        warn("Scenario data in JuMP.Model object was spliced. Set the optional argument 'splice=false' if you want to re-use the object.")
+        @warn("Scenario data in JuMP.Model object was spliced. Set the optional argument 'splice=false' if you want to re-use the object.")
     end
 
     return
@@ -688,7 +688,7 @@ function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::Str
 
     # check if model is stochastic (or structured) model
     if !haskey(m.ext, :Stochastic)
-        warn("Not a stochastic model.")
+        @warn("Not a stochastic model.")
         return
     end
 
@@ -703,7 +703,7 @@ function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::Str
     # Check if m is a StructJuMP model
     if !haskey(m.ext, :Stochastic)
         JuMP.writeMPS(m, "$FILE_NAME.mps")
-        warn("This is not a stochastic model. $FILE_NAME.mps is generated.")
+        @warn("This is not a stochastic model. $FILE_NAME.mps is generated.")
         return
     end
 
@@ -781,7 +781,7 @@ function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::Str
     println("done")
 
     if splice == true
-        warn("Scenario data in JuMP.Model object was spliced. Set the keyword argument 'splice=false' if you want to re-use the object.")
+        @warn("Scenario data in JuMP.Model object was spliced. Set the keyword argument 'splice=false' if you want to re-use the object.")
     end
 
     return

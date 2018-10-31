@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         DCAP_2_3_3_500
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 22958 ENDATA
-Read SMPS files: 0.010215 sec.
+Read SMPS files: 0.012286 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -30,7 +30,7 @@ CPX0000  Probing time = 0.01 sec. (7.07 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  Reduced MIP has 6616 rows, 11208 columns, and 24550 nonzeros.
 CPX0000  Reduced MIP has 11202 binaries, 0 generals, 0 SOSs, and 0 indicators.
-CPX0000  Presolve time = 0.02 sec. (15.71 ticks)
+CPX0000  Presolve time = 0.03 sec. (15.71 ticks)
 CPX0000  Probing time = 0.01 sec. (7.07 ticks)
 CPX0000  Clique table members: 7571.
 CPX0000  MIP emphasis: balance optimality and feasibility.

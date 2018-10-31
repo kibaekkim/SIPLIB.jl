@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         DCAP_3_4_2_300
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 17047 ENDATA
-Read SMPS files: 0.010305 sec.
+Read SMPS files: 0.009 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -61,7 +61,7 @@ CPX0000  *     0+    0                         1928.5407     1922.4831          
 CPX0000  *     0+    0                         1926.7972     1922.4831             0.22%
 CPX0000  *     0+    0                         1926.6180     1922.4831             0.21%
 CPX0000        0     2     1922.4831  1283     1926.6180     1922.7571     7342    0.20%
-CPX0000  Elapsed time = 2.37 sec. (1515.55 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 2.60 sec. (1515.55 ticks, tree = 0.01 MB
 CPX0000  *    10+    5                         1926.5663     1922.7571             0.20%
 CPX0000  *    54+    2                         1926.5591     1922.7571             0.20%
 CPX0000  *    68+   27                         1926.2569     1922.7571             0.18%
@@ -95,7 +95,7 @@ CPX0000  * 10499+   35                         1925.0576     1923.4573          
 CPX0000    10824  1022     1924.8825   513     1925.0576     1923.4573   258837    0.08%
 CPX0000    13325  2574     1923.7483   675     1925.0576     1923.4577   295138    0.08%
 CPX0000    25726 12012     1924.7829   263     1925.0576     1923.5761   435934    0.08%
-CPX0000  Elapsed time = 12.31 sec. (8850.61 ticks, tree = 41.98 MB
+CPX0000  Elapsed time = 12.51 sec. (8850.61 ticks, tree = 41.98 MB
 CPX0000  * 31481 17372      integral     0     1924.8868     1923.5868   484771    0.07%
 CPX0000  * 31674+12842                         1924.8480     1923.5868             0.07%
 CPX0000  * 31969+12840                         1924.7710     1923.5935             0.06%
@@ -140,13 +140,13 @@ CPX0000  Lift and project cuts applied:  17
 CPX0000  Gomory fractional cuts applied:  80
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    2.30 sec. (1495.90 ticks)
+CPX0000    Real time             =    2.54 sec. (1495.90 ticks)
 CPX0000  Parallel b&c, 36 threads:
-CPX0000    Real time             =   21.83 sec. (15356.52 ticks)
-CPX0000    Sync time (average)   =    4.71 sec.
+CPX0000    Real time             =   22.01 sec. (15356.52 ticks)
+CPX0000    Sync time (average)   =    4.53 sec.
 CPX0000    Wait time (average)   =    0.12 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =   24.13 sec. (16852.43 ticks)
+CPX0000  Total (root+branch&cut) =   24.54 sec. (16852.43 ticks)
 Status: 3000
 Primal Bound: 1923.84
 Dual Bound  : 1923.84

@@ -2,15 +2,6 @@ Creating DSP environment
 Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SSLP/EF/SSLP_10_50_1000
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
-Coin0001I At line 1 NAME          SSLP_10_50_1000
-Coin0001I At line 2 ROWS
-Coin0001I At line 1 NAME          SSLP_10_50_1000
-Coin0001I At line 2 ROWS
-Coin0001I At line 1 NAME          SSLP_10_50_1000
-Coin0001I At line 2 ROWS
-Coin0001I At line 65 COLUMNS
-Coin0001I At line 65 COLUMNS
-Coin0001I At line 65 COLUMNS
 Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
@@ -35,12 +26,12 @@ Coin0001I At line 2 ROWS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
-Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
+Coin0001I At line 65 COLUMNS
 Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
@@ -69,14 +60,11 @@ Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
+Coin0001I At line 1079 RHS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
-Coin0001I At line 1079 RHS
 Coin0001I At line 65 COLUMNS
 Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1 NAME          SSLP_10_50_1000
-Coin0001I At line 2 ROWS
-Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
@@ -90,6 +78,12 @@ Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
+Coin0001I At line 1 NAME          SSLP_10_50_1000
+Coin0001I At line 2 ROWS
+Coin0001I At line 65 COLUMNS
+Coin0001I At line 65 COLUMNS
+Coin0001I At line 1 NAME          SSLP_10_50_1000
+Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
 Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
@@ -102,47 +96,6 @@ Coin0001I At line 65 COLUMNS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1 NAME          SSLP_10_50_1000
-Coin0001I At line 2 ROWS
-Coin0001I At line 1079 RHS
-Coin0001I At line 65 COLUMNS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
@@ -154,30 +107,8 @@ Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
 Coin0001I At line 65 COLUMNS
 Coin0001I At line 1079 RHS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
 Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
@@ -187,61 +118,45 @@ Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
 Coin0001I At line 1622 ENDATA
 Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1079 RHS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1079 RHS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
 Coin0001I At line 1622 ENDATA
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1079 RHS
 Coin0001I At line 1 NAME          SSLP_10_50_1000
 Coin0001I At line 2 ROWS
 Coin0001I At line 65 COLUMNS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 5 ENDATA
 Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1622 ENDATA
-Coin0001I At line 1622 ENDATA
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 5 ENDATA
 Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
-Coin0001I At line 1079 RHS
-Coin0001I At line 1111 BOUNDS
 Coin0001I At line 1622 ENDATA
 Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
-Coin0001I At line 1622 ENDATA
-Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
-Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 NAME          SSLP_10_50_1000
+Coin0001I At line 2 ROWS
+Coin0001I At line 65 COLUMNS
 Coin0001I At line 1622 ENDATA
 Coin0001I At line 1622 ENDATA
 Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
@@ -250,99 +165,94 @@ Coin0001I At line 1622 ENDATA
 Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 Coin0001I At line 1079 RHS
 Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1079 RHS
+Coin0001I At line 1622 ENDATA
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1 NAME          SSLP_10_50_1000
+Coin0001I At line 2 ROWS
+Coin0001I At line 65 COLUMNS
+Coin0001I At line 1111 BOUNDS
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
 Coin0001I At line 1622 ENDATA
 Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 5 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1622 ENDATA
+Coin0001I At line 1622 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 Coin0001I At line 5 ENDATA
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
+Coin0001I At line 1622 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1079 RHS
+Coin0001I At line 1622 ENDATA
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 5 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 
 
 
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
 
-Coin0001I At line 5 ENDATA
-
-
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
-
-
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
 
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
@@ -351,50 +261,140 @@ Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+
+
+Coin0001I At line 1 NAME          SSLP_10_50_1000
+Coin0001I At line 2 ROWS
+Coin0001I At line 65 COLUMNS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1079 RHS
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1622 ENDATA
+
+
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
 
 Coin0001I At line 5 ENDATA
 
 
+
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
 
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
-
 Coin0001I At line 5 ENDATA
 Coin0001I At line 5 ENDATA
-
+Coin0001I At line 5 ENDATA
 Coin0001I At line 5 ENDATA
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 5 ENDATA
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-Coin0001I At line 1 TIME          SSLP_10_50_1000
-Coin0001I At line 2 PERIODS       IMPLICIT
-
-Coin0001I At line 5 ENDATA
-
-Coin0001I At line 5 ENDATA
-Coin0001I At line 5 ENDATA
-
-
-
-
 
 
 Coin0001I At line 1 TIME          SSLP_10_50_1000
 Coin0001I At line 2 PERIODS       IMPLICIT
 Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_1000 has 61 rows, 520 columns and 1011 elements
+
+Coin0001I At line 5 ENDATA
+
+
+Coin0001I At line 1 TIME          SSLP_10_50_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+
+
+
+
+
+
 
 Coin0001I At line 1 STOCH         SSLP_10_50_1000
 Coin0001I At line 2 SCENARIOS     DISCRETE
@@ -469,78 +469,78 @@ Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 1 STOCH         SSLP_10_50_1000
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.247623 sec.
+Read SMPS files: 0.230739 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.254906 sec.
+Read SMPS files: 0.254647 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.247936 sec.
+Read SMPS files: 0.266827 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.256461 sec.
+Read SMPS files: 0.263832 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.247217 sec.
+Read SMPS files: 0.242535 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.251637 sec.
-Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_dd.txt
+Read SMPS files: 0.265351 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.250621 sec.
+Read SMPS files: 0.245923 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.252655 sec.
+Read SMPS files: 0.26116 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.258195 sec.
+Read SMPS files: 0.247945 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.259203 sec.
+Read SMPS files: 0.258714 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.249229 sec.
+Read SMPS files: 0.260496 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.261152 sec.
+Read SMPS files: 0.259871 sec.
 Coin0001I At line 506716 ENDATA
+Read SMPS files: 0.253149 sec.
 Coin0001I At line 506716 ENDATA
-Coin0001I At line 506716 ENDATA
-Coin0001I At line 506716 ENDATA
-Read SMPS files: Read SMPS files: 0.252135 sec.
-Read SMPS files: 0.261423 sec.
-Read SMPS files: 0.254501 sec.
-0.267812 sec.
-Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.256009 sec.
-Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.272641 sec.
-Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.252547 sec.
-Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.256855 sec.Coin0001I At line 506716 ENDATA
-Coin0001I At line 506716 ENDATA
-
-Read SMPS files: 0.259138 sec.
-Read SMPS files: 0.251398Coin0001I At line 506716 ENDATA
+Read SMPS files: 0.25501Coin0001I At line 506716 ENDATA
  sec.
+Read SMPS files: Coin0001I At line 506716 ENDATA
+0.263478 sec.
+Read SMPS files: 0.245163 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.266568 sec.
+Coin0001I At line 506716 ENDATA
+Read SMPS files: 0.238387 sec.
+Read SMPS files: 0.250962 sec.Coin0001I At line 506716 ENDATA
+
+Read SMPS files: 0.261359 sec.
 Coin0001I At line 506716 ENDATA
 Coin0001I At line 506716 ENDATA
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.255061 sec.
+Read SMPS files: 0.258972 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: Read SMPS files: 0.252312 sec.
+Read SMPS files: 0.265174 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.266327 sec.
-0.270255 sec.
-Read SMPS files: Read SMPS files: 0.257393 sec.
-0.251585 sec.
+Coin0001I At line 506716 ENDATA
+Read SMPS files: 0.262931 sec.
+Read SMPS files: Read SMPS files: 0.254355 sec.
+Coin0001I At line 506716 ENDATA
+Read SMPS files: 0.262867 sec.
+0.262619 sec.Read SMPS files: 0.262996 sec.
+
+Coin0001I At line 506716 ENDATA
+Coin0001I At line 506716 ENDATA
+Read SMPS files: 0.271916 sec.Read SMPS files: 
+0.276082 sec.
 Coin0001I At line 506716 ENDATA
 Read SMPS files: Coin0001I At line 506716 ENDATA
-0.256762 sec.
-Read SMPS files: 0.256221 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.250544 sec.Coin0001I At line 506716 ENDATA
-
-Read SMPS files: 0.264445 sec.
+0.248205Coin0001I At line 506716 ENDATA
+ sec.
+Read SMPS files: Read SMPS files: 0.257579 sec.
+0.256434 sec.
+Read SMPS files: Coin0001I At line 506716 ENDATA
+0.269963 sec.
+Read SMPS files: 0.285416 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.271262 sec.
+Read SMPS files: 0.263882 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.257625 sec.
+Read SMPS files: 0.269228 sec.
 Coin0001I At line 506716 ENDATA
-Read SMPS files: 0.274866 sec.
+Read SMPS files: 0.279642 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_dd.txt
 
 DUAL DECOMPOSITION ITERATION INFORMATION:
 * master   = objective function value of the master problem.
@@ -552,57 +552,57 @@ DUAL DECOMPOSITION ITERATION INFORMATION:
 
   iter         master        primobj        dualobj  a.gap(%)  d.gap(%)    time
  B   0  +1.374011e+03  -3.508160e+02  -3.709890e+02    127.00      5.75     3.4
-     1  +1.100248e+03  -3.508160e+02  -3.709890e+02    133.72      5.75     5.6
-     2  +4.850733e+01  -3.508160e+02  -3.709890e+02    864.81      5.75     7.7
-     3  -2.034859e+02  -3.508160e+02  -3.709890e+02     82.32      5.75     9.6
-     4  -2.338762e+02  -3.508160e+02  -3.709890e+02     58.63      5.75    11.7
-     5  -2.459673e+02  -3.508160e+02  -3.709890e+02     50.83      5.75    14.0
-     6  -2.654424e+02  -3.508160e+02  -3.709890e+02     39.76      5.75    16.2
-     7  -2.753081e+02  -3.508160e+02  -3.709890e+02     34.75      5.75    18.3
-     8  -2.849766e+02  -3.508160e+02  -3.709890e+02     30.18      5.75    20.1
-     9  -2.916289e+02  -3.508160e+02  -3.709890e+02     27.21      5.75    21.5
-    10  -2.961825e+02  -3.508160e+02  -3.709890e+02     25.26      5.75    22.9
-    11  -2.997958e+02  -3.508160e+02  -3.709890e+02     23.75      5.75    24.4
-    12  -3.039765e+02  -3.508160e+02  -3.709890e+02     22.05      5.75    25.7
-    13  -3.074278e+02  -3.508160e+02  -3.709890e+02     20.68      5.75    27.0
-    14  -3.107687e+02  -3.508160e+02  -3.709890e+02     19.38      5.75    28.6
-    15  -3.137137e+02  -3.508160e+02  -3.709890e+02     18.26      5.75    30.4
-    16  -3.164650e+02  -3.508160e+02  -3.709890e+02     17.23      5.75    32.3
-    17  -3.191738e+02  -3.508160e+02  -3.709890e+02     16.23      5.75    34.5
-    18  -3.216705e+02  -3.508160e+02  -3.709890e+02     15.33      5.75    37.0
-    19  -3.240430e+02  -3.508160e+02  -3.709890e+02     14.49      5.75    39.7
-    20  -3.262842e+02  -3.508160e+02  -3.709890e+02     13.70      5.75    42.5
-    21  -3.283116e+02  -3.508160e+02  -3.709890e+02     13.00      5.75    45.5
-    22  -3.302492e+02  -3.508160e+02  -3.709890e+02     12.34      5.75    48.9
-    23  -3.320522e+02  -3.508160e+02  -3.709890e+02     11.73      5.75    52.5
-    24  -3.337603e+02  -3.508160e+02  -3.709890e+02     11.15      5.75    56.3
-    25  -3.353372e+02  -3.508160e+02  -3.709890e+02     10.63      5.75    60.6
+     1  +1.100248e+03  -3.508160e+02  -3.709890e+02    133.72      5.75     5.5
+     2  +4.850733e+01  -3.508160e+02  -3.709890e+02    864.81      5.75     7.5
+     3  -2.034859e+02  -3.508160e+02  -3.709890e+02     82.32      5.75     9.5
+     4  -2.338762e+02  -3.508160e+02  -3.709890e+02     58.63      5.75    11.6
+     5  -2.459673e+02  -3.508160e+02  -3.709890e+02     50.83      5.75    13.8
+     6  -2.654424e+02  -3.508160e+02  -3.709890e+02     39.76      5.75    16.0
+     7  -2.753081e+02  -3.508160e+02  -3.709890e+02     34.75      5.75    18.1
+     8  -2.849766e+02  -3.508160e+02  -3.709890e+02     30.18      5.75    19.9
+     9  -2.916289e+02  -3.508160e+02  -3.709890e+02     27.21      5.75    21.3
+    10  -2.961825e+02  -3.508160e+02  -3.709890e+02     25.26      5.75    22.8
+    11  -2.997958e+02  -3.508160e+02  -3.709890e+02     23.75      5.75    24.2
+    12  -3.039765e+02  -3.508160e+02  -3.709890e+02     22.05      5.75    25.5
+    13  -3.074278e+02  -3.508160e+02  -3.709890e+02     20.68      5.75    26.9
+    14  -3.107687e+02  -3.508160e+02  -3.709890e+02     19.38      5.75    28.4
+    15  -3.137137e+02  -3.508160e+02  -3.709890e+02     18.26      5.75    30.2
+    16  -3.164650e+02  -3.508160e+02  -3.709890e+02     17.23      5.75    32.2
+    17  -3.191738e+02  -3.508160e+02  -3.709890e+02     16.23      5.75    34.4
+    18  -3.216705e+02  -3.508160e+02  -3.709890e+02     15.33      5.75    36.9
+    19  -3.240430e+02  -3.508160e+02  -3.709890e+02     14.49      5.75    39.6
+    20  -3.262842e+02  -3.508160e+02  -3.709890e+02     13.70      5.75    42.3
+    21  -3.283116e+02  -3.508160e+02  -3.709890e+02     13.00      5.75    45.4
+    22  -3.302492e+02  -3.508160e+02  -3.709890e+02     12.34      5.75    48.8
+    23  -3.320522e+02  -3.508160e+02  -3.709890e+02     11.73      5.75    52.3
+    24  -3.337603e+02  -3.508160e+02  -3.709890e+02     11.15      5.75    56.2
+    25  -3.353372e+02  -3.508160e+02  -3.709890e+02     10.63      5.75    60.5
     26  -3.369501e+02  -3.508160e+02  -3.709890e+02     10.10      5.75    65.1
     27  -3.400307e+02  -3.508160e+02  -3.709890e+02      9.10      5.75    70.1
  D  28  -3.381746e+02  -3.508160e+02  -3.650711e+02      7.95      4.06    74.7
-    29  -3.415788e+02  -3.508160e+02  -3.650711e+02      6.88      4.06    79.9
+    29  -3.415788e+02  -3.508160e+02  -3.650711e+02      6.88      4.06    79.8
  D  30  -3.396552e+02  -3.508160e+02  -3.616602e+02      6.48      3.09    84.6
     31  -3.459687e+02  -3.508160e+02  -3.616602e+02      4.54      3.09    90.1
  D  32  -3.422353e+02  -3.508160e+02  -3.589862e+02      4.89      2.33    94.3
  D  33  -3.405567e+02  -3.508160e+02  -3.585634e+02      5.29      2.21    99.5
-    34  -3.503543e+02  -3.508160e+02  -3.585634e+02      2.34      2.21   105.1
-    35  -3.506832e+02  -3.508160e+02  -3.585634e+02      2.25      2.21   109.3
- D  36  -3.505074e+02  -3.508160e+02  -3.533087e+02      0.80      0.71   113.4
+    34  -3.503543e+02  -3.508160e+02  -3.585634e+02      2.34      2.21   105.2
+    35  -3.506832e+02  -3.508160e+02  -3.585634e+02      2.25      2.21   109.4
+ D  36  -3.505074e+02  -3.508160e+02  -3.533087e+02      0.80      0.71   113.5
  D  37  -3.503291e+02  -3.508160e+02  -3.531102e+02      0.79      0.65   117.4
     38  -3.508158e+02  -3.508160e+02  -3.531102e+02      0.65      0.65   121.5
  D  39  -3.508148e+02  -3.508160e+02  -3.515587e+02      0.21      0.21   125.1
- D  40  -3.508147e+02  -3.508160e+02  -3.514609e+02      0.18      0.18   128.5
+ D  40  -3.508147e+02  -3.508160e+02  -3.514609e+02      0.18      0.18   128.6
  D  41  -3.508146e+02  -3.508160e+02  -3.514505e+02      0.18      0.18   132.0
  D  42  -3.508146e+02  -3.508160e+02  -3.514496e+02      0.18      0.18   135.9
  D  43  -3.508146e+02  -3.508160e+02  -3.514494e+02      0.18      0.18   139.6
     44  -3.508147e+02  -3.508160e+02  -3.514494e+02      0.18      0.18   143.6
- D  45  -3.508147e+02  -3.508160e+02  -3.509571e+02      0.04      0.04   147.0
-    46  -3.508147e+02  -3.508160e+02  -3.509571e+02      0.04      0.04   150.8
- D  47  -3.508147e+02  -3.508160e+02  -3.508551e+02      0.01      0.01   154.5
-    48  -3.508147e+02  -3.508160e+02  -3.508551e+02      0.01      0.01   158.4
+ D  45  -3.508147e+02  -3.508160e+02  -3.509571e+02      0.04      0.04   147.1
+    46  -3.508147e+02  -3.508160e+02  -3.509571e+02      0.04      0.04   150.9
+ D  47  -3.508147e+02  -3.508160e+02  -3.508551e+02      0.01      0.01   154.6
+    48  -3.508147e+02  -3.508160e+02  -3.508551e+02      0.01      0.01   158.5
 Tr  STOP with gap tolerance +1.384837e-03 (0.00%).
- D  49  -3.508147e+02  -3.508160e+02  -3.508161e+02      0.00      0.00   162.0
-Master timing results: total 162.04, solve 24.01, idle 111.51
+ D  49  -3.508147e+02  -3.508160e+02  -3.508161e+02      0.00      0.00   162.1
+Master timing results: total 162.10, solve 23.91, idle 111.67
 Status: 3000
 Primal Bound: -350.816
 Dual Bound  : -350.816

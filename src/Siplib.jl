@@ -1,12 +1,14 @@
 module Siplib
     # dependent packages
+    using SparseArrays
+    using Printf
+    using Random
     using MathProgBase
     using StructJuMP
     using Distributions
-    using PyPlot
     using Combinatorics
-#    using SparseArrays
-#    using Printf
+    using DelimitedFiles
+#    using PyPlot
 
     # include Siplib utility sources
     include("./writer.jl")
@@ -32,12 +34,12 @@ module Siplib
            generateMPS,                     # generate MPS file with optional .dec file (set decfile=true) & return JuMP.Model object (to use returned object, set splice=false)
            writeSMPS,                       # convert JuMP.Model object to SMPS files
            writeMPS,                        # convert JuMP.Model object to MPS files (if decfile=true, generate .dec file together)
-           plotConstrMatrix,                # plot constraint matrix of the extensive form
-           plotFirstStageBlock,             # plot block A (first stage only)
-           plotSecondStageBlock,            # plot block W (second stage only)
-           plotTechnologyBlock,             # plot block T (complicating block)
-           plotAllBlocks,                   # plot block A, W, T simultaneously
-           plotAll,
+#           plotConstrMatrix,                # plot constraint matrix of the extensive form
+#           plotFirstStageBlock,             # plot block A (first stage only)
+#           plotSecondStageBlock,            # plot block W (second stage only)
+#           plotTechnologyBlock,             # plot block T (complicating block)
+#           plotAllBlocks,                   # plot block A, W, T simultaneously
+#           plotAll,
            generateSparsityPlots,           # save all sparsity plots into "plot" folder (default)
            getSparsity,
            getSize,
@@ -49,31 +51,27 @@ module Siplib
            arrayParams,
            WS,                              # Solve to obtain the wait-and-see solution
            EEV,                             # Solve to obtain the EEV solution
-           RP,                              # Solve the extensive form recourse problem
+           EF,                              # Solve the extensive form recourse problem
            EV,                              # Solve the expected value problem
            LP,                               # Solve the LP-relaxed problem (default relax level: 3 (full LP-relaxation))
            generateBasicInstances
 
 end # end module Siplib
+
 #=
-using Siplib
+using Main.Siplib
 using CPLEX
 
-generateSMPS(:CHEM,[100])
-
+generateSMPS(:CHEM,[1000])
+generateSMPS(:DCAP,[3,3,3,10])
 generateSMPS(:DCAP,[3,3,3,10],lprelax=2,genericnames=false)
 generateMPS(:DCAP,[3,3,3,10],ev=true,genericnames=false)
 generateMPS(:DCAP,[3,3,3,10],ss=true,genericnames=false)
 
 model = getModel(:DCAP,[3,3,3,10])
-RP(model, CplexSolver())
+EF(model, CplexSolver())
 EV(model, CplexSolver())
 LP(model,CplexSolver(),level=2)
-
-
-param_set
-
-generateBasicInstances()
 
 model = getModel(:AIRLIFT,[200])
 model = getModel(:CARGO, [3])

@@ -14,13 +14,13 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         DCAP_2_3_3_200
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 9158 ENDATA
-Read SMPS files: 0.006083 sec.
+Read SMPS files: 0.004 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
 CPX0000  CPXPARAM_Threads                                 36
 CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
-CPX0000  Found incumbent of value 6705.615078 after 0.01 sec. (0.32 ticks)
+CPX0000  Found incumbent of value 6705.615078 after 0.00 sec. (0.32 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  MIP Presolve eliminated 356 rows and 912 columns.
 CPX0000  Reduced MIP has 2650 rows, 4500 columns, and 9840 nonzeros.
@@ -36,7 +36,7 @@ CPX0000  Clique table members: 2808.
 CPX0000  MIP emphasis: balance optimality and feasibility.
 CPX0000  MIP search method: dynamic search.
 CPX0000  Parallel mode: deterministic, using up to 36 threads.
-CPX0000  Root relaxation solution time = 0.04 sec. (42.09 ticks)
+CPX0000  Root relaxation solution time = 0.17 sec. (42.09 ticks)
 CPX0000
 CPX0000          Nodes                                         Cuts/
 CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
@@ -110,13 +110,13 @@ CPX0000  Lift and project cuts applied:  6
 CPX0000  Gomory fractional cuts applied:  37
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    1.11 sec. (487.60 ticks)
+CPX0000    Real time             =    1.21 sec. (487.60 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    1.11 sec. (487.60 ticks)
+CPX0000  Total (root+branch&cut) =    1.21 sec. (487.60 ticks)
 Status: 3000
 Primal Bound: 1670.65
 Dual Bound  : 1670.65

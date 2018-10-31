@@ -1,0 +1,178 @@
+
+Welcome to IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 12.8.0.0
+  with Simplex, Mixed Integer & Barrier Optimizers
+5725-A06 5725-A29 5724-Y48 5724-Y49 5724-Y54 5724-Y55 5655-Y21
+Copyright IBM Corp. 1988, 2017.  All Rights Reserved.
+
+Type 'help' for a list of available commands.
+Type 'help' followed by a command name for more
+information on commands.
+
+CPLEX> 
+Available Parameters:
+
+advance          set indicator for advanced starting information
+barrier          set parameters for barrier optimization
+benders          set parameters for benders optimization
+clocktype        set type of clock used to measure time
+conflict         set parameters for finding conflicts
+cpumask          set cpubinding mask (off, auto, or a hex mask)
+defaults         set all parameter values to defaults
+dettimelimit     set deterministic time limit in ticks
+distmip          set distributed parallel mixed integer optimization
+emphasis         set optimization emphasis
+feasopt          set parameters for feasopt
+logfile          set file to which results are printed
+lpmethod         set method for linear optimization
+mip              set parameters for mixed integer optimization
+network          set parameters for network optimizations
+optimalitytarget set type of solution CPLEX will attempt to compute
+output           set extent and destinations of outputs
+parallel         set parallel optimization mode
+paramdisplay     set whether to display changed parameters before optimization
+preprocessing    set parameters for preprocessing
+qpmethod         set method for quadratic optimization
+randomseed       set seed to initialize the random number generator
+read             set problem read parameters
+record           set record calls to C API
+sifting          set parameters for sifting optimization
+simplex          set parameters for primal and dual simplex optimizations
+solutiontype     set solution information CPLEX will attempt to compute
+threads          set default parallel thread count
+timelimit        set time limit in seconds
+tune             set parameters for parameter tuning
+workdir          set directory for CPLEX working files
+workmem          set memory available for working storage (in megabytes)
+
+Parameter to set: Present value for default parallel thread count: 0 (default is 0)
+  0 = automatic
+  1 = sequential
+ >1 = parallel
+New value for default parallel thread count: New value for default parallel thread count: 36
+CPLEX> 
+Available Parameters:
+
+advance          set indicator for advanced starting information
+barrier          set parameters for barrier optimization
+benders          set parameters for benders optimization
+clocktype        set type of clock used to measure time
+conflict         set parameters for finding conflicts
+cpumask          set cpubinding mask (off, auto, or a hex mask)
+defaults         set all parameter values to defaults
+dettimelimit     set deterministic time limit in ticks
+distmip          set distributed parallel mixed integer optimization
+emphasis         set optimization emphasis
+feasopt          set parameters for feasopt
+logfile          set file to which results are printed
+lpmethod         set method for linear optimization
+mip              set parameters for mixed integer optimization
+network          set parameters for network optimizations
+optimalitytarget set type of solution CPLEX will attempt to compute
+output           set extent and destinations of outputs
+parallel         set parallel optimization mode
+paramdisplay     set whether to display changed parameters before optimization
+preprocessing    set parameters for preprocessing
+qpmethod         set method for quadratic optimization
+randomseed       set seed to initialize the random number generator
+read             set problem read parameters
+record           set record calls to C API
+sifting          set parameters for sifting optimization
+simplex          set parameters for primal and dual simplex optimizations
+solutiontype     set solution information CPLEX will attempt to compute
+threads          set default parallel thread count
+timelimit        set time limit in seconds
+tune             set parameters for parameter tuning
+workdir          set directory for CPLEX working files
+workmem          set memory available for working storage (in megabytes)
+
+Parameter to set: Present value for time limit in seconds: 1e+75 (default is 1e+75)
+New value for time limit in seconds: New value for time limit in seconds: 3600
+CPLEX> Selected objective sense:  MINIMIZE
+Selected objective  name:  OBJ
+Selected RHS        name:  RHS
+Selected bound      name:  BOUND
+Problem '/blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/DCAP/EV/DCAP_3_4_2_200_EV.mps' read.
+Read time = 0.05 sec. (0.01 ticks)
+CPLEX> CPXPARAM_TimeLimit                               3600
+CPXPARAM_Threads                                 36
+Found incumbent of value 6007.721365 after 0.00 sec. (0.01 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 7 rows and 16 columns.
+Reduced MIP has 13 rows, 28 columns, and 46 nonzeros.
+Reduced MIP has 22 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.04 ticks)
+Probing time = 0.00 sec. (0.01 ticks)
+Tried aggregator 1 time.
+Reduced MIP has 13 rows, 28 columns, and 46 nonzeros.
+Reduced MIP has 22 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.04 ticks)
+Probing time = 0.00 sec. (0.01 ticks)
+Clique table members: 13.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 36 threads.
+Root relaxation solution time = 0.17 sec. (0.03 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                         6007.7214     2996.0630            50.13%
+*     0+    0                         5283.6163     2996.0630            43.30%
+      0     0     3183.8256     5     5283.6163     3183.8256        7   39.74%
+*     0+    0                         4667.2489     3183.8256            31.78%
+*     0+    0                         3956.1640     3183.8256            19.52%
+      0     0     3210.1879     8     3956.1640      Cuts: 11       16   18.86%
+      0     0     3284.2865     6     3956.1640      Cuts: 14       24   16.98%
+      0     0     3916.9640    13     3956.1640       Cuts: 3       30    0.99%
+      0     0     3940.7525    10     3956.1640       Cuts: 3       36    0.39%
+      0     0     3947.4405    14     3956.1640       Cuts: 2       39    0.22%
+      0     0        cutoff           3956.1640                     42    0.00%
+Elapsed time = 2.60 sec. (0.86 ticks, tree = 0.01 MB, solutions = 4)
+
+Clique cuts applied:  3
+Cover cuts applied:  6
+Mixed integer rounding cuts applied:  3
+Zero-half cuts applied:  2
+
+Root node processing (before b&c):
+  Real time             =    2.68 sec. (0.87 ticks)
+Parallel b&c, 36 threads:
+  Real time             =    0.00 sec. (0.00 ticks)
+  Sync time (average)   =    0.00 sec.
+  Wait time (average)   =    0.00 sec.
+                          ------------
+Total (root+branch&cut) =    2.68 sec. (0.87 ticks)
+
+Solution pool: 4 solutions saved.
+
+MIP - Integer optimal solution:  Objective =  3.9561640214e+03
+Solution time =    2.69 sec.  Iterations = 42  Nodes = 0
+Deterministic time = 0.87 ticks  (0.32 ticks/sec)
+
+CPLEX> Name of file to write: 
+File type options:
+
+alp          LP format problem with generic names and bound annotations
+ann          Model annotations
+bas          INSERT format basis file
+clp          Conflict file
+dpe          Binary format for dual-perturbed problem
+dua          MPS format of explicit dual of problem
+emb          MPS format of (embedded) network
+flt          Solution pool filters
+lp           LP format problem file
+min          DIMACS min-cost network-flow format of (embedded) network
+mps          MPS format problem file
+mst          MIP start file
+net          CPLEX network format of (embedded) network
+ord          Integer priority order file
+ppe          Binary format for primal-perturbed problem
+pre          Binary format for presolved problem
+prm          Non-default parameter settings
+rlp          LP format problem with generic names
+rew          MPS format problem with generic names
+sav          Binary matrix and basis file
+sol          Solution file
+
+File type: Incumbent solution written to file '/blues/gpfs/home/choy/Siplib/experiment/solutions/DCAP/EV_CPLEX/DCAP_3_4_2_200_EV_CPLEX_sol.txt'.
+CPLEX> 

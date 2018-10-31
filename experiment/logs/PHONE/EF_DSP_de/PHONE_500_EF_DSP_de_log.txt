@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         PHONE_500
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 7347 ENDATA
-Read SMPS files: 0.004161 sec.
+Read SMPS files: 0.004053 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -44,13 +44,13 @@ CPX0000  *     0     0      integral     0      124.8860      124.8860     2968 
 CPX0000  Elapsed time = 0.66 sec. (456.41 ticks, tree = 0.00 MB
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    0.67 sec. (458.45 ticks)
+CPX0000    Real time             =    0.66 sec. (458.45 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    0.67 sec. (458.45 ticks)
+CPX0000  Total (root+branch&cut) =    0.66 sec. (458.45 ticks)
 Status: 3000
 Primal Bound: 124.886
 Dual Bound  : 124.886

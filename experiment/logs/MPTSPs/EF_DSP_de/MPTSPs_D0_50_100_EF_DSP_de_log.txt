@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         MPTSPs_D0_50_100
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 727753 ENDATA
-Read SMPS files: 0.332605 sec.
+Read SMPS files: 0.332122 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -25,19 +25,19 @@ CPX0000  MIP Presolve eliminated 242550 rows and 490049 columns.
 CPX0000  Aggregator did 2450 substitutions.
 CPX0000  Reduced MIP has 2550 rows, 4851 columns, and 14455 nonzeros.
 CPX0000  Reduced MIP has 2450 binaries, 0 generals, 0 SOSs, and 0 indicators.
-CPX0000  Presolve time = 0.64 sec. (424.02 ticks)
-CPX0000  Found incumbent of value 8847.218702 after 0.74 sec. (479.02 ticks)
+CPX0000  Presolve time = 0.63 sec. (424.02 ticks)
+CPX0000  Found incumbent of value 8847.218702 after 0.73 sec. (479.02 ticks)
 CPX0000  Probing time = 0.02 sec. (4.89 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  Reduced MIP has 2550 rows, 4851 columns, and 14455 nonzeros.
 CPX0000  Reduced MIP has 2450 binaries, 0 generals, 0 SOSs, and 0 indicators.
 CPX0000  Presolve time = 0.01 sec. (9.16 ticks)
-CPX0000  Probing time = 0.01 sec. (4.40 ticks)
+CPX0000  Probing time = 0.02 sec. (4.40 ticks)
 CPX0000  Clique table members: 100.
 CPX0000  MIP emphasis: balance optimality and feasibility.
 CPX0000  MIP search method: dynamic search.
 CPX0000  Parallel mode: deterministic, using up to 36 threads.
-CPX0000  Root relaxation solution time = 0.17 sec. (140.01 ticks)
+CPX0000  Root relaxation solution time = 0.15 sec. (140.01 ticks)
 CPX0000
 CPX0000          Nodes                                         Cuts/
 CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
@@ -57,7 +57,7 @@ CPX0000  MIP Presolve modified 56 coefficients.
 CPX0000  Aggregator did 21 substitutions.
 CPX0000  Reduced MIP has 554 rows, 838 columns, and 2649 nonzeros.
 CPX0000  Reduced MIP has 412 binaries, 0 generals, 0 SOSs, and 0 indicators.
-CPX0000  Presolve time = 0.01 sec. (4.08 ticks)
+CPX0000  Presolve time = 0.00 sec. (4.08 ticks)
 CPX0000  Probing time = 0.00 sec. (1.45 ticks)
 CPX0000  Cover probing fixed 0 vars, tightened 246 bounds.
 CPX0000  Tried aggregator 1 time.
@@ -65,7 +65,7 @@ CPX0000  MIP Presolve modified 246 coefficients.
 CPX0000  Reduced MIP has 554 rows, 838 columns, and 2649 nonzeros.
 CPX0000  Reduced MIP has 412 binaries, 0 generals, 0 SOSs, and 0 indicators.
 CPX0000  Presolve time = 0.00 sec. (1.58 ticks)
-CPX0000  Represolve time = 0.19 sec. (178.24 ticks)
+CPX0000  Represolve time = 0.18 sec. (178.24 ticks)
 CPX0000  Probing time = 0.00 sec. (1.41 ticks)
 CPX0000  Cover probing fixed 0 vars, tightened 25 bounds.
 CPX0000  Clique table members: 86.
@@ -83,7 +83,7 @@ CPX0000  *     0+    0                         2071.3394     2057.2680          
 CPX0000        0     0     2070.1758   107     2071.3394      Cuts: 52     5896    0.06%
 CPX0000        0     0     2071.3179   101     2071.3394      Cuts: 54     6119    0.00%
 CPX0000        0     0        cutoff           2071.3394                   6119    0.00%
-CPX0000  Elapsed time = 3.15 sec. (1818.11 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 3.11 sec. (1818.11 ticks, tree = 0.01 MB
 CPX0000
 CPX0000  Implied bound cuts applied:  8
 CPX0000  Flow cuts applied:  71
@@ -93,13 +93,13 @@ CPX0000  Lift and project cuts applied:  1
 CPX0000  Gomory fractional cuts applied:  1
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    3.20 sec. (1857.18 ticks)
+CPX0000    Real time             =    3.17 sec. (1857.18 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    3.20 sec. (1857.18 ticks)
+CPX0000  Total (root+branch&cut) =    3.17 sec. (1857.18 ticks)
 Status: 3000
 Primal Bound: 2071.34
 Dual Bound  : 2071.34

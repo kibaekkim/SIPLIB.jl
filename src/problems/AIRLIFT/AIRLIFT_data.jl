@@ -22,7 +22,7 @@ end
 
 function AIRLIFTData(nS::Integer, seed::Integer)::AIRLIFTData
 
-    srand(seed)
+    Random.seed!(seed)
     data = AIRLIFTData()
 
     # ---------------------------------------------

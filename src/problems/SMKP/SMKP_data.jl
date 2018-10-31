@@ -22,7 +22,7 @@ end
 
 function SMKPData(nI::Int, nS::Int, seed::Int, nXZ::Int=NXZ, nXY::Int=NXY)::SMKPData
 
-    srand(seed)
+    Random.seed!(seed)
     data = SMKPData()
 
     # Sets

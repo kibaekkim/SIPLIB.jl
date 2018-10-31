@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         SIZES_5
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 48 ENDATA
-Read SMPS files: 0 sec.
+Read SMPS files: 0.001112 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -26,7 +26,7 @@ CPX0000  MIP Presolve modified 55 coefficients.
 CPX0000  Reduced MIP has 176 rows, 409 columns, and 1233 nonzeros.
 CPX0000  Reduced MIP has 19 binaries, 390 generals, 0 SOSs, and 0 indicators.
 CPX0000  Presolve time = 0.00 sec. (1.07 ticks)
-CPX0000  Found incumbent of value 286322.136000 after 0.02 sec. (2.89 ticks)
+CPX0000  Found incumbent of value 286322.136000 after 0.01 sec. (2.89 ticks)
 CPX0000  Probing time = 0.00 sec. (0.09 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  Reduced MIP has 176 rows, 409 columns, and 1233 nonzeros.
@@ -80,7 +80,7 @@ CPX0000  *     0+    0                       166379.8360   165733.5610          
 CPX0000        0     0   165733.5696    59   166379.8360   165733.5696      327    0.39%
 CPX0000        0     0   165733.5696    62   166379.8360       Cuts: 4      336    0.39%
 CPX0000        0     2   165733.5696    62   166379.8360   165733.5696      336    0.39%
-CPX0000  Elapsed time = 0.36 sec. (29.45 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 0.48 sec. (29.45 ticks, tree = 0.01 MB
 CPX0000  *  3879  1544      integral     0   166374.8896   165736.2701    11540    0.38%
 CPX0000  *  4761  1091      integral     0   166370.7504   165748.0931    13932    0.37%
 CPX0000  *  5187   987      integral     0   166365.3520   165748.0931    14284    0.37%
@@ -92,13 +92,13 @@ CPX0000  Mixed integer rounding cuts applied:  26
 CPX0000  Gomory fractional cuts applied:  3
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    0.35 sec. (29.41 ticks)
+CPX0000    Real time             =    0.47 sec. (29.41 ticks)
 CPX0000  Parallel b&c, 36 threads:
-CPX0000    Real time             =    0.25 sec. (23.71 ticks)
-CPX0000    Sync time (average)   =    0.20 sec.
+CPX0000    Real time             =    0.26 sec. (23.71 ticks)
+CPX0000    Sync time (average)   =    0.21 sec.
 CPX0000    Wait time (average)   =    0.01 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    0.60 sec. (53.12 ticks)
+CPX0000  Total (root+branch&cut) =    0.73 sec. (53.12 ticks)
 Status: 3000
 Primal Bound: 166365
 Dual Bound  : 166365

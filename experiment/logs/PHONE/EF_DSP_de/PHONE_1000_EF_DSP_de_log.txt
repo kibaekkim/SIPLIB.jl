@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         PHONE_1000
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 14621 ENDATA
-Read SMPS files: 0.007901 sec.
+Read SMPS files: 0.008228 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -33,7 +33,7 @@ CPX0000  Presolve time = 0.13 sec. (120.95 ticks)
 CPX0000  MIP emphasis: balance optimality and feasibility.
 CPX0000  MIP search method: dynamic search.
 CPX0000  Parallel mode: deterministic, using up to 36 threads.
-CPX0000  Root relaxation solution time = 0.80 sec. (524.99 ticks)
+CPX0000  Root relaxation solution time = 0.83 sec. (524.99 ticks)
 CPX0000
 CPX0000          Nodes                                         Cuts/
 CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
@@ -41,16 +41,16 @@ CPX0000
 CPX0000  *     0+    0                          150.1290        6.0740            95.95%
 CPX0000  *     0+    0                          137.3840        6.0740            95.58%
 CPX0000  *     0     0      integral     0      125.1290      125.1290     3660    0.00%
-CPX0000  Elapsed time = 1.19 sec. (845.49 ticks, tree = 0.00 MB
+CPX0000  Elapsed time = 1.21 sec. (845.49 ticks, tree = 0.00 MB
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    1.20 sec. (849.56 ticks)
+CPX0000    Real time             =    1.22 sec. (849.56 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    1.20 sec. (849.56 ticks)
+CPX0000  Total (root+branch&cut) =    1.22 sec. (849.56 ticks)
 Status: 3000
 Primal Bound: 125.129
 Dual Bound  : 125.129

@@ -1,0 +1,176 @@
+
+Welcome to IBM(R) ILOG(R) CPLEX(R) Interactive Optimizer 12.8.0.0
+  with Simplex, Mixed Integer & Barrier Optimizers
+5725-A06 5725-A29 5724-Y48 5724-Y49 5724-Y54 5724-Y55 5655-Y21
+Copyright IBM Corp. 1988, 2017.  All Rights Reserved.
+
+Type 'help' for a list of available commands.
+Type 'help' followed by a command name for more
+information on commands.
+
+CPLEX> 
+Available Parameters:
+
+advance          set indicator for advanced starting information
+barrier          set parameters for barrier optimization
+benders          set parameters for benders optimization
+clocktype        set type of clock used to measure time
+conflict         set parameters for finding conflicts
+cpumask          set cpubinding mask (off, auto, or a hex mask)
+defaults         set all parameter values to defaults
+dettimelimit     set deterministic time limit in ticks
+distmip          set distributed parallel mixed integer optimization
+emphasis         set optimization emphasis
+feasopt          set parameters for feasopt
+logfile          set file to which results are printed
+lpmethod         set method for linear optimization
+mip              set parameters for mixed integer optimization
+network          set parameters for network optimizations
+optimalitytarget set type of solution CPLEX will attempt to compute
+output           set extent and destinations of outputs
+parallel         set parallel optimization mode
+paramdisplay     set whether to display changed parameters before optimization
+preprocessing    set parameters for preprocessing
+qpmethod         set method for quadratic optimization
+randomseed       set seed to initialize the random number generator
+read             set problem read parameters
+record           set record calls to C API
+sifting          set parameters for sifting optimization
+simplex          set parameters for primal and dual simplex optimizations
+solutiontype     set solution information CPLEX will attempt to compute
+threads          set default parallel thread count
+timelimit        set time limit in seconds
+tune             set parameters for parameter tuning
+workdir          set directory for CPLEX working files
+workmem          set memory available for working storage (in megabytes)
+
+Parameter to set: Present value for default parallel thread count: 0 (default is 0)
+  0 = automatic
+  1 = sequential
+ >1 = parallel
+New value for default parallel thread count: New value for default parallel thread count: 36
+CPLEX> 
+Available Parameters:
+
+advance          set indicator for advanced starting information
+barrier          set parameters for barrier optimization
+benders          set parameters for benders optimization
+clocktype        set type of clock used to measure time
+conflict         set parameters for finding conflicts
+cpumask          set cpubinding mask (off, auto, or a hex mask)
+defaults         set all parameter values to defaults
+dettimelimit     set deterministic time limit in ticks
+distmip          set distributed parallel mixed integer optimization
+emphasis         set optimization emphasis
+feasopt          set parameters for feasopt
+logfile          set file to which results are printed
+lpmethod         set method for linear optimization
+mip              set parameters for mixed integer optimization
+network          set parameters for network optimizations
+optimalitytarget set type of solution CPLEX will attempt to compute
+output           set extent and destinations of outputs
+parallel         set parallel optimization mode
+paramdisplay     set whether to display changed parameters before optimization
+preprocessing    set parameters for preprocessing
+qpmethod         set method for quadratic optimization
+randomseed       set seed to initialize the random number generator
+read             set problem read parameters
+record           set record calls to C API
+sifting          set parameters for sifting optimization
+simplex          set parameters for primal and dual simplex optimizations
+solutiontype     set solution information CPLEX will attempt to compute
+threads          set default parallel thread count
+timelimit        set time limit in seconds
+tune             set parameters for parameter tuning
+workdir          set directory for CPLEX working files
+workmem          set memory available for working storage (in megabytes)
+
+Parameter to set: Present value for time limit in seconds: 1e+75 (default is 1e+75)
+New value for time limit in seconds: New value for time limit in seconds: 3600
+CPLEX> Selected objective sense:  MINIMIZE
+Selected objective  name:  OBJ
+Selected RHS        name:  RHS
+Selected bound      name:  BOUND
+Problem '/blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SSLP/SS/SSLP_10_50_500/SSLP_10_50_500_SS378.mps' read.
+Read time = 0.00 sec. (0.10 ticks)
+CPLEX> CPXPARAM_TimeLimit                               3600
+CPXPARAM_Threads                                 36
+Found incumbent of value 142645.000000 after 0.00 sec. (0.04 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 29 rows and 317 columns.
+MIP Presolve modified 20 coefficients.
+Reduced MIP has 32 rows, 203 columns, and 379 nonzeros.
+Reduced MIP has 193 binaries, 0 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.44 ticks)
+Probing time = 0.00 sec. (0.14 ticks)
+Tried aggregator 1 time.
+MIP Presolve eliminated 3 rows and 11 columns.
+MIP Presolve added 2 rows and 2 columns.
+MIP Presolve modified 10 coefficients.
+Reduced MIP has 31 rows, 194 columns, and 371 nonzeros.
+Reduced MIP has 190 binaries, 4 generals, 0 SOSs, and 0 indicators.
+Presolve time = 0.00 sec. (0.49 ticks)
+Probing time = 0.00 sec. (0.16 ticks)
+Clique table members: 159.
+MIP emphasis: balance optimality and feasibility.
+MIP search method: dynamic search.
+Parallel mode: deterministic, using up to 36 threads.
+Root relaxation solution time = 0.02 sec. (0.10 ticks)
+
+        Nodes                                         Cuts/
+   Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+
+*     0+    0                       142645.0000    -2384.0000           101.67%
+      0     0     -446.4381    10   142645.0000     -446.4381        2  100.31%
+*     0+    0                           38.0000     -446.4381              --- 
+      0     0     -402.9356    50       38.0000      Cuts: 43       30     --- 
+*     0+    0                         -204.0000     -402.9356            97.52%
+      0     0     -360.2189    38     -204.0000      Cuts: 36       64   76.58%
+      0     0     -336.8874    77     -204.0000      Cuts: 34      103   65.14%
+      0     0     -326.3131    78     -204.0000      Cuts: 42      138   59.96%
+      0     0     -324.1023    82     -204.0000      Cuts: 15      155   58.87%
+      0     0     -322.5193    62     -204.0000       Cuts: 6      163   58.10%
+*     0+    0                         -276.0000     -322.5193            16.85%
+      0     0     -322.1268    54     -276.0000       Cuts: 7      168   16.71%
+      0     0     -321.7009    82     -276.0000       Cuts: 5      173   16.56%
+      0     0     -319.7150    72     -276.0000      Cuts: 11      188   15.84%
+      0     0     -319.4085    72     -276.0000   ZeroHalf: 1      190   15.73%
+*     0+    0                         -306.0000     -319.4085             4.38%
+      0     0     -318.9672    80     -306.0000       Cuts: 7      199    4.24%
+      0     0     -318.1219    57     -306.0000      Cuts: 12      211    3.96%
+      0     0     -317.8703    80     -306.0000       Cuts: 4      220    3.88%
+      0     0     -316.4627    84     -306.0000      Cuts: 17      237    3.42%
+      0     0     -315.6319    82     -306.0000      Cuts: 14      254    3.15%
+      0     0     -314.9974    80     -306.0000      Cuts: 11      270    2.94%
+      0     0     -314.9142    78     -306.0000       Cuts: 7      275    2.91%
+      0     0     -314.5818    79     -306.0000      Cuts: 20      289    2.80%
+      0     0     -314.5000    41     -306.0000       Cuts: 3      290    2.78%
+      0     0     -314.3821    87     -306.0000   ZeroHalf: 2      295    2.74%
+      0     0     -313.5985    85     -306.0000      Cuts: 13      308    2.48%
+*     0+    0                         -313.0000     -313.5985             0.19%
+      0     0        cutoff           -313.0000     -313.0000      308    0.00%
+Elapsed time = 0.65 sec. (35.77 ticks, tree = 0.01 MB, solutions = 6)
+
+Clique cuts applied:  45
+Cover cuts applied:  30
+Implied bound cuts applied:  8
+Mixed integer rounding cuts applied:  3
+Zero-half cuts applied:  16
+Gomory fractional cuts applied:  7
+
+Root node processing (before b&c):
+  Real time             =    0.65 sec. (35.81 ticks)
+Parallel b&c, 36 threads:
+  Real time             =    0.00 sec. (0.00 ticks)
+  Sync time (average)   =    0.00 sec.
+  Wait time (average)   =    0.00 sec.
+                          ------------
+Total (root+branch&cut) =    0.65 sec. (35.81 ticks)
+
+Solution pool: 6 solutions saved.
+
+MIP - Integer optimal solution:  Objective = -3.1300000000e+02
+Solution time =    0.66 sec.  Iterations = 308  Nodes = 0
+Deterministic time = 35.81 ticks  (54.59 ticks/sec)
+
+CPLEX> 

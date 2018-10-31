@@ -14,7 +14,7 @@ function getModel(problem::Symbol, params_arr::Any ; seed::Int=1)::JuMP.Model
         model = modeling_function(params_arr... , seed)
         return model
     else
-        warn("The number of parameter is wrong. Please use correct set of parameters.")
+        @warn("The number of parameter is wrong. Please use correct set of parameters.")
         return
     end
 
@@ -27,7 +27,7 @@ getModel(problem::Symbol, params_arr::Any, _seed::Int) = getModel(problem, param
 function getExtensiveFormModel(model::JuMP.Model ; genericnames::Bool=true, splice::Bool=true)::JuMP.Model
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
-        warn("Not a stochastic model.")
+        @warn("Not a stochastic model.")
         return
     end
 

@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         SSLP_5_50_100
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 26462 ENDATA
-Read SMPS files: 0.01328 sec.
+Read SMPS files: 0.010897 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -39,7 +39,7 @@ CPX0000  Clique table members: 2249.
 CPX0000  MIP emphasis: balance optimality and feasibility.
 CPX0000  MIP search method: dynamic search.
 CPX0000  Parallel mode: deterministic, using up to 36 threads.
-CPX0000  Root relaxation solution time = 0.12 sec. (102.12 ticks)
+CPX0000  Root relaxation solution time = 0.11 sec. (102.12 ticks)
 CPX0000
 CPX0000          Nodes                                         Cuts/
 CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
@@ -50,7 +50,7 @@ CPX0000        0     0     -453.1433   780     -256.9700     -453.1433     1752 
 CPX0000  *     0+    0                         -329.8900     -453.1433            37.36%
 CPX0000        0     0     -404.6577  1598     -329.8900     Cuts: 787     4247   10.82%
 CPX0000        0     0        cutoff           -329.8900     -329.8900     6271    0.00%
-CPX0000  Elapsed time = 1.04 sec. (860.22 ticks, tree = 0.01 MB
+CPX0000  Elapsed time = 1.06 sec. (860.22 ticks, tree = 0.01 MB
 CPX0000
 CPX0000  Clique cuts applied:  95
 CPX0000  Flow cuts applied:  27
@@ -59,13 +59,13 @@ CPX0000  Zero-half cuts applied:  476
 CPX0000  Gomory fractional cuts applied:  3
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    1.05 sec. (861.62 ticks)
+CPX0000    Real time             =    1.06 sec. (861.62 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    1.05 sec. (861.62 ticks)
+CPX0000  Total (root+branch&cut) =    1.06 sec. (861.62 ticks)
 Status: 3000
 Primal Bound: -329.89
 Dual Bound  : -329.89

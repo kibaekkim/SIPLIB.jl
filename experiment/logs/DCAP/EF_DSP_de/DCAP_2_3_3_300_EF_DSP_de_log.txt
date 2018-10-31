@@ -14,7 +14,7 @@ Coin0001I At line 5 ENDATA
 Coin0001I At line 1 STOCH         DCAP_2_3_3_300
 Coin0001I At line 2 SCENARIOS     DISCRETE
 Coin0001I At line 13758 ENDATA
-Read SMPS files: 0.007625 sec.
+Read SMPS files: 0.007 sec.
 Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
 CPX0000  CPXPARAM_Advance                                 0
 CPX0000  CPXPARAM_TimeLimit                               3600
@@ -30,7 +30,7 @@ CPX0000  Probing time = 0.01 sec. (5.16 ticks)
 CPX0000  Tried aggregator 1 time.
 CPX0000  Reduced MIP has 3996 rows, 6780 columns, and 14826 nonzeros.
 CPX0000  Reduced MIP has 6774 binaries, 0 generals, 0 SOSs, and 0 indicators.
-CPX0000  Presolve time = 0.01 sec. (10.23 ticks)
+CPX0000  Presolve time = 0.02 sec. (10.23 ticks)
 CPX0000  Probing time = 0.01 sec. (5.36 ticks)
 CPX0000  Clique table members: 4380.
 CPX0000  MIP emphasis: balance optimality and feasibility.
@@ -108,13 +108,13 @@ CPX0000  Lift and project cuts applied:  15
 CPX0000  Gomory fractional cuts applied:  136
 CPX0000
 CPX0000  Root node processing (before b&c):
-CPX0000    Real time             =    1.42 sec. (829.13 ticks)
+CPX0000    Real time             =    1.73 sec. (829.13 ticks)
 CPX0000  Parallel b&c, 36 threads:
 CPX0000    Real time             =    0.00 sec. (0.00 ticks)
 CPX0000    Sync time (average)   =    0.00 sec.
 CPX0000    Wait time (average)   =    0.00 sec.
 CPX0000                            ------------
-CPX0000  Total (root+branch&cut) =    1.42 sec. (829.13 ticks)
+CPX0000  Total (root+branch&cut) =    1.73 sec. (829.13 ticks)
 Status: 3000
 Primal Bound: 1629.26
 Dual Bound  : 1629.26
