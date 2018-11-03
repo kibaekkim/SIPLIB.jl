@@ -36,7 +36,7 @@ Parameters (scenario):
 function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
 
     # set random seed (default=1)
-    srand(seed)
+    Random.seed!(seed)
 
     # generate & store instance data
     ## sets
@@ -46,11 +46,11 @@ function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
     S = 1:nS
 
     ## parameters
-    a = rand(nR, nT) * 5 + 5
-    b = rand(nR, nT) * 40 + 10
-    c = rand(nR, nN, nT, nS) * 5 + 5
-    c0 = rand(nN, nT, nS) * 500 + 500
-    d = rand(nN, nT, nS) + 0.5
+    a = rand(nR, nT) * 5 .+ 5
+    b = rand(nR, nT) * 40 .+ 10
+    c = rand(nR, nN, nT, nS) * 5 .+ 5
+    c0 = rand(nN, nT, nS) * 500 .+ 500
+    d = rand(nN, nT, nS) .+ 0.5
     Pr = ones(nS)/nS
 
     # construct JuMP.Model

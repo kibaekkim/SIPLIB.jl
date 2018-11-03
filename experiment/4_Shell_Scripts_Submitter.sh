@@ -1,5 +1,0 @@
-for
- for
-  sbatch asfasdfa
-
-

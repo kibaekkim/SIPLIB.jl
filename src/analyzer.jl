@@ -35,7 +35,7 @@ mutable struct Sparsity
     sparsity::Float64       # sparsity ([0,1] scale) in total
     Sparsity() = new()
 end
-
+#=
 function plotConstrMatrix(model::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../plot"; close::Bool=false)
 
     mdata_all = getStructModelData(model, false, false)
@@ -258,7 +258,7 @@ function generateSparsityPlots(problem::Symbol, params_arr::Any, DIR_NAME::Strin
     plotConstrMatrix(model, INSTANCE_NAME, DIR_NAME, close=true)
 
 end
-
+=#
 function getSize(model::JuMP.Model, INSTANCE_NAME::String="")::Size
 
     mdata1 = getModelData(model, false, false)

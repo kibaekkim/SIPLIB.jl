@@ -1,0 +1,152 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/DCAP/EF/DCAP_3_4_2_300
+Coin0001I At line 1 NAME          DCAP_3_4_2_300
+Coin0001I At line 2 ROWS
+Coin0001I At line 24 COLUMNS
+Coin0001I At line 101 RHS
+Coin0001I At line 112 BOUNDS
+Coin0001I At line 151 ENDATA
+Coin0002I Problem DCAP_3_4_2_300 has 20 rows, 44 columns and 77 elements
+Coin0001I At line 1 TIME          DCAP_3_4_2_300
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         DCAP_3_4_2_300
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 17047 ENDATA
+Read SMPS files: 0.009 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 6054.335362 after 0.00 sec. (0.54 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 646 rows and 2392 columns.
+CPX0000  Reduced MIP has 3560 rows, 7220 columns, and 15278 nonzeros.
+CPX0000  Reduced MIP has 7214 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.02 sec. (10.39 ticks)
+CPX0000  Probing time = 0.01 sec. (4.79 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 3560 rows, 7220 columns, and 15278 nonzeros.
+CPX0000  Reduced MIP has 7214 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.02 sec. (11.09 ticks)
+CPX0000  Probing time = 0.01 sec. (4.85 ticks)
+CPX0000  Clique table members: 5687.
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.06 sec. (77.35 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                         6054.3354     1498.3679            75.25%
+CPX0000  *     0+    0                         1984.0342     1498.3679            24.48%
+CPX0000        0     0     1758.3670  1196     1984.0342     1758.3670     2084   11.37%
+CPX0000  *     0+    0                         1948.8833     1758.3670             9.78%
+CPX0000        0     0     1856.2112  1253     1948.8833     Cuts: 990     3962    4.76%
+CPX0000        0     0     1918.1894  1005     1948.8833     Cuts: 990     5734    1.57%
+CPX0000  *     0+    0                         1932.5354     1918.1894             0.74%
+CPX0000        0     0     1922.0940  1045     1932.5354     Cuts: 701     6466    0.54%
+CPX0000  *     0+    0                         1929.7262     1922.0940             0.40%
+CPX0000  *     0+    0                         1929.6519     1922.0940             0.39%
+CPX0000  *     0+    0                         1929.0287     1922.0940             0.36%
+CPX0000        0     0     1922.2975  1112     1929.0287     Cuts: 990     6744    0.35%
+CPX0000        0     0     1922.3823  1121     1929.0287     Cuts: 990     7022    0.34%
+CPX0000        0     0     1922.4831  1283     1929.0287     Cuts: 990     7342    0.34%
+CPX0000  *     0+    0                         1928.9316     1922.4831             0.33%
+CPX0000  *     0+    0                         1928.8080     1922.4831             0.33%
+CPX0000  *     0+    0                         1928.5407     1922.4831             0.31%
+CPX0000  *     0+    0                         1926.7972     1922.4831             0.22%
+CPX0000  *     0+    0                         1926.6180     1922.4831             0.21%
+CPX0000        0     2     1922.4831  1283     1926.6180     1922.7571     7342    0.20%
+CPX0000  Elapsed time = 2.60 sec. (1515.55 ticks, tree = 0.01 MB
+CPX0000  *    10+    5                         1926.5663     1922.7571             0.20%
+CPX0000  *    54+    2                         1926.5591     1922.7571             0.20%
+CPX0000  *    68+   27                         1926.2569     1922.7571             0.18%
+CPX0000  *   120+   27                         1926.2413     1922.7571             0.18%
+CPX0000  *   128+   23                         1926.2221     1922.7571             0.18%
+CPX0000  *   148+   31                         1926.0950     1922.7571             0.17%
+CPX0000      240   135     1924.1928   985     1926.0950     1922.7571    18214    0.17%
+CPX0000  *   266+   31                         1925.9592     1922.7571             0.17%
+CPX0000     1569  1091     1925.7856   336     1925.9592     1922.7571    67379    0.17%
+CPX0000     3390  2390     1923.0627  1178     1925.9592     1922.7571   117695    0.17%
+CPX0000     5756  3828     1923.5705  1046     1925.9592     1922.7571   151408    0.17%
+CPX0000     8345  6348     1925.2903   516     1925.9592     1922.7571   205582    0.17%
+CPX0000  *  8783+ 4817                         1925.2703     1922.7571             0.13%
+CPX0000  *  8783+ 3210                         1925.2540     1922.9508             0.12%
+CPX0000  *  8783+ 2140                         1925.1856     1923.0097             0.11%
+CPX0000  *  8783+ 1426                         1925.1811     1923.2229             0.10%
+CPX0000  *  8783+  950                         1925.1799     1923.2229             0.10%
+CPX0000     8783   951     1923.1383  1499     1925.1799     1923.2229   225480    0.10%
+CPX0000  *  8848+   15                         1925.1716     1923.2229             0.10%
+CPX0000  *  8853+    7                         1925.1703     1923.2229             0.10%
+CPX0000  *  8856+    6                         1925.1692     1923.2229             0.10%
+CPX0000  *  8866+   14                         1925.0823     1923.2229             0.10%
+CPX0000  *  8941+   12                         1925.0790     1923.2229             0.10%
+CPX0000     8982    54        cutoff           1925.0790     1923.2229   233050    0.10%
+CPX0000  *  8988+    9                         1925.0765     1923.2229             0.10%
+CPX0000  *  9063+    3                         1925.0759     1923.2229             0.10%
+CPX0000  *  9149+    9                         1925.0756     1923.2229             0.10%
+CPX0000  *  9234+   35                         1925.0735     1923.2229             0.10%
+CPX0000  *  9503+   35                         1925.0647     1923.2229             0.10%
+CPX0000  * 10499+   35                         1925.0576     1923.4573             0.08%
+CPX0000    10824  1022     1924.8825   513     1925.0576     1923.4573   258837    0.08%
+CPX0000    13325  2574     1923.7483   675     1925.0576     1923.4577   295138    0.08%
+CPX0000    25726 12012     1924.7829   263     1925.0576     1923.5761   435934    0.08%
+CPX0000  Elapsed time = 12.51 sec. (8850.61 ticks, tree = 41.98 MB
+CPX0000  * 31481 17372      integral     0     1924.8868     1923.5868   484771    0.07%
+CPX0000  * 31674+12842                         1924.8480     1923.5868             0.07%
+CPX0000  * 31969+12840                         1924.7710     1923.5935             0.06%
+CPX0000  * 32106+12073                         1924.6337     1923.5935             0.05%
+CPX0000  * 36157+ 9567                         1924.6323     1923.6026             0.05%
+CPX0000    39909 13048     1924.4692   427     1924.6323     1923.6053   554033    0.05%
+CPX0000  * 42408+14925                         1924.5557     1923.6053             0.05%
+CPX0000  * 42420+14308                         1924.4345     1923.6053             0.04%
+CPX0000  * 42499+14177                         1924.4326     1923.6053             0.04%
+CPX0000  * 43163+11233                         1924.3429     1923.6053             0.04%
+CPX0000  * 43688+11300                         1924.3309     1923.6053             0.04%
+CPX0000  * 43853+11107                         1924.3236     1923.6093             0.04%
+CPX0000  * 44602+10473                         1924.3116     1923.6093             0.04%
+CPX0000  * 45408+10969                         1924.1193     1923.6093             0.03%
+CPX0000  * 45929+ 7783                         1923.9665     1923.6101             0.02%
+CPX0000  * 46015+10805                         1923.9561     1923.6101             0.02%
+CPX0000  * 47166+ 6484                         1923.9393     1923.6110             0.02%
+CPX0000  * 47354+ 7820                         1923.9020     1923.6140             0.01%
+CPX0000  * 47405+ 6281                         1923.9006     1923.6140             0.01%
+CPX0000  * 49517+ 6468                         1923.8947     1923.6151             0.01%
+CPX0000  * 50423+ 7036                         1923.8881     1923.6151             0.01%
+CPX0000  * 52994+ 9265                         1923.8822     1923.6163             0.01%
+CPX0000    54577 11183     1923.6402   721     1923.8822     1923.6180   647309    0.01%
+CPX0000  * 58812+14543                         1923.8754     1923.6218             0.01%
+CPX0000  * 61669+16601                         1923.8717     1923.6237             0.01%
+CPX0000  * 62064+16744                         1923.8671     1923.6249             0.01%
+CPX0000  * 62389+16832                         1923.8634     1923.6249             0.01%
+CPX0000  * 64832+17007                         1923.8602     1923.6267             0.01%
+CPX0000  * 65530+16651                         1923.8586     1923.6267             0.01%
+CPX0000    67382 20933     1923.6582   759     1923.8586     1923.6267   727258    0.01%
+CPX0000  * 72366+23152                         1923.8557     1923.6270             0.01%
+CPX0000  * 72367+16538                         1923.8429     1923.6314             0.01%
+CPX0000    72367 16539     1923.2051  1578     1923.8429     1923.6314   775336    0.01%
+CPX0000  * 72536+   28                         1923.8420     1923.6314             0.01%
+CPX0000
+CPX0000  Clique cuts applied:  122
+CPX0000  Cover cuts applied:  556
+CPX0000  Flow cuts applied:  138
+CPX0000  Mixed integer rounding cuts applied:  383
+CPX0000  Zero-half cuts applied:  58
+CPX0000  Lift and project cuts applied:  17
+CPX0000  Gomory fractional cuts applied:  80
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    2.54 sec. (1495.90 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =   22.01 sec. (15356.52 ticks)
+CPX0000    Sync time (average)   =    4.53 sec.
+CPX0000    Wait time (average)   =    0.12 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =   24.54 sec. (16852.43 ticks)
+Status: 3000
+Primal Bound: 1923.84
+Dual Bound  : 1923.84

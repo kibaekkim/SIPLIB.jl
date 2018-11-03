@@ -1,0 +1,73 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SSLP/EF/SSLP_10_50_2000
+Coin0001I At line 1 NAME          SSLP_10_50_2000
+Coin0001I At line 2 ROWS
+Coin0001I At line 65 COLUMNS
+Coin0001I At line 1079 RHS
+Coin0001I At line 1111 BOUNDS
+Coin0001I At line 1622 ENDATA
+Coin0002I Problem SSLP_10_50_2000 has 61 rows, 520 columns and 1011 elements
+Coin0001I At line 1 TIME          SSLP_10_50_2000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         SSLP_10_50_2000
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 1014025 ENDATA
+Read SMPS files: 0.427714 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 199855.044500 after 0.10 sec. (64.59 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 51654 rows and 568682 columns.
+CPX0000  MIP Presolve modified 40000 coefficients.
+CPX0000  Reduced MIP has 68347 rows, 451328 columns, and 888472 nonzeros.
+CPX0000  Reduced MIP has 431328 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 1.16 sec. (807.48 ticks)
+CPX0000  Tried aggregator 2 times.
+CPX0000  MIP Presolve modified 17028 coefficients.
+CPX0000  Aggregator did 1545 substitutions.
+CPX0000  Reduced MIP has 66802 rows, 449783 columns, and 885382 nonzeros.
+CPX0000  Reduced MIP has 429783 binaries, 20000 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 1.31 sec. (755.73 ticks)
+CPX0000  Probing time = 0.43 sec. (28.25 ticks)
+CPX0000  Clique table members: 46802.
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 7.27 sec. (4281.07 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                       199855.0445    -2827.8125           101.41%
+CPX0000        0     0     -504.2392 33644   199855.0445     -504.2392       35  100.25%
+CPX0000        0     0     -476.1930 50487   199855.0445   Cuts: 10000    46729  100.24%
+CPX0000  *     0+    0                           81.3170     -476.1930           685.60%
+CPX0000        0     0     -461.8709 66832       81.3170    Cuts: 9994    81768  667.99%
+CPX0000  *     0+    0                         -329.5520     -461.8709            40.15%
+CPX0000        0     0     -453.1862 79985     -329.5520   Cuts: 10000   117198   37.52%
+CPX0000        0     0     -442.1633 91203     -329.5520    Cuts: 9950   172747   34.17%
+CPX0000        0     0     -432.1159 101022     -329.5520    Cuts: 9976   235931   31.12%
+CPX0000  *     0+    0                         -349.7060     -432.1159            23.57%
+CPX0000        0     0     -423.0618 109919     -349.7060    Cuts: 9983   306037   20.98%
+CPX0000        0     0        cutoff           -349.7060     -349.7060   356194    0.00%
+CPX0000  Elapsed time = 1606.16 sec. (1262352.26 ticks, tree = 0.01 MB
+CPX0000
+CPX0000  Flow cuts applied:  12780
+CPX0000  Mixed integer rounding cuts applied:  49449
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             = 1606.24 sec. (1262419.39 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    0.00 sec. (0.00 ticks)
+CPX0000    Sync time (average)   =    0.00 sec.
+CPX0000    Wait time (average)   =    0.00 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) = 1606.24 sec. (1262419.39 ticks)
+Status: 3000
+Primal Bound: -349.706
+Dual Bound  : -349.706

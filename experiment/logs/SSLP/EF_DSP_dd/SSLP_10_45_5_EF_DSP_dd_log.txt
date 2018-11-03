@@ -1,0 +1,110 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SSLP/EF/SSLP_10_45_5
+Coin0001I At line 1 NAME          SSLP_10_45_5
+Coin0001I At line 2 ROWS
+Coin0001I At line 1 NAME          SSLP_10_45_5
+Coin0001I At line 2 ROWS
+Coin0001I At line 1 NAME          SSLP_10_45_5
+Coin0001I At line 2 ROWS
+Coin0001I At line 1 NAME          SSLP_10_45_5
+Coin0001I At line 2 ROWS
+Coin0001I At line 1 NAME          SSLP_10_45_5
+Coin0001I At line 2 ROWS
+Coin0001I At line 60 COLUMNS
+Coin0001I At line 60 COLUMNS
+Coin0001I At line 60 COLUMNS
+Coin0001I At line 60 COLUMNS
+Coin0001I At line 60 COLUMNS
+Coin0001I At line 976 RHS
+Coin0001I At line 976 RHS
+Coin0001I At line 1005 BOUNDS
+Coin0001I At line 976 RHS
+Coin0001I At line 1005 BOUNDS
+Coin0001I At line 976 RHS
+Coin0001I At line 1005 BOUNDS
+Coin0001I At line 976 RHS
+Coin0001I At line 1005 BOUNDS
+Coin0001I At line 1005 BOUNDS
+Coin0001I At line 1466 ENDATA
+Coin0001I At line 1466 ENDATA
+Coin0001I At line 1466 ENDATA
+Coin0002I Problem SSLP_10_45_5 has 56 rows, 470 columns and 913 elements
+Coin0001I At line 1466 ENDATA
+Coin0002I Problem SSLP_10_45_5 has 56 rows, 470 columns and 913 elements
+Coin0002I Problem SSLP_10_45_5 has 56 rows, 470 columns and 913 elements
+Coin0001I At line 1466 ENDATA
+Coin0002I Problem SSLP_10_45_5 has 56 rows, 470 columns and 913 elements
+Coin0002I Problem SSLP_10_45_5 has 56 rows, 470 columns and 913 elements
+Coin0001I At line 1 TIME          SSLP_10_45_5
+Coin0001I At line 1 TIME          SSLP_10_45_5
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1 TIME          SSLP_10_45_5
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1 TIME          SSLP_10_45_5
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 1 TIME          SSLP_10_45_5
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+Coin0001I At line 5 ENDATA
+
+
+
+
+
+Coin0001I At line 1 STOCH         SSLP_10_45_5
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 1 STOCH         SSLP_10_45_5
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 1 STOCH         SSLP_10_45_5
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 1 STOCH         SSLP_10_45_5
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 1 STOCH         SSLP_10_45_5
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 1874 ENDATA
+Coin0001I At line 1874 ENDATA
+Read SMPS files: Read SMPS files: Coin0001I At line 1874 ENDATA
+0.001058 sec.
+0.001 sec.
+Coin0001I At line 1874 ENDATA
+Coin0001I At line 1874 ENDATA
+Read SMPS files: Read SMPS files: Read SMPS files: 0.002027 sec.
+0.003 sec.
+0.002099 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_dd.txt
+
+DUAL DECOMPOSITION ITERATION INFORMATION:
+* master   = objective function value of the master problem.
+* primobj  = best primal objective function value.
+* dualobj  = best dual objective function value.
+* a.gap(%) = Approximate gap between master and dualobj.
+* d.gap(%) = Duality gap between primobj and dualobj.
+* times    = wall clock time in seconds.
+
+  iter         master        primobj        dualobj  a.gap(%)  d.gap(%)    time
+ B   0  -2.830000e+02  -2.712000e+02  -2.900000e+02      2.47      6.93     0.1
+ D   1  -2.760000e+02  -2.712000e+02  -2.870000e+02      3.99      5.83     0.3
+     2  -2.794000e+02  -2.712000e+02  -2.870000e+02      2.72      5.83     0.5
+ D   3  -2.744000e+02  -2.712000e+02  -2.835159e+02      3.32      4.54     0.7
+     4  -2.778008e+02  -2.712000e+02  -2.835159e+02      2.06      4.54     0.8
+ D   5  -2.698001e+02  -2.712000e+02  -2.793417e+02      3.54      3.00     1.1
+     6  -2.719862e+02  -2.712000e+02  -2.793417e+02      2.70      3.00     1.1
+ D   7  -2.679923e+02  -2.712000e+02  -2.765211e+02      3.18      1.96     1.4
+     8  -2.684387e+02  -2.712000e+02  -2.765211e+02      3.01      1.96     1.6
+     9  -2.718553e+02  -2.712000e+02  -2.765211e+02      1.72      1.96     1.7
+ D  10  -2.678550e+02  -2.712000e+02  -2.728216e+02      1.85      0.60     2.0
+    11  -2.708287e+02  -2.712000e+02  -2.728216e+02      0.74      0.60     2.2
+ D  12  -2.698025e+02  -2.712000e+02  -2.727500e+02      1.09      0.57     2.3
+    13  -2.698024e+02  -2.712000e+02  -2.727500e+02      1.09      0.57     2.6
+    14  -2.712007e+02  -2.712000e+02  -2.727500e+02      0.57      0.57     2.8
+Tr  STOP with gap tolerance +6.410361e-04 (0.00%).
+ D  15  -2.712006e+02  -2.712000e+02  -2.712000e+02      0.00      0.00     3.1
+Master timing results: total 3.08, solve 0.07, idle 3.00
+Status: 3000
+Primal Bound: -271.2
+Dual Bound  : -271.2
+Deleting DSP environment

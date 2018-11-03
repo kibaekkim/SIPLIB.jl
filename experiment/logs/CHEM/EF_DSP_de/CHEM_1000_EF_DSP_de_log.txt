@@ -1,0 +1,41 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/CHEM/EF/CHEM_1000
+Coin0001I At line 1 NAME          CHEM_1000
+Coin0001I At line 2 ROWS
+Coin0001I At line 97 COLUMNS
+Coin0001I At line 239 RHS
+Coin0001I At line 287 BOUNDS
+Coin0001I At line 318 ENDATA
+Coin0002I Problem CHEM_1000 has 93 rows, 124 columns and 197 elements
+Coin0001I At line 1 TIME          CHEM_1000
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         CHEM_1000
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 8995 ENDATA
+Read SMPS files: 0.005192 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 0.000000 after 0.00 sec. (0.81 ticks)
+CPX0000  Tried aggregator 3 times.
+CPX0000  MIP Presolve eliminated 28060 rows and 28091 columns.
+CPX0000  MIP Presolve modified 3 coefficients.
+CPX0000  Aggregator did 5 substitutions.
+CPX0000  All rows and columns eliminated.
+CPX0000  Presolve time = 0.03 sec. (22.84 ticks)
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    0.03 sec. (24.80 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    0.00 sec. (0.00 ticks)
+CPX0000    Sync time (average)   =    0.00 sec.
+CPX0000    Wait time (average)   =    0.00 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =    0.03 sec. (24.80 ticks)
+Status: 3000
+Primal Bound: -28.4494
+Dual Bound  : -28.4494

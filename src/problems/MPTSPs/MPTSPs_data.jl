@@ -68,7 +68,7 @@ end
 
 function generate_nodes(d::String, nN::Int, seed::Int, radius::Float64=RADIUS)::Array{Node}    # nN: number of nodes, D: node partition strategy
 
-    srand(seed)
+    Random.seed!(seed)
 
     Nodes = Node[]
     center = Node(radius, radius, true)
@@ -158,7 +158,7 @@ end#
 
 function generate_scenario_data(Nodes::Array{Node}, d::String, nN::Int, nS::Int, seed::Int, nK::Int=NK, radius::Float64=RADIUS, vc::Float64=VC, vs::Float64=VS)
 
-    srand(seed)
+    Random.seed!(seed)
 
     EC = calculate_euclidean_distances(Nodes)
     Cs = zeros(nS, nN, nN, nK)

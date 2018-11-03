@@ -7,7 +7,7 @@ Source:
 function CHEM(nS::Int, seed::Int=1)::JuMP.Model
 
     # set random seed (default=1)
-    srand(seed)
+    Random.seed!(seed)
 
     # generate & store instance data
     ## sets

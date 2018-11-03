@@ -1,0 +1,69 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/SSLP/EF/SSLP_5_25_50
+Coin0001I At line 1 NAME          SSLP_5_25_50
+Coin0001I At line 2 ROWS
+Coin0001I At line 35 COLUMNS
+Coin0001I At line 296 RHS
+Coin0001I At line 313 BOUNDS
+Coin0001I At line 444 ENDATA
+Coin0002I Problem SSLP_5_25_50 has 31 rows, 135 columns and 258 elements
+Coin0001I At line 1 TIME          SSLP_5_25_50
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         SSLP_5_25_50
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 6579 ENDATA
+Read SMPS files: 0.007096 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 103608.260000 after 0.00 sec. (0.42 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 682 rows and 3612 columns.
+CPX0000  MIP Presolve modified 500 coefficients.
+CPX0000  Reduced MIP has 819 rows, 2893 columns, and 5639 nonzeros.
+CPX0000  Reduced MIP has 2643 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (5.04 ticks)
+CPX0000  Probing time = 0.00 sec. (1.20 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 31 rows and 31 columns.
+CPX0000  MIP Presolve modified 201 coefficients.
+CPX0000  Reduced MIP has 788 rows, 2862 columns, and 5577 nonzeros.
+CPX0000  Reduced MIP has 2612 binaries, 250 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (4.60 ticks)
+CPX0000  Probing time = 0.00 sec. (1.17 ticks)
+CPX0000  Clique table members: 538.
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.05 sec. (20.82 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                       103608.2600     -702.0400           100.68%
+CPX0000  *     0+    0                          -97.0400     -702.0400           623.45%
+CPX0000        0     0     -192.1735   404      -97.0400     -192.1735      698   98.04%
+CPX0000  *     0+    0                         -127.7000     -192.1735            50.49%
+CPX0000        0     0        cutoff           -127.7000     -127.7000     1350    0.00%
+CPX0000  Elapsed time = 0.23 sec. (101.86 ticks, tree = 0.01 MB
+CPX0000
+CPX0000  Clique cuts applied:  102
+CPX0000  Mixed integer rounding cuts applied:  100
+CPX0000  Zero-half cuts applied:  93
+CPX0000  Gomory fractional cuts applied:  2
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    0.24 sec. (102.22 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    0.00 sec. (0.00 ticks)
+CPX0000    Sync time (average)   =    0.00 sec.
+CPX0000    Wait time (average)   =    0.00 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =    0.24 sec. (102.22 ticks)
+Status: 3000
+Primal Bound: -127.7
+Dual Bound  : -127.7

@@ -14,7 +14,7 @@ function getModel(problem::Symbol, params_arr::Any ; seed::Int=1)::JuMP.Model
         model = modeling_function(params_arr... , seed)
         return model
     else
-        warn("The number of parameter is wrong. Please use correct set of parameters.")
+        @warn("The number of parameter is wrong. Please use correct set of parameters.")
         return
     end
 
@@ -27,7 +27,7 @@ getModel(problem::Symbol, params_arr::Any, _seed::Int) = getModel(problem, param
 function getExtensiveFormModel(model::JuMP.Model ; genericnames::Bool=true, splice::Bool=true)::JuMP.Model
     # check if model is stochastic (or structured) model
     if in(:Stochastic, model.ext.keys) == false
-        warn("Not a stochastic model.")
+        @warn("Not a stochastic model.")
         return
     end
 
@@ -47,12 +47,14 @@ Generates SMPS files and Returns JuMP.Model-type object.
     DIR_NAME (optional, positional): Directory where SMPS files are stored (DEFAULT: Siplib/instance)
     seed (optional, keyword): Any integer (DEFAULT=1)
     lprelax (optional, keyword): One of (0, 1, 2, 3) (0: no relax, 1: first-stage only, 2: second-stage only, 3: fully LP relax)
+    ss (optional, keyword): 'true' if you want to generate single scenario instances
+    ev (optional, keyword): 'true' if you want to generate the expected value problem
     genericnames (optional, keyword): 'true' if you want to let Siplib automatically generate: VAR1, VAR2, ... . 'false' if you want to maintain the original (readable) variable names. (DEFAULT: true)
     splice (optional, keyword): 'true' then data in the model is spliced after writing SMPS files so you cannot re-use the object. 'false' if you want to re-use the JuMP.Model object.  (DEFAULT: true)
     smpsfile (optional, keyword): 'true' if you want to generate .smps file together (for SCIP 6.0).
 """
 function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ;
-                    seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true, smpsfile::Bool=false, FIRST_STAGE_SOLUTION_FILE::String="")
+                    seed::Int=1, lprelax::Int=0, eev::Bool=false, FIRST_STAGE_SOLUTION_FILE::String="", genericnames::Bool=true, splice::Bool=true, smpsfile::Bool=false)
 
 @time begin
     INSTANCE_NAME = getInstanceName(problem, params_arr)
@@ -62,13 +64,11 @@ function generateSMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirn
         INSTANCE_NAME *= "_LP$(lprelax)"
         lprelaxModel!(model,lprelax)
         writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
-    # generating EEV instance given the first-stage solutions (expected result of using the first-stage solution obtained from EVP)
-    elseif FIRST_STAGE_SOLUTION_FILE != ""
-        writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
+    elseif eev == true
+        # to be implemented
     else
         writeSMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
     end
-
 end
 
     return model
@@ -80,36 +80,36 @@ end
 Generates MPS file (with optional .dec file) and Returns JuMP.Model-type object.
 """
 function generateMPS(problem::Symbol, params_arr::Any, DIR_NAME::String="$(dirname(@__FILE__))/../instance" ;
-                    seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true, decfile::Bool=false, ss::Bool=false, ev::Bool=false)
+                    seed::Int=1, lprelax::Int=0, genericnames::Bool=true, splice::Bool=true, decfile::Bool=false, ss::Bool=false, ev::Bool=false, roundRHS::Bool=false)
 
 @time begin
-
     INSTANCE_NAME = getInstanceName(problem, params_arr)
     model = getModel(problem, params_arr, seed)
-    # LP relaxation
-    if lprelax != 0
+    if lprelax != 0     # LP relaxation
         INSTANCE_NAME *= "_LP$(lprelax)"
         lprelaxModel!(model,lprelax)
         writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, decfile)
-    # Genarating single scenario instances (to get WS solution)
-    elseif ss == true
+    elseif ss == true     # Genarating single scenario instances (to get WS solution)
         INSTANCE_NAME *= "_SS"
         mdata_all = getStructModelData(model, genericnames, splice)
         for s in 1:model.ext[:Stochastic].num_scen
             mdata_ss = getSingleScenarioModelData(mdata_all, s)
             writeMPS("$(DIR_NAME)/$(INSTANCE_NAME)$s.mps", INSTANCE_NAME*"$s", mdata_ss, genericnames)
         end
-    # Generating EVP instance (expected value problem)
-    elseif ev == true
-        writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, decfile)
+    elseif ev == true     # Generating EVP instance (expected value problem)
+        INSTANCE_NAME *= "_EV"
+        mdata_all = getStructModelData(model, genericnames, splice)
+        mdata_ev = getExpectedValueModelData(mdata_all, roundRHS)
+        writeMPS("$(DIR_NAME)/$(INSTANCE_NAME).mps", INSTANCE_NAME, mdata_ev, genericnames)
     else
-        writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, smpsfile)
+        writeMPS(model, INSTANCE_NAME, DIR_NAME, genericnames, splice, decfile)
     end
 
 end
 
     return model
 end
+
 
 #generateMPS(:DCAP, [3,3,3,100], ssp=true) : this will generate 100 MPS files each with single scenario (DCAP_3_3_3_100_SSP1.mps, DCAP_3_3_3_100_SSP2.mps, ...)
 

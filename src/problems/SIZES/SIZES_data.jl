@@ -18,7 +18,7 @@ end
 
 function SIZESData(nS::Integer, seed::Integer)::SIZESData
 
-    srand(seed)
+    Random.seed!(seed)
     data = SIZESData()
 
     # ---------------------------------------------
@@ -48,7 +48,7 @@ function SIZESData(nS::Integer, seed::Integer)::SIZESData
     if nS == 1
         demand_variability = [1.0]
     else
-        demand_variability = linspace(0.5, 1.5, nS)
+        demand_variability = range(0.5, step=1.5, length=nS)
     end
     data.D = zeros(nN, nT, nS)
     for s in data.S

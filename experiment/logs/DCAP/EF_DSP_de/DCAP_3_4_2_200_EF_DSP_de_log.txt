@@ -1,0 +1,128 @@
+Creating DSP environment
+Reading SMPS files: /blues/gpfs/home/choy/Siplib/experiment/FULL_INSTANCE/DCAP/EF/DCAP_3_4_2_200
+Coin0001I At line 1 NAME          DCAP_3_4_2_200
+Coin0001I At line 2 ROWS
+Coin0001I At line 24 COLUMNS
+Coin0001I At line 101 RHS
+Coin0001I At line 112 BOUNDS
+Coin0001I At line 151 ENDATA
+Coin0002I Problem DCAP_3_4_2_200 has 20 rows, 44 columns and 77 elements
+Coin0001I At line 1 TIME          DCAP_3_4_2_200
+Coin0001I At line 2 PERIODS       IMPLICIT
+Coin0001I At line 5 ENDATA
+
+Coin0001I At line 1 STOCH         DCAP_3_4_2_200
+Coin0001I At line 2 SCENARIOS     DISCRETE
+Coin0001I At line 11347 ENDATA
+Read SMPS files: 0.006376 sec.
+Reading parameter files: /blues/gpfs/home/choy/Siplib/experiment/solver_parameters/param_EF_DSP_de.txt
+CPX0000  CPXPARAM_Advance                                 0
+CPX0000  CPXPARAM_TimeLimit                               3600
+CPX0000  CPXPARAM_Threads                                 36
+CPX0000  CPXPARAM_MIP_Limits_Nodes                        100000000
+CPX0000  Found incumbent of value 6007.721366 after 0.00 sec. (0.36 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  MIP Presolve eliminated 462 rows and 1692 columns.
+CPX0000  Reduced MIP has 2344 rows, 4720 columns, and 10012 nonzeros.
+CPX0000  Reduced MIP has 4714 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (6.93 ticks)
+CPX0000  Probing time = 0.01 sec. (3.86 ticks)
+CPX0000  Tried aggregator 1 time.
+CPX0000  Reduced MIP has 2344 rows, 4720 columns, and 10012 nonzeros.
+CPX0000  Reduced MIP has 4714 binaries, 0 generals, 0 SOSs, and 0 indicators.
+CPX0000  Presolve time = 0.01 sec. (7.34 ticks)
+CPX0000  Probing time = 0.01 sec. (4.05 ticks)
+CPX0000  Clique table members: 3787.
+CPX0000  MIP emphasis: balance optimality and feasibility.
+CPX0000  MIP search method: dynamic search.
+CPX0000  Parallel mode: deterministic, using up to 36 threads.
+CPX0000  Root relaxation solution time = 0.05 sec. (42.95 ticks)
+CPX0000
+CPX0000          Nodes                                         Cuts/
+CPX0000     Node  Left     Objective  IInf  Best Integer    Best Bound    ItCnt     Gap
+CPX0000
+CPX0000  *     0+    0                         6007.7214     1590.7733            73.52%
+CPX0000  *     0+    0                         2057.6494     1590.7733            22.69%
+CPX0000        0     0     1837.8904   827     2057.6494     1837.8904     1317   10.68%
+CPX0000  *     0+    0                         2038.2317     1837.8904             9.83%
+CPX0000  *     0+    0                         2019.9543     1837.8904             9.01%
+CPX0000        0     0     1908.8988   860     2019.9543     Cuts: 686     2559    5.50%
+CPX0000  *     0+    0                         2017.3697     1908.8988             5.38%
+CPX0000        0     0     1976.2094   646     2017.3697     Cuts: 686     3944    2.04%
+CPX0000        0     0     1984.3437   746     2017.3697     Cuts: 686     4448    1.64%
+CPX0000  *     0+    0                         1991.1630     1984.3437             0.34%
+CPX0000  *     0+    0                         1991.0372     1984.3437             0.34%
+CPX0000  *     0+    0                         1990.6560     1984.3437             0.32%
+CPX0000  *     0+    0                         1990.6148     1984.3437             0.32%
+CPX0000        0     0     1984.4674   748     1990.6148     Cuts: 414     4660    0.31%
+CPX0000        0     0     1984.5005   758     1990.6148     Cuts: 405     4752    0.31%
+CPX0000        0     0     1984.5295   782     1990.6148     Cuts: 458     4856    0.31%
+CPX0000  *     0+    0                         1989.9439     1984.5295             0.27%
+CPX0000  *     0+    0                         1988.3633     1984.5295             0.19%
+CPX0000  *     0+    0                         1987.8402     1984.5295             0.17%
+CPX0000  *     0+    0                         1987.8030     1984.5295             0.16%
+CPX0000        0     2     1984.5295   782     1987.8030     1984.6175     4856    0.16%
+CPX0000  Elapsed time = 1.49 sec. (893.24 ticks, tree = 0.01 MB
+CPX0000  *     9+    1                         1987.6393     1984.6175             0.15%
+CPX0000  *    14+    1                         1987.6392     1984.6175             0.15%
+CPX0000  *    15+    3                         1987.6391     1984.6175             0.15%
+CPX0000  *   102+   17                         1987.6379     1984.6175             0.15%
+CPX0000  *   103+   19                         1987.6325     1984.6175             0.15%
+CPX0000  *   125+   28                         1987.6324     1984.6175             0.15%
+CPX0000  *   465+   46                         1987.6312     1984.6175             0.15%
+CPX0000     1027   608     1986.5606   605     1987.6312     1984.6175    46684    0.15%
+CPX0000     3584  2084     1986.5764   477     1987.6312     1984.6218   121635    0.15%
+CPX0000     7160  4339     1985.1080   512     1987.6312     1984.6535   207433    0.15%
+CPX0000  *  9010+ 4724                         1986.7253     1984.7329             0.10%
+CPX0000  *  9010+ 3149                         1986.7114     1984.9270             0.09%
+CPX0000  *  9010+ 2098                         1986.7093     1984.9699             0.09%
+CPX0000     9010  2099     1984.8060   996     1986.7093     1984.9699   244194    0.09%
+CPX0000     9012  1050     1984.8080   996     1986.7093     1984.9699   244195    0.09%
+CPX0000     9016   701     1984.9114   722     1986.7093     1984.9699   244452    0.09%
+CPX0000  *  9023+  373                         1986.6604     1984.9699             0.09%
+CPX0000     9025   301     1984.9445   721     1986.6604     1984.9699   244639    0.09%
+CPX0000     9043    55     1985.2053   764     1986.6604     1984.9777   246224    0.08%
+CPX0000  *  9059+   13                         1986.6598     1984.9883             0.08%
+CPX0000  *  9064+    8                         1986.6585     1984.9883             0.08%
+CPX0000  *  9185+   12                         1986.6583     1984.9883             0.08%
+CPX0000  *  9450+   18                         1986.3820     1984.9927             0.07%
+CPX0000     9469    48     1985.1471   563     1986.3820     1984.9927   249965    0.07%
+CPX0000  * 11755+ 1237                         1986.3818     1985.1124             0.06%
+CPX0000  * 24182+10816                         1986.2520     1985.1548             0.06%
+CPX0000  * 24801  8999      integral     0     1986.2442     1985.1600   359897    0.05%
+CPX0000  Elapsed time = 8.61 sec. (5699.67 ticks, tree = 18.37 MB
+CPX0000  * 24841+ 9107                         1986.0797     1985.1600             0.05%
+CPX0000  * 24976+ 9062                         1986.0750     1985.1634             0.05%
+CPX0000  * 25340+ 7593                         1985.7151     1985.1634             0.03%
+CPX0000  * 32121+ 9398                         1985.6801     1985.1897             0.02%
+CPX0000  * 32996+ 9711                         1985.6640     1985.1898             0.02%
+CPX0000  * 33860+10209                         1985.5434     1985.1898             0.02%
+CPX0000  * 37383+10340                         1985.5419     1985.1957             0.02%
+CPX0000  * 41337+12662                         1985.5215     1985.1981             0.02%
+CPX0000  * 42189+13518                         1985.4619     1985.1981             0.01%
+CPX0000  * 42679+13499                         1985.4147     1985.1998             0.01%
+CPX0000  * 43275+12735                         1985.4100     1985.2021             0.01%
+CPX0000  * 44328+ 8335                         1985.4098     1985.2021             0.01%
+CPX0000    46144  8678     1985.4098   255     1985.4098     1985.2040   450590    0.01%
+CPX0000
+CPX0000  GUB cover cuts applied:  1
+CPX0000  Clique cuts applied:  98
+CPX0000  Cover cuts applied:  454
+CPX0000  Implied bound cuts applied:  28
+CPX0000  Flow cuts applied:  57
+CPX0000  Mixed integer rounding cuts applied:  213
+CPX0000  Zero-half cuts applied:  66
+CPX0000  Lift and project cuts applied:  26
+CPX0000  Gomory fractional cuts applied:  57
+CPX0000
+CPX0000  Root node processing (before b&c):
+CPX0000    Real time             =    1.42 sec. (878.53 ticks)
+CPX0000  Parallel b&c, 36 threads:
+CPX0000    Real time             =    9.36 sec. (5959.42 ticks)
+CPX0000    Sync time (average)   =    3.22 sec.
+CPX0000    Wait time (average)   =    0.04 sec.
+CPX0000                            ------------
+CPX0000  Total (root+branch&cut) =   10.77 sec. (6837.94 ticks)
+Status: 3000
+Primal Bound: 1985.41
+Dual Bound  : 1985.41

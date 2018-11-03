@@ -155,13 +155,64 @@ function getSingleScenarioModelData(mdata_all::Array{ModelData}, s::Int)::ModelD
     return ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname)
 end
 
+function getExpectedValueModelData(mdata_all::Array{ModelData}, roundRHS::Bool)::ModelData
+    # save the number of scenarios
+    nS = length(mdata_all)-1
+
+    m1 = mdata_all[1]
+    m2 = mdata_all[2]
+    avg_mat = m2.mat
+    avg_rhs = m2.rhs
+    avg_obj = m2.obj
+    avg_clbd = m2.clbd
+    avg_cubd = m2.cubd
+    for s in 2:nS
+        avg_mat += mdata_all[s+1].mat
+        avg_rhs += mdata_all[s+1].rhs
+        avg_obj += mdata_all[s+1].obj
+        avg_clbd += mdata_all[s+1].clbd
+        avg_cubd += mdata_all[s+1].cubd
+    end
+
+    avg_mat = avg_mat/nS
+    avg_obj = avg_obj/nS
+    avg_rhs = avg_rhs/nS
+    avg_clbd = avg_clbd/nS
+    avg_cubd = avg_cubd/nS
+
+    # get # of first-stage rows and columns
+    nrows1, ncols1 = size(m1.mat)
+
+    # get # of rows and columns for the scenario block
+    nrows2, ncols = size(m2.mat)
+    ncols2 = ncols - ncols1
+
+    # core data (includes 1st stage & 2nd stage's s-th scenario data)
+    objsense = m1.objsense
+    obj      = [m1.obj  ; avg_obj]
+    rhs      = [m1.rhs  ; avg_rhs]
+    sense    = [m1.sense; m2.sense]
+    clbd     = [m1.clbd ; avg_clbd]
+    cubd     = [m1.cubd ; avg_cubd]
+    ctype    = m1.ctype * m2.ctype
+    cname    = [m1.cname ; m2.cname]    # for column name
+    mat      = [[m1.mat zeros(nrows1, ncols2)] ; avg_mat]
+
+    if !roundRHS
+        return ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname)
+    else
+        return ModelData(mat, round.(rhs), sense, obj, objsense, clbd, cubd, ctype, cname)
+    end
+end
+
+
 # general purpose MPS writing function (e.g., writing .cor file)
 function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname, genericnames::Bool=true)
 
     nrows, ncols = size(mat)
     if objsense == :Max
         obj *= -1
-        warn("The problem is converted to minimization problem.")
+        @warn("The problem is converted to minimization problem.")
     end
 
     # .mps file
@@ -211,7 +262,7 @@ function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd
                 end
                 @printf(fp, "\n")
             else # abs(obj[j]) == 0 && length(nzrange(mat,j)) == 0
-                println("Warning: The JuMP model contains unused variable. Remove this to reduce file size.")
+                println("@warning: The JuMP model contains unused variable. Remove this to reduce file size.")
     #                @printf(fp, "    %-8s", "VAR"*string(j))
                 @printf(fp, "    %-8s", cname[j])
                 @printf(fp, "  %-8s", "OBJ")
@@ -333,7 +384,7 @@ function writeMPS(FILE_NAME, INSTANCE_NAME, mat, rhs, sense, obj, objsense, clbd
                 end
                 @printf(fp, "\n")
             else # abs(obj[j]) == 0 && length(nzrange(mat,j)) == 0
-                println("Warning: The JuMP model contains unused variable. Remove this to reduce file size.")
+                println("@warning: The JuMP model contains unused variable. Remove this to reduce file size.")
                 @printf(fp, "    %-8s", "VAR"*string(j))
                 @printf(fp, "  %-8s", "OBJ")
                 @printf(fp, "  %-12f", 0)
@@ -597,7 +648,7 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
 
     # check if model is stochastic (or structured) model
     if in(:Stochastic, m.ext.keys) == false
-        warn("Not a stochastic model.")
+        @warn("Not a stochastic model.")
         return
     end
 
@@ -622,7 +673,7 @@ function writeSMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::St
     end
 
     if splice == true
-        warn("Scenario data in JuMP.Model object was spliced. Set the optional argument 'splice=false' if you want to re-use the object.")
+        @warn("Scenario data in JuMP.Model object was spliced. Set the optional argument 'splice=false' if you want to re-use the object.")
     end
 
     return
@@ -636,8 +687,8 @@ writeSMPS(m, INSTANCE_NAME="instance", DIR_NAME="$(dirname(@__FILE__))/../instan
 function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::String="$(dirname(@__FILE__))/../instance"; genericnames::Bool=true, splice::Bool=true, decfile::Bool=false)
 
     # check if model is stochastic (or structured) model
-    if in(:Stochastic, model.ext.keys) == false
-        warn("Not a stochastic model.")
+    if !haskey(m.ext, :Stochastic)
+        @warn("Not a stochastic model.")
         return
     end
 
@@ -652,7 +703,7 @@ function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::Str
     # Check if m is a StructJuMP model
     if !haskey(m.ext, :Stochastic)
         JuMP.writeMPS(m, "$FILE_NAME.mps")
-        warn("This is not a stochastic model. $FILE_NAME.mps is generated.")
+        @warn("This is not a stochastic model. $FILE_NAME.mps is generated.")
         return
     end
 
@@ -730,7 +781,7 @@ function writeMPS(m::JuMP.Model, INSTANCE_NAME::String="instance", DIR_NAME::Str
     println("done")
 
     if splice == true
-        warn("Scenario data in JuMP.Model object was spliced. Set the keyword argument 'splice=false' if you want to re-use the object.")
+        @warn("Scenario data in JuMP.Model object was spliced. Set the keyword argument 'splice=false' if you want to re-use the object.")
     end
 
     return
