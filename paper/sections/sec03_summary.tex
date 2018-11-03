@@ -1,8 +1,9 @@
 %\yoc{I strengthened this section towards discussing why the things we consider are important. }
-In this section, we explain information about the test problems included in \siplibtwo\ in a summarized manner. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We discuss why they are important for advances in SIP research study. This section also reflects our philosophy in developing \siplibtwo. Detailed problem-specific explanation is available in Section \ref{sec:prob_desc} for those who are interested in.
+In this section, we describe the test problems provided in \siplibtwo\. This includes problem origin, type, components (variables and constraints), and sparsity for each problem. We discuss the importance of the test problems in order for advances in SIP research study. This section also reflects our philosophy in developing \siplibtwo. \kk{Please state the philosophy..}
 
-\subsection{Origin of the problems}
-Table \ref{table:problems} summarizes the description of each test problem in \siplibtwo. The nine of them (except \sdcp\ and \suc) are adopted from existing libraries, Shabbir Ahmed's \siplib\ \cite{web:SIPLIB1} and Andy Felt's test-problem collection for stochastic linear programming \cite{journal:AF2004}. We tried to implement the problems as the same as the original references possible. Not all of them, however, are exactly the same mainly due to insufficient information. We sometimes needed to guess the missing links and develop our own way to implement the problems. 
+\subsection{Problem References}
+Table \ref{table:problems} summarizes the description and reference of each test problem in \siplibtwo. The nine of them (except \sdcp\ and \suc) are adopted from existing libraries from \cite{web:SIPLIB1} and \cite{journal:AF2004}. The problem formulations and detailed information are given in Appendix~\ref{sec:prob_desc}.
+%We tried to implement the problems as the same as the original references possible. Not all of them, however, are exactly the same mainly due to random parameters and insufficient information. We sometimes needed to guess the missing links and develop our own way to implement the problems. 
 
 
 	
@@ -60,19 +61,20 @@ Table \ref{table:problems} summarizes the description of each test problem in \s
 %%	}
 %\end{table}
 
-\subsubsection{How we deal with missing links and errors}
 %\yoc{This subsection is newely added to discuss the issues on implementaion.}
-During implementation, we often faced some missing links and errors. The missing links are largely from the deterministic and random parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the relevant references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
+We found that not all parameters were available for the problems or in their references. \kk{missing links?} For instance, the data generation steps are not given in details for {\mptsps}. Another example is that some constraints for {\sslp} instances are given without their parameter information. Some parameters for {\dcap} instances are not compatible to the formulation given in~\cite{journal:AG2004}. Specifically,  the big-M constant in the logical constraint (\ref{dcap:b}) is set to be 1, instead of a sufficiently large value. Table~\ref{table:remarks} present the brief remarks for implementing the instances with missing or incompatible parameters. \kk{Please update the remarks (with some more details) in the table.}
 
-We also found some errors. The errors are not critical so the instances provided by the former collections are still solvable somehow. The result, however, might be different from the originally intended. For example, we found from \smps\ files of \dcap\ that the big-M constant in the logical constraint (\ref{dcap:b}) is set to be 1 instead of a suitably large value. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
+%During implementation, we often faced some missing links and errors. The missing links are largely from the deterministic and random parameters. For example, we could not catch the exact data generating procedure for \mptsps\ even after looking up all the relevant references. For \sslp, the parameters for the zonal constraints are not provided ($Z$, $w_z$, $J_z$ in Table \ref{sslp:notation}). 
 
-We set the following rule to address such issues described above.
-\begin{enumerate}
-	\item Follow the original implementation including the errors whenever we are able to reproduce them.
-	\item Develop our own way as long as it does not harm the endemic characteristic of the problem.
-\end{enumerate}
+%We also found some errors. The errors are not critical so the instances provided by the former collections are still solvable somehow. The result, however, might be different from the originally intended. For example, we found from \smps\ files of \dcap\ that the big-M constant in the logical constraint (\ref{dcap:b}) is set to be 1 instead of a suitably large value. For \sslp, the redundant constraint (\ref{sslp:b}) presents in the \smps\ files. 
 
-The notable remark for each problem briefly presents in Table \ref{table:remarks}.
+%We set the following rule to address such issues described above.
+%\begin{enumerate}
+%	\item Follow the original implementation including the errors whenever we are able to reproduce them.
+%	\item Develop our own way as long as it does not harm the endemic characteristic of the problem.
+%\end{enumerate}
+
+%The notable remark for each problem briefly presents in Table \ref{table:remarks}.
 \begin{table}[H]
 	\centering
 	\resizebox{\textwidth}{!}{%
@@ -102,8 +104,9 @@ The notable remark for each problem briefly presents in Table \ref{table:remarks
 	}
 \end{table}
 
-\subsection{Instance naming rule}
-Table \ref{table:naming_rule} shows how we name the instances. We change the original naming convention for consistency and future extension. Some legacy naming rules do not consider the case where the set cardinality becomes larger than 1 digit number. Moreover, since some \siplibtwo\ instances can be generated using more sets than used in \siplib, we needed to define a new naming convention. For example, we change the instance names of \dcap\ and \smkp\ as below.
+\subsection{Instance Naming Rules}
+
+Naming the problem instances is important to organize a large number of instance files and provide users with parameter information. Table \ref{table:naming_rule} shows the instance naming rules for the problems with parameterization. We change the original naming convention for consistency and future extension. In particular, some legacy naming rules do not consider the case where the set cardinality becomes larger than 1 digit number (i.e., {\dcap}). Moreover, since some \siplibtwo\ instances can be generated using more sets than used in \siplib, we needed to define a new naming convention. For example, we change the instance names of \dcap\ and \smkp\ as below.
 \begin{quote}
 	\centering dcap$RNT$\_$\mathcal{S}$ $\longrightarrow$ DCAP$\_R\_N\_T\_\mathcal{S}$\\
 	smkp$\_\mathcal{S}$ $\longrightarrow$ SMKP$\_I\_\mathcal{S}$
