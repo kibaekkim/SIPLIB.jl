@@ -34,6 +34,9 @@
 \def\ttiny{\fontsize{6pt}{6pt}\selectfont}
 \def\Tiny{\fontsize{5pt}{5pt}\selectfont}
 
+\addtobeamertemplate{navigation symbols}{}{ \hspace{1em}    \usebeamerfont{footline}%
+	\insertframenumber / \inserttotalframenumber }
+
 %% Package, Library, abbreviate terms
 \newcommand{\siplibtwo}{\textsf{SIPLIB 2.0}}
 \newcommand{\siplib}{\textsf{SIPLIB}}
@@ -222,7 +225,8 @@
 			\end{itemize}
 			\item Variation of problem types
 			\begin{itemize}
-				\item Provides only 5 different variations in terms of variable types: continuous, binary, integer.
+				\item Current SIPLIB provides only 5 different variations in terms of variable types: continuous, binary, integer.
+				\item 24 types exist in total for two-stage SIP.
 			\end{itemize}
 			\item Contribution rule
 			\begin{itemize}
@@ -235,10 +239,10 @@
 	\begin{frame}{Contribution of \siplibtwo}
 		\textbf{\siplibtwo} provides
 		\begin{itemize}
-			\item \textcolor{blue}{richer pre-generated instances} accompanied with \textcolor{blue}{analytic \& computational information}
-			\item \textcolor{blue}{a \julia\ package} to support SIP algorithmic \& computational research study
+			\item \textcolor{blue}{richer pre-generated instances} accompanied with analytic \& computational information
+			\item \textcolor{blue}{a \julia\ package} to support computational research studies for SIP 
 			\begin{itemize}
-				\item generating new instances in SMPS format
+				\item \textcolor{blue}{generating new instances in SMPS format}
 				\item analyzing the instances (size, sparsity)
 				\item solving the instances to get some known bounds
 			\end{itemize}
@@ -250,14 +254,14 @@
 		\end{itemize}
 	\end{frame}
 	
-	\section{Stochastic Integer Programming}
+	\section{Two-Stage Stochastic Integer Programming}
 	
 	\begin{frame}<beamer>{Contents}
 		\tableofcontents[currentsection,currentsubsection,hideothersubsections]
 	\end{frame}
 	
 	\begin{frame}{Problem of interest}
-	\textbf{{Two-stage Stochastic Integer Programming (TSSIP)}}
+	\textbf{{Two-Stage Stochastic Integer Programming (TSSIP)}}
 	\begin{itemize}
 		\item Considers only \textcolor{blue}{two stages}.
 			\begin{itemize}
@@ -300,7 +304,7 @@
 	\end{frame}
 
 	\begin{frame}{Mathematical formulation}
-	\textbf{Deterministic Equivalent Form} (DEF):
+	\textbf{Extensive Form} (EF):
 	\begin{subequations}\label{sip:ef}
 		\begin{align}
 		\min_{x,\mathrm{y}}\ &c^{\top}x + \sum_{s=1}^{r}\PP(s) (q_s^{\top}y_s) \label{ef:obj}\\ 
@@ -320,7 +324,7 @@
 	\end{itemize}
 	\end{frame}
 	
-	\begin{frame}{DEF: Block-diagonal structure}
+	\begin{frame}{EF: Block-diagonal structure}
 		\begin{figure}
 			\begin{center}
 				\includegraphics[width=0.9\textwidth]{stagewise_sparsity_slide}
@@ -328,7 +332,7 @@
 		\end{figure}
 	\end{frame}
 
-	\begin{frame}{DEF: Block-diagonal structure}
+	\begin{frame}{EF: Block-diagonal structure}
 		\vspace{-0.5cm}
 		\begin{figure}
 			\centering
@@ -352,7 +356,7 @@
 				\centering\includegraphics[width=0.35\linewidth]{SSLP_5_10_3}
 			}
 			\vspace{0.5cm}
-			\caption{Example: Repeated sparsity patterns in DEF}
+			\caption{Example: Sparsity patterns in EF}
 			%\label{data3}
 		\end{figure}
 	\end{frame}
@@ -677,6 +681,7 @@
 				}
 		\end{table}
 		\begin{itemize}
+			\item DSP's optimality gap: Lagrangian duality gap
 			\item LP2-relax gap: Relative gap between the EF and LP-relaxation (2nd stage only)
 			\item REVPI: Relative Expected Value of Perfect Information
 			\item RVSS: Relative Value of Stochastic Solution
@@ -730,7 +735,8 @@
 
 	\begin{frame}{}
 	\centering \Huge
-	\emph{End of slide}
+	\emph{End of slide}\\ 
+	\emph{(next: demonstration)}
 	\end{frame}
 
 	\begin{frame}[noframenumbering]{Appendix: Deterministic Equivalent Form SIP}

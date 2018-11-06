@@ -1,7 +1,7 @@
 THIS_FILE_PATH = dirname(@__FILE__)
 include("$THIS_FILE_PATH/../src/Siplib.jl")
 using Siplib
-
+#=
 mkdir("$THIS_FILE_PATH/FULL_INSTANCE")
 for prob in problem
     if prob != :SSLP
@@ -32,7 +32,7 @@ for prob in problem
         end
     end
 end
-
+=#
 # make directories for logs & solutions in advance
 mkdir("$THIS_FILE_PATH/logs")
 mkdir("$THIS_FILE_PATH/solutions")
