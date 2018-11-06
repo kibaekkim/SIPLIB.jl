@@ -235,8 +235,8 @@
 	\begin{frame}{Contribution of \siplibtwo}
 		\textbf{\siplibtwo} provides
 		\begin{itemize}
-			\item \textcolor{blue}{richer pre-generated instances} accompanied with \textcolor{blue}{analytic \& computational information}
-			\item \textcolor{blue}{a \julia\ package} to support SIP algorithmic \& computational research study
+			\item \textcolor{blue}{more instances} accompanied with \textcolor{blue}{analytic \& computational information}
+			\item \textcolor{blue}{a \julia\ package} to support
 			\begin{itemize}
 				\item generating new instances in SMPS format
 				\item analyzing the instances (size, sparsity)
@@ -357,13 +357,13 @@
 		\end{figure}
 	\end{frame}
 
-	\section{\textbf{\texttt{SMPS}}, \textbf{\texttt{Julia}}, \textbf{\texttt{StructJuMP}}}
+	\section{SMPS, Julia, StructJuMP}
 	\begin{frame}<beamer>{Contents}
 		\tableofcontents[currentsection,currentsubsection,hideothersubsections]
 	\end{frame}	
 
 	\begin{frame}{\texttt{SMPS} format}
-		\textbf{\smps\ is a standard \textcolor{blue}{column-oriented} data convention for the automatic input of multi-stage stochastic programs.} 
+		\textbf{\smps\ is a standard \textcolor{blue}{column-oriented} data format for stochastic programs.} 
 		\begin{itemize}
 			\item \textbf{(example)} Let DCAP\_3\_3\_3\_10 be the instance name. Then, \smps\ format comprises
 			\begin{itemize}
@@ -462,7 +462,7 @@
 
 %	\end{frame}
 
-	\section{Implementation of a \texttt{Julia} package: \textbf{\texttt{Siplib.jl}}}
+	\section{Implementation of a Julia package: Siplib.jl}
 	\begin{frame}<beamer>{Contents}
 		\tableofcontents[currentsection,currentsubsection,hideothersubsections]
 	\end{frame}	
@@ -562,66 +562,66 @@
 		\end{itemize}
 	\end{frame}
 	
-	\begin{frame}[shrink=45]{Structure of the package}
-		\vspace{1cm}
-		\begin{minipage}[c][1.3\paperheight][c]{\textwidth}
-			\begin{figure} 
-				\begin{forest}
-					for tree={
-						font=\ttfamily,
-						grow'=0,
-						child anchor=west,
-						parent anchor=south,
-						anchor=west,
-						calign=first,
-						inner xsep=7pt,
-						edge path={
-							\noexpand\path [draw, \forestoption{edge}]
-							(!u.south west) +(7.5pt,0) |- (.child anchor) pic {folder} \forestoption{edge label};
-						},
-						% style for your file node 
-						file/.style={edge path={\noexpand\path [draw, \forestoption{edge}]
-								(!u.south west) +(7.5pt,0) |- (.child anchor) \forestoption{edge label};},
-							inner xsep=2pt,font=\small\ttfamily
-						},
-						before typesetting nodes={
-							if n=1
-							{insert before={[,phantom]}}
-							{}
-						},
-						fit=band,
-						before computing xy={l=15pt},
-					}  
-					[Siplib
-					[src
-					[problems
-					[AIRLIFT
-					[DATA
-					[numerical\_data.csv,file]
-					]
-					[AIRLIFT\_model.jl,file]
-					[AIRLIFT\_data.jl,file]
-					]
-					[CARGO
-					[CARGO\_model.jl,file]			
-					]
-					[$\ldots$]
-					]
-					[Siplib.jl,file]
-					[analyzer.jl,file]
-					[generator.jl,file]
-					[writer.jl,file]
-					[solver.jl,file]
-					[utility.jl,file]
-					[problem\_info.csv,file]
-					]
-					]
-					]
-				\end{forest}
-	%			\caption{Structure of the \julia\ package}\label{fig:siplibjl_structure}
-			\end{figure}
-		\end{minipage} 
-	\end{frame}
+%	\begin{frame}[shrink=45]{Structure of the package}
+%		\vspace{1cm}
+%		\begin{minipage}[c][1.3\paperheight][c]{\textwidth}
+%			\begin{figure} 
+%				\begin{forest}
+%					for tree={
+%						font=\ttfamily,
+%						grow'=0,
+%						child anchor=west,
+%						parent anchor=south,
+%						anchor=west,
+%						calign=first,
+%						inner xsep=7pt,
+%						edge path={
+%							\noexpand\path [draw, \forestoption{edge}]
+%							(!u.south west) +(7.5pt,0) |- (.child anchor) pic {folder} \forestoption{edge label};
+%						},
+%						% style for your file node 
+%						file/.style={edge path={\noexpand\path [draw, \forestoption{edge}]
+%								(!u.south west) +(7.5pt,0) |- (.child anchor) \forestoption{edge label};},
+%							inner xsep=2pt,font=\small\ttfamily
+%						},
+%						before typesetting nodes={
+%							if n=1
+%							{insert before={[,phantom]}}
+%							{}
+%						},
+%						fit=band,
+%						before computing xy={l=15pt},
+%					}  
+%					[Siplib
+%					[src
+%					[problems
+%					[AIRLIFT
+%					[DATA
+%					[numerical\_data.csv,file]
+%					]
+%					[AIRLIFT\_model.jl,file]
+%					[AIRLIFT\_data.jl,file]
+%					]
+%					[CARGO
+%					[CARGO\_model.jl,file]			
+%					]
+%					[$\ldots$]
+%					]
+%					[Siplib.jl,file]
+%					[analyzer.jl,file]
+%					[generator.jl,file]
+%					[writer.jl,file]
+%					[solver.jl,file]
+%					[utility.jl,file]
+%					[problem\_info.csv,file]
+%					]
+%					]
+%					]
+%				\end{forest}
+%	%			\caption{Structure of the \julia\ package}\label{fig:siplibjl_structure}
+%			\end{figure}
+%		\end{minipage} 
+%	\end{frame}
 
 	\section{Computational Experiments (work in progress)}
 	\begin{frame}<beamer>{Contents}
@@ -730,7 +730,7 @@
 
 	\begin{frame}{}
 	\centering \Huge
-	\emph{End of slide}
+	\emph{Any suggestions are welcome!}
 	\end{frame}
 
 	\begin{frame}[noframenumbering]{Appendix: Deterministic Equivalent Form SIP}
