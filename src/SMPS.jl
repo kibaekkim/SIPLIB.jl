@@ -171,6 +171,9 @@ function writeMPS(FILE_NAME, mdata::ModelData; ext="mps")
     pos = 1
     @printf(fp, "    %-8s", "RHS")
     for i in 1:nrows
+        if isapprox(rhs[i], 0)
+            continue
+        end
         if pos >= 3
             @printf(fp, "\n    %-8s", "RHS")
             pos = 1
@@ -361,8 +364,10 @@ function writeStoc(FILE_NAME, tree::ScenTreeData, core::ModelData)
         mod_V = Vector{Float64}()
         rows_core = rowvals(core.mat)
         vals_core = nonzeros(core.mat)
+        # @show core.mat
         for stage in branch_stage:tree.num_stages
             mat_scen = tree.node[scen_path[stage]].model.mat
+            # @show (stage,mat_scen)
             rows = rowvals(mat_scen)
             vals = nonzeros(mat_scen)
             nrows_scen, ncols_scen = size(mat_scen)
@@ -374,17 +379,20 @@ function writeStoc(FILE_NAME, tree::ScenTreeData, core::ModelData)
                         push!(mod_V, vals[i])
                     end
                 end
-                for i in nzrange(core.mat, j)
-                    if rows_core[i]-rstart[stage]+1 > 0 &&
-                        rows_core[i]-rstart[stage]+1 <= nrows_scen &&
-                        mat_scen[rows_core[i]-rstart[stage]+1,j] != vals_core[i]
+                # for i in nzrange(core.mat, j)
+                #     if rows_core[i]-rstart[stage]+1 > 0 &&
+                #         rows_core[i]-rstart[stage]+1 <= nrows_scen &&
+                #         mat_scen[rows_core[i]-rstart[stage]+1,j] != vals_core[i]
 
-                        push!(mod_I, rows_core[i])
-                        push!(mod_J, j)
-                        push!(mod_V, vals_core[i])
-                    end
-                end
+                #         push!(mod_I, rows_core[i])
+                #         push!(mod_J, j)
+                #         push!(mod_V, vals_core[i])
+                #     end
+                # end
             end
+            # for (n,i) in enumerate(mod_I)
+            #     @show (mod_I[n],mod_J[n],mod_V[n])
+            # end
         end
 
         core_mod = sparse(mod_I, mod_J, mod_V)
