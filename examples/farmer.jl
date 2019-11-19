@@ -74,4 +74,4 @@ end
 include("../src/SIPLIB.jl")
 using .SIPLIB
 
-SIPLIB.write_smps(m)
+SIPLIB.write_smps(m, "farmer")
