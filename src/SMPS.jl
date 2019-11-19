@@ -32,15 +32,15 @@ function write(scendata::ScenTreeData,
     # Write .tim and .sto files
     writeTime(FILE_NAME, scendata)
     writeStoc(FILE_NAME, scendata, mdata_core)
-    #
-    # # Generate .smps file if smpsfile == true
-    # if smpsfile == true
-    #     fp_smps = open("$FILE_NAME.smps", "w")
-    #     println(fp_smps, "$INSTANCE_NAME.cor")
-    #     println(fp_smps, "$INSTANCE_NAME.tim")
-    #     println(fp_smps, "$INSTANCE_NAME.sto")
-    #     close(fp_smps)
-    # end
+    
+    # Generate .smps file if smpsfile == true
+    if smpsfile == true
+        fp_smps = open("$FILE_NAME.smps", "w")
+        println(fp_smps, "$INSTANCE_NAME.cor")
+        println(fp_smps, "$INSTANCE_NAME.tim")
+        println(fp_smps, "$INSTANCE_NAME.sto")
+        close(fp_smps)
+    end
 
     return
 end
