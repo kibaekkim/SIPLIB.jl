@@ -86,13 +86,13 @@ function writeCore(FILE_NAME, scendata::ScenTreeData)::ModelData
 
     core = ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname)
 
-    writeMPS("$FILE_NAME.cor", core)
+    writeMPS(FILE_NAME, core, ext="cor")
 
     return core
 end
 
 # general purpose MPS writing function (e.g., writing .cor file)
-function writeMPS(FILE_NAME, mdata::ModelData)
+function writeMPS(FILE_NAME, mdata::ModelData; ext="mps")
 
     mat = mdata.mat; rhs = mdata.rhs; sense = mdata.sense;
     obj = mdata.obj; objsense = mdata.objsense;
@@ -105,7 +105,7 @@ function writeMPS(FILE_NAME, mdata::ModelData)
     end
 
     # .mps file
-    fp = open(FILE_NAME, "w")
+    fp = open("$FILE_NAME.$ext", "w")
 
     # 123456789 123456789
     println(fp, "NAME          $(basename(FILE_NAME))")
