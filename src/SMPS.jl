@@ -318,7 +318,7 @@ function writeStoc(FILE_NAME, tree::ScenTreeData, core::ModelData)
         end
 
         # find branch stage
-        branch_stage = t
+        branch_stage = scen == 1 ? t : t + 1
 
         # find parent scenario
         parent_scenario = scen - 1
