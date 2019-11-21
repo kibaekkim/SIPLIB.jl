@@ -55,17 +55,21 @@ function get_model_data(m::StructuredModel)::ModelData
     # column information
     clbd = Vector{Float64}(undef, num_variables(m))
     cubd = Vector{Float64}(undef, num_variables(m))
-    ctype = repeat('C', num_variables(m))
+    ctype = ""
     cname = Vector{String}(undef, num_variables(m))
-    for (i,v) in m.variables
+    for i in 1:num_variables(m)
+        vref = SJ.StructuredVariableRef(m, i)
+        v = m.variables[vref.idx]
         if v.info.integer
-            ctype[i] = 'I'
+            ctype = ctype * "I"
         elseif v.info.binary
-            ctype[i] = 'B'
+            ctype = ctype * "B"
+        else
+            ctype = ctype * "C"
         end
-        clbd[i] = v.info.has_lb ? v.info.lower_bound : -Inf
-        cubd[i] = v.info.has_ub ? v.info.upper_bound : Inf
-        cname[i] = m.varnames[i]
+        clbd[vref.idx] = v.info.has_lb ? v.info.lower_bound : -Inf
+        cubd[vref.idx] = v.info.has_ub ? v.info.upper_bound : Inf
+        cname[vref.idx] = m.varnames[vref.idx]
     end
 
     # objective coefficients
