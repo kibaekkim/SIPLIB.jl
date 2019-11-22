@@ -1,3 +1,6 @@
+using StructJuMP
+using Random
+
 include("./PHONE_data.jl")
 
 function PHONE(nS::Integer, seed::Int=1)::JuMP.Model

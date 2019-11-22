@@ -2,7 +2,9 @@
 Source:
 =#
 
-#using StructJuMP
+using StructJuMP
+using Random
+
 
 function CHEM(nS::Int, seed::Int=1)::JuMP.Model
 

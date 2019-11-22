@@ -6,6 +6,9 @@
 # Decision variables
 #  (1st stage, binary)  x[j], z[j]
 #  (2nd stage, binary)  y[j]
+using StructJuMP
+using Random
+
 include("./SMKP_data.jl")
 
 ## predetermined parameters

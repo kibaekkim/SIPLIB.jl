@@ -34,6 +34,9 @@ Parameters (scenario):
   h[i,s]: 1 if client i is present in scenario s, 0 otherwise
 =#
 
+using StructJuMP
+using Random
+
 function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::JuMP.Model
 
     Random.seed!(seed)

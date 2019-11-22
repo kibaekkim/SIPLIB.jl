@@ -1,3 +1,6 @@
+using StructJuMP
+using Random
+
 function CARGO(nS::Int, seed::Int=1)::JuMP.Model
 
     # internal function definitions

@@ -3,6 +3,7 @@ Source:
   A. Papavasiliou and S. Oren. (2013) Multiarea Stochastic Unit Commitment for High Wind
   Penetration in a Transmission Constrained Network. Operations Research 61(3):578-592
 =#
+using StructJuMP
 
 include("./SUC_data.jl")
 

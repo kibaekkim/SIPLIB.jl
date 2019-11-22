@@ -1,3 +1,6 @@
+using StructJuMP
+using Random
+
 include("./SDCP_data.jl")
 
 function SDCP(k::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::JuMP.Model

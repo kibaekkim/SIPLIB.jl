@@ -33,7 +33,10 @@ Parameters (scenario):
 
 #include("./DCAP_data.jl")
 
-function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::JuMP.Model
+using StructJuMP
+using Random
+
+function DCAP(nR::Int, nN::Int, nT::Int, nS::Int, seed::Int=1)::StructuredModel
 
     # set random seed (default=1)
     Random.seed!(seed)

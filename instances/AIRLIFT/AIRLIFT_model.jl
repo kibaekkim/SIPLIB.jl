@@ -1,3 +1,6 @@
+using StructJuMP
+using Random
+
 include("./AIRLIFT_data.jl")
 
 function AIRLIFT(nS::Integer, seed::Int=1)::JuMP.Model

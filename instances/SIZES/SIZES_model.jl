@@ -1,3 +1,6 @@
+using StructJuMP
+using Random
+
 include("./SIZES_data.jl")
 
 function SIZES(nS::Integer, seed::Int=1)::JuMP.Model

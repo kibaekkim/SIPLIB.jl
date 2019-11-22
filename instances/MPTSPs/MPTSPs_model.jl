@@ -1,5 +1,5 @@
-#include("./mptsps_types.jl")
-#include("./mptsps_functions.jl")
+using StructJuMP
+using Random
 
 include("./MPTSPs_data.jl")
 
