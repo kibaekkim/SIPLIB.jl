@@ -1,9 +1,11 @@
 using StructJuMP
 using Random
+using DelimitedFiles
+using Distributions
 
 include("./AIRLIFT_data.jl")
 
-function AIRLIFT(nS::Integer, seed::Int=1)::JuMP.Model
+function AIRLIFT(nS::Integer, seed::Int=1)::StructuredModel
 
     # read & generate instance data
     data = AIRLIFTData(nS, seed)

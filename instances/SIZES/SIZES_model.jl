@@ -1,9 +1,10 @@
 using StructJuMP
 using Random
+using DelimitedFiles
 
 include("./SIZES_data.jl")
 
-function SIZES(nS::Integer, seed::Int=1)::JuMP.Model
+function SIZES(nS::Integer, seed::Int=1)::StructuredModel
 
     # read & generate instance data
     data = SIZESData(nS, seed)

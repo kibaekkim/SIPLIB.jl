@@ -1,9 +1,10 @@
 using StructJuMP
 using Random
+using DelimitedFiles
 
 include("./SDCP_data.jl")
 
-function SDCP(k::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::JuMP.Model
+function SDCP(k::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::StructuredModel
 
     ## read data
     data = SDCPData(PenetPercent, Season, nS)
@@ -22,7 +23,7 @@ function SDCP(k::Int, PenetPercent::Any, Season::String, nS::Int, seed::Int=1)::
 
     ## 1st stage
     @variable(model, d[n=N] >= 0, Int)
-    @objective(model, Min, 0)
+    @objective(model, Min, 0*d[N[1]])
     @constraint(model, sum(d[n] for n in N) <= k)
 
     ## 2nd stage

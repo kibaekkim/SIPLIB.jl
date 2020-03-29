@@ -15,7 +15,7 @@ include("./SMKP_data.jl")
 global NXZ = 50          # SMKP: default number of xz-knapsack
 global NXY = 5           # SMKP: default number of xy-knapsacks
 
-function SMKP(nI::Int, nS::Int, seed::Int=1, nXZ::Int=NXZ, nXY::Int=NXY)::JuMP.Model
+function SMKP(nI::Int, nS::Int, seed::Int=1, nXZ::Int=NXZ, nXY::Int=NXY)::StructuredModel
 
     # generate instance data
     data = SMKPData(nI, nS, seed)

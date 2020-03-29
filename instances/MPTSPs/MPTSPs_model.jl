@@ -9,7 +9,7 @@ global NK = 3            # MPTSPs: default number of paths between two nodes
 global VC = 40.0         # MPTSPs: default deterministic velocity profile for central node
 global VS = 80.0         # MPTSPs: default deterministic velocity profile for suburban node
 
-function MPTSPs(D::String, nN::Integer, nS::Integer, seed::Int)::JuMP.Model
+function MPTSPs(D::String, nN::Integer, nS::Integer, seed::Int=1)::StructuredModel
 
     # generate instance data
     data = MPTSPsData(D, nN, nS, seed)
@@ -22,7 +22,7 @@ function MPTSPs(D::String, nN::Integer, nS::Integer, seed::Int)::JuMP.Model
 
     ## 1st stage
     @variables model begin
-        phi[i = N, j = N; i != 1] >= 0, Cont
+        phi[i = N, j = N; i != 1] >= 0
         y[i = N, j = N; i != j], Bin
     end
     @objective(model, Min, sum(Ce[i][j]*y[i,j] for i in N for j in N if i != j))

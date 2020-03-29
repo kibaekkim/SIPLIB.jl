@@ -4,10 +4,12 @@ Source:
   Penetration in a Transmission Constrained Network. Operations Research 61(3):578-592
 =#
 using StructJuMP
+using Random
+using DelimitedFiles
 
 include("./SUC_data.jl")
 
-function SUC(Season::AbstractString, nS::Integer, seed::Int=1)::JuMP.Model
+function SUC(Season::AbstractString, nS::Integer, seed::Int=1)::StructuredModel
 
     # read & generate instance data
     data = SUCData(Season, nS)

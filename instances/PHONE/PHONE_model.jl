@@ -1,9 +1,11 @@
 using StructJuMP
 using Random
+using DelimitedFiles
+using Combinatorics
 
 include("./PHONE_data.jl")
 
-function PHONE(nS::Integer, seed::Int=1)::JuMP.Model
+function PHONE(nS::Integer, seed::Int=1)::StructuredModel
 
     # read & generate instance data
     data = PHONEData(nS, seed)
@@ -22,7 +24,7 @@ function PHONE(nS::Integer, seed::Int=1)::JuMP.Model
 
     ## 1st stage
     @variable(model, x[j=E] >= 0, Int)
-    @objective(model, Min, 0)
+    @objective(model, Min, 0*x[1])
     @constraint(model, sum(x[j] for j in E) <= 3) # budget = 3
 
     ## 2nd stage

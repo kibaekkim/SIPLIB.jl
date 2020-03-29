@@ -6,7 +6,7 @@ using StructJuMP
 using Random
 
 
-function CHEM(nS::Int, seed::Int=1)::JuMP.Model
+function CHEM(nS::Int, seed::Int=1)::StructuredModel
 
     # set random seed (default=1)
     Random.seed!(seed)

@@ -1,7 +1,7 @@
 using StructJuMP
 using Random
 
-function CARGO(nS::Int, seed::Int=1)::JuMP.Model
+function CARGO(nS::Int, seed::Int=1)::StructuredModel
 
     # internal function definitions
     function U(m::Char, n::Char, Route::Array{String})
@@ -91,11 +91,11 @@ function CARGO(nS::Int, seed::Int=1)::JuMP.Model
     @constraint(model, [a=A], sum(x[pi,a]*h(Route[pi],a,FlightHours,Ndict) for pi in P) <= hmax[a])
     for s in S
         sb = StructuredModel(parent=model, id = s, prob = Pr[s])
-        @variable(sb, d[pi=P,m=N,n=N]>=0, Cont)
-        @variable(sb, t[pi=P,m=N,k=N,n=N]>=0, Cont)
-        @variable(sb, r[pi=P,k=N,n=N]>=0, Cont)
-        @variable(sb, y[m=N,n=N]>=0, Cont)
-        @variable(sb, z[pi=P,j=1:l-1]>=0, Cont)
+        @variable(sb, d[pi=P,m=N,n=N]>=0)
+        @variable(sb, t[pi=P,m=N,k=N,n=N]>=0)
+        @variable(sb, r[pi=P,k=N,n=N]>=0)
+        @variable(sb, y[m=N,n=N]>=0)
+        @variable(sb, z[pi=P,j=1:l-1]>=0)
         @objective(sb, Min, q*sum(sum(d[pi,m,n]+r[pi,m,n]+sum(t[pi,m,n,k] for k in N) for (m,n) in Pair(pi,Route,Ndict)) for pi in P) + rho*sum(sum(y[m,n] for n in N) for m in N))
         @constraint(sb, [m=N,n=N], sum(d[pi,m,n]+sum(t[pi,m,k,n] for k in N) for pi in P) + y[m,n] >= b[m,n,s])
         @constraint(sb, [k=N,n=N], sum(sum(t[pi,m,k,n] for m in N) for pi in P) == sum(r[pi,k,n] for pi in P))

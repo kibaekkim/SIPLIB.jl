@@ -37,7 +37,7 @@ Parameters (scenario):
 using StructJuMP
 using Random
 
-function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::JuMP.Model
+function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::StructuredModel
 
     Random.seed!(seed)
 
