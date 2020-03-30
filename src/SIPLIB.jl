@@ -1,3 +1,5 @@
+__precompile__(false)
+
 module SIPLIB
 
 include("ScenarioTree.jl")
