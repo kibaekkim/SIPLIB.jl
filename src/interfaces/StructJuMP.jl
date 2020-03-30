@@ -20,7 +20,7 @@ rhs_from_moi(set::MOI.GreaterThan) = set.lower
 rhs_from_moi(set::MOI.EqualTo) = set.value
 rhs_from_moi(set::MOI.Interval) = set.upper
 
-function write_smps(m::StructuredModel,
+function write_smps(m::SJ.StructuredModel,
         INSTANCE_NAME::String="noname", DIR_NAME::String=".";
         smpsfile::Bool=false)
 
@@ -49,7 +49,7 @@ function write_smps(m::StructuredModel,
     SMPS.write(tree, INSTANCE_NAME, DIR_NAME, smpsfile=smpsfile)
 end
 
-function get_model_data(m::StructuredModel)::ModelData
+function get_model_data(m::SJ.StructuredModel)::ModelData
 
     # Get a column-wise sparse matrix
     mat, rhs, sense = get_constraint_matrix(m)
@@ -85,7 +85,7 @@ function get_model_data(m::StructuredModel)::ModelData
     return ModelData(mat, rhs, sense, obj, objsense, clbd, cubd, ctype, cname)
 end
 
-function get_constraint_matrix(m::StructuredModel)
+function get_constraint_matrix(m::SJ.StructuredModel)
 
     is_parent = SJ.getparent(m) == nothing ? true : false
 
