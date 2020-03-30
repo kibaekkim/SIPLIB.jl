@@ -2,11 +2,13 @@ using .ScenarioTree
 using .SMPS
 
 using JuMP
+using MathOptInterface
 using StructJuMP
 using SparseArrays
 using Printf
 
 const SJ = StructJuMP
+const MOI = MathOptInterface
 
 sense_from_moi(set::MOI.LessThan) = 'L'
 sense_from_moi(set::MOI.GreaterThan) = 'G'
