@@ -1,4 +1,0 @@
-Block,#row,#col,#nonzero,"Sparsity ([0,1])"
-A (1st stage),$RT$,$2RT$,$2RT$,$\frac{1}{RT}$
-W (2nd stage),$(R+N)T$,$(1+R)T$,$NRT+(R+1)NT$,$\frac{1+2R}{T(R+N)(1+R)}$
-T (complicating),$(R+N)T$,$2RT$,$\frac{1}{2}T(T+1)$,$\frac{1+T}{4T(R+N)}$

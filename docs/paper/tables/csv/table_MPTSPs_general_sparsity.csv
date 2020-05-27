@@ -1,4 +1,0 @@
-Block,\#row,\#col,\#nonzero,"Sparsity ([0,1])"
-A (1st stage),$N(N+1)$,$2N(N-1)$,$2(3N-2)(N-1)$,$\frac{3N-2}{(N+1)N^2}$
-W (2nd stage),$N(N-1)$,$KN(N-1)$,$N(N-1)$,$\frac{1}{KN(N-1)}$
-T (complicating),$N(N-1)$,$2N(N-1)$,$3N(N-1)$,$\frac{3}{2N(N-1)}$
