@@ -8,17 +8,22 @@ Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 JuMP = "4076af6c-e467-56ae-b986-b466b2749572"
-MathOptFormat = "f4570300-c277-12e8-125c-4912f86ce65d"
 MathOptInterface = "b8f27783-ece8-5eb3-8dc8-9495eed66fee"
 Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 StructJuMP = "34f15cae-5318-50c9-93d3-9feadd34e321"
-Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
-julia="1.4"
-Combinatorics = "1.0"
-Distributions = "0.23"
-MathOptFormat = "0.4"
-MathOptInterface = "0.9"
+Combinatorics = "1.0.2"
+Distributions = "0.23.9"
+JuMP = "0.21.3"
+MathOptInterface = "0.9.14"
+StructJuMP = "0.2.0"
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
