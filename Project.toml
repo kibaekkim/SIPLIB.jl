@@ -16,9 +16,9 @@ StructJuMP = "34f15cae-5318-50c9-93d3-9feadd34e321"
 
 [compat]
 Combinatorics = "1.0.2"
-Distributions = "0.23.9"
-JuMP = "0.21.3"
-MathOptInterface = "0.9.14"
+Distributions = "0.23.12"
+JuMP = "0.21.5"
+MathOptInterface = "0.9.17"
 StructJuMP = "0.2.0"
 julia = "1"
 
