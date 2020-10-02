@@ -20,7 +20,7 @@ function write_wasserstein_dro(
 )
     m, n = size(wasserstein_distance)
     if m == num_references && n == num_discretizations + num_references
-        @error "The dismension of wasserstein_distance does not match."
+        @error "The dismension of wasserstein_distance does not match: ($m,$n) =? ($num_references,$(num_discretizations + num_references))"
         return
     end
 
