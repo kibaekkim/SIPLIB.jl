@@ -11,12 +11,18 @@ line 2: number of discretized points of support
 line 3-: wasserstein distance
 """
 function write_wasserstein_dro(
+    num_discretizations::Int,
+    num_references::Int,
     reference_probability::Vector{Float64},
-    wasserstein_distance::Array{Float64,2}, # Dimension: |discretization of support| times |references|
+    wasserstein_distance::Array{Float64,2}, # Dimension: (num_discretizations) times (num_discretizations + num_references)
     ϵ::Float64,
     filename::String
 )
-    num_discretizations, num_references = size(wasserstein_distance)
+    m, n = size(wasserstein_distance)
+    if m == num_discretizations && n == num_discretizations + num_references
+        @error "The dismension of wasserstein_distance does not match."
+        return
+    end
 
     fp = open("$filename.dro","w")
     println(fp, ϵ)
