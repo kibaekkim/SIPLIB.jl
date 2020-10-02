@@ -47,7 +47,7 @@ function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::StructuredModel
     Z = []
 
     c = rand(40:80,nJ)
-    q = rand(0:25,nI,nJ,nS)
+    q = rand(0:25,nI,nJ)
     q0 = ones(nJ)*1000
     d = q
     u = 1.5*sum(d)/nJ
@@ -71,8 +71,8 @@ function SSLP(nJ::Int, nI::Int, nS::Int, seed::Int=1)::StructuredModel
         sb = StructuredModel(parent=model, id = s, prob = Pr[s])
         @variable(sb, y[i=I,j=J], Bin)
         @variable(sb, y0[j=J] >= 0)
-        @objective(sb, Min, -sum(q[i,j,s]*y[i,j] for i in I for j in J) + sum(q0[j]*y0[j] for j in J))
-        @constraint(sb, [j=J], sum(d[i,j,s]*y[i,j] for i in I) - y0[j] <= u*x[j])
+        @objective(sb, Min, -sum(q[i,j]*y[i,j] for i in I for j in J) + sum(q0[j]*y0[j] for j in J))
+        @constraint(sb, [j=J], sum(d[i,j]*y[i,j] for i in I) - y0[j] <= u*x[j])
         @constraint(sb, [i=I], sum(y[i,j] for j in J) == h[i,s])
     end
 
