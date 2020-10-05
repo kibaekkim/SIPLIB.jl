@@ -19,8 +19,8 @@ function write_wasserstein_dro(
     filename::String
 )
     m, n = size(wasserstein_distance)
-    if m != num_references || n != num_discretizations + num_references
-        @error "The dismension of wasserstein_distance does not match: ($m,$n) =? ($num_references,$(num_discretizations + num_references))"
+    if m != num_discretizations || n != num_discretizations + num_references
+        @error "The dismension of wasserstein_distance does not match: ($m,$n) =? ($num_discretizations,$(num_discretizations + num_references))"
         return
     end
 
