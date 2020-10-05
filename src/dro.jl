@@ -11,15 +11,15 @@ line 2: number of references
 line 3-: wasserstein distance
 """
 function write_wasserstein_dro(
-    num_discretizations::Int,
     num_references::Int,
+    num_discretizations::Int,
     reference_probability::Vector{Float64},
     wasserstein_distance::Array{Float64,2}, # Dimension: (num_references) times (num_discretizations + num_references)
     ϵ::Float64,
     filename::String
 )
     m, n = size(wasserstein_distance)
-    if m != num_discretizations || n != num_discretizations + num_references
+    if m != num_references || n != num_discretizations + num_references
         @error "The dismension of wasserstein_distance does not match: ($m,$n) =? ($num_discretizations,$(num_discretizations + num_references))"
         return
     end
