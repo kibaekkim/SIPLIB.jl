@@ -85,3 +85,6 @@ end
 SIPLIB.write_smps(m, "farmer")
 ```
 
+# Acknowledgement
+
+This material is based upon work supported by the U.S. Department of Energy, Office of Science, under contract number DE-AC02-06CH11357.
